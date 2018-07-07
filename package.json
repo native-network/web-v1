@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bloom-react-scripts": "file:/Users/ChrisPlz/Projects/_work/ibn/repos/create-react-app/packages/react-scripts",
+    "bloom-react-scripts": "git+ssh://git@github.com/ChrisPlease/react-scripts-fork.git",
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
     "react": "^16.4.1",
