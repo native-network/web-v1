@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
+import loadingReducer from './loadingReducer';
+import tribesReducer from './tribesReducer';
 
 const rootReducer = combineReducers({
-  initialReducer: () => null,
+  loading: loadingReducer,
+  tribes: tribesReducer
 });
 
 export default rootReducer;
