@@ -1,0 +1,6 @@
+.navigation {
+  background: #4ba191;
+  & svg fill {
+    color: white;
+  }
+}
