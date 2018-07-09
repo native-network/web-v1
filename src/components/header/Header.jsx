@@ -1,23 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import logo from '../../assets/img/logo.svg';
 
-import styles from './Navigation.css';
+import styles from './Header.css';
 
 const shortenedNav = (exact = false, to, name) => {
   return <NavLink exact={exact} activeClassName="active" to={to}>{name}</NavLink>;
 };
 
-function Navigation () {
+console.log(styles);
+function Header () {
   return (
-    <Fragment>
+    <header className={styles.header}>
       <nav className={styles.navigation} role="navigation">
         {shortenedNav(true, '/', 'Home')}
-        <img src={logo} alt="Native logo"/>
       </nav>
-    </Fragment>
+      <img className={styles.logo} src={logo} alt="Native logo"/>
+    </header>
   );
 }
 
-export default Navigation;
+export default Header;
