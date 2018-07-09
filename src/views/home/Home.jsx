@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getTribes } from '../../actions/tribeActions';
-
-import logo from '../../assets/img/logo.svg';
+import { getTribes } from '../../actions/tribesActions';
 
 import './Home.css';
 
@@ -17,7 +15,6 @@ export class Home extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Hello World</h1>
         </header>
         <ul>
@@ -35,17 +32,15 @@ export class Home extends Component {
   }
 }
 
-export function mapStateToProps(state) {
-  const { tribes } = state;
-  return {
-    tribes
-  };
-}
-
 export function mapDispatchToProps(dispatch) {
   return {
     getTribes: bindActionCreators(getTribes, dispatch)
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(
+  (state) => {
+    return { tribes: state.tribes.tribes };
+  },
+  mapDispatchToProps
+)(Home);

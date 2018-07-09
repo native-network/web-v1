@@ -6,7 +6,7 @@ describe('Home', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Home />);
+    wrapper = mount(<Home />);
   });
 
   it('renders without crashing', () => {
