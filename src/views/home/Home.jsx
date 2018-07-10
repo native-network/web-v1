@@ -10,7 +10,9 @@ import './Home.css';
 
 export class Home extends Component {
   componentDidMount() {
-    this.props.getTribes();
+    if (!this.props.tribes.length) {
+      this.props.getTribes();
+    }
   }
 
   render() {

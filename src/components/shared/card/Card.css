@@ -30,9 +30,14 @@
   & p {
     color: var(--primary-color--alt);
   }
+}
 
-  &_taglist {
-    list-style-type: none;
+.Taglist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  & li {
+    display: inline-block;
   }
 }
 

@@ -17,7 +17,7 @@ function Card ({tribe}) {
         {tribe.tribeIntro}
       </p>
       {tribe.tags &&
-        <ul className={styles.Card_Taglist}>
+        <ul className={styles.Taglist}>
           {tribe.tags.map((tag, i) => <li key={i}><Tag name={tag} /></li>)}
         </ul>
       }

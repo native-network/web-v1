@@ -3,6 +3,7 @@
 
 .header {
   background: var(--primary-color);
+
   & div {
     display: flex;
     align-items: center;
@@ -22,9 +23,11 @@
   border-radius: 9999px;
   transition: background 200ms linear;
   background: rgba(0, 0, 0, 0);
+
   &:hover,
   &:active,
-  &:focus {
+  &:focus,
+  &:global(.active) {
     background: rgba(0, 0, 0, .1);
   }
 }
