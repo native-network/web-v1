@@ -1,19 +1,32 @@
 @import '../../styles/variables.css';
+@import '../../styles/globals.css';
 
 .header {
   background: var(--primary-color);
-  display: flex;
-  align-items: center;
+  & div {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .logo {
   max-width: 150px;
-  margin-right: 3rem;
+  margin-right: 1rem;
 }
 
 .navLink {
   color: var(--primary-white);
   text-decoration: none;
+  display: inline-flex;
+  padding: .5rem 1rem;
+  border-radius: 9999px;
+  transition: background 200ms linear;
+  background: rgba(0, 0, 0, 0);
+  &:hover,
+  &:active,
+  &:focus {
+    background: rgba(0, 0, 0, .1);
+  }
 }
 
 
