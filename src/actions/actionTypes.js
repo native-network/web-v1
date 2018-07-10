@@ -2,8 +2,15 @@ export const loadingActions = {
   LOADING: 'LOADING',
 };
 
-export const tribesActions = {
+export const allTribesActions = {
   GET_TRIBES: 'GET_TRIBES',
   GET_TRIBES_SUCCESS: 'GET_TRIBES_SUCCESS',
   GET_TRIBES_ERROR: 'GET_TRIBES_ERROR'
+};
+
+export const tribeActions = {
+  GET_TRIBE_BY_ID: 'GET_TRIBE_BY_ID',
+  GET_TRIBE_BY_ID_SUCCESS: 'GET_TRIBE_BY_ID_SUCCESS',
+  GET_TRIBE_BY_ID_ERROR: 'GET_TRIBE_BY_ID_ERROR',
+  CLEAR_ACTIVE_TRIBE: 'CLEAR_ACTIVE_TRIBE'
 };

@@ -19,10 +19,13 @@ const shortenedNav = (exact = false, to, name) => {
 function Header () {
   return (
     <header className={styles.header}>
-      <img className={styles.logo} src={logo} alt="Native logo"/>
-      <nav className={styles.navigation} role="navigation">
-        {shortenedNav(true, '/', 'Home')}
-      </nav>
+      <div className="container">
+        <img className={styles.logo} src={logo} alt="Native logo"/>
+        <nav className={styles.navigation} role="navigation">
+          {shortenedNav(true, '/', 'Home')}
+          {shortenedNav(true, '/tribes', 'Tribes')}
+        </nav>
+      </div>
     </header>
   );
 }

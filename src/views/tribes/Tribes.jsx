@@ -6,19 +6,19 @@ import { getTribes } from '../../actions/allTribesActions';
 
 import CardList from '../../components/shared/card-list/CardList';
 
-import './Home.css';
+export class Tribes extends Component {
 
-export class Home extends Component {
   componentDidMount() {
-    this.props.getTribes();
+    if (!this.props.tribes.length) {
+      this.props.getTribes();
+    }
   }
 
   render() {
+    const { tribes } = this.props;
     return (
       <div className="container">
-        <h1>Welcome to Native</h1>
-        <h2>Get started by connecting to a web3 wallet.</h2>
-        <CardList listItems={this.props.tribes} />
+        <CardList listItems={tribes} />
       </div>
     );
   }
@@ -32,7 +32,11 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   (state) => {
-    return { tribes: state.tribes.tribes };
+    const { tribes } = state.tribes;
+
+    return {
+      tribes
+    };
   },
   mapDispatchToProps
-)(Home);
+)(Tribes);

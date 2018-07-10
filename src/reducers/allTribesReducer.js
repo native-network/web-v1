@@ -1,11 +1,11 @@
-import { tribesActions as actions } from '../actions/actionTypes';
+import { allTribesActions as actions } from '../actions/actionTypes';
 
 const initialState = {
   tribes: [],
   error: ''
 };
 
-export default function tribesReducer(state = initialState, action) {
+export default function allTribesReducer(state = initialState, action) {
   switch (action.type) {
     case actions.GET_TRIBES_SUCCESS:
       return {
