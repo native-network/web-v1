@@ -19,3 +19,9 @@
 
 1. To run unit tests, run `yarn test`. To run tests continuously, pass 
 the `--watch` flag: `yarn test --watch`.
+
+## Styles
+
+This project utilizes [css-modules](https://github.com/css-modules/css-modules) with [postcss](https://postcss.org/) and [cssnext](http://cssnext.io/) plugins configured in the build step. CSS-modules provide scoped css class names that can be defined at a component level to provide isolated styles. 
+
+CSSNext is configured to provide `@import` syntax, CSS variable naming conventions, as well as nesting.

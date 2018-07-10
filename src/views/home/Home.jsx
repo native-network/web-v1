@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 
 import { getTribes } from '../../actions/tribesActions';
 
+import CardList from '../../components/shared/card-list/CardList';
+
 import './Home.css';
 
 export class Home extends Component {
@@ -13,20 +15,8 @@ export class Home extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Hello World</h1>
-        </header>
-        <ul>
-          {this.props.tribes &&
-            this.props.tribes.map(tribe => {
-              return <li key={tribe.name}>
-                <pre>{JSON.stringify(tribe)}</pre>
-                {tribe.name}
-                </li>
-            })
-          }
-        </ul>
+      <div className="container">
+        <CardList listItems={this.props.tribes} />
       </div>
     );
   }

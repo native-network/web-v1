@@ -1,0 +1,19 @@
+@import '../../styles/variables.css';
+
+.header {
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-width: 150px;
+  margin-right: 3rem;
+}
+
+.navLink {
+  color: var(--primary-white);
+  text-decoration: none;
+}
+
+
