@@ -1,0 +1,16 @@
+:root {
+  --white-0: #fff;
+  --white-1: #fafafa;
+  --white-2: #f5f6f8;
+  --white-3: #eee;
+
+  --black-0: #000;
+  --black-1: #111;
+
+  --primary-color: #4ba191;
+  --primary-color--alt: #70d0be;
+  --secondary-color: #f2666c;
+
+  --primary-white: var(--white-0);
+  --primary-black: var(--black-0);
+}
