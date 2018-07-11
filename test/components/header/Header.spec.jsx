@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Navigation from '../../../src/components/navigation/Navigation';
+import Header from '../../../src/components/header/Header';
 
-describe('Navigation', () => {
+fdescribe('Header', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Navigation />);
+    wrapper = shallow(<Header />);
   });
 
   it('renders without crashing', () => {
