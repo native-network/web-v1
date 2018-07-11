@@ -6,18 +6,19 @@ import Tag from '../tag/Tag';
 import styles from './Card.css';
 
 function Card ({tribe}) {
+
   return (
     <div className={styles.Card}>
-      <h3>
+      <h3 className={styles.Title}>
         <Link to={`/tribe/${tribe.address}`}>{tribe.name}</Link>
       </h3>
-      <h4>{tribe.subtitle}</h4>
+      <h4 className={styles.Subtitle}>{tribe.subtitle}</h4>
       <img src="http://placehold.it/500x200" alt=""/>
-      <p className={styles.Card_Intro}>
+      <p className={styles.Intro}>
         {tribe.tribeIntro}
       </p>
       {tribe.tags &&
-        <ul className={styles.Card_Taglist}>
+        <ul className={styles.Taglist}>
           {tribe.tags.map((tag, i) => <li key={i}><Tag name={tag} /></li>)}
         </ul>
       }

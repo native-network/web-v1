@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/img/logo.svg';
 
@@ -20,11 +20,16 @@ function Header () {
   return (
     <header className={styles.header}>
       <div className="container">
-        <img className={styles.logo} src={logo} alt="Native logo"/>
+        <Link to="/">
+          <img className={styles.logo} src={logo} alt="Native logo"/>
+        </Link>
         <nav className={styles.navigation} role="navigation">
           {shortenedNav(true, '/', 'Home')}
           {shortenedNav(true, '/tribes', 'Tribes')}
         </nav>
+        <div className={styles.userIcon}>
+          <img src="http://placehold.it/50x50" alt=""/>
+        </div>
       </div>
     </header>
   );

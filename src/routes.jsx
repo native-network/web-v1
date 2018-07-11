@@ -10,7 +10,7 @@ export const routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/tribes" component={Tribes} />
+      <Route path="/tribes" component={Tribes} />
       <Route path="/tribe/:id" component={Tribe} />
       <Route component={FourOhFour} />
     </Switch>
