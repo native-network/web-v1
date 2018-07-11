@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bloom-react-scripts": "git+ssh://git@github.com/ChrisPlease/react-scripts-fork.git",
+    "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",

@@ -1,0 +1,12 @@
+.Button {
+  border: 0;
+  color: var(--primary-white);
+  border-radius: 9999px;
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  font-weight: 100;
+}
+
+.Primary {
+  background: var(--primary-color);
+}
