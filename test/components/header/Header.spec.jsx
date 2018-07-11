@@ -1,12 +1,10 @@
-import React from 'react';
-
 import Header from '../../../src/components/header/Header';
 
 fdescribe('Header', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Header />);
+    wrapper = buildComponent(Header);
   });
 
   it('renders without crashing', () => {

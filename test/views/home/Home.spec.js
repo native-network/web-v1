@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Home } from '../../../src/views/home/Home';
 
 describe('Home', () => {

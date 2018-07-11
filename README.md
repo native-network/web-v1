@@ -32,12 +32,13 @@ global helper method to simplify creating new components with Enzyme: `buildComp
 `buildComponent` takes 3 arguments: 
 
 * `Component` - the component being rendered
-* `props` - the props needed for the component
+* `props` - the props object of the component
 * `render` - The Enzyme render method to use (defaults to `shallow`)
 
-`buildComponent` is exposed globally for the test suite, so it is not necessary to import into your test file. 
+`buildComponent` is exposed globally for the test suite, so it is not necessary to import into your test file. Because
+the `jsx` is defined in the test configuration, there's no need to import `React` into your unit tests.
 
-Sample Usage:
+#### Sample Usage:
 
 ```js
 
