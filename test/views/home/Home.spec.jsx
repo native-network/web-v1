@@ -6,7 +6,7 @@ describe('Home', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Home />);
+    wrapper = buildComponent(Home);
   });
 
   it('renders without crashing', () => {
