@@ -1,5 +1,5 @@
-@import '../../styles/variables.css';
 @import '../../styles/globals.css';
+@import '../../styles/media-queries.css';
 
 .header {
   background: var(--primary-color);
@@ -7,6 +7,7 @@
   & div {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
   }
 }
 
@@ -32,4 +33,7 @@
   }
 }
 
+.userIcon {
+  margin-left: auto;
+}
 

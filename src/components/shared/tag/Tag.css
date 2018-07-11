@@ -1,5 +1,3 @@
-@import '../../../styles/variables.css';
-
 .Tag {
   font-size: 0.9rem;
   color: var(--primary-color--alt);

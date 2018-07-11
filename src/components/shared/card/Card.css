@@ -1,7 +1,4 @@
-@import '../../../styles/variables.css';
-
 .Card {
-  margin: 1rem;
   padding: 1rem;
   background: var(--white-1);
   border-radius: 10px;

@@ -27,6 +27,9 @@ function Header () {
           {shortenedNav(true, '/', 'Home')}
           {shortenedNav(true, '/tribes', 'Tribes')}
         </nav>
+        <div className={styles.userIcon}>
+          <img src="http://placehold.it/50x50" alt=""/>
+        </div>
       </div>
     </header>
   );
