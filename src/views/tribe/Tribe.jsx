@@ -41,7 +41,7 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   (state, ownProps) => {
     const { tribe } = state.activeTribe;
-    const { id } = ownProps.match.params;
+    const { tribeId: id } = ownProps.match.params;
 
     return { tribe, id };
   },
