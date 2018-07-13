@@ -2,15 +2,13 @@ import { tribeActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get } from '../requests';
 
-const baseUrl = `http://localhost:3004`;
-
 export const getTribeById = (id) => {
   return async dispatch => {
     dispatch({ type: actions.GET_TRIBE_BY_ID });
     dispatch(beginAjaxCall());
 
     try {
-      const { data } = await get(`${baseUrl}/tribes/${id}`);
+      const { data } = await get(`tribes/${id}`);
 
       return dispatch(getTribeByIdSuccess(data));
     } catch (err) {}
