@@ -8,7 +8,7 @@ import styles from './Tribe.css';
 export class Tribe extends Component {
 
   componentDidMount() {
-    this.props.getTribeById(this.props.match.params.id);
+    this.props.getTribeById(this.props.id);
   }
 
   componentWillUnmount() {

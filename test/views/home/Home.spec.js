@@ -1,12 +1,10 @@
-import React from 'react';
-
 import { Home } from '../../../src/views/home/Home';
 
 describe('Home', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Home />);
+    wrapper = buildComponent(Home);
   });
 
   it('renders without crashing', () => {
