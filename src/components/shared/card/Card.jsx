@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Tag from '../tag/Tag';
+import Tag from '../tag';
 
 import styles from './Card.css';
 
