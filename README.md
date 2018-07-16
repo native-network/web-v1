@@ -1,13 +1,25 @@
 # Native App
 
-## Set up and installation
+## Setup and installation
+
+**Important**: This project utilizes `.env` variables to provide configuration. These `.env` files are not checked into
+the project repository, so it is imperative that these are configured before the project will run.
 
 1. Clone this repo
-2. Run `yarn` to install dependencies
+1. Create and save an `.env.local` file (all `.env` files are ignored by git as defined in the `.gitignore` file):
+    * `REACT_APP_API_HOST` - Host address of the API server
+    * `REACT_APP_API_PORT` - Port number of the API server
+1. Run `yarn` to install dependencies
 
-## Running a development environment
+## Running a development environment locally
 
-1. After dependencies have been installed, run `yarn start`
+1. After dependencies have been installed and an `.env.local` file has been created, run `yarn start`
+
+**Note**: To run this project without an `.env.local` file, variables can be set in the CLI:
+
+```sh
+REACT_APP_API_HOST=http://localhost REACT_APP_API_PORT=3004 yarn start
+```
 
 ## Building a production build
 
