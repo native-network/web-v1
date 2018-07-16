@@ -11,7 +11,9 @@ export const getTribeById = (id) => {
       const { data } = await get(`tribes/${id}`);
 
       return dispatch(getTribeByIdSuccess(data));
-    } catch (err) {}
+    } catch (err) {
+      return dispatch(getTribeByIdError(err));
+    }
   };
 }
 
