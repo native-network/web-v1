@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
 
+import Loader from '../../components/shared/loader';
+
 import styles from './Tribe.css';
 
 export class Tribe extends Component {
@@ -19,7 +21,7 @@ export class Tribe extends Component {
     const { props } = this;
     const { tribe } = props;
 
-    return (
+    return this.props.isLoading ? <Loader /> : (
       <Fragment>
         <img src="http://placehold.it/1200x300" alt=""/>
         <div className={`container ${styles.TribeContainer}`}>
@@ -40,10 +42,11 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   (state, ownProps) => {
-    const { tribe } = state.activeTribe;
-    const { id } = ownProps.match.params;
+    const { loading, activeTribe } = state;
+    const { tribe } = activeTribe;
+    const { tribeId: id } = ownProps.match.params;
 
-    return { tribe, id };
+    return { tribe, id, isLoading: loading > 0 };
   },
   mapDispatchToProps
 )(Tribe);

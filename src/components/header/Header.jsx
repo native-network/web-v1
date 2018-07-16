@@ -23,7 +23,7 @@ function Header () {
         <Link to="/">
           <img className={styles.logo} src={logo} alt="Native logo"/>
         </Link>
-        <nav className={styles.navigation} role="navigation">
+        <nav className={styles.navigation}>
           {shortenedNav(true, '/', 'Home')}
           {shortenedNav(true, '/tribes', 'Tribes')}
         </nav>

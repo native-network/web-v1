@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import loadingReducer from './loadingReducer';
 import allTribesReducer from './allTribesReducer';
 import tribeReducer from './tribeReducer';

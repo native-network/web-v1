@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 
 import { getTribes } from '../../actions/allTribesActions';
 
-import CardList from '../../components/shared/card-list/CardList';
+import Loader from '../../components/shared/loader';
+import CardList from '../../components/shared/card-list';
 
 import './Home.css';
 
@@ -16,7 +17,9 @@ export class Home extends Component {
   }
 
   render() {
-    return (
+    const { isLoading } = this.props;
+
+    return isLoading ? <Loader /> : (
       <div className="container">
         <h1>Welcome to Native</h1>
         <h2>Get started by connecting to a web3 wallet.</h2>
@@ -34,7 +37,7 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   (state) => {
-    return { tribes: state.tribes.tribes };
+    return { tribes: state.tribes.tribes, isLoading: state.loading > 0 };
   },
   mapDispatchToProps
 )(Home);

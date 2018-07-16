@@ -1,17 +1,19 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 
-import Home from './views/home/Home';
-import Tribes from './views/tribes/Tribes';
-import Tribe from './views/tribe/Tribe';
-import FourOhFour from './views/404/404';
+import Home from './views/home';
+import Tribes from './views/tribes';
+import Tribe from './views/tribe';
+import Project from './views/project';
+import FourOhFour from './views/404';
 
 export const routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/tribes" component={Tribes} />
-      <Route path="/tribe/:id" component={Tribe} />
+      <Route exact path="/tribe/:tribeId" component={Tribe} />
+      <Route path="/tribe/:tribeId/project/:projectId" component={Project} />
       <Route component={FourOhFour} />
     </Switch>
   );
