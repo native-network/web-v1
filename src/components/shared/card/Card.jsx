@@ -10,10 +10,10 @@ function Card ({tribe}) {
   return (
     <div className={styles.Card}>
       <h3 className={styles.Title}>
-        <Link to={`/tribe/${tribe.address}`}>{tribe.name}</Link>
+        <Link to={`/tribe/${tribe.id}`}>{tribe.name}</Link>
       </h3>
       <h4 className={styles.Subtitle}>{tribe.subtitle}</h4>
-      <img src="http://placehold.it/500x200" alt=""/>
+      <img src={`/${tribe.image}`} alt=""/>
       <p className={styles.Intro}>
         {tribe.tribeIntro}
       </p>

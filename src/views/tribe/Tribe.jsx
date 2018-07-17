@@ -23,7 +23,8 @@ export class Tribe extends Component {
 
     return this.props.isLoading ? <Loader /> : (
       <Fragment>
-        <img src="http://placehold.it/1200x300" alt=""/>
+        {console.log(tribe)}
+        <img src={`/${tribe.image}`} alt=""/>
         <div className={`container ${styles.TribeContainer}`}>
           <h1>{tribe.name}</h1>
           <p>{tribe.tribePurpose}</p>
