@@ -13,7 +13,8 @@ const shortenedNav = (exact = false, to, name) => {
         activeClassName="active"
         to={to}>
       {name}
-    </NavLink>);
+    </NavLink>
+  );
 };
 
 function Header () {

@@ -9,7 +9,6 @@ describe('Tribes', () => {
       tribes: [],
       getTribes: jest.fn()
     };
-    wrapper = buildComponent(Tribes, props);
   });
 
   afterEach(() => {
@@ -17,17 +16,16 @@ describe('Tribes', () => {
   });
 
   it('should render without crashing', () => {
+    wrapper = buildComponent(Tribes, props);
     expect(wrapper).toHaveLength(1);
   });
 
   it('should call `getTribes` when no tribes are present', () => {
+    wrapper = buildComponent(Tribes, props);
     expect(props.getTribes).toHaveBeenCalled();
   });
 
-  // TODO: Mock is getting called,
-  // maybe from initial buildComponent in beforeEach?
-  xit('should NOT call `getTribes` when tribes are present', () => {
-
+  it('should NOT call `getTribes` when tribes are present', () => {
     props = { ...props, tribes: [{}, {}]};
     wrapper = buildComponent(Tribes, props);
 

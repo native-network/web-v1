@@ -1,11 +1,11 @@
 import { loadingActions as loading } from '../actions/actionTypes';
 
 function actionTypeEndsInSuccess(type) {
-  return type.substring(type.length - 8) === '_SUCCESS';
+  return type && type.substring(type.length - 8) === '_SUCCESS';
 }
 
 function actionTypeEndsInError(type) {
-  return type.substring(type.length - 6) === '_ERROR';
+  return type && type.substring(type.length - 6) === '_ERROR';
 }
 
 export default function loadingReducer(state = 0, action) {

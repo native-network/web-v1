@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_HOST;
 
 const isProdPort = (p) => p === '80' || p === '';
 
@@ -16,6 +16,7 @@ export const get = async (endpoint) => {
   try {
     return await axios.get(requestUrl);
   } catch (err) {
-    throw new Error(err);
+    const { data: error } = err && err.response;
+    throw new Error(error);
   }
 }
