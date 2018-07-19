@@ -1,10 +1,9 @@
 .Button {
   border: 0;
-  color: var(--primary-white);
+  color: var(--primary-color);
   border-radius: 9999px;
-  font-size: 1.25rem;
-  padding: 0.5rem 1rem;
-  font-weight: 100;
+  font-size: 1rem;
+  padding: 0.5rem 2rem;
 }
 
 .Primary {
