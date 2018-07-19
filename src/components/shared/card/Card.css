@@ -1,33 +1,65 @@
 .Card {
-  padding: 1rem;
   background: var(--white-1);
-  border-radius: 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
   height: 100%;
+  padding: 1rem 0;
+}
 
-  & .Title,
-  & .Subtitle {
-    margin: 0;
-    font-weight: 100;
+.Card_Container {
+
+  composes: container from global;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-column-gap: 1rem;
+  grid-template-areas:
+    'header header header'
+    'summary data membership';
+
+  & .Header {
+    grid-area: header;
+    text-align: center;
   }
 
-  & .Title a {
-    color: var(--primary-color);
-    text-decoration: none;
+  & .Summary,
+  & .Data,
+  & .Membership {
+
+    & h4 {
+      text-align: center;
+    }
   }
 
-  & .Subtitle {
-    color: #777;
+  & .Summary {
+    grid-area: summary;
   }
 
-  & img {
-    margin: 0 -1rem;
-    width: calc(100% + 2rem);
+  & .Data {
+    grid-area: data;
   }
 
-  & .Intro {
-    color: var(--primary-color--alt);
+  & .Membership {
+    grid-area: membership;
   }
+}
+
+
+.Title,
+.Subtitle {
+  margin: 0;
+  font-weight: 100;
+}
+
+.Title a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.Subtitle {
+  color: var(--gray-0);
+}
+
+.Intro {
+  color: var(--primary-color--alt);
 }
 
 .Taglist {
