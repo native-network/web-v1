@@ -1,0 +1,63 @@
+@import '../../../styles/globals.css';
+@import '../../../styles/media-queries.css';
+
+.Header {
+
+  composes: container from global;
+
+  background: var(--primary-white);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem 0;
+}
+
+.LogoLink {
+  margin-right: auto;
+}
+
+.Logo {
+  max-width: 10rem;
+}
+
+.Navigation {
+  margin-right: 1rem;
+}
+
+.NavLink {
+  color: var(--primary-color);
+  text-decoration: none;
+  display: inline-flex;
+  margin: 0 1rem;
+  font-weight: 100;
+
+  &:global(.active) {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    font-weight: 900;
+  }
+}
+
+.metamask {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & img {
+    max-width: 2rem;
+  }
+
+  & svg {
+    margin-left: .5rem;
+  }
+}
+
+.Subheader {
+  background: var(--gray-0);
+  padding: 1rem 0;
+
+  & > div {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
