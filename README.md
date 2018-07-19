@@ -1,15 +1,16 @@
 # Native App
 
 ## Setup and installation
-
-**Important**: This project utilizes `.env` variables to provide configuration. These `.env` files are not checked into
-the project repository, so it is imperative that these are configured before the project will run.
-
 1. Clone this repo
-1. Create and save an `.env.local` file (all `.env` files are ignored by git as defined in the `.gitignore` file):
-    * `REACT_APP_API_HOST` - Host address of the API server
-    * `REACT_APP_API_PORT` - Port number of the API server
-1. Run `yarn` to install dependencies
+2. Install dependencies
+    ```bash
+    $ yarn
+    ```
+3. Copy sample .env.sample to .env.|ENVIRONMENT_NAME|
+    ```bash
+    $ cp .env.sample .env.local
+    ```
+4. Make any necessary environment variable changes
 
 ## Running a development environment locally
 
@@ -33,7 +34,7 @@ The project uses [Jest](https://jestjs.io/en/) as the test suite, [Enzyme](http:
 React components, and [Instanbul](https://istanbul.js.org/) for coverage reports.
 
 1. Run `yarn test` to run unit tests. By default, tests are run in a watch mode.
-1. To run a coverage report, add the `--coverage` flag: `yarn test --coverage`.
+2. To run a coverage report, add the `--coverage` flag: `yarn test --coverage`.
 
 Test configuration is established in `/test/config/setup.js`. This configuration includes setting up Enzyme's React 16
 Adapter, exposing Enzyme's `shallow`, `mount`, and `render` globally to avoid repetitive imports. Additionally, there's a
