@@ -8,9 +8,11 @@
   --black-0: #000;
   --black-1: #111;
 
-  --primary-color: #4ba191;
+  --gray-0: #333;
+
+  --primary-color: #2C5E5E;
   --primary-color--alt: #70d0be;
-  --secondary-color: #f2666c;
+  --secondary-color: #F16667;
 
   --primary-white: var(--white-0);
   --primary-black: var(--black-0);
