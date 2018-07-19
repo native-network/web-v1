@@ -23,11 +23,9 @@ export class Home extends Component {
   render() {
     const { isLoading, user } = this.props;
     return isLoading ? <Loader /> : (
-      <div className="container">
-        <h1>Welcome to Native: {user.account} </h1>
-        <h2>Get started by connecting to a web3 wallet.</h2>
+      <main>
         <CardList listItems={this.props.tribes} />
-      </div>
+      </main>
     );
   }
 }
