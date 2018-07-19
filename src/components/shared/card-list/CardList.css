@@ -4,16 +4,13 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: stretch;
-}
+  background: var(--gray-0);
 
-.CardListItem {
-  margin: 1rem 0;
+  & li {
+    margin-bottom: 1rem;
 
-  @media (--medium-viewport) {
-    flex-basis: 32%;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
