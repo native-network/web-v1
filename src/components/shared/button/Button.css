@@ -45,7 +45,7 @@
   color: var(--primary-color);
   font-size: 1rem;
   padding: 0.5rem 2rem;
-  border-radius: 5px;
+  border-radius: 10px;
   color: var(--primary-white);
   cursor: pointer;
 
