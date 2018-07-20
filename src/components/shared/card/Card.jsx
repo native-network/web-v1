@@ -7,7 +7,6 @@ import Tag from '../tag';
 import styles from './Card.css';
 
 function Card ({tribe, render}) {
-  console.log(tribe);
 
   const displayTitle = (bool) => {
     if (bool) {
