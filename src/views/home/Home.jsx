@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { getTribes } from '../../actions/allTribesActions';
+import { getUserAccount } from '../../actions/userActions';
 
 import Loader from '../../components/shared/loader';
 import CardList from '../../components/shared/card-list';
@@ -14,14 +15,16 @@ export class Home extends Component {
     if (this.props.tribes && !this.props.tribes.length) {
       this.props.getTribes();
     }
+    if (this.props.user && !this.props.user.length) {
+      this.props.getUserAccount();
+    }
   }
 
   render() {
-    const { isLoading } = this.props;
-
+    const { isLoading, user } = this.props;
     return isLoading ? <Loader /> : (
       <div className="container">
-        <h1>Welcome to Native</h1>
+        <h1>Welcome to Native: {user.account} </h1>
         <h2>Get started by connecting to a web3 wallet.</h2>
         <CardList listItems={this.props.tribes} />
       </div>
@@ -31,13 +34,14 @@ export class Home extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getTribes: bindActionCreators(getTribes, dispatch)
+    getTribes: bindActionCreators(getTribes, dispatch),
+    getUserAccount: () => dispatch(getUserAccount())
   };
 }
 
 export default connect(
   (state) => {
-    return { tribes: state.tribes.tribes, isLoading: state.loading > 0 };
+    return { tribes: state.tribes.tribes, isLoading: state.loading > 0, user: state.user };
   },
   mapDispatchToProps
 )(Home);
