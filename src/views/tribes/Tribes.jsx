@@ -16,11 +16,7 @@ export class Tribes extends Component {
 
   render() {
     const { tribes } = this.props;
-    return (
-      <div className="container">
-        <CardList listItems={tribes} />
-      </div>
-    );
+    return <CardList listItems={tribes} />;
   }
 }
 

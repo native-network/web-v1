@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
 
 import Loader from '../../components/shared/loader';
+import Card from '../../components/shared/card';
 
 import styles from './Tribe.css';
 
@@ -21,16 +22,13 @@ export class Tribe extends Component {
     const { props } = this;
     const { tribe } = props;
 
-    return this.props.isLoading ? <Loader /> : (
-      <Fragment>
-        {console.log(tribe)}
-        <img src={`/${tribe.image}`} alt=""/>
-        <div className={`container ${styles.TribeContainer}`}>
-          <h1>{tribe.name}</h1>
-          <p>{tribe.tribePurpose}</p>
-        </div>
-      </Fragment>
-    );
+    return this.props.isLoading ?
+      <Loader /> :
+      <Card
+        tribe={tribe}
+        render={() => {
+        return <div>Foo</div>
+      }} />;
   }
 }
 
