@@ -1,12 +1,26 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
 
 import Loader from '../../components/shared/loader';
 import Card from '../../components/shared/card';
+import TabPanels from '../../components/shared/tab-panels';
 
-import styles from './Tribe.css';
+const panels = [
+  {
+    name: 'Votes',
+    render: () => <span style={{background: '#bada55'}}>Votes</span>
+  },
+  {
+    name: 'Tasks',
+    render: () => <span style={{background: '#bada55'}}>Tasks</span>
+  },
+  {
+    name: 'Projects',
+    render: () => <span style={{background: '#bada55'}}>Projects</span>
+  }
+];
 
 export class Tribe extends Component {
 
@@ -27,8 +41,11 @@ export class Tribe extends Component {
       <Card
         tribe={tribe}
         render={() => {
-        return <div>Foo</div>
-      }} />;
+          return (
+            <TabPanels
+                panels={panels}
+            />);
+        }} />;
   }
 }
 
