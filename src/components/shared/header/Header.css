@@ -20,25 +20,7 @@
   max-width: 10rem;
 }
 
-.Navigation {
-  margin-right: 1rem;
-}
-
-.NavLink {
-  color: var(--primary-color);
-  text-decoration: none;
-  display: inline-flex;
-  margin: 0 1rem;
-  font-weight: 100;
-
-  &:global(.active) {
-    color: var(--secondary-color);
-    text-decoration: underline;
-    font-weight: 900;
-  }
-}
-
-.metamask {
+.Metamask {
   display: flex;
   align-items: center;
   justify-content: space-between;

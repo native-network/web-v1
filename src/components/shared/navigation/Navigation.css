@@ -1,0 +1,27 @@
+@import '../../../styles/globals.css';
+@import '../../../styles/media-queries.css';
+
+.Navigation {
+  margin-right: 1rem;
+
+  & ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+}
+
+.NavLink {
+  color: var(--primary-color);
+  text-decoration: none;
+  display: inline-flex;
+  margin: 0 1rem;
+  font-weight: 100;
+
+  &.Active {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    font-weight: 900;
+  }
+}
