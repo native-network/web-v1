@@ -1,6 +1,6 @@
-import Header from '../../../src/components/header/Header';
+import Header from '../../../../src/components/shared/header';
 
-fdescribe('Header', () => {
+describe('Header', () => {
   let wrapper;
 
   beforeEach(() => {
