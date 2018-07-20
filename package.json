@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "bignumber.js": "^7.2.1",
     "bloom-react-scripts": "ChrisPlease/react-scripts-fork.git",
     "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
