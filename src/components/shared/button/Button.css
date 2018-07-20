@@ -1,11 +1,75 @@
-.Button {
-  border: 0;
-  color: var(--primary-color);
-  border-radius: 9999px;
-  font-size: 1rem;
-  padding: 0.5rem 2rem;
+
+@custom-selector :--button button, .Button;
+@custom-selector :--enter :hover, :focus;
+
+:root {
+
+  --primary-button-default: var(--primary-color);
+  --primary-button-active: color(var(--primary-color) tint(10%));
+
+  --secondary-button-default: var(--secondary-color);
+  --secondary-button-active: color(var(--secondary-color) tint(10%));
+
+  --tertiary-button-default: var(--primary-white);
+  --tertiary-button-active: color(var(--primary-white) tint(10%));
+
+
+  --primary-theme: {
+    background: var(--primary-button-default);
+
+    &:--enter {
+      background: var(--primary-button-active);
+    }
+  }
+
+  --secondary-theme: {
+    background: var(--secondary-button-default);
+
+    &:--enter {
+      background: var(--secondary-button-active);
+    }
+  }
+
+  --tertiary-theme: {
+    background: var(--tertiary-button-default);
+    color: var(--primary-color);
+
+    &:--enter {
+      background: var(--tertiary-button-active);
+    }
+  }
 }
 
-.Primary {
-  background: var(--primary-color);
+:--button {
+  border: 0;
+  color: var(--primary-color);
+  font-size: 1rem;
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  color: var(--primary-white);
+  cursor: pointer;
+
+  &.Primary {
+
+    @apply --primary-theme;
+  }
+
+  &.Secondary {
+
+    @apply --secondary-theme;
+  }
+
+  &.Tertiary {
+
+    @apply --tertiary-theme;
+  }
+
+  &.Rounded {
+    border-radius: 9999px
+  }
+
+  &.Centered {
+    display: flex;
+    margin: 0 auto;
+  }
 }
