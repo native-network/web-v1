@@ -10,7 +10,7 @@ import TabPanels from '../../components/shared/tab-panels';
 const initiatives = [
   {
     name: 'Votes',
-    render: () => <span style={{background: '#bada55'}}>Votes</span>
+    render: () => <div style={{background: '#bada55'}}>Votes</div>
   },
   {
     name: 'Tasks',
@@ -24,6 +24,10 @@ const initiatives = [
 
 export class Tribe extends Component {
 
+  state = {
+    initiatives: initiatives
+  }
+
   componentDidMount() {
     this.props.getTribeById(this.props.id);
   }
@@ -33,7 +37,7 @@ export class Tribe extends Component {
   }
 
   render() {
-    const { props } = this;
+    const { props, state } = this;
     const { tribe } = props;
 
     return this.props.isLoading ?
@@ -43,7 +47,7 @@ export class Tribe extends Component {
         render={() => {
           return (
             <TabPanels
-                panels={initiatives}
+                panels={state.initiatives}
             />);
         }} />;
   }
