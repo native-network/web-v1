@@ -10,7 +10,7 @@
 .TabNavigationItem {
   border: 2px solid var(--primary-color);
   border-top-width: 0px;
-  margin: 0 2rem;
+  margin: 0 0.5rem;
 
   & button {
     border-radius: initial;

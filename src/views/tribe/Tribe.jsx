@@ -7,7 +7,7 @@ import Loader from '../../components/shared/loader';
 import Card from '../../components/shared/card';
 import TabPanels from '../../components/shared/tab-panels';
 
-const panels = [
+const initiatives = [
   {
     name: 'Votes',
     render: () => <span style={{background: '#bada55'}}>Votes</span>
@@ -43,7 +43,7 @@ export class Tribe extends Component {
         render={() => {
           return (
             <TabPanels
-                panels={panels}
+                panels={initiatives}
             />);
         }} />;
   }
