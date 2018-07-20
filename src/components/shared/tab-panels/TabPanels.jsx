@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import TabNavigation from './TabNavigation';
+import TabPanel from './TabPanel';
 
 class TabPanels extends Component {
 
@@ -9,23 +10,23 @@ class TabPanels extends Component {
   }
 
   setActiveTab (tabIndex) {
-
+    this.setState({activeTab: tabIndex});
   }
 
   render() {
-    const { props, state, setActiveTab } = this;
+    const { props, state } = this;
     const { panels } = props;
     const { activeTab } = state;
-
-    console.log(activeTab);
-    console.log(panels);
+    const activePanel = (panels || []).find((panel, i) => i === activeTab);
 
     return (
       <div>
-        <TabNavigation items={panels} clickHandler={() => alert('clicked')} />
-        {/* {(panels || []).find(({render}, i) => {
-          return i === activeTab ? <div key={i}>{render()}</div> : null;
-        })} */}
+        <TabNavigation
+            activeTab={activeTab}
+            items={panels}
+            clickHandler={(i) => this.setActiveTab(i)}
+        />
+        <TabPanel render={activePanel.render} />
       </div>
     );
   }

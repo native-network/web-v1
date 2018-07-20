@@ -1,12 +1,30 @@
 import React from 'react';
+import classNames from 'classnames/bind';
 
-export default function TabNavigation ({items, clickHandler}) {
-  console.log(items);
+import styles from './TabPanels.css';
+
+const cx = classNames.bind(styles);
+
+export default function TabNavigation ({items, activeTab, clickHandler}) {
+
+  const addClassNames = (index) => {
+    return cx({
+      ActiveTab: activeTab === index,
+      TabNavigationItem: true
+    });
+  };
+
   return (
-    <ul>
+    <ul className={styles.TabNavigation}>
       {(items || []).map(({name}, i) => {
         return (
-          <li onClick={() => clickHandler(i)} key={i}>{name}</li>
+          <li
+              key={i}
+              className={addClassNames(i)}
+              onClick={() => clickHandler(i)}
+          >
+            <button>{name}</button>
+          </li>
         );
       })}
     </ul>

@@ -1,0 +1,24 @@
+.TabNavigation {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid var(--primary-color);
+}
+
+.TabNavigationItem {
+  border: 2px solid var(--primary-color);
+  border-top-width: 0px;
+  margin: 0 2rem;
+
+  & button {
+    border-radius: initial;
+    color: var(--primary-color);
+  }
+
+  &.ActiveTab button {
+    background: var(--primary-color);
+    color: var(--primary-white);
+  }
+}
