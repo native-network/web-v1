@@ -31,6 +31,18 @@
 
   & svg {
     margin-left: .5rem;
+    & circle {
+      fill: var(--primary-color--alt);
+    }
+  }
+
+  &.Disabled {
+    & img {
+      filter: grayscale(100%);
+    }
+    & svg circle {
+      fill: var(--secondary-color);
+    }
   }
 }
 
