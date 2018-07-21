@@ -1,67 +1,98 @@
 
 @custom-selector :--button button, .Button;
 @custom-selector :--enter :hover, :focus;
+@custom-selector :--outline .Outline;
 
 :root {
 
-  --primary-button-default: var(--primary-color);
-  --primary-button-active: color(var(--primary-color) tint(10%));
-
-  --secondary-button-default: var(--secondary-color);
-  --secondary-button-active: color(var(--secondary-color) tint(10%));
-
-  --tertiary-button-default: var(--primary-white);
-  --tertiary-button-active: color(var(--primary-white) tint(10%));
-
-
   --primary-theme: {
-    background: var(--primary-button-default);
 
-    &:--enter {
-      background: var(--primary-button-active);
+    &:not(:--outline) {
+      background: var(--primary-button-default);
+      border-color: var(--primary-button-default);
+
+      &:--enter {
+        background: var(--primary-button-active);
+        border-color: var(--primary-button-active);
+      }
+    }
+
+    &:--outline {
+      color: var(--primary-button-default);
+
+      &:--enter {
+        border-color: var(--primary-button-active);
+        color: var(--primary-button-active);
+      }
     }
   }
 
   --secondary-theme: {
-    background: var(--secondary-button-default);
 
-    &:--enter {
-      background: var(--secondary-button-active);
+    &:not(:--outline) {
+      background: var(--secondary-button-default);
+      border-color: var(--secondary-button-default);
+
+      &:--enter {
+        background: var(--secondary-button-active);
+        border-color: var(--secondary-button-active);
+      }
+    }
+
+    &:--outline {
+      color: var(--secondary-button-default);
+
+      &:--enter {
+        border-color: var(--secondary-button-active);
+        color: var(--secondary-button-active);
+      }
     }
   }
 
   --tertiary-theme: {
     background: var(--tertiary-button-default);
+    border-color: var(--tertiary-button-default);
     color: var(--primary-color);
 
     &:--enter {
       background: var(--tertiary-button-active);
     }
   }
+
+  --outline: {
+    /* Outline will always have a transparent background */
+    background: transparent !important;
+  }
 }
 
 :--button {
-  border: 0;
-  color: var(--primary-color);
+  border: 1px solid;
+  color: var(--primary-white);
   font-size: 1rem;
   padding: 0.5rem 2rem;
   border-radius: 10px;
-  color: var(--primary-white);
   cursor: pointer;
+  transition: all 100ms linear;
 
   &.Primary {
-
     @apply --primary-theme;
   }
 
   &.Secondary {
-
     @apply --secondary-theme;
   }
 
   &.Tertiary {
 
     @apply --tertiary-theme;
+
+    &.Outline {
+      color: green;
+    }
+  }
+
+  &.Outline {
+    @apply --outline;
   }
 
   &.Rounded {

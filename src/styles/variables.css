@@ -16,4 +16,13 @@
 
   --primary-white: var(--white-0);
   --primary-black: var(--black-0);
+
+  --primary-button-default: var(--primary-color);
+  --primary-button-active: color-mod(var(--primary-color) shade(30%));
+
+  --secondary-button-default: var(--secondary-color);
+  --secondary-button-active: color-mod(var(--secondary-color) shade(30%));
+
+  --tertiary-button-default: var(--primary-white);
+  --tertiary-button-active: color-mod(var(--primary-white) shade(30%));
 }
