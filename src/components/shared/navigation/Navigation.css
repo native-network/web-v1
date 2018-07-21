@@ -19,7 +19,7 @@
   margin: 0 1rem;
   font-weight: 100;
 
-  &.Active {
+  &:global(.active) {
     color: var(--secondary-color);
     text-decoration: underline;
     font-weight: 900;

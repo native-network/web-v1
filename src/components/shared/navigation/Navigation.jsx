@@ -9,7 +9,7 @@ const shortenedNav = (exact = false, to, name) => {
       <NavLink
           className={styles.NavLink}
           exact={exact}
-          activeClassName={styles.Active}
+          activeClassName="active"
           to={to}>
         {name}
       </NavLink>
