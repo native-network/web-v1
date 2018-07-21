@@ -2,7 +2,7 @@
 @import '../../../styles/media-queries.css';
 
 .Navigation {
-  margin-right: 1rem;
+  margin-left: auto;
 
   & ul {
     list-style-type: none;

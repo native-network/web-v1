@@ -8,16 +8,16 @@
   background: var(--primary-white);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: 0.5rem 0;
-}
-
-.LogoLink {
-  margin-right: auto;
 }
 
 .Logo {
   max-width: 10rem;
+}
+
+.PrimaryNav {
+  margin-left: auto;
 }
 
 .Metamask {
