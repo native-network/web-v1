@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 
+import Button from '../button';
+
 import styles from './Modal.css';
 
 function NativeModal ({
@@ -9,6 +11,8 @@ function NativeModal ({
   closeModal,
   render
 }) {
+  Modal.setAppElement('#root');
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -16,13 +20,22 @@ function NativeModal ({
     >
       <div className={styles.ModalHeader}>
         <h1>{title}</h1>
-        <button style={{background: 'green'}} onClick={closeModal}>X</button>
+        <button className={styles.CloseButton} onClick={closeModal}>x</button>
       </div>
-      {render && render()}
+      <div className={styles.ModalBody}>
+        {render && render()}
+      </div>
+      <div className={styles.ModalFooter}>
+        <Button
+          centered
+          theme="secondary"
+          clickHandler={closeModal}
+          content="Close"
+        />
+      </div>
     </Modal>
   );
 }
 
-Modal.setAppElement('#root');
 
 export default NativeModal;
