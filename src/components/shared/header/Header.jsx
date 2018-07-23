@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
@@ -75,10 +76,10 @@ export class Header extends Component {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   (state) => {
     const { account } = state.user;
     return { user: account };
   },
   null
-)(Header);
+)(Header));
