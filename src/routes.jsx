@@ -14,7 +14,7 @@ export const routes = () => {
       <Route exact path="/" component={Home} />
       <Route exact path="/tribes" component={Tribes} />
       <Route exact path="/tribe/:tribeId" component={Tribe} />
-      <Route exact path="/tokens" component={Tokens} />
+      <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
       <Route component={FourOhFour} />
     </Switch>
