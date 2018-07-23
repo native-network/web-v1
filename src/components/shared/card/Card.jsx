@@ -48,7 +48,11 @@ function Card ({tribe, render}) {
         <div className={styles.Membership}>
           <h4>Membership</h4>
           <p>{tribe.tribePurpose}</p>
-          <Button centered theme="secondary" content={`Support ${tribe.name}`} />
+          <Button
+              centered
+              theme="secondary"
+              content={`Support ${tribe.name}`}
+          />
         </div>
       </div>
       {render && render()}

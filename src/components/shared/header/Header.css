@@ -8,16 +8,16 @@
   background: var(--primary-white);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: 0.5rem 0;
-}
-
-.LogoLink {
-  margin-right: auto;
 }
 
 .Logo {
   max-width: 10rem;
+}
+
+.PrimaryNav {
+  margin-left: auto;
 }
 
 .Metamask {
@@ -31,6 +31,18 @@
 
   & svg {
     margin-left: .5rem;
+    & circle {
+      fill: var(--primary-color--alt);
+    }
+  }
+
+  &.Disabled {
+    & img {
+      filter: grayscale(100%);
+    }
+    & svg circle {
+      fill: var(--secondary-color);
+    }
   }
 }
 

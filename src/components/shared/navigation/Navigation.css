@@ -2,7 +2,7 @@
 @import '../../../styles/media-queries.css';
 
 .Navigation {
-  margin-right: 1rem;
+  margin-left: auto;
 
   & ul {
     list-style-type: none;
@@ -19,7 +19,7 @@
   margin: 0 1rem;
   font-weight: 100;
 
-  &.Active {
+  &:global(.active) {
     color: var(--secondary-color);
     text-decoration: underline;
     font-weight: 900;

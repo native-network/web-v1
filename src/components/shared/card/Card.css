@@ -1,9 +1,3 @@
-.Card {
-  background: var(--white-1);
-  height: 100%;
-  padding: 1rem 0;
-}
-
 :root {
   --decorator: {
     &:after {
@@ -18,8 +12,13 @@
   }
 }
 
-.Card_Container {
+.Card {
+  background: var(--white-1);
+  height: 100%;
+  padding: 1rem 0;
+}
 
+.Card_Container {
   composes: container from global;
 
   display: grid;

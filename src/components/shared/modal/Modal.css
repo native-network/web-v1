@@ -1,0 +1,39 @@
+:global(.ReactModal__Body--open) {
+  overflow: hidden;
+}
+
+:global(.ReactModal__Content) {
+  display: flex;
+  flex-direction: column;
+}
+
+.ModalHeader {
+  display: flex;
+  justify-content: center;
+
+  & h1 {
+    width: 100%;
+    text-align: center;
+  }
+
+  & button {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.ModalFooter {
+  margin-top: auto;
+}
+
+.CloseButton {
+  border-radius: 9999px;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  background: var(--secondary-color);
+}
