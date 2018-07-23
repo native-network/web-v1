@@ -66,12 +66,6 @@ export class Header extends Component {
             render={() => {
               return (
                 <div>Foo
-                  <Button
-                    centered
-                    theme="secondary"
-                    clickHandler={this.closeModal.bind(this)}
-                    content="Close"
-                  />
                 </div>
               );
             }}
