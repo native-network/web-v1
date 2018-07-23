@@ -60,8 +60,13 @@
   }
 
   --outline: {
-    /* Outline will always have a transparent background */
-    background: transparent !important;
+    /* NOTE: !important used because .Outline  */
+    /* will always have transparent backgrounds */
+    background: var(--transparent-black-0) !important;
+
+    &:--enter {
+      background: var(--transparent-black-10) !important;
+    }
   }
 }
 
@@ -83,12 +88,7 @@
   }
 
   &.Tertiary {
-
     @apply --tertiary-theme;
-
-    &.Outline {
-      color: green;
-    }
   }
 
   &.Outline {
