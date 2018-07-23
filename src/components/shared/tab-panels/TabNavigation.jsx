@@ -5,7 +5,7 @@ import styles from './TabPanels.css';
 
 const cx = classNames.bind(styles);
 
-export default function TabNavigation ({items, activeTab, clickHandler}) {
+export default function TabNavigation ({panels, activeTab, clickHandler}) {
 
   const addClassNames = (index) => {
     return cx({
@@ -16,7 +16,7 @@ export default function TabNavigation ({items, activeTab, clickHandler}) {
 
   return (
     <ul className={styles.TabNavigation}>
-      {(items || []).map(({name}, i) => {
+      {(panels || []).map(({name}, i) => {
         return (
           <li
               key={i}

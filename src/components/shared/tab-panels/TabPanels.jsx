@@ -23,7 +23,7 @@ class TabPanels extends Component {
       <div>
         <TabNavigation
             activeTab={activeTab}
-            items={panels}
+            panels={panels}
             clickHandler={(i) => this.setActiveTab(i)}
         />
         <TabPanel render={activePanel.render} />
