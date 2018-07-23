@@ -8,6 +8,9 @@
   --black-0: #000;
   --black-1: #111;
 
+  --transparent-black-0: color-mod(var(--black-0) alpha(0%));
+  --transparent-black-10: color-mod(var(--black-0) alpha(10%));
+
   --gray-0: #333;
 
   --primary-color: #2C5E5E;
