@@ -1,8 +1,9 @@
 import React from 'react';
 
-function Tasks () {
+function Tasks ({items}) {
+  console.log(items);
   return (
-    <div>Tasks</div>
+    <div>{JSON.stringify(items)}</div>
   );
 }
 
