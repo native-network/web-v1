@@ -1,72 +1,68 @@
-
 @custom-selector :--button button, .Button;
 @custom-selector :--enter :hover, :focus;
 @custom-selector :--outline .Outline;
 
-:root {
+%primary-theme {
 
-  --primary-theme: {
-
-    &:not(:--outline) {
-      background: var(--primary-button-default);
-      border-color: var(--primary-button-default);
-
-      &:--enter {
-        background: var(--primary-button-active);
-        border-color: var(--primary-button-active);
-      }
-    }
-
-    &:--outline {
-      color: var(--primary-button-default);
-
-      &:--enter {
-        border-color: var(--primary-button-active);
-        color: var(--primary-button-active);
-      }
-    }
-  }
-
-  --secondary-theme: {
-
-    &:not(:--outline) {
-      background: var(--secondary-button-default);
-      border-color: var(--secondary-button-default);
-
-      &:--enter {
-        background: var(--secondary-button-active);
-        border-color: var(--secondary-button-active);
-      }
-    }
-
-    &:--outline {
-      color: var(--secondary-button-default);
-
-      &:--enter {
-        border-color: var(--secondary-button-active);
-        color: var(--secondary-button-active);
-      }
-    }
-  }
-
-  --tertiary-theme: {
-    background: var(--tertiary-button-default);
-    border-color: var(--tertiary-button-default);
-    color: var(--primary-color);
+  &:not(:--outline) {
+    background: var(--primary-button-default);
+    border-color: var(--primary-button-default);
 
     &:--enter {
-      background: var(--tertiary-button-active);
+      background: var(--primary-button-active);
+      border-color: var(--primary-button-active);
     }
   }
 
-  --outline: {
-    /* NOTE: !important used because .Outline  */
-    /* will always have transparent backgrounds */
-    background: var(--transparent-black-0) !important;
+  &:--outline {
+    color: var(--primary-button-default);
 
     &:--enter {
-      background: var(--transparent-black-10) !important;
+      border-color: var(--primary-button-active);
+      color: var(--primary-button-active);
     }
+  }
+}
+
+%secondary-theme {
+
+  &:not(:--outline) {
+    background: var(--secondary-button-default);
+    border-color: var(--secondary-button-default);
+
+    &:--enter {
+      background: var(--secondary-button-active);
+      border-color: var(--secondary-button-active);
+    }
+  }
+
+  &:--outline {
+    color: var(--secondary-button-default);
+
+    &:--enter {
+      border-color: var(--secondary-button-active);
+      color: var(--secondary-button-active);
+    }
+  }
+}
+
+%tertiary-theme {
+  background: var(--tertiary-button-default);
+  border-color: var(--tertiary-button-default);
+  color: var(--primary-color);
+
+  &:--enter {
+    background: var(--tertiary-button-active);
+  }
+}
+
+%outline {
+  /* NOTE: !important used because .Outline  */
+  /* will always have transparent backgrounds */
+  background: var(--transparent-black-0) !important;
+
+  &:--enter {
+    background: var(--transparent-black-10) !important;
   }
 }
 
@@ -80,19 +76,19 @@
   transition: all 100ms linear;
 
   &.Primary {
-    @apply --primary-theme;
+    @extend %primary-theme;
   }
 
   &.Secondary {
-    @apply --secondary-theme;
+    @extend %secondary-theme;
   }
 
   &.Tertiary {
-    @apply --tertiary-theme;
+    @extend %tertiary-theme;
   }
 
   &.Outline {
-    @apply --outline;
+    @extend %outline;
   }
 
   &.Rounded {

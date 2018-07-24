@@ -1,16 +1,4 @@
-:root {
-  --decorator: {
-    &:after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 20%;
-      width: 60%;
-      height: 1px;
-      background: var(--primary-color--alt);
-    }
-  }
-}
+@import '../../../styles/globals.css';
 
 .Card {
   background: var(--white-1);
@@ -42,7 +30,7 @@
       position: relative;
       padding-bottom: 1rem;
 
-      @apply --decorator;
+      @extend %decorator;
     }
   }
 
