@@ -6,16 +6,14 @@ import { routes } from '../routes';
 import { getUserAddress } from "../actions/userActions";
 
 export class App extends Component {
-   componentDidMount = () => {
-       this.props.getUserAddress();
+  componentDidMount = () => {
+    this.props.getUserAddress();
   };
 
   render() {
-      const { user } = this.props;
     return (
       <Fragment>
-          <h3>{user.address}</h3>
-        <Header location={this.props.location} />
+        <Header isLoggedIn={this.props.isLoggedIn} />
         {routes()}
       </Fragment>
     );
@@ -32,7 +30,7 @@ App = connect(
   (state) => {
     return {
       location: state.router.location,
-      user: state.user
+      isLoggedIn: !!state.user.address
     };
   },
   mapDispatchToProps

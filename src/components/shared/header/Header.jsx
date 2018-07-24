@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
@@ -31,7 +30,7 @@ export class Header extends Component {
   render() {
     const metamaskClass = cx({
       Metamask: true,
-      Disabled: !this.props.user
+      Disabled: !this.props.isLoggedIn
     });
 
     return (
@@ -75,9 +74,4 @@ export class Header extends Component {
   }
 }
 
-export default connect(
-  (state) => {
-    return state;
-  },
-  null
-)(Header);
+export default Header;

@@ -15,7 +15,7 @@ export class Tokens extends Component {
         }}>
           <img style={{width: '3rem', marginRight: '10px'}} src={metamask} alt=""/>
           Metamask ID: <br />
-          weofnawpekmfwoiehr0298h3e
+          {this.props.user.address}
         </div>
 
       </div>
@@ -24,6 +24,10 @@ export class Tokens extends Component {
 }
 
 export default connect(
-  null,
+  (state) => {
+    return {
+      user: state.user
+    };
+  },
   null
 )(Tokens);

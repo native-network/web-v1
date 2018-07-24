@@ -10,7 +10,8 @@ export const getUserAddress= () => {
       const data = await getAddress();
       return dispatch(getUserAddressSuccess(data));
     } catch (err) {
-      return dispatch(getUserAddressError(err));
+      const { message } = err;
+      return dispatch(getUserAddressError(message));
     }
   };
 }
