@@ -16,13 +16,10 @@ export const getAddress = async () => {
 };
 
 export const promptSign = async (nonce) => {
-    const address = await getAddress();
-    const messageHash = web3.sha3(nonce);
-    console.log(address, messageHash);
-    const signature = web3.eth.sign(address, messageHash, function(res,res2) {
-        console.log(res, res2);
-    });
-
+  const address = (await web3.eth.getAccounts())[0];
+  const messageHash = web3.utils.sha3(nonce.toString());
+  const signedMessage = await web3.eth.sign(messageHash, address);
+  return signedMessage;
 };
 
 export const sendTransaction = async (from, to, amount, gas) => {
