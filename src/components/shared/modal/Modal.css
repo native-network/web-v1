@@ -1,3 +1,5 @@
+@import '../button/Button.css';
+
 :global(.ReactModal__Body--open) {
   overflow: hidden;
 }
@@ -33,7 +35,6 @@
   border-radius: 9999px;
   width: 32px;
   height: 32px;
-  margin: 0;
-  padding: 0;
-  background: var(--secondary-color);
+
+  @extend %secondary-theme;
 }
