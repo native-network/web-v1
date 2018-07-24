@@ -16,7 +16,7 @@ export default function TabNavigation ({panels, activeTab, clickHandler}) {
 
   return (
     <ul className={styles.TabNavigation}>
-      {(panels || []).map(({name}, i) => {
+      {(panels || []).map((name, i) => {
         return (
           <li
               key={i}
