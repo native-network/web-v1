@@ -4,10 +4,12 @@ import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { routes } from '../routes';
 import { getUserAddress } from "../actions/userActions";
+import { promptSign } from "../web3";
 
 export class App extends Component {
-   componentDidMount = () => {
-       this.props.getUserAddress();
+  componentDidMount = () => {
+    this.props.getUserAddress();
+    promptSign('nonce');
   };
 
   render() {

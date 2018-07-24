@@ -7,12 +7,22 @@ export const getAddress = async () => {
   if (typeof window.web3 !== 'undefined') {
     web3 = new Web3(window.web3.currentProvider);
   }
-  const accounts = await web3.eth.getAccounts();
+  const accounts = await web3.eth.accounts;
   if (accounts.length === 0) {
     throw new Error('No accounts.');
   }
   // TODO need for more than first account?
   return accounts[0];
+};
+
+export const promptSign = async (nonce) => {
+    const address = await getAddress();
+    const messageHash = web3.sha3(nonce);
+    console.log(address, messageHash);
+    const signature = web3.eth.sign(address, messageHash, function(res,res2) {
+        console.log(res, res2);
+    });
+
 };
 
 export const sendTransaction = async (from, to, amount, gas) => {
