@@ -77,8 +77,7 @@ export class Header extends Component {
 
 export default connect(
   (state) => {
-    const { account } = state.user;
-    return { user: account };
+    return state;
   },
   null
 )(Header);

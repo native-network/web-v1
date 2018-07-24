@@ -3,7 +3,7 @@ import { BigNumber } from "bignumber.js/bignumber";
 const Web3 = require('web3');
 let web3;
 
-export const getAccount = async () => {
+export const getAddress = async () => {
   if (typeof window.web3 !== 'undefined') {
     web3 = new Web3(window.web3.currentProvider);
   }

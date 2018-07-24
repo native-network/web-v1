@@ -1,30 +1,30 @@
 import { userActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { getAccount } from '../web3';
+import { getAddress } from '../web3';
 
-export const getUserAccount = () => {
+export const getUserAddress= () => {
   return async dispatch => {
-    dispatch({ type: actions.GET_USER_ACCOUNT });
+    dispatch({ type: actions.GET_USER_ADDRESS });
     dispatch(beginAjaxCall());
     try {
-      const data = await getAccount();
-      return dispatch(getUserAccountSuccess(data));
+      const data = await getAddress();
+      return dispatch(getUserAddressSuccess(data));
     } catch (err) {
-      return dispatch(getUserAccountError(err));
+      return dispatch(getUserAddressError(err));
     }
   };
 }
 
-export const getUserAccountSuccess = (account) => {
+export const getUserAddressSuccess = (address) => {
   return {
-    type: actions.GET_USER_ACCOUNT_SUCCESS,
-    account
+    type: actions.GET_USER_ADDRESS_SUCCESS,
+    address
   };
 }
 
-export const getUserAccountError = (error) => {
+export const getUserAddressError = (error) => {
   return {
-    type: actions.GET_USER_ACCOUNT_ERROR,
+    type: actions.GET_USER_ADDRESS_ERROR,
     error
   }
 }
