@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
@@ -65,7 +65,27 @@ const initiatives = [
   },
   {
     name: 'Projects',
-    render: () => <Projects />
+    items: [
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      },
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      },
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      }
+    ],
+    render: (items) => <Projects items={items} />
   }
 ];
 
