@@ -1,0 +1,28 @@
+%unstyled-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+%decorator {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 20%;
+    width: 60%;
+    height: 1px;
+    background: var(--primary-color--alt);
+  }
+}
+
+%decorator--full-width {
+  @extend %decorator;
+
+  &::after {
+    left: 0;
+    width: 100%;
+  }
+}
