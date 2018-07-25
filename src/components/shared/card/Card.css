@@ -1,4 +1,4 @@
-@import '../../../styles/globals.css';
+@import '../../../styles/extends.css';
 
 .Card {
   background: var(--white-1);
@@ -64,9 +64,8 @@
 }
 
 .Taglist {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  @extend %unstyled-list;
+
   & li {
     display: inline-block;
   }

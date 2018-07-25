@@ -1,13 +1,13 @@
 @import '../../../styles/globals.css';
+@import '../../../styles/extends.css';
 @import '../../../styles/media-queries.css';
 
 .Navigation {
   margin-left: auto;
 
   & ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    @extend %unstyled-list;
+
     display: flex;
   }
 }
