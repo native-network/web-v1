@@ -1,8 +1,24 @@
 import React from 'react';
 
-function Projects () {
+import styles from './Projects.css';
+
+function Projects ({items}) {
+
+  const renderProject = ({index, ...item}) => {
+    return (
+      <li className={styles.ProjectItem} key={index}>
+        <h3>{item.name}</h3>
+      </li>
+    );
+  };
+
   return (
-    <div>Projects</div>
+    <ul className={styles.ProjectList}>
+      {
+        (items || [])
+          .map((item, i) => renderProject({index: i, ...item}))
+      }
+    </ul>
   );
 }
 

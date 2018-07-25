@@ -1,4 +1,4 @@
-@import '../../../styles/globals.css';
+@import '../../../styles/extends.css';
 
 .Vote {
   display: flex;
@@ -10,9 +10,7 @@
 }
 
 .VoteList {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  @extend %unstyled-list
 }
 
 .VoteItem {
@@ -24,12 +22,10 @@
   &:not(:last-child) {
     margin-bottom: 1rem;
 
-    @extend %decorator;
+    @extend %decorator--full-width;
 
     /* Decorator overwrites */
     &::after {
-      width: 100%;
-      left: 0;
       background: var(--primary-color);
     }
   }
