@@ -7,18 +7,85 @@ import Loader from '../../components/shared/loader';
 import Card from '../../components/shared/card';
 import TabPanels from '../../components/shared/tab-panels';
 
+import { Votes, Tasks, Projects } from '../../components/initiatives';
+
+import styles from './Tribe.css';
+
 const initiatives = [
   {
     name: 'Votes',
-    render: () => <div style={{background: '#bada55'}}>Votes</div>
+    items: [
+      {
+        name: 'Support First thing',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp',
+        open: false
+      },
+      {
+        name: 'Support Second Thing',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp',
+        open: true
+      },
+      {
+        name: 'Support Third thing',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp',
+        open: true
+      }
+    ],
+    render: (items) => <Votes items={items} />
   },
   {
     name: 'Tasks',
-    render: () => <span style={{background: '#bada55'}}>Tasks</span>
+    items: [
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      },
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      },
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      }
+    ],
+    render: (items) => <Tasks items={items} />
   },
   {
     name: 'Projects',
-    render: () => <span style={{background: '#bada55'}}>Projects</span>
+    items: [
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      },
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      },
+      {
+        name: 'Support something',
+        description: 'Cast a vote to support something',
+        voteCount: 0,
+        voteDeadline: 'timestamp'
+      }
+    ],
+    render: (items) => <Projects items={items} />
   }
 ];
 
@@ -44,12 +111,12 @@ export class Tribe extends Component {
       <Loader /> :
       <Card
         tribe={tribe}
-        render={() => {
-          return (
-            <TabPanels
-                panels={state.initiatives}
-            />);
-        }} />;
+        render={() => (
+          <div className={styles.TribePanels}>
+            <span className={styles.TribeCTA}>Talk with Tribe members on Telegram</span>
+            <TabPanels panels={state.initiatives} />
+          </div>
+        )} />;
   }
 }
 

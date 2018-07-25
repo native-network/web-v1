@@ -18,15 +18,17 @@ class TabPanels extends Component {
     const { panels } = props;
     const { activeTab } = state;
     const activePanel = (panels || []).find((panel, i) => i === activeTab);
+    const activeItems = activePanel.items;
+    const panelNames = panels.map(panel => `${(panel.items && panel.items.length) || 0} ${panel.name}`)
 
     return (
       <div>
         <TabNavigation
             activeTab={activeTab}
-            items={panels}
+            panels={panelNames}
             clickHandler={(i) => this.setActiveTab(i)}
         />
-        <TabPanel render={activePanel.render} />
+        <TabPanel render={() => activePanel.render(activeItems)} />
       </div>
     );
   }

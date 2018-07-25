@@ -1,0 +1,54 @@
+@import '../../../styles/extends.css';
+
+.Vote {
+  display: flex;
+  flex-direction: column;
+}
+
+.Filter {
+  align-self: flex-end;
+}
+
+.VoteList {
+  @extend %unstyled-list
+}
+
+.VoteItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 0;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+
+    @extend %decorator--full-width;
+
+    /* Decorator overwrites */
+    &::after {
+      background: var(--primary-color);
+    }
+  }
+}
+
+.VoteImage {
+  flex-basis: 15rem;
+}
+
+.VoteDescription {
+  margin: 0 2rem;
+  flex-grow: 2;
+
+  & h3 {
+    margin-top: 0;
+  }
+}
+
+.VoteMeta {
+  flex-grow: 1;
+  text-align: center;
+
+  & h4 {
+    margin-top: 0;
+  }
+}

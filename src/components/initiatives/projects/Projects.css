@@ -1,0 +1,18 @@
+@import '../../../styles/extends.css';
+
+.ProjectList {
+  @extend %unstyled-list;
+}
+
+.ProjectItem {
+  padding: 1rem 0;
+
+  &:not(:last-child) {
+    @extend %decorator--full-width;
+
+    /* Decorator overwrites */
+    &::after {
+      background: var(--primary-color);
+    }
+  }
+}
