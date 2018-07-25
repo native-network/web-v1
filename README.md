@@ -8,15 +8,15 @@
     ```
 3. Copy sample .env.sample to .env.|ENVIRONMENT_NAME|
     ```bash
-    $ cp .env.sample .env.local
+    $ cp .env.sample .env
     ```
 4. Make any necessary environment variable changes
 
 ## Running a development environment locally
 
-1. After dependencies have been installed and an `.env.local` file has been created, run `yarn start`
+1. After dependencies have been installed and an `.env` file has been created, run `yarn start`
 
-**Note**: To run this project without an `.env.local` file, variables can be set in the CLI:
+**Note**: To run this project without an `.env` file, variables can be set in the CLI:
 
 ```sh
 REACT_APP_API_HOST=http://localhost REACT_APP_API_PORT=3004 yarn start
