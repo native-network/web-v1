@@ -1,0 +1,43 @@
+@import '../../../styles/extends.css';
+
+.TaskList {
+  @extend %unstyled-list;
+}
+
+.TaskItem {
+  padding: 1rem 0;
+  display: flex;
+  align-items: stretch;
+
+  &:not(:last-child) {
+
+    @extend %decorator--full-width;
+  }
+}
+
+.TaskImage {
+  flex-basis: 15rem;
+
+  & span {
+    display: block;
+    text-align: center;
+  }
+}
+
+.TaskDescription {
+  margin: 0 2rem;
+  flex-grow: 2;
+
+  & h3 {
+    margin-top: 0;
+  }
+}
+
+.TaskMeta {
+  flex-grow: 1;
+  text-align: center;
+
+  & h4 {
+    margin-top: 0;
+  }
+}

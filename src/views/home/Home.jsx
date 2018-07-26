@@ -16,7 +16,9 @@ export class Home extends Component {
 
   render() {
     const { isLoading } = this.props;
-    return isLoading ? <Loader /> : (
+    return isLoading ? (
+      <Loader />
+    ) : (
       <main>
         <CardList listItems={this.props.tribes} />
       </main>
@@ -26,7 +28,7 @@ export class Home extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getTribes: bindActionCreators(getTribes, dispatch)
+    getTribes: bindActionCreators(getTribes, dispatch),
   };
 }
 
@@ -34,5 +36,5 @@ export default connect(
   (state) => {
     return { tribes: state.tribes.tribes, isLoading: state.loading > 0 };
   },
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Home);

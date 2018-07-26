@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
@@ -15,69 +14,59 @@ import styles from './Header.css';
 const cx = classNames.bind(styles);
 
 export class Header extends Component {
-
   state = {
-    isModalOpen: false
-  }
+    isModalOpen: false,
+  };
 
   openModal() {
-    this.setState({isModalOpen: true});
+    this.setState({ isModalOpen: true });
   }
 
   closeModal() {
-    this.setState({isModalOpen: false});
+    this.setState({ isModalOpen: false });
   }
 
   render() {
     const metamaskClass = cx({
       Metamask: true,
-      Disabled: !this.props.user
+      Disabled: !this.props.isLoggedIn,
     });
 
     return (
       <header>
         <div className={styles.Header}>
           <Link className={styles.LogoLink} to="/">
-            <img className={styles.Logo} src={logo} alt="Native logo"/>
+            <img className={styles.Logo} src={logo} alt="Native logo" />
           </Link>
           <Button
-              rounded
-              outline
-              theme="primary"
-              clickHandler={this.openModal.bind(this)}
-              content="Get NT"
+            rounded
+            outline
+            theme="primary"
+            clickHandler={this.openModal.bind(this)}
+            content="Get NT"
           />
           <Navigation />
           <div className={metamaskClass}>
-            <img src={metamask} alt="Metamask Connected"/>
+            <img src={metamask} alt="Metamask Connected" />
             <svg width="10px" height="10px" viewBox="0 0 10 10">
               <circle r="5" cx="5" cy="5" />
             </svg>
           </div>
         </div>
         <div className={styles.Subheader}>
-          <div className="container">
-          </div>
+          <div className="container" />
         </div>
         <Modal
-            title="Lorem Ipsum"
-            isModalOpen={this.state.isModalOpen}
-            closeModal={this.closeModal.bind(this)}
-            render={() => {
-              return (
-                <div>Foo
-                </div>
-              );
-            }}
+          title="Lorem Ipsum"
+          isModalOpen={this.state.isModalOpen}
+          closeModal={this.closeModal.bind(this)}
+          render={() => {
+            return <div>Foo</div>;
+          }}
         />
       </header>
     );
   }
 }
 
-export default connect(
-  (state) => {
-    return state;
-  },
-  null
-)(Header);
+export default Header;

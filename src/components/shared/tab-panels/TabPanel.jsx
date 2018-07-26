@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function TabPanel({render}) {
-  return (
-    <div className="container">{render()}</div>
-  );
+import styles from './TabPanels.css';
+
+export default function TabPanel({ render }) {
+  return <div className={styles.TabPanel}>{render()}</div>;
 }

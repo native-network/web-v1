@@ -1,16 +1,4 @@
-:root {
-  --decorator: {
-    &:after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 20%;
-      width: 60%;
-      height: 1px;
-      background: var(--primary-color--alt);
-    }
-  }
-}
+@import '../../../styles/extends.css';
 
 .Card {
   background: var(--white-1);
@@ -42,7 +30,7 @@
       position: relative;
       padding-bottom: 1rem;
 
-      @apply --decorator;
+      @extend %decorator;
     }
   }
 
@@ -76,9 +64,8 @@
 }
 
 .Taglist {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  @extend %unstyled-list;
+
   & li {
     display: inline-block;
   }

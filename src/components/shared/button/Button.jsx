@@ -5,15 +5,7 @@ import styles from './Button.css';
 
 const cx = classNames.bind(styles);
 
-function Button ({
-  theme,
-  rounded,
-  outline,
-  centered,
-  content,
-  clickHandler
-}) {
-
+function Button({ theme, rounded, outline, centered, content, clickHandler }) {
   const className = cx({
     Button: true,
     Primary: theme === 'primary',
@@ -21,10 +13,14 @@ function Button ({
     Tertiary: theme === 'tertiary',
     Rounded: rounded,
     Centered: centered,
-    Outline: outline
+    Outline: outline,
   });
 
-  return (<button onClick={clickHandler} className={className}>{content}</button>);
+  return (
+    <button onClick={clickHandler} className={className}>
+      {content}
+    </button>
+  );
 }
 
 export default Button;

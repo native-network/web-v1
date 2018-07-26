@@ -2,7 +2,7 @@ import { allTribesActions as actions } from '../actions/actionTypes';
 
 const initialState = {
   tribes: [],
-  error: ''
+  error: '',
 };
 
 export default function allTribesReducer(state = initialState, action) {
@@ -10,14 +10,14 @@ export default function allTribesReducer(state = initialState, action) {
     case actions.GET_TRIBES_SUCCESS:
       return {
         ...state,
-        tribes: action.tribes
+        tribes: action.tribes,
       };
     case actions.GET_TRIBES_ERROR:
       return {
         ...initialState,
         tribes: [],
-        error: action.error
-      }
+        error: action.error,
+      };
     default:
       return state;
   }

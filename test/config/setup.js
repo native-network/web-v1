@@ -13,4 +13,3 @@ global.render = render;
 global.mount = mount;
 
 global.buildComponent = buildComponent;
-

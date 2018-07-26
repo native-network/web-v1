@@ -8,10 +8,10 @@ describe('Tribe', () => {
     props = {
       id: 1,
       tribe: {
-        name: 'Foo'
+        name: 'Foo',
       },
       getTribeById: jest.fn(),
-      clearActiveTribe: jest.fn()
+      clearActiveTribe: jest.fn(),
     };
     wrapper = buildComponent(Tribe, props);
   });
