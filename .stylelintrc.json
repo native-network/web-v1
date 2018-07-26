@@ -6,7 +6,6 @@
   "rules": {
     "order/order": [
       "at-rules",
-      "custom-properties",
       "declarations",
       "rules"
     ],
