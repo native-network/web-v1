@@ -1,0 +1,56 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "globals": {
+    "jest": true,
+    "before": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "describe": true,
+    "expect": true,
+    "it": true,
+    "buildComponent": true,
+    "shallow": true,
+    "mount": true,
+    "render": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "prettier"
+  ],
+  "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-indent-props": [2, 4],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
+}
