@@ -110,8 +110,8 @@ export class Tribe extends Component {
     return this.props.isLoading ?
       <Loader /> :
       <Card
-        tribe={tribe}
-        render={() => (
+          tribe={tribe}
+          render={() => (
           <div className={styles.TribePanels}>
             <span className={styles.TribeCTA}>Talk with Tribe members on Telegram</span>
             <TabPanels panels={state.initiatives} />

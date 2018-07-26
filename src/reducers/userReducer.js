@@ -1,9 +1,9 @@
 import { userActions as actions } from '../actions/actionTypes';
 
 const initialState = {
-    address: '',
-    tribes: [],
-    error: ''
+  address: '',
+  tribes: [],
+  error: ''
 };
 
 export default function userReducer(state = initialState, action) {

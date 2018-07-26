@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 'use strict';
 
 process.env.BABEL_ENV = 'development';
@@ -45,6 +47,7 @@ if (process.env.HOST) {
     )
   );
   console.log(
+    // eslint-disable-next-line quotes
     `If this was unintentional, check that you haven't mistakenly set it in your shell.`
   );
   console.log(`Learn more here: ${chalk.yellow('http://bit.ly/2mwWSwH')}`);
