@@ -25,11 +25,11 @@
   & .Membership {
 
     & h4 {
+      @extend %decorator;
+
       text-align: center;
       position: relative;
       padding-bottom: 1rem;
-
-      @extend %decorator;
     }
   }
 

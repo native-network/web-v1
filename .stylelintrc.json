@@ -1,6 +1,23 @@
 {
   "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-order"
+  ],
   "rules": {
+    "order/order": [
+      "at-rules",
+      "custom-properties",
+      "declarations",
+      "rules"
+    ],
+    "order/properties-order": [
+      [
+        "composes"
+      ],
+      {
+        "unspecified": "bottom"
+      }
+    ],
     "color-hex-case": "lower",
     "color-named": ["never"],
     "at-rule-no-unknown": [
@@ -40,6 +57,8 @@
         "ignore": ["after-comment"]
       }
     ],
-    "declaration-no-important": [true]
+    "declaration-no-important": [
+      true
+    ]
   }
 }
