@@ -11,11 +11,6 @@ export default function configureStore(initialState = {}) {
   return createStore(
     connectRouter(history)(rootReducer),
     initialState,
-    composeWithDevTools(
-      applyMiddleware(
-        routerMiddleware(history),
-        thunk
-      )
-    )
+    composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk)),
   );
 }

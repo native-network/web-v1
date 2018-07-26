@@ -5,13 +5,13 @@ class FAQ extends Component {
     return (
       <main className="container">
         <h1>Learn more about Native</h1>
-        <div style={{
-          width: '100%',
-          height: '300px',
-          background: '#eee'
-        }}>
-
-        </div>
+        <div
+          style={{
+            width: '100%',
+            height: '300px',
+            background: '#eee',
+          }}
+        />
       </main>
     );
   }

@@ -2,10 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 
-import {
-  loadingActions,
-  tribeActions
-} from '../../src/actions/actionTypes';
+import { loadingActions, tribeActions } from '../../src/actions/actionTypes';
 
 import {
   getTribeById,
@@ -27,7 +24,6 @@ describe('tribeActions', () => {
   });
 
   describe('getTribeById', () => {
-
     beforeEach(() => moxios.install());
     afterEach(() => moxios.uninstall());
 
@@ -77,7 +73,7 @@ describe('tribeActions', () => {
       beforeEach(() => {
         response = {
           id: 3,
-          name: 'Foo'
+          name: 'Foo',
         };
 
         moxios.wait(() => {
@@ -93,7 +89,7 @@ describe('tribeActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: tribeActions.GET_TRIBE_BY_ID_SUCCESS,
-          tribe: response
+          tribe: response,
         };
 
         expect(lastAction).toEqual(expectedAction);
@@ -118,7 +114,7 @@ describe('tribeActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: tribeActions.GET_TRIBE_BY_ID_ERROR,
-          error: new Error(response)
+          error: new Error(response),
         };
 
         expect(lastAction).toEqual(expectedAction);
@@ -129,7 +125,7 @@ describe('tribeActions', () => {
   describe('clearActiveTribe', () => {
     it('should create `CLEAR_ACTIVE_TRIBE` action', () => {
       const expectedAction = {
-        type: tribeActions.CLEAR_ACTIVE_TRIBE
+        type: tribeActions.CLEAR_ACTIVE_TRIBE,
       };
 
       expect(clearActiveTribe()).toEqual(expectedAction);
@@ -140,12 +136,12 @@ describe('tribeActions', () => {
     it('should create `GET_TRIBE_BY_ID_SUCCESS` action with a given tribe', () => {
       const tribe = {
         id: 3,
-        name: 'foo'
+        name: 'foo',
       };
 
       const expectedAction = {
         type: tribeActions.GET_TRIBE_BY_ID_SUCCESS,
-        tribe
+        tribe,
       };
 
       expect(getTribeByIdSuccess(tribe)).toEqual(expectedAction);
@@ -157,7 +153,7 @@ describe('tribeActions', () => {
       const error = 'Something went wrong';
       const expectedAction = {
         type: tribeActions.GET_TRIBE_BY_ID_ERROR,
-        error
+        error,
       };
 
       expect(getTribeByIdError(error)).toEqual(expectedAction);

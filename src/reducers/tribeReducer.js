@@ -2,7 +2,7 @@ import { tribeActions as actions } from '../actions/actionTypes';
 
 const initialState = {
   tribe: {},
-  error: ''
+  error: '',
 };
 
 export default function tribeReducer(state = initialState, action) {

@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   loading: loadingReducer,
   tribes: allTribesReducer,
-  activeTribe: tribeReducer
+  activeTribe: tribeReducer,
 });
 
 export default rootReducer;

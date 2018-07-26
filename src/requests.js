@@ -4,9 +4,9 @@ const apiUrl = process.env.REACT_APP_API_HOST;
 
 const isProdPort = (p) => p === '80' || p === '';
 
-const apiPort = isProdPort(process.env.REACT_APP_API_PORT) ?
-  '' : `:${process.env.REACT_APP_API_PORT}`;
-
+const apiPort = isProdPort(process.env.REACT_APP_API_PORT)
+  ? ''
+  : `:${process.env.REACT_APP_API_PORT}`;
 
 const baseApi = apiUrl + apiPort;
 

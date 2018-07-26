@@ -22,7 +22,7 @@ export class App extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUserAddress: () => dispatch(getUserAddress())
+    getUserAddress: () => dispatch(getUserAddress()),
   };
 }
 
@@ -31,10 +31,10 @@ App = connect(
   (state) => {
     return {
       location: state.router.location,
-      isLoggedIn: !!state.user.address
+      isLoggedIn: !!state.user.address,
     };
   },
-  mapDispatchToProps
+  mapDispatchToProps,
 )(App);
 
 export default hot(module)(App);

@@ -6,8 +6,7 @@ import Tag from '../tag';
 
 import styles from './Card.css';
 
-function Card ({tribe, render}) {
-
+function Card({ tribe, render }) {
   const displayTitle = (bool) => {
     if (bool) {
       return (
@@ -16,9 +15,7 @@ function Card ({tribe, render}) {
         </h2>
       );
     } else {
-      return (
-        <h2 className={styles.Title}>{tribe.name}</h2>
-      );
+      return <h2 className={styles.Title}>{tribe.name}</h2>;
     }
   };
 
@@ -31,27 +28,29 @@ function Card ({tribe, render}) {
         </div>
         <div className={styles.Summary}>
           <h4>About</h4>
-          <p className={styles.Intro}>
-            {tribe.tribeIntro}
-          </p>
-          {tribe.tags &&
+          <p className={styles.Intro}>{tribe.tribeIntro}</p>
+          {tribe.tags && (
             <ul className={styles.Taglist}>
-              {tribe.tags.map((tag, i) => <li key={i}><Tag name={tag} /></li>)}
+              {tribe.tags.map((tag, i) => (
+                <li key={i}>
+                  <Tag name={tag} />
+                </li>
+              ))}
             </ul>
-          }
+          )}
           Location: {tribe.location}
         </div>
         <div className={styles.Data}>
-          <img src={`/${tribe.image}`} alt=""/>
+          <img src={`/${tribe.image}`} alt="" />
           TBD: Data
         </div>
         <div className={styles.Membership}>
           <h4>Membership</h4>
           <p>{tribe.tribePurpose}</p>
           <Button
-              centered
-              theme="secondary"
-              content={`Support ${tribe.name}`}
+            centered
+            theme="secondary"
+            content={`Support ${tribe.name}`}
           />
         </div>
       </div>
@@ -61,4 +60,3 @@ function Card ({tribe, render}) {
 }
 
 export default Card;
-

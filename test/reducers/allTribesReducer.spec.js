@@ -3,7 +3,7 @@ import { allTribesActions as actions } from '../../src/actions/actionTypes';
 
 const initialState = {
   tribes: [],
-  error: ''
+  error: '',
 };
 
 describe('allTribesReducer', () => {
@@ -17,12 +17,12 @@ describe('allTribesReducer', () => {
     const tribes = [{}, {}, {}];
     const reducedState = allTribesReducer(initialState, {
       type: actions.GET_TRIBES_SUCCESS,
-      tribes
+      tribes,
     });
 
     expect(reducedState).toEqual({
       ...initialState,
-      tribes: [...tribes]
+      tribes: [...tribes],
     });
   });
 
@@ -30,12 +30,12 @@ describe('allTribesReducer', () => {
     const error = 'Something went wrong';
     const reducedState = allTribesReducer(initialState, {
       type: actions.GET_TRIBES_ERROR,
-      error
+      error,
     });
 
     expect(reducedState).toEqual({
       ...initialState,
-      error
+      error,
     });
   });
 });

@@ -10,7 +10,7 @@ describe('Tag', () => {
   });
 
   it('should render the name prop inside a `span`', () => {
-    wrapper = buildComponent(Tag, {name: 'Foo'});
+    wrapper = buildComponent(Tag, { name: 'Foo' });
     const span = wrapper.find('span');
 
     expect(span).toHaveLength(1);

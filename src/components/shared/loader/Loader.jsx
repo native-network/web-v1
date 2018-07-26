@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Loader.css';
 
-function Loader () {
+function Loader() {
   return (
     <div className={styles.LoaderBackground}>
       <div className={styles.Loader} />

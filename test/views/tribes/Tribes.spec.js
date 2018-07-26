@@ -7,7 +7,7 @@ describe('Tribes', () => {
   beforeEach(() => {
     props = {
       tribes: [],
-      getTribes: jest.fn()
+      getTribes: jest.fn(),
     };
   });
 
@@ -26,7 +26,7 @@ describe('Tribes', () => {
   });
 
   it('should NOT call `getTribes` when tribes are present', () => {
-    props = { ...props, tribes: [{}, {}]};
+    props = { ...props, tribes: [{}, {}] };
     wrapper = buildComponent(Tribes, props);
 
     expect(props.getTribes).not.toHaveBeenCalled();
