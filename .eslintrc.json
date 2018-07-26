@@ -40,7 +40,8 @@
       {
         "singleQuote": true,
         "trailingComma": "all",
-        "arrowParens": "always"
+        "arrowParens": "always",
+        "jsxBracketSameLine": false
       }
     ],
     "react/jsx-uses-react": "error",
