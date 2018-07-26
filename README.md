@@ -25,6 +25,15 @@ REACT_APP_API_HOST=http://localhost REACT_APP_API_PORT=3004 yarn start
 ## Building a production build
 
 1. Run `yarn build`
+  * The build task runs prebuild steps: 
+      * `clean` (which refreshes the `build/` directory)
+      * `lint` lints the `src`, `scripts`, and `test` directories
+
+
+## Linting
+
+This project is configured with [eslint](https://eslint.org/) and [prettier](https://prettier.io/). To run the 
+lint task, use `yarn lint`. For simple lint fixes, the `--fix` flag can also be passed: `yarn lint --fix`
 
 ## Testing
 
