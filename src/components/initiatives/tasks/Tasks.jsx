@@ -4,13 +4,12 @@ import Button from '../../shared/button';
 
 import styles from './Tasks.css';
 
-function Tasks ({items}) {
-
-  const renderTask = ({index, ...item}) => {
+function Tasks({ items }) {
+  const renderTask = ({ index, ...item }) => {
     return (
       <li className={styles.TaskItem} key={index}>
         <div className={styles.TaskImage}>
-          <img src="http://placehold.it/250x150" alt=""/>
+          <img src="http://placehold.it/250x150" alt="" />
           <span>Reward: $$$$$$</span>
         </div>
         <div className={styles.TaskDescription}>
@@ -29,10 +28,7 @@ function Tasks ({items}) {
 
   return (
     <ul className={styles.TaskList}>
-      {
-        (items || [])
-          .map((item, i) => renderTask({index: i, ...item}))
-      }
+      {(items || []).map((item, i) => renderTask({ index: i, ...item }))}
     </ul>
   );
 }

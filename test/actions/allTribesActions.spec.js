@@ -4,7 +4,7 @@ import moxios from 'moxios';
 
 import {
   loadingActions,
-  allTribesActions
+  allTribesActions,
 } from '../../src/actions/actionTypes';
 
 import {
@@ -26,7 +26,6 @@ describe('allTribesActions', () => {
   });
 
   describe('getTribes', () => {
-
     beforeEach(() => moxios.install());
     afterEach(() => moxios.uninstall());
 
@@ -73,7 +72,7 @@ describe('allTribesActions', () => {
       let response;
 
       beforeEach(() => {
-        response = [{name: 'foo'}, {name: 'bar'}, {name: 'baz'}];
+        response = [{ name: 'foo' }, { name: 'bar' }, { name: 'baz' }];
         moxios.wait(() => {
           let req = moxios.requests.mostRecent();
           req.respondWith({ status: 200, response });
@@ -87,12 +86,11 @@ describe('allTribesActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: allTribesActions.GET_TRIBES_SUCCESS,
-          tribes: response
+          tribes: response,
         };
 
         expect(lastAction).toEqual(expectedAction);
       });
-
     });
 
     describe('error response', () => {
@@ -113,7 +111,7 @@ describe('allTribesActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: allTribesActions.GET_TRIBES_ERROR,
-          error: new Error(response)
+          error: new Error(response),
         };
 
         expect(lastAction).toEqual(expectedAction);
@@ -123,14 +121,10 @@ describe('allTribesActions', () => {
 
   describe('getTribesSuccess', () => {
     it('should create `GET_TRIBES_SUCCESS` action with given tribes', () => {
-      const tribes = [
-        { name: 'Foo' },
-        { name: 'Bar' },
-        { name: 'Baz' }
-      ];
+      const tribes = [{ name: 'Foo' }, { name: 'Bar' }, { name: 'Baz' }];
       const expectedAction = {
         type: allTribesActions.GET_TRIBES_SUCCESS,
-        tribes
+        tribes,
       };
 
       expect(getTribesSuccess(tribes)).toEqual(expectedAction);
@@ -142,7 +136,7 @@ describe('allTribesActions', () => {
       const error = 'Something went wrong';
       const expectedAction = {
         type: allTribesActions.GET_TRIBES_ERROR,
-        error
+        error,
       };
 
       expect(getTribesError(error)).toEqual(expectedAction);

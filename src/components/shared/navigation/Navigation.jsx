@@ -7,17 +7,18 @@ const shortenedNav = (exact = false, to, name) => {
   return (
     <li>
       <NavLink
-          className={styles.NavLink}
-          exact={exact}
-          activeClassName="active"
-          to={to}>
+        className={styles.NavLink}
+        exact={exact}
+        activeClassName="active"
+        to={to}
+      >
         {name}
       </NavLink>
     </li>
   );
 };
 
-function Navigation () {
+function Navigation() {
   return (
     <nav className={styles.Navigation}>
       <ul>

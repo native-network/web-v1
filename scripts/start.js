@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
+
 'use strict';
 
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   throw err;
 });
 
@@ -40,19 +42,20 @@ if (process.env.HOST) {
   console.log(
     chalk.cyan(
       `Attempting to bind to HOST environment variable: ${chalk.yellow(
-        chalk.bold(process.env.HOST)
-      )}`
-    )
+        chalk.bold(process.env.HOST),
+      )}`,
+    ),
   );
   console.log(
-    `If this was unintentional, check that you haven't mistakenly set it in your shell.`
+    // eslint-disable-next-line quotes
+    `If this was unintentional, check that you haven't mistakenly set it in your shell.`,
   );
   console.log(`Learn more here: ${chalk.yellow('http://bit.ly/2mwWSwH')}`);
   console.log();
 }
 
 choosePort(HOST, DEFAULT_PORT)
-  .then(port => {
+  .then((port) => {
     if (port == null) {
       return;
     }
@@ -64,10 +67,10 @@ choosePort(HOST, DEFAULT_PORT)
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
     const serverConfig = createDevServerConfig(
       proxyConfig,
-      urls.lanUrlForConfig
+      urls.lanUrlForConfig,
     );
     const devServer = new WebpackDevServer(compiler, serverConfig);
-    devServer.listen(port, HOST, err => {
+    devServer.listen(port, HOST, (err) => {
       if (err) {
         return console.log(err);
       }
@@ -85,7 +88,7 @@ choosePort(HOST, DEFAULT_PORT)
       });
     });
   })
-  .catch(err => {
+  .catch((err) => {
     if (err && err.message) {
       console.log(err.message);
     }

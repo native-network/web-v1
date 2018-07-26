@@ -20,24 +20,24 @@ const initiatives = [
         description: 'Cast a vote to support something',
         voteCount: 0,
         voteDeadline: 'timestamp',
-        open: false
+        open: false,
       },
       {
         name: 'Support Second Thing',
         description: 'Cast a vote to support something',
         voteCount: 0,
         voteDeadline: 'timestamp',
-        open: true
+        open: true,
       },
       {
         name: 'Support Third thing',
         description: 'Cast a vote to support something',
         voteCount: 0,
         voteDeadline: 'timestamp',
-        open: true
-      }
+        open: true,
+      },
     ],
-    render: (items) => <Votes items={items} />
+    render: (items) => <Votes items={items} />,
   },
   {
     name: 'Tasks',
@@ -46,22 +46,22 @@ const initiatives = [
         name: 'Support something',
         description: 'Cast a vote to support something',
         voteCount: 0,
-        voteDeadline: 'timestamp'
+        voteDeadline: 'timestamp',
       },
       {
         name: 'Support something',
         description: 'Cast a vote to support something',
         voteCount: 0,
-        voteDeadline: 'timestamp'
+        voteDeadline: 'timestamp',
       },
       {
         name: 'Support something',
         description: 'Cast a vote to support something',
         voteCount: 0,
-        voteDeadline: 'timestamp'
-      }
+        voteDeadline: 'timestamp',
+      },
     ],
-    render: (items) => <Tasks items={items} />
+    render: (items) => <Tasks items={items} />,
   },
   {
     name: 'Projects',
@@ -70,30 +70,29 @@ const initiatives = [
         name: 'Support something',
         description: 'Cast a vote to support something',
         voteCount: 0,
-        voteDeadline: 'timestamp'
+        voteDeadline: 'timestamp',
       },
       {
         name: 'Support something',
         description: 'Cast a vote to support something',
         voteCount: 0,
-        voteDeadline: 'timestamp'
+        voteDeadline: 'timestamp',
       },
       {
         name: 'Support something',
         description: 'Cast a vote to support something',
         voteCount: 0,
-        voteDeadline: 'timestamp'
-      }
+        voteDeadline: 'timestamp',
+      },
     ],
-    render: (items) => <Projects items={items} />
-  }
+    render: (items) => <Projects items={items} />,
+  },
 ];
 
 export class Tribe extends Component {
-
   state = {
-    initiatives: initiatives
-  }
+    initiatives: initiatives,
+  };
 
   componentDidMount() {
     this.props.getTribeById(this.props.id);
@@ -107,23 +106,28 @@ export class Tribe extends Component {
     const { props, state } = this;
     const { tribe } = props;
 
-    return this.props.isLoading ?
-      <Loader /> :
+    return this.props.isLoading ? (
+      <Loader />
+    ) : (
       <Card
         tribe={tribe}
         render={() => (
           <div className={styles.TribePanels}>
-            <span className={styles.TribeCTA}>Talk with Tribe members on Telegram</span>
+            <span className={styles.TribeCTA}>
+              Talk with Tribe members on Telegram
+            </span>
             <TabPanels panels={state.initiatives} />
           </div>
-        )} />;
+        )}
+      />
+    );
   }
 }
 
 export function mapDispatchToProps(dispatch) {
   return {
     getTribeById: bindActionCreators(getTribeById, dispatch),
-    clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch)
+    clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
   };
 }
 
@@ -135,5 +139,5 @@ export default connect(
 
     return { tribe, id, isLoading: loading > 0 };
   },
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Tribe);

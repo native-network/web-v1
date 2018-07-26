@@ -5,12 +5,11 @@ import styles from './TabPanels.css';
 
 const cx = classNames.bind(styles);
 
-export default function TabNavigation ({panels, activeTab, clickHandler}) {
-
+export default function TabNavigation({ panels, activeTab, clickHandler }) {
   const addClassNames = (index) => {
     return cx({
       ActiveTab: activeTab === index,
-      TabNavigationItem: true
+      TabNavigationItem: true,
     });
   };
 
@@ -19,9 +18,9 @@ export default function TabNavigation ({panels, activeTab, clickHandler}) {
       {(panels || []).map((name, i) => {
         return (
           <li
-              key={i}
-              className={addClassNames(i)}
-              onClick={() => clickHandler(i)}
+            key={i}
+            className={addClassNames(i)}
+            onClick={() => clickHandler(i)}
           >
             <button>{name}</button>
           </li>

@@ -7,7 +7,6 @@ import { getTribes } from '../../actions/allTribesActions';
 import CardList from '../../components/shared/card-list/CardList';
 
 export class Tribes extends Component {
-
   componentDidMount() {
     if (!this.props.tribes.length) {
       this.props.getTribes();
@@ -22,7 +21,7 @@ export class Tribes extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getTribes: bindActionCreators(getTribes, dispatch)
+    getTribes: bindActionCreators(getTribes, dispatch),
   };
 }
 
@@ -31,8 +30,8 @@ export default connect(
     const { tribes } = state.tribes;
 
     return {
-      tribes
+      tribes,
     };
   },
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Tribes);
