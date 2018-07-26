@@ -36,12 +36,14 @@
   ],
   "rules": {
     "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "react/jsx-indent-props": [2, 4],
     "indent": [
       "error",
       2,
       {
-        "SwitchCase": 1
+        "SwitchCase": 1,
+        "ignoredNodes": ["JSXAttribute"]
       }
     ],
     "quotes": [
