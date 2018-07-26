@@ -6,4 +6,4 @@ export {
   Projects,
   Tasks,
   Votes
-}
+};

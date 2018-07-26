@@ -1,4 +1,4 @@
-import { BigNumber } from "bignumber.js/bignumber";
+import { BigNumber } from 'bignumber.js/bignumber';
 
 const Web3 = require('web3');
 let web3;
@@ -22,4 +22,4 @@ export const sendTransaction = async (from, to, amount, gas) => {
   amount = new BigNumber(amount);
   gas = new BigNumber(gas);
   return await web3.eth.sendTransaction({ from: from, to: to, value: web3.utils.toWei(amount,'ether'), gas: gas });
-}
+};

@@ -3,7 +3,7 @@ import Header from './shared/header';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { routes } from '../routes';
-import { getUserAddress } from "../actions/userActions";
+import { getUserAddress } from '../actions/userActions';
 
 export class App extends Component {
   componentDidMount = () => {
@@ -21,11 +21,12 @@ export class App extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        getUserAddress: () => dispatch(getUserAddress())
-    };
+  return {
+    getUserAddress: () => dispatch(getUserAddress())
+  };
 }
 
+// eslint-disable-next-line no-class-assign
 App = connect(
   (state) => {
     return {

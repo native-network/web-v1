@@ -15,8 +15,8 @@ function NativeModal ({
 
   return (
     <Modal
-      isOpen={isModalOpen}
-      contentLabel={title}
+        isOpen={isModalOpen}
+        contentLabel={title}
     >
       <div className={styles.ModalHeader}>
         <h1>{title}</h1>
@@ -27,10 +27,10 @@ function NativeModal ({
       </div>
       <div className={styles.ModalFooter}>
         <Button
-          centered
-          theme="secondary"
-          clickHandler={closeModal}
-          content="Close"
+            centered
+            theme="secondary"
+            clickHandler={closeModal}
+            content="Close"
         />
       </div>
     </Modal>

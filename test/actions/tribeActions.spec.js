@@ -119,7 +119,7 @@ describe('tribeActions', () => {
         const expectedAction = {
           type: tribeActions.GET_TRIBE_BY_ID_ERROR,
           error: new Error(response)
-        }
+        };
 
         expect(lastAction).toEqual(expectedAction);
       });

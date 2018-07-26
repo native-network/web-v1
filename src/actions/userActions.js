@@ -14,18 +14,18 @@ export const getUserAddress= () => {
       return dispatch(getUserAddressError(message));
     }
   };
-}
+};
 
 export const getUserAddressSuccess = (address) => {
   return {
     type: actions.GET_USER_ADDRESS_SUCCESS,
     address
   };
-}
+};
 
 export const getUserAddressError = (error) => {
   return {
     type: actions.GET_USER_ADDRESS_ERROR,
     error
-  }
-}
+  };
+};

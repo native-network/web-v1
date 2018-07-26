@@ -15,18 +15,18 @@ export const getTribes = () => {
       return dispatch(getTribesError(err));
     }
   };
-}
+};
 
 export const getTribesSuccess = (tribes) => {
   return {
     type: actions.GET_TRIBES_SUCCESS,
     tribes
   };
-}
+};
 
 export const getTribesError = (error) => {
   return {
     type: actions.GET_TRIBES_ERROR,
     error
-  }
-}
+  };
+};

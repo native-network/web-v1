@@ -20,7 +20,7 @@ function Card ({tribe, render}) {
         <h2 className={styles.Title}>{tribe.name}</h2>
       );
     }
-  }
+  };
 
   return (
     <div className={styles.Card}>

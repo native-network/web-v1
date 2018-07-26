@@ -11,6 +11,7 @@ function Votes ({items}) {
       <li className={styles.VoteItem} key={index}>
         <div className={styles.VoteImage}>
           <img src="http://placehold.it/250x150" alt=""/>
+          Total Votes: {voteCount}
         </div>
         <div className={styles.VoteDescription}>
           <h3>{name}</h3>
@@ -27,7 +28,7 @@ function Votes ({items}) {
           {voteDeadline}
         </div>
       </li>
-    )
+    );
   };
 
   return (

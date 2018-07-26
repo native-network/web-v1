@@ -19,7 +19,7 @@ class TabPanels extends Component {
     const { activeTab } = state;
     const activePanel = (panels || []).find((panel, i) => i === activeTab);
     const activeItems = activePanel.items;
-    const panelNames = panels.map(panel => `${(panel.items && panel.items.length) || 0} ${panel.name}`)
+    const panelNames = panels.map(panel => `${(panel.items && panel.items.length) || 0} ${panel.name}`);
 
     return (
       <div>

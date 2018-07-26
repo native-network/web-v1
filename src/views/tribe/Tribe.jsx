@@ -112,11 +112,11 @@ export class Tribe extends Component {
       <Card
           tribe={tribe}
           render={() => (
-          <div className={styles.TribePanels}>
-            <span className={styles.TribeCTA}>Talk with Tribe members on Telegram</span>
-            <TabPanels panels={state.initiatives} />
-          </div>
-        )} />;
+            <div className={styles.TribePanels}>
+              <span className={styles.TribeCTA}>Talk with Tribe members on Telegram</span>
+              <TabPanels panels={state.initiatives} />
+            </div>
+          )} />;
   }
 }
 

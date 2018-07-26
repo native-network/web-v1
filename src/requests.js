@@ -19,4 +19,4 @@ export const get = async (endpoint) => {
     const { data: error } = err && err.response;
     throw new Error(error);
   }
-}
+};

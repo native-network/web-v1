@@ -17,7 +17,7 @@ export default function allTribesReducer(state = initialState, action) {
         ...initialState,
         tribes: [],
         error: action.error
-      }
+      };
     default:
       return state;
   }
