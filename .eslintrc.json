@@ -6,9 +6,9 @@
   },
   "parser": "babel-eslint",
   "extends": [
-    "eslint:recommended",
-    "prettier",
-    "prettier/react"
+    "plugin:prettier/recommended",
+    "prettier/react",
+    "eslint:recommended"
   ],
   "globals": {
     "jest": true,
@@ -35,21 +35,16 @@
     "prettier"
   ],
   "rules": {
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error",
-    "react/jsx-indent-props": [2, 4],
-    "indent": [
+    "prettier/prettier": [
       "error",
-      2,
       {
-        "SwitchCase": 1,
-        "ignoredNodes": ["JSXAttribute"]
+        "singleQuote": true,
+        "trailingComma": "all",
+        "arrowParens": "always"
       }
     ],
-    "quotes": [
-      "error",
-      "single"
-    ],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "semi": [
       "error",
       "always"
