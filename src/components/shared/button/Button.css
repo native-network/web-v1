@@ -57,6 +57,7 @@
 }
 
 %outline {
+
   /* NOTE: !important used because .Outline  */
   /* will always have transparent backgrounds */
   background: var(--transparent-black-0) !important;
@@ -92,7 +93,7 @@
   }
 
   &.Rounded {
-    border-radius: 9999px
+    border-radius: 9999px;
   }
 
   &.Centered {

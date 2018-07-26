@@ -10,7 +10,7 @@
 }
 
 .VoteList {
-  @extend %unstyled-list
+  @extend %unstyled-list;
 }
 
 .VoteItem {

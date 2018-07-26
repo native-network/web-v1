@@ -8,7 +8,6 @@
 
 .Card_Container {
   composes: container from global;
-
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   grid-column-gap: 2rem;
@@ -46,7 +45,6 @@
     grid-area: membership;
   }
 }
-
 
 .Title,
 .Subtitle {

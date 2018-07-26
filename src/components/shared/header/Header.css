@@ -2,9 +2,7 @@
 @import '../../../styles/media-queries.css';
 
 .Header {
-
   composes: container from global;
-
   background: var(--primary-white);
   display: flex;
   align-items: center;
@@ -30,16 +28,19 @@
   }
 
   & svg {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
+
     & circle {
       fill: var(--primary-color--alt);
     }
   }
 
   &.Disabled {
+
     & img {
       filter: grayscale(100%);
     }
+
     & svg circle {
       fill: var(--secondary-color);
     }
