@@ -45,7 +45,7 @@ export class Header extends Component {
             clickHandler={this.openModal.bind(this)}
             content="Get NT"
           />
-          <AuthenticatedStatus hasSession={this.props.hasSession} />
+          <AuthenticatedStatus session={this.props.session} />
           <Navigation />
           <div className={metamaskClass}>
             <img src={metamask} alt="Metamask Connected" />

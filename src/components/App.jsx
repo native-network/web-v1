@@ -6,19 +6,24 @@ import { routes } from '../routes';
 import { getUserAddress, getUserSession } from '../actions/userActions';
 
 export class App extends Component {
-  componentDidMount = () => {
-    const address = this.props.getUserAddress();
-    if (address) {
-      this.props.getUserSession();
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.user.address !== this.props.user.address) {
+      if (this.props.user.address) {
+        this.props.getUserSession();
+      }
     }
+  };
+
+  componentDidMount = () => {
+    this.props.getUserAddress();
   };
 
   render() {
     return (
       <Fragment>
         <Header
-          isLoggedIn={this.props.isLoggedIn}
-          hasSession={this.props.hasSession}
+          isLoggedIn={this.props.user.isLoggedIn}
+          session={this.props.user.session}
         />
         {routes()}
       </Fragment>
@@ -38,8 +43,11 @@ App = connect(
   (state) => {
     return {
       location: state.router.location,
-      isLoggedIn: !!state.user.address,
-      hasSession: !!state.user.session,
+      user: {
+        address: state.user.address,
+        session: state.user.session,
+        isLoggedIn: !!state.user.address,
+      },
     };
   },
   mapDispatchToProps,
