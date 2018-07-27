@@ -7,12 +7,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const getClientEnvironment = require('./env');
-const paths = require('./paths');
+// const paths = require('./paths');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const publicPath = '/';
-const publicUrl = '';
-const env = getClientEnvironment(publicUrl);
 
 module.exports = {
   mode: 'development',
@@ -20,24 +17,24 @@ module.exports = {
   entry: [
     require.resolve('./polyfills'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    paths.appIndexJs,
-    ],
+    path.resolve(__dirname, '..', 'src/index.js'),
+  ],
   output: {
     pathinfo: true,
     filename: 'static/js/bundle.js',
     chunkFilename: 'static/js/[name].chunk.js',
     publicPath: publicPath,
-    devtoolModuleFilenameTemplate: info =>
+    devtoolModuleFilenameTemplate: (info) =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
-    modules: ['node_modules', paths.appNodeModules].concat(
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
+    modules: ['node_modules'].concat(
+      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
     ),
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       'react-native': 'react-native-web',
-    }
+    },
   },
   module: {
     strictExportPresence: true,
@@ -50,13 +47,11 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-
             },
             loader: require.resolve('eslint-loader'),
           },
         ],
-        use: [],
-        include: paths.appSrc,
+        include: path.resolve(__dirname, '..', 'src'),
       },
       {
         oneOf: [
@@ -70,12 +65,11 @@ module.exports = {
           },
           {
             test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
+            include: path.resolve(__dirname, '..', 'src'),
             loader: require.resolve('babel-loader'),
             options: {
-
               cacheDirectory: true,
-              plugins: ['react-hot-loader/babel']
+              plugins: ['react-hot-loader/babel'],
             },
           },
           {
@@ -87,7 +81,7 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: true,
-                  localIndentName: '[name]__[local]__[hash:base64:5]'
+                  localIndentName: '[name]__[local]__[hash:base64:5]',
                 },
               },
               {
@@ -100,7 +94,7 @@ module.exports = {
                     require('postcss-custom-properties')(),
                     require('postcss-color-mod-function')(),
                     require('postcss-preset-env')({
-                      stage: 0
+                      stage: 0,
                     }),
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
@@ -108,15 +102,16 @@ module.exports = {
                         '>1%',
                         'last 4 versions',
                         'Firefox ESR',
-                        'not ie < 9', ],
+                        'not ie < 9',
+                      ],
                       flexbox: 'no-2009',
                     }),
                   ],
                 },
               },
             ],
-        },
-        {
+          },
+          {
             exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
@@ -125,12 +120,12 @@ module.exports = {
           },
         ],
       },
-      ],
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-      template: paths.appHtml,
+      template: path.resolve(__dirname, '..', 'public/index.html'),
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CopyWebpackPlugin([
@@ -138,12 +133,12 @@ module.exports = {
         from: './src/assets/**/*.png',
         to: './static/media',
         flatten: true,
-        toType: 'dir'
-      }
+        toType: 'dir',
+      },
     ]),
     new CaseSensitivePathsPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new Dotenv()
+    new Dotenv(),
   ],
   node: {
     dgram: 'empty',
