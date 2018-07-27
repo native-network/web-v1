@@ -57,11 +57,15 @@
 }
 
 %outline {
+
   /* NOTE: !important used because .Outline  */
   /* will always have transparent backgrounds */
+  /* stylelint-disable-next-line declaration-no-important */
   background: var(--transparent-black-0) !important;
 
   &:--enter {
+
+    /* stylelint-disable-next-line declaration-no-important */
     background: var(--transparent-black-10) !important;
   }
 }
@@ -92,7 +96,7 @@
   }
 
   &.Rounded {
-    border-radius: 9999px
+    border-radius: 9999px;
   }
 
   &.Centered {

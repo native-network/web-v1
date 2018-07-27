@@ -32,9 +32,9 @@
 }
 
 .CloseButton {
+  @extend %secondary-theme;
+
   border-radius: 9999px;
   width: 32px;
   height: 32px;
-
-  @extend %secondary-theme;
 }
