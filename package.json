@@ -26,14 +26,14 @@
   "scripts": {
     "start": "node scripts/start.js",
     "clean": "rm -rf build/",
-    "lint": "eslint \"{scripts,src,test}/**/*.{js,jsx}\"",
-    "prebuild": "yarn clean && yarn lint",
+    "lint": "eslint \"{scripts,src,test,config}/**/*.{js,jsx}\"",
+    "prebuild": "yarn clean",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "{scripts,src,test}/**/*.{js,jsx}": [
+    "{scripts,src,test,config}/**/*.{js,jsx}": [
       "eslint"
     ]
   },
