@@ -13,7 +13,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const Dotenv = require('dotenv-webpack');
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
-require('dotenv').config();
+require('./env');
 
 if (process.env.NODE_ENV !== 'production') {
   throw new Error('Production builds must have NODE_ENV=production.');
@@ -39,9 +39,7 @@ module.exports = {
       path.relative(srcDir, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
-    modules: ['node_modules'].concat(
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
-    ),
+    modules: ['node_modules'],
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       'react-native': 'react-native-web',

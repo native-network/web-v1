@@ -31,7 +31,7 @@ const createDevServerConfig = require('../config/webpackDevServer.config');
 const yarnLock = path.resolve(__dirname, '..', 'yarn.lock');
 const publicDir = path.resolve(__dirname, '..', 'public');
 const srcDir = path.resolve(__dirname, '..', 'src');
-const packageFile = path.resolve(__dirname, '..', 'package.json');
+const packageFile = require(path.resolve(__dirname, '..', 'package.json'));
 
 const useYarn = fs.existsSync(yarnLock);
 const isInteractive = process.stdout.isTTY;

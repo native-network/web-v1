@@ -21,7 +21,6 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
-const env = require('dotenv').config();
 
 const yarnLock = path.resolve(__dirname, '..', 'yarn.lock');
 const publicDir = path.resolve(__dirname, '..', 'public');
@@ -78,7 +77,7 @@ measureFileSizesBeforeBuild(buildDir)
       console.log();
 
       const appPackage = require(packageFile);
-      const publicUrl = env.PUBLIC_URL;
+      const publicUrl = process.env.PUBLIC_URL;
       const publicPath = config.output.publicPath;
       const buildFolder = path.relative(process.cwd(), buildDir);
       printHostingInstructions(

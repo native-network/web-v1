@@ -13,6 +13,8 @@ const publicPath = '/';
 const srcDir = path.resolve(__dirname, '..', 'src');
 const publicDir = path.resolve(__dirname, '..', 'public');
 
+require('./env');
+
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
@@ -30,9 +32,7 @@ module.exports = {
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
-    modules: ['node_modules'].concat(
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
-    ),
+    modules: ['node_modules'],
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       'react-native': 'react-native-web',
