@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribes } from '../../actions/allTribesActions';
 
-import './Home.css';
-
 export class Home extends Component {
   componentDidMount() {
     if (this.props.tribes && !this.props.tribes.length) {
