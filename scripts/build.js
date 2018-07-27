@@ -16,28 +16,34 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
-const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 
+const yarnLock = path.resolve(__dirname, '..', 'yarn.lock');
+const publicDir = path.resolve(__dirname, '..', 'public');
+const srcDir = path.resolve(__dirname, '..', 'src');
+const buildDir = path.resolve(__dirname, '..', 'build');
+const packageFile = path.resolve(__dirname, '..', 'package.json');
+
+const useYarn = fs.existsSync(yarnLock);
+
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
-const useYarn = fs.existsSync(paths.yarnLockFile);
 
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+if (!checkRequiredFiles([`${publicDir}/index.html`, `${srcDir}/index.js`])) {
   process.exit(1);
 }
 
-measureFileSizesBeforeBuild(paths.appBuild)
+measureFileSizesBeforeBuild(buildDir)
   .then((previousFileSizes) => {
-    fs.emptyDirSync(paths.appBuild);
+    fs.emptyDirSync(buildDir);
     copyPublicFolder();
     return build(previousFileSizes);
   })
@@ -64,16 +70,16 @@ measureFileSizesBeforeBuild(paths.appBuild)
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,
-        paths.appBuild,
+        buildDir,
         WARN_AFTER_BUNDLE_GZIP_SIZE,
         WARN_AFTER_CHUNK_GZIP_SIZE,
       );
       console.log();
 
-      const appPackage = require(paths.appPackageJson);
-      const publicUrl = paths.publicUrl;
+      const appPackage = require(packageFile);
+      const publicUrl = process.env.PUBLIC_URL;
       const publicPath = config.output.publicPath;
-      const buildFolder = path.relative(process.cwd(), paths.appBuild);
+      const buildFolder = path.relative(process.cwd(), buildDir);
       printHostingInstructions(
         appPackage,
         publicUrl,
@@ -129,8 +135,8 @@ function build(previousFileSizes) {
 }
 
 function copyPublicFolder() {
-  fs.copySync(paths.appPublic, paths.appBuild, {
+  fs.copySync(publicDir, buildDir, {
     dereference: true,
-    filter: (file) => file !== paths.appHtml,
+    filter: (file) => file !== `${publicDir}/index.html`,
   });
 }
