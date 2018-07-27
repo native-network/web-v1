@@ -7,9 +7,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-// const paths = require('./paths');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const publicPath = '/';
+
+const srcDir = path.resolve(__dirname, '..', 'src');
+const publicDir = path.resolve(__dirname, '..', 'public');
 
 module.exports = {
   mode: 'development',
@@ -17,7 +19,7 @@ module.exports = {
   entry: [
     require.resolve('./polyfills'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    path.resolve(__dirname, '..', 'src/index.js'),
+    `${srcDir}/index.js`,
   ],
   output: {
     pathinfo: true,
@@ -51,7 +53,7 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
-        include: path.resolve(__dirname, '..', 'src'),
+        include: srcDir,
       },
       {
         oneOf: [
@@ -65,7 +67,7 @@ module.exports = {
           },
           {
             test: /\.(js|jsx|mjs)$/,
-            include: path.resolve(__dirname, '..', 'src'),
+            include: srcDir,
             loader: require.resolve('babel-loader'),
             options: {
               cacheDirectory: true,
@@ -125,7 +127,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, '..', 'public/index.html'),
+      template: `${publicDir}/index.html`,
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CopyWebpackPlugin([
