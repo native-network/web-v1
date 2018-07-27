@@ -13,6 +13,8 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const Dotenv = require('dotenv-webpack');
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
+require('dotenv').config();
+
 if (process.env.NODE_ENV !== 'production') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
@@ -27,22 +29,14 @@ module.exports = {
   bail: true,
   mode: 'production',
   devtool: shouldUseSourceMap ? 'source-map' : false,
-  entry: [
-    require.resolve('./polyfills'),
-    `${srcDir}/index.js`,
-  ],
+  entry: [require.resolve('./polyfills'), `${srcDir}/index.js`],
   output: {
     path: buildDir,
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     publicPath: '/',
     devtoolModuleFilenameTemplate: (info) =>
-      path
-        .relative(
-          srcDir,
-          info.absoluteResourcePath,
-        )
-        .replace(/\\/g, '/'),
+      path.relative(srcDir, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
     modules: ['node_modules'].concat(
@@ -188,7 +182,7 @@ module.exports = {
         console.log(message); // eslint-disable-line no-console
       },
       minify: true,
-      navigateFallback: path.resolve(__dirname, '..', 'index.html'),
+      navigateFallback: `${process.env.PUBLIC_URL}/index.html`,
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
