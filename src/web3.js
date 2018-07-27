@@ -7,7 +7,7 @@ export const getAddress = async () => {
   if (typeof window.web3 !== 'undefined') {
     web3 = new Web3(window.web3.currentProvider);
   }
-  const accounts = await web3.eth.accounts;
+  const accounts = await web3.eth.getAccounts();
   if (accounts.length === 0) {
     throw new Error('No accounts.');
   }
@@ -16,7 +16,7 @@ export const getAddress = async () => {
 };
 
 export const promptSign = async (nonce) => {
-  const address = (await web3.eth.getAccounts())[0];
+  const address = getAddress();
   const messageHash = web3.utils.sha3(nonce.toString());
   const signedMessage = await web3.eth.sign(messageHash, address);
   return signedMessage;

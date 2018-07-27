@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import Button from '../button';
 import Navigation from '../navigation';
 import Modal from '../modal';
-
+import AuthenticatedStatus from '../authenticated-status';
 import logo from '../../../assets/img/logo.svg';
 import metamask from '../../../assets/img/metamask.svg';
 
@@ -45,6 +45,7 @@ export class Header extends Component {
             clickHandler={this.openModal.bind(this)}
             content="Get NT"
           />
+          <AuthenticatedStatus hasSession={this.props.hasSession} />
           <Navigation />
           <div className={metamaskClass}>
             <img src={metamask} alt="Metamask Connected" />

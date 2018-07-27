@@ -3,19 +3,23 @@ import Header from './shared/header';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { routes } from '../routes';
-import { getUserAddress } from '../actions/userActions';
-import { promptSign } from '../web3';
+import { getUserAddress, getUserSession } from '../actions/userActions';
 
 export class App extends Component {
   componentDidMount = () => {
-    this.props.getUserAddress();
-    promptSign('nonce');
+    const address = this.props.getUserAddress();
+    if (address) {
+      this.props.getUserSession();
+    }
   };
 
   render() {
     return (
       <Fragment>
-        <Header isLoggedIn={this.props.isLoggedIn} />
+        <Header
+          isLoggedIn={this.props.isLoggedIn}
+          hasSession={this.props.hasSession}
+        />
         {routes()}
       </Fragment>
     );
@@ -25,6 +29,7 @@ export class App extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     getUserAddress: () => dispatch(getUserAddress()),
+    getUserSession: () => dispatch(getUserSession()),
   };
 }
 
@@ -34,6 +39,7 @@ App = connect(
     return {
       location: state.router.location,
       isLoggedIn: !!state.user.address,
+      hasSession: !!state.user.session,
     };
   },
   mapDispatchToProps,
