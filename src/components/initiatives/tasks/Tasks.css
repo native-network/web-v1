@@ -10,7 +10,6 @@
   align-items: stretch;
 
   &:not(:last-child) {
-
     @extend %decorator--full-width;
   }
 }
