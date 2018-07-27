@@ -26,8 +26,10 @@
   "scripts": {
     "start": "node scripts/start.js",
     "clean": "rm -rf build/",
-    "lint": "eslint \"{scripts,src,test,config}/**/*.{js,jsx}\"",
-    "prebuild": "yarn clean",
+    "lint:js": "eslint \"{scripts,src,test,config}/**/*.{js,jsx}\"",
+    "lint:css": "stylelint \"src/**/*.css\"",
+    "lint": "yarn lint:js && yarn lint:css",
+    "prebuild": "yarn clean && yarn lint",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "precommit": "lint-staged"
@@ -35,6 +37,9 @@
   "lint-staged": {
     "{scripts,src,test,config}/**/*.{js,jsx}": [
       "eslint"
+    ],
+    "src/**/*.css": [
+      "stylelint"
     ]
   },
   "devDependencies": {
@@ -88,6 +93,10 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
     "style-loader": "0.19.0",
+    "stylelint": "^9.4.0",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-order": "^0.8.1",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "webpack": "^4.16.2",

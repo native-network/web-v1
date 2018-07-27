@@ -1,4 +1,6 @@
+/* stylelint-disable custom-property-empty-line-before */
 :root {
+
   /* Colors */
   --white-0: #fff;
   --white-1: #fafafa;
@@ -13,9 +15,9 @@
 
   --gray-0: #333;
 
-  --primary-color: #2C5E5E;
+  --primary-color: #2c5e5e;
   --primary-color--alt: #549387;
-  --secondary-color: #F16667;
+  --secondary-color: #f16667;
 
   --primary-white: var(--white-0);
   --primary-black: var(--black-0);
