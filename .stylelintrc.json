@@ -27,6 +27,17 @@
         ]
       }
     ],
+    "property-blacklist": [
+      "float"
+    ],
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": [
+          "consecutive-duplicates-with-different-values"
+        ]
+      }
+    ],
     "selector-pseudo-class-no-unknown": [
       true,
       {
