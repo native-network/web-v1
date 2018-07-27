@@ -24,14 +24,19 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
-const paths = require('../config/paths');
+const path = require('path');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
-const useYarn = fs.existsSync(paths.yarnLockFile);
+const yarnLock = path.resolve(__dirname, '..', 'yarn.lock');
+const publicDir = path.resolve(__dirname, '..', 'public');
+const srcDir = path.resolve(__dirname, '..', 'src');
+const packageFile = path.resolve(__dirname, '..', 'package.json');
+
+const useYarn = fs.existsSync(yarnLock);
 const isInteractive = process.stdout.isTTY;
 
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+if (!checkRequiredFiles([`${publicDir}/index.html`, `${srcDir}/index.js`])) {
   process.exit(1);
 }
 
@@ -60,11 +65,11 @@ choosePort(HOST, DEFAULT_PORT)
       return;
     }
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-    const appName = require(paths.appPackageJson).name;
+    const appName = packageFile.name;
     const urls = prepareUrls(protocol, HOST, port);
     const compiler = createCompiler(webpack, config, appName, urls, useYarn);
-    const proxySetting = require(paths.appPackageJson).proxy;
-    const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
+    const proxySetting = packageFile.proxy;
+    const proxyConfig = prepareProxy(proxySetting, publicDir);
     const serverConfig = createDevServerConfig(
       proxyConfig,
       urls.lanUrlForConfig,
