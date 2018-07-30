@@ -6,14 +6,6 @@ import { routes } from '../routes';
 import { getUserAddress, getUserSession } from '../actions/userActions';
 
 export class App extends Component {
-  componentDidUpdate = (prevProps) => {
-    if (prevProps.user.address !== this.props.user.address) {
-      if (this.props.user.address) {
-        this.props.getUserSession();
-      }
-    }
-  };
-
   componentDidMount = () => {
     this.props.getUserAddress();
   };
