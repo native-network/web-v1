@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 export class Dashboard extends Component {
   render() {
@@ -6,4 +7,7 @@ export class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default connect(
+  null,
+  null,
+)(Dashboard);
