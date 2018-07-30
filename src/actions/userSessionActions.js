@@ -1,22 +1,7 @@
-/* eslint-disable */
-import { userActions as actions } from './actionTypes';
+import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
-import { getAddress, promptSign } from '../web3';
-
-export const getUserAddress = () => {
-  return async (dispatch) => {
-    dispatch({ type: actions.GET_USER_ADDRESS });
-    dispatch(beginAjaxCall());
-    try {
-      const data = await getAddress();
-      return dispatch(getUserAddressSuccess(data));
-    } catch (err) {
-      const { message } = err;
-      return dispatch(getUserError(message));
-    }
-  };
-};
+import { promptSign } from '../web3';
 
 export const getUserSession = () => {
   return async (dispatch) => {
@@ -26,12 +11,10 @@ export const getUserSession = () => {
       const { data } = await get(`user`);
       if (data.length > 0) {
         return dispatch(getUserSessionSuccess(data));
-      } else {
-        return dispatch(promptAuthorize());
       }
     } catch (err) {
       const { message } = err;
-      return dispatch(getUserError(message));
+      return dispatch(getUserSessionError(message));
     }
   };
 };
@@ -44,10 +27,10 @@ export const promptAuthorize = () => {
       if (data) {
         return dispatch(promptSignature(data));
       }
-      return dispatch(getUserError('No nonce found.'));
+      return dispatch(getUserSessionError('No nonce found.'));
     } catch (err) {
       const { message } = err;
-      return dispatch(getUserError(message));
+      return dispatch(getUserSessionError(message));
     }
   };
 };
@@ -61,15 +44,8 @@ export const promptSignature = (nonce) => {
       return dispatch(getUserSignatureSuccess(data));
     } catch (err) {
       const { message } = err;
-      return dispatch(getUserError(message));
+      return dispatch(getUserSessionError(message));
     }
-  };
-};
-
-export const getUserAddressSuccess = (address) => {
-  return {
-    type: actions.GET_USER_ADDRESS_SUCCESS,
-    address,
   };
 };
 
@@ -81,16 +57,15 @@ export const getUserSessionSuccess = (session) => {
 };
 
 export const getUserSignatureSuccess = (signature) => {
-  console.log(signature);
   return {
     type: actions.GET_USER_SIGNATURE_SUCCESS,
     signature,
   };
 };
 
-export const getUserError = (error) => {
+export const getUserSessionError = (error) => {
   return {
-    type: actions.GET_USER_ERROR,
+    type: actions.GET_USER_SESSION_ERROR,
     error,
   };
 };
