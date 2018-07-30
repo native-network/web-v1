@@ -1,7 +1,8 @@
+/* eslint-disable */
 import { userActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { get } from '../requests';
-import { getAddress } from '../web3';
+import { get, post } from '../requests';
+import { getAddress, promptSign } from '../web3';
 
 export const getUserAddress = () => {
   return async (dispatch) => {
@@ -23,7 +24,42 @@ export const getUserSession = () => {
     dispatch(beginAjaxCall());
     try {
       const { data } = await get(`user`);
-      return dispatch(getUserSessionSuccess(data));
+      if (data.length > 0) {
+        return dispatch(getUserSessionSuccess(data));
+      } else {
+        return dispatch(promptAuthorize());
+      }
+    } catch (err) {
+      const { message } = err;
+      return dispatch(getUserError(message));
+    }
+  };
+};
+
+export const promptAuthorize = () => {
+  return async (dispatch) => {
+    // dispatch({ type: 'FOO' });
+    // dispatch(beginAjaxCall());
+    try {
+      const { data } = await get(`user/nonce`);
+      if (data) {
+        dispatch(promptSignature(data));
+      }
+      return dispatch(getUserSessionSuccess());
+    } catch (err) {
+      const { message } = err;
+      return dispatch(getUserError(message));
+    }
+  };
+};
+
+export const promptSignature = (nonce) => {
+  return async (dispatch) => {
+    // dispatch(beginAjaxCall());
+    try {
+      const signature = await promptSign(nonce);
+      const { data } = await post(`user/authorize`, { signature });
+      return dispatch(getUserSignatureSuccess(data));
     } catch (err) {
       const { message } = err;
       return dispatch(getUserError(message));
@@ -42,6 +78,13 @@ export const getUserSessionSuccess = (session) => {
   return {
     type: actions.GET_USER_SESSION_SUCCESS,
     session,
+  };
+};
+
+export const getUserSignatureSuccess = (signature) => {
+  return {
+    type: actions.GET_USER_SIGNATURE_SUCCESS,
+    signature,
   };
 };
 

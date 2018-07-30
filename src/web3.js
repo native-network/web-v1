@@ -16,7 +16,7 @@ export const getAddress = async () => {
 };
 
 export const promptSign = async (nonce) => {
-  const address = getAddress();
+  const address = await getAddress();
   const messageHash = web3.utils.sha3(nonce.toString());
   const signedMessage = await web3.eth.sign(messageHash, address);
   return signedMessage;

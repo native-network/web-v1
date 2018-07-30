@@ -3,7 +3,11 @@ import Header from './shared/header';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { routes } from '../routes';
-import { getUserAddress, getUserSession } from '../actions/userActions';
+import {
+  getUserAddress,
+  getUserSession,
+  promptAuthorize,
+} from '../actions/userActions';
 
 export class App extends Component {
   componentDidUpdate = (prevProps) => {
@@ -35,6 +39,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getUserAddress: () => dispatch(getUserAddress()),
     getUserSession: () => dispatch(getUserSession()),
+    promptAuthorize: () => dispatch(promptAuthorize()),
   };
 }
 
