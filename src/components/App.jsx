@@ -3,7 +3,7 @@ import Header from './shared/header';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { routes } from '../routes';
-import { getUserAddress } from '../actions/userActions';
+import { getUserAddress } from '../actions/userAddressActions';
 
 export class App extends Component {
   componentDidMount = () => {
