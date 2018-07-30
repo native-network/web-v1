@@ -118,3 +118,5 @@ be defined at a component level to provide isolated styles.
 * [postcss-custom-properties](https://github.com/postcss/postcss-custom-properties) - provides CSS variable support
 * [postcss-color-mod-function](https://github.com/jonathantneal/postcss-color-mod-function) - custom color modification, similar to SASS and LESS color modifications
 * [postcss-preset-env](https://github.com/csstools/postcss-preset-env) - polyfill to provide browser support for future css syntax
+
+Further reading: [An Introduction to PostCSS](https://www.sitepoint.com/an-introduction-to-postcss/)
