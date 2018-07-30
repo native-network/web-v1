@@ -38,14 +38,13 @@ export const getUserSession = () => {
 
 export const promptAuthorize = () => {
   return async (dispatch) => {
-    // dispatch({ type: 'FOO' });
-    // dispatch(beginAjaxCall());
+    dispatch({ type: actions.PROMPT_AUTHORIZE });
     try {
       const { data } = await get(`user/nonce`);
       if (data) {
-        dispatch(promptSignature(data));
+        return dispatch(promptSignature(data));
       }
-      return dispatch(getUserSessionSuccess());
+      return dispatch(getUserError('No nonce found.'));
     } catch (err) {
       const { message } = err;
       return dispatch(getUserError(message));
@@ -55,7 +54,7 @@ export const promptAuthorize = () => {
 
 export const promptSignature = (nonce) => {
   return async (dispatch) => {
-    // dispatch(beginAjaxCall());
+    dispatch({ type: actions.PROMPT_SIGNATURE });
     try {
       const signature = await promptSign(nonce);
       const { data } = await post(`user/authorize`, { signature });
@@ -82,6 +81,7 @@ export const getUserSessionSuccess = (session) => {
 };
 
 export const getUserSignatureSuccess = (signature) => {
+  console.log(signature);
   return {
     type: actions.GET_USER_SIGNATURE_SUCCESS,
     signature,
