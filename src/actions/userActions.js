@@ -9,8 +9,7 @@ export const getUserAddress = () => {
     dispatch(beginAjaxCall());
     try {
       const data = await getAddress();
-      dispatch(getUserAddressSuccess(data));
-      return dispatch(getUserSession());
+      return dispatch(getUserAddressSuccess(data));
     } catch (err) {
       const { message } = err;
       return dispatch(getUserError(message));
