@@ -3,21 +3,9 @@ import Header from './shared/header';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { routes } from '../routes';
-import {
-  getUserAddress,
-  getUserSession,
-  promptAuthorize,
-} from '../actions/userActions';
+import { getUserAddress } from '../actions/userActions';
 
 export class App extends Component {
-  componentDidUpdate = (prevProps) => {
-    if (prevProps.user.address !== this.props.user.address) {
-      if (this.props.user.address) {
-        this.props.getUserSession();
-      }
-    }
-  };
-
   componentDidMount = () => {
     this.props.getUserAddress();
   };
@@ -38,8 +26,6 @@ export class App extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     getUserAddress: () => dispatch(getUserAddress()),
-    getUserSession: () => dispatch(getUserSession()),
-    promptAuthorize: () => dispatch(promptAuthorize()),
   };
 }
 
@@ -50,7 +36,6 @@ App = connect(
       location: state.router.location,
       user: {
         address: state.user.address,
-        session: state.user.session,
         isLoggedIn: !!state.user.address,
       },
     };
