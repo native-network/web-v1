@@ -18,6 +18,14 @@ export class Dashboard extends Component {
     this.props.getUserSession();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.hasSession !== prevProps.hasSession) {
+      if (this.props.hasSession) {
+        this.setState({ hasSession: true });
+      }
+    }
+  }
+
   authorize() {
     this.props.promptAuthorize();
     this.setState({ hasSession: true });
@@ -40,6 +48,7 @@ export class Dashboard extends Component {
             );
           }}
         />
+        {this.state.hasSession && <div>Dashboard!</div>}
       </div>
     );
   }
