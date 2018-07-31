@@ -26,7 +26,7 @@ export class Dashboard extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.hasSession !== prevProps.hasSession) {
       if (this.props.hasSession) {
-        this.setState({ hasSession: false });
+        this.setState({ hasSession: true });
       }
     }
   }
@@ -60,8 +60,7 @@ export class Dashboard extends Component {
       <Loader />
     ) : (
       <Fragment>
-        {this.renderModal()}
-        {this.state.hasSession && (
+        {this.state.hasSession ? (
           <section className={styles.Dashboard}>
             <div className={styles.TokenBalance}>
               <h1>Convert Tokens</h1>
@@ -78,6 +77,8 @@ export class Dashboard extends Component {
             </div>
             <div className={styles.Table}>&lt;Tabular Data&gt;</div>
           </section>
+        ) : (
+          this.renderModal()
         )}
       </Fragment>
     );

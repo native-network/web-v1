@@ -33,7 +33,7 @@
 .Table {
   grid-area: table;
   justify-self: center;
-  background: #bada55;
+  background: #efefef;
   width: 100%;
   text-align: center;
   height: 500px;
