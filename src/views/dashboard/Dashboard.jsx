@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import styles from './Dashboard.css';
 
 import {
   getUserSession,
   promptAuthorize,
 } from '../../actions/userSessionActions';
+
+import Loader from '../../components/shared/loader';
 import Modal from '../../components/shared/modal';
 import Button from '../../components/shared/button';
+import CurrencyConverter from '../../components/shared/currency-converter';
 
 export class Dashboard extends Component {
   state = {
@@ -21,7 +26,7 @@ export class Dashboard extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.hasSession !== prevProps.hasSession) {
       if (this.props.hasSession) {
-        this.setState({ hasSession: true });
+        this.setState({ hasSession: false });
       }
     }
   }
@@ -31,25 +36,50 @@ export class Dashboard extends Component {
     this.setState({ hasSession: true });
   }
 
-  render() {
+  renderModal() {
     return (
-      <div>
-        <Modal
-          title="Sign in"
-          isModalOpen={!this.state.hasSession}
-          render={() => {
-            return (
-              <Button
-                centered
-                theme="primary"
-                content="Authorize"
-                clickHandler={this.authorize.bind(this)}
-              />
-            );
-          }}
-        />
-        {this.state.hasSession && <div>Dashboard!</div>}
-      </div>
+      <Modal
+        title="Sign in"
+        isModalOpen={!this.state.hasSession}
+        render={() => {
+          return (
+            <Button
+              centered
+              theme="primary"
+              content="Authorize"
+              clickHandler={this.authorize.bind(this)}
+            />
+          );
+        }}
+      />
+    );
+  }
+
+  render() {
+    return this.props.isLoading ? (
+      <Loader />
+    ) : (
+      <Fragment>
+        {this.renderModal()}
+        {this.state.hasSession && (
+          <section className={styles.Dashboard}>
+            <div className={styles.TokenBalance}>
+              <h1>Convert Tokens</h1>
+              <span className={styles.Balance}>
+                <img src="http://placehold.it/50x50" />ETH 3.14 $1,353.34
+              </span>
+              <span className={styles.Balance}>
+                <img src="http://placehold.it/50x50" />ETH 3.14 $1,353.34
+              </span>
+            </div>
+            <CurrencyConverter />
+            <div className={styles.TableTitle}>
+              <h1>Your Tribes</h1>
+            </div>
+            <div className={styles.Table}>&lt;Tabular Data&gt;</div>
+          </section>
+        )}
+      </Fragment>
     );
   }
 }
@@ -64,6 +94,7 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => {
     return {
+      isLoading: state.loading > 0,
       hasSession: state.user.session && state.user.session.length > 0,
     };
   },

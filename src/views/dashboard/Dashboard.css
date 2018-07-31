@@ -1,0 +1,40 @@
+.Dashboard {
+  composes: container from global;
+  display: grid;
+  grid-template-areas:
+    'balances conversion'
+    'balances title'
+    'table table';
+  grid-template-columns: 300px 1fr;
+}
+
+.TokenBalance {
+  grid-area: balances;
+
+  & .Balance {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+  }
+
+  & img {
+    max-width: 50px;
+    margin-right: 1rem;
+  }
+}
+
+.TableTitle {
+  grid-area: title;
+  align-self: end;
+  justify-self: center;
+  margin-left: -300px;
+}
+
+.Table {
+  grid-area: table;
+  justify-self: center;
+  background: #bada55;
+  width: 100%;
+  text-align: center;
+  height: 500px;
+}
