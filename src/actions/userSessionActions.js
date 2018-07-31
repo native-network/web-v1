@@ -22,6 +22,7 @@ export const getUserSession = () => {
 export const promptAuthorize = () => {
   return async (dispatch) => {
     dispatch({ type: actions.PROMPT_AUTHORIZE });
+    dispatch(beginAjaxCall());
     try {
       const { data } = await get(`user/nonce`);
       if (data) {
