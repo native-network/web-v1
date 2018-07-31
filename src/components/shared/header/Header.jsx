@@ -39,7 +39,6 @@ export class Header extends Component {
             <img className={styles.Logo} src={logo} alt="Native logo" />
           </Link>
           <Button
-            rounded
             outline
             theme="primary"
             clickHandler={this.openModal.bind(this)}
@@ -59,6 +58,7 @@ export class Header extends Component {
         </div>
         <Modal
           title="Lorem Ipsum"
+          hasCloseButton
           isModalOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
           render={() => {
