@@ -17,7 +17,7 @@ function NativeModal({
         <h1>{title}</h1>
         {hasCloseButton && (
           <button className={styles.CloseButton} onClick={closeModal}>
-            x
+            &times;
           </button>
         )}
       </div>

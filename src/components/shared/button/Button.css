@@ -78,6 +78,7 @@
   border-radius: 10px;
   cursor: pointer;
   transition: all 100ms linear;
+  font-family: 'Montserrat', sans-serif;
 
   &.Primary {
     @extend %primary-theme;
