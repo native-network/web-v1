@@ -27,8 +27,10 @@ export class Dashboard extends Component {
   }
 
   authorize() {
-    this.props.promptAuthorize();
-    this.setState({ hasSession: true });
+    if (this.props.user.address) {
+      this.props.promptAuthorize(this.props.user.address);
+      this.setState({ hasSession: true });
+    }
   }
 
   render() {
@@ -65,6 +67,7 @@ export default connect(
   (state) => {
     return {
       hasSession: state.user.session && state.user.session.length > 0,
+      user: state.user,
     };
   },
   mapDispatchToProps,

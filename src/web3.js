@@ -1,5 +1,7 @@
+/* eslint-disable */
 import { BigNumber } from 'bignumber.js/bignumber';
-
+const sigUtil = require('eth-sig-util');
+const ethUtil = require("ethereumjs-util");
 const Web3 = require('web3');
 let web3;
 
@@ -15,11 +17,13 @@ export const getAddress = async () => {
   return accounts[0];
 };
 
-export const promptSign = async (nonce) => {
-  const address = await getAddress();
-  const messageHash = web3.utils.sha3(nonce.toString());
-  const signedMessage = await web3.eth.sign(messageHash, address);
-  return signedMessage;
+export const promptSign = async (rawMessage) => {
+  const message = ethUtil.bufferToHex(new Buffer(rawMessage, 'utf8'));
+  let address = await getAddress();
+  address = sigUtil.normalize(address);
+  var params = [message, address];
+  let signed = await web3.eth.personal.sign(message, address);
+  return signed;
 };
 
 export const sendTransaction = async (from, to, amount, gas) => {
