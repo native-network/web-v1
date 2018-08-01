@@ -38,14 +38,30 @@ function CurrencyConverter() {
         <CurrencyInput
           currency={currencies[0]}
           renderLabel={(currency) => (
-            <label htmlFor={currency.id}>
+            <label
+              htmlFor={currency.id}
+              style={{ position: 'relative', cursor: 'pointer' }}
+            >
               <img src={currency.thumb} alt="" />
               <span>Pay with</span>
               {currency.id} &#9662;
-              <ul>
+              <ul
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  margin: 0,
+                  padding: 0,
+                  listStyleType: 'none',
+                  background: '#bada55',
+                }}
+              >
                 {currencies
                   .filter((curr) => curr.id !== currency.id)
-                  .map((curr, i) => <li key={i}>{curr.id}</li>)}
+                  .map((curr, i) => (
+                    <li style={{ padding: '0.25rem 1rem' }} key={i}>
+                      {curr.id}
+                    </li>
+                  ))}
               </ul>
             </label>
           )}
