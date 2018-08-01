@@ -26,3 +26,11 @@
     width: 100%;
   }
 }
+
+%link-style {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  vertical-align: baseline;
+  border: 0;
+}
