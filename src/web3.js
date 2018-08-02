@@ -1,7 +1,6 @@
-/* eslint-disable */
 import { BigNumber } from 'bignumber.js/bignumber';
 const sigUtil = require('eth-sig-util');
-const ethUtil = require("ethereumjs-util");
+const ethUtil = require('ethereumjs-util');
 const Web3 = require('web3');
 let web3;
 
