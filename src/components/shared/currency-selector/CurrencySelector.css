@@ -1,0 +1,56 @@
+@import '../../../styles/extends.css';
+
+.MenuLabel {
+  display: flex;
+  align-items: center;
+
+  & > img {
+    max-width: 2rem;
+    margin: 0 0.25rem;
+    flex-shrink: 3;
+  }
+
+  & > div {
+    font-weight: 700;
+  }
+
+  & span {
+    display: block;
+    flex-grow: 1;
+    font-weight: 100;
+    color: var(--gray-3);
+    font-size: 0.9rem;
+  }
+}
+
+.MenuToggle {
+  @extend %link-style;
+
+  grid-area: label;
+  color: var(--primary-black);
+}
+
+.Dropdown {
+  @extend %unstyled-list;
+
+  background: var(--primary-white);
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  min-width: 200px;
+  border: 1px solid var(--primary-color);
+}
+
+.SubmenuItem {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+
+  &:not(:last-child) {
+    @extend %decorator;
+  }
+
+  & img {
+    max-width: 2rem;
+    margin-right: 1rem;
+  }
+}
