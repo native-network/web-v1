@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router';
 
 import Home from './views/home';
 import Tribes from './views/tribes';
+import Dashboard from './views/dashboard';
 import Tribe from './views/tribe';
 import Tokens from './views/tokens';
 import FAQ from './views/faq';
@@ -14,6 +15,7 @@ export const routes = () => {
       <Route exact path="/" component={Home} />
       <Route exact path="/tribes" component={Tribes} />
       <Route exact path="/tribe/:tribeId" component={Tribe} />
+      <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
       <Route component={FourOhFour} />

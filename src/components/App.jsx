@@ -3,7 +3,7 @@ import Header from './shared/header';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { routes } from '../routes';
-import { getUserAddress } from '../actions/userActions';
+import { getUserAddress } from '../actions/userAddressActions';
 
 export class App extends Component {
   componentDidMount = () => {
@@ -13,7 +13,10 @@ export class App extends Component {
   render() {
     return (
       <Fragment>
-        <Header isLoggedIn={this.props.isLoggedIn} />
+        <Header
+          isLoggedIn={this.props.user.isLoggedIn}
+          session={this.props.user.session}
+        />
         {routes()}
       </Fragment>
     );
@@ -31,7 +34,11 @@ App = connect(
   (state) => {
     return {
       location: state.router.location,
-      isLoggedIn: !!state.user.address,
+      user: {
+        address: state.user.address,
+        session: state.user.session,
+        isLoggedIn: !!state.user.address,
+      },
     };
   },
   mapDispatchToProps,

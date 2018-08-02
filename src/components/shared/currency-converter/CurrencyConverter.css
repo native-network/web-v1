@@ -1,0 +1,19 @@
+.ConversionInputs {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.ConversionInput {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  margin: 0 1rem 0 0;
+
+  & input {
+    align-self: flex-end;
+    width: 100%;
+  }
+}

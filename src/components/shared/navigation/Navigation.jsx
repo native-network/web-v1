@@ -23,8 +23,7 @@ function Navigation() {
     <nav className={styles.Navigation}>
       <ul>
         {shortenedNav(true, '/', 'All Tribes')}
-        {shortenedNav(true, '/tribes', 'My Tribes')}
-        {shortenedNav(true, '/tokens', 'My Tokens')}
+        {shortenedNav(true, '/dashboard', 'Dashboard')}
         {shortenedNav(true, '/learn', 'Learn')}
       </ul>
     </nav>

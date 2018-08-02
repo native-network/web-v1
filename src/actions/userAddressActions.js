@@ -1,4 +1,4 @@
-import { userActions as actions } from './actionTypes';
+import { userAddressActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { getAddress } from '../web3';
 

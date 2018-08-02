@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import Button from '../button';
 import Navigation from '../navigation';
 import Modal from '../modal';
-
+import AuthenticatedStatus from '../authenticated-status';
 import logo from '../../../assets/img/logo.svg';
 import metamask from '../../../assets/img/metamask.svg';
 
@@ -39,12 +39,12 @@ export class Header extends Component {
             <img className={styles.Logo} src={logo} alt="Native logo" />
           </Link>
           <Button
-            rounded
             outline
             theme="primary"
             clickHandler={this.openModal.bind(this)}
             content="Get NT"
           />
+          <AuthenticatedStatus session={this.props.session} />
           <Navigation />
           <div className={metamaskClass}>
             <img src={metamask} alt="Metamask Connected" />
@@ -58,6 +58,7 @@ export class Header extends Component {
         </div>
         <Modal
           title="Lorem Ipsum"
+          hasCloseButton
           isModalOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
           render={() => {

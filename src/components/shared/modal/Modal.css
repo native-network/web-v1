@@ -34,7 +34,9 @@
 .CloseButton {
   @extend %secondary-theme;
 
+  font-size: 2rem;
+  line-height: 1;
   border-radius: 9999px;
-  width: 32px;
-  height: 32px;
+  height: 2rem;
+  width: 2rem;
 }

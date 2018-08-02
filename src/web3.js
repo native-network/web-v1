@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js/bignumber';
-
+const sigUtil = require('eth-sig-util');
+const ethUtil = require('ethereumjs-util');
 const Web3 = require('web3');
 let web3;
 
@@ -13,6 +14,14 @@ export const getAddress = async () => {
   }
   // TODO need for more than first account?
   return accounts[0];
+};
+
+export const promptSign = async (rawMessage) => {
+  const message = ethUtil.bufferToHex(new Buffer(rawMessage, 'utf8'));
+  let address = await getAddress();
+  address = sigUtil.normalize(address);
+  let signed = await web3.eth.personal.sign(message, address);
+  return signed;
 };
 
 export const sendTransaction = async (from, to, amount, gas) => {
