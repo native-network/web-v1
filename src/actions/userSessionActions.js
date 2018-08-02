@@ -11,6 +11,8 @@ export const getUserSession = () => {
       const { data } = await get(`user`);
       if (data.session) {
         return dispatch(getUserSessionSuccess(data.session));
+      } else {
+        return dispatch(getUserSessionError('No user in session.'));
       }
     } catch (err) {
       const { message } = err;
