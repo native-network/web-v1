@@ -9,6 +9,8 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
     "downshift": "^2.0.20",
+    "eth-sig-util": "^2.0.1",
+    "ethereumjs-util": "^5.2.0",
     "history": "^4.7.2",
     "object-assign": "4.1.1",
     "promise": "8.0.1",

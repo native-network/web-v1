@@ -9,8 +9,8 @@ export const getUserSession = () => {
     dispatch(beginAjaxCall());
     try {
       const { data } = await get(`user`);
-      if (data.length > 0) {
-        return dispatch(getUserSessionSuccess(data));
+      if (data.session) {
+        return dispatch(getUserSessionSuccess(data.session));
       }
     } catch (err) {
       const { message } = err;
@@ -19,16 +19,16 @@ export const getUserSession = () => {
   };
 };
 
-export const promptAuthorize = () => {
+export const promptAuthorize = (address) => {
   return async (dispatch) => {
     dispatch({ type: actions.PROMPT_AUTHORIZE });
     dispatch(beginAjaxCall());
     try {
-      const { data } = await get(`user/nonce`);
+      const { data } = await post(`user/signing`, { address });
       if (data) {
-        return dispatch(promptSignature(data));
+        return dispatch(promptSignature(data, address));
       }
-      return dispatch(getUserSessionError('No nonce found.'));
+      return dispatch(getUserSessionError('No message to sign found.'));
     } catch (err) {
       const { message } = err;
       return dispatch(getUserSessionError(message));
@@ -36,12 +36,13 @@ export const promptAuthorize = () => {
   };
 };
 
-export const promptSignature = (nonce) => {
+export const promptSignature = (signing, address) => {
   return async (dispatch) => {
     dispatch({ type: actions.PROMPT_SIGNATURE });
     try {
-      const signature = await promptSign(nonce);
-      const { data } = await post(`user/authorize`, { signature });
+      const signature = await promptSign(signing);
+      const { data } = await post(`user/authorize`, { signature, address });
+      dispatch(getUserSessionSuccess(data));
       return dispatch(getUserSignatureSuccess(data));
     } catch (err) {
       const { message } = err;

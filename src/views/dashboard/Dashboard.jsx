@@ -65,8 +65,9 @@ export class Dashboard extends Component {
   }
 
   authorize() {
-    this.props.promptAuthorize();
-    this.setState({ hasSession: true });
+    if (this.props.user.address) {
+      this.props.promptAuthorize(this.props.user.address);
+    }
   }
 
   renderModal() {
@@ -134,8 +135,8 @@ export default connect(
   (state) => {
     return {
       isLoading: state.loading > 0,
-      hasSession: state.user.session && state.user.session.length > 0,
-      tribes: state.tribes.tribes,
+      hasSession: state.user.session,
+      user: state.user,
     };
   },
   mapDispatchToProps,
