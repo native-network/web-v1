@@ -1,10 +1,8 @@
-/* eslint-disable */
 import React, { Fragment } from 'react';
 
 import styles from './CurrencyInput.css';
 
-function CurrencyInput({currency, renderLabel}) {
-
+function CurrencyInput({ currency, renderLabel }) {
   return (
     <Fragment>
       {renderLabel && renderLabel(currency)}

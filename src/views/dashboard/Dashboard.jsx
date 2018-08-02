@@ -56,7 +56,10 @@ export class Dashboard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.hasSession !== prevProps.hasSession && this.props.hasSession) {
+    if (
+      this.props.hasSession !== prevProps.hasSession &&
+      this.props.hasSession
+    ) {
       this.setState({ hasSession: true });
     }
   }
@@ -96,20 +99,21 @@ export class Dashboard extends Component {
               <h1>Convert Tokens</h1>
               {this.state.userCurrencies
                 .filter((currency) => currency.balance && currency.balance > 0)
-                .map(
-                  (currency, i) => (
-                    <span key={i} className={styles.Balance}>
-                      <img src={currency.thumb} />
-                      {currency.id} {currency.balance} {currency.inUsd}
-                    </span>
-                  ),
-                )}
+                .map((currency, i) => (
+                  <span key={i} className={styles.Balance}>
+                    <img src={currency.thumb} />
+                    {currency.id} {currency.balance} {currency.inUsd}
+                  </span>
+                ))}
             </div>
             <CurrencyConverter currencies={this.state.userCurrencies} />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
             </div>
-            <div className={styles.Table}>&lt;Tabular Data&gt;</div>
+            <div className={styles.Table}>
+              &lt;Tabular Data&gt;
+              {this.props.tribes && this.props.tribes.map((tribe) => <div key={tribe.name}>{tribe.name}</div>)}
+            </div>
           </section>
         ) : (
           this.renderModal()
@@ -131,6 +135,7 @@ export default connect(
     return {
       isLoading: state.loading > 0,
       hasSession: state.user.session && state.user.session.length > 0,
+      tribes: state.tribes.tribes,
     };
   },
   mapDispatchToProps,
