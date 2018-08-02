@@ -36,6 +36,7 @@ App = connect(
       location: state.router.location,
       user: {
         address: state.user.address,
+        session: state.user.session,
         isLoggedIn: !!state.user.address,
       },
     };

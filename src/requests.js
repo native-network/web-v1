@@ -14,7 +14,7 @@ export const get = async (endpoint) => {
   const reqUrl = `${baseApi}/${endpoint}/`;
 
   try {
-    return await axios.get(reqUrl);
+    return await axios.get(reqUrl, { withCredentials: true });
   } catch (err) {
     const { data: error } = err && err.response;
     throw new Error(error);
@@ -25,7 +25,7 @@ export const post = async (endpoint, payload) => {
   const reqUrl = `${baseApi}/${endpoint}/`;
 
   try {
-    return await axios.post(reqUrl, payload);
+    return await axios.post(reqUrl, payload, { withCredentials: true });
   } catch (err) {
     const { data: error } = err && err.response;
     throw new Error(error);
