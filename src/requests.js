@@ -8,13 +8,16 @@ const apiPort = isProdPort(process.env.REACT_APP_API_PORT)
   ? ''
   : `:${process.env.REACT_APP_API_PORT}`;
 
-const baseApi = apiUrl + apiPort;
+const baseURL = apiUrl + apiPort;
+
+const instance = axios.create({
+  baseURL,
+  withCredentials: true,
+});
 
 export const get = async (endpoint) => {
-  const reqUrl = `${baseApi}/${endpoint}/`;
-
   try {
-    return await axios.get(reqUrl, { withCredentials: true });
+    return await instance.get(`/${endpoint}`);
   } catch (err) {
     const { data: error } = err && err.response;
     throw new Error(error);
@@ -22,10 +25,8 @@ export const get = async (endpoint) => {
 };
 
 export const post = async (endpoint, payload) => {
-  const reqUrl = `${baseApi}/${endpoint}/`;
-
   try {
-    return await axios.post(reqUrl, payload, { withCredentials: true });
+    return await instance.post(`/${endpoint}`, payload);
   } catch (err) {
     const { data: error } = err && err.response;
     throw new Error(error);
