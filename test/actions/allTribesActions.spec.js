@@ -1,6 +1,7 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
+import { instance } from '../../src/requests';
 
 import {
   loadingActions,
@@ -26,8 +27,8 @@ describe('allTribesActions', () => {
   });
 
   describe('getTribes', () => {
-    beforeEach(() => moxios.install());
-    afterEach(() => moxios.uninstall());
+    beforeEach(() => moxios.install(instance));
+    afterEach(() => moxios.uninstall(instance));
 
     it('should dispatch `GET_TRIBES`', async () => {
       moxios.wait(() => {
