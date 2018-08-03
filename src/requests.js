@@ -10,7 +10,7 @@ const apiPort = isProdPort(process.env.REACT_APP_API_PORT)
 
 const baseURL = apiUrl + apiPort;
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL,
   withCredentials: true,
 });
