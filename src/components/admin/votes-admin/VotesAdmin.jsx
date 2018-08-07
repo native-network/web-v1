@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import styles from './VotesAdmin.css';
-
 function VotesAdmin({ items }) {
   const renderItem = ({ index, name, description }) => {
     return (
