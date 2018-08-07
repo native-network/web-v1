@@ -3,7 +3,6 @@
 @custom-selector :--outline .Outline;
 
 %primary-theme {
-
   &:not(:--outline) {
     background: var(--primary-button-default);
     border-color: var(--primary-button-default);
@@ -25,10 +24,15 @@
 }
 
 %secondary-theme {
-
   &:not(:--outline) {
     background: var(--secondary-button-default);
     border-color: var(--secondary-button-default);
+
+    &[disabled],
+    &[disabled]:--enter {
+      background: var(--secondary-button-disabled);
+      border-color: var(--secondary-button-disabled);
+    }
 
     &:--enter {
       background: var(--secondary-button-active);
@@ -79,6 +83,10 @@
   cursor: pointer;
   transition: all 100ms linear;
   font-family: 'Montserrat', sans-serif;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
 
   &.Primary {
     @extend %primary-theme;
