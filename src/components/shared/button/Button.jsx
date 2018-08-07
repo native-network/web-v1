@@ -6,6 +6,7 @@ import styles from './Button.css';
 const cx = classNames.bind(styles);
 
 function Button({
+  className,
   theme,
   rounded,
   outline,
@@ -14,7 +15,7 @@ function Button({
   clickHandler,
   ...props
 }) {
-  const className = cx({
+  const classNames = cx({
     Button: true,
     Primary: theme === 'primary',
     Secondary: theme === 'secondary',
@@ -25,7 +26,11 @@ function Button({
   });
 
   return (
-    <button {...props} onClick={clickHandler} className={className}>
+    <button
+      {...props}
+      onClick={clickHandler}
+      className={`${classNames} ${className}`}
+    >
       {content}
     </button>
   );

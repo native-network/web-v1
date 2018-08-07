@@ -57,14 +57,12 @@ export class Header extends Component {
           <div className="container" />
         </div>
         <Modal
-          title="Lorem Ipsum"
-          hasCloseButton
-          isModalOpen={this.state.isModalOpen}
+          label="Lorem Ipsum"
+          isOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
-          render={() => {
-            return <div>Foo</div>;
-          }}
-        />
+        >
+          <div>Foo</div>
+        </Modal>
       </header>
     );
   }
