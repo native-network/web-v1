@@ -1,19 +1,34 @@
 import React from 'react';
 
+import AddVote from './AddVote';
+
 function VotesAdmin({ items }) {
-  const renderItem = ({ index, name, description }) => {
+  const renderItem = ({ index, name, description, startDate, endDate }) => {
     return (
-      <li key={index}>
+      <div key={index}>
         <div>
-          <h3>{name}</h3>
+          <p>{name}</p>
+        </div>
+        <div>
           <p>{description}</p>
         </div>
-      </li>
+        <div>
+          <p>{startDate}</p>
+        </div>
+        <div>
+          <p>{endDate}</p>
+        </div>
+      </div>
     );
   };
 
   return (
-    <ul>{(items || []).map((item, i) => renderItem({ index: i, ...item }))}</ul>
+    <div>
+      <AddVote />
+      <div>
+        {(items || []).map((item, i) => renderItem({ index: i, ...item }))}
+      </div>
+    </div>
   );
 }
 

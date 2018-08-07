@@ -71,8 +71,6 @@ export class TribeAdmin extends Component {
 
   componentDidMount() {
     this.props.getTribeById(this.props.id);
-
-    console.log(this.props.tribe); // eslint-disable-line
   }
 
   componentWillUnmount() {
