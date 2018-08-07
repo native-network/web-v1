@@ -3,6 +3,7 @@ import Loader from '../../components/shared/loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
+import { getTribeVotes } from '../../actions/tribeVotesActions';
 
 import TabPanels from '../../components/shared/tab-panels';
 import { VotesAdmin } from '../../components/admin';
@@ -71,6 +72,7 @@ export class TribeAdmin extends Component {
 
   componentDidMount() {
     this.props.getTribeById(this.props.id);
+    this.props.getTribeVotes(this.props.id);
   }
 
   componentWillUnmount() {
@@ -96,6 +98,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     getTribeById: bindActionCreators(getTribeById, dispatch),
     clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
+    getTribeVotes: bindActionCreators(getTribeVotes, dispatch),
   };
 }
 
@@ -103,9 +106,10 @@ export default connect(
   (state, ownProps) => {
     const { loading, activeTribe } = state;
     const { tribe } = activeTribe;
+    const { votes } = state.votes;
     const { tribeId: id } = ownProps.match.params;
 
-    return { tribe, id, isLoading: loading > 0 };
+    return { tribe, id, isLoading: loading > 0, votes };
   },
   mapDispatchToProps,
 )(TribeAdmin);
