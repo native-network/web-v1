@@ -41,7 +41,7 @@
         "singleQuote": true,
         "trailingComma": "all",
         "arrowParens": "always",
-        "jsxBracketSameLine": false
+        "jsxBracketSameLine": false,
       }
     ],
     "react/jsx-uses-react": "error",
