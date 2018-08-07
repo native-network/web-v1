@@ -1,0 +1,10 @@
+.WelcomeContainer {
+  height: 100%;
+  position: relative;
+}
+
+.StepCounter {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
