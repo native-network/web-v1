@@ -25,6 +25,7 @@ function Navigation() {
         {shortenedNav(true, '/', 'All Tribes')}
         {shortenedNav(true, '/dashboard', 'Dashboard')}
         {shortenedNav(true, '/learn', 'Learn')}
+        {shortenedNav(true, '/manage', 'Manage')}
       </ul>
     </nav>
   );
