@@ -7,7 +7,6 @@ import Dashboard from './views/dashboard';
 import Tribe from './views/tribe';
 import Tokens from './views/tokens';
 import FAQ from './views/faq';
-import Manage from './views/manage';
 import FourOhFour from './views/404';
 
 export const routes = () => {
@@ -19,7 +18,6 @@ export const routes = () => {
       <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
-      <Route exact path="/manage" component={Manage} />
       <Route component={FourOhFour} />
     </Switch>
   );
