@@ -19,6 +19,7 @@
     "expect": true,
     "it": true,
     "buildComponent": true,
+    "moxiosResponse": true,
     "shallow": true,
     "mount": true,
     "render": true
