@@ -131,5 +131,59 @@ describe('userSessionActions', () => {
 
       expect(actions[0]).toEqual(expectedAction);
     });
+
+    it('should dispatch `LOADING` after `PROMPT_AUTHORIZE`', async () => {
+      moxiosResponse({ status: 200 });
+      await store.dispatch(promptAuthorize(address));
+
+      const actions = store.getActions();
+      const expectedAction = {
+        type: loadingActions.LOADING,
+      };
+
+      expect(actions[1]).toEqual(expectedAction);
+    });
+
+    describe('success response', () => {
+      it('should dispatch `PROMPT_SIGNATURE` on success response', async () => {
+        moxiosResponse({ status: 200, response: { data: 'foo' } });
+        await store.dispatch(promptAuthorize(address));
+        const actions = store.getActions();
+        const expectedAction = {
+          type: userSessionActions.PROMPT_SIGNATURE,
+        };
+
+        expect(actions[2]).toEqual(expectedAction);
+      });
+
+      it('should finally dispatch `GET_USER_SESSION_ERROR` when no `data` is in response', async () => {
+        moxiosResponse({ status: 200 });
+        await store.dispatch(promptAuthorize(address));
+        const actions = store.getActions();
+        const lastAction = actions[actions.length - 1];
+        const expectedAction = {
+          type: userSessionActions.GET_USER_SESSION_ERROR,
+          error: 'No message to sign found.',
+        };
+
+        expect(lastAction).toEqual(expectedAction);
+      });
+    });
+
+    describe('error response', () => {
+      beforeEach(() => moxiosResponse({ status: 400, response: 'foo' }));
+      it('should finally dispatch `GET_USER_SESSION_ERROR` on error', async () => {
+        await store.dispatch(getUserSession(address));
+
+        const actions = store.getActions();
+        const lastAction = actions[actions.length - 1];
+        const expectedAction = {
+          type: userSessionActions.GET_USER_SESSION_ERROR,
+          error: 'foo',
+        };
+
+        expect(lastAction).toEqual(expectedAction);
+      });
+    });
   });
 });
