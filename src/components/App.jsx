@@ -59,7 +59,7 @@ export class App extends Component {
         </Modal>
         <Header
           session={this.props.user.session}
-          isLoggedIn={this.props.isLoggedIn}
+          isLoggedIn={this.props.user.isLoggedIn}
         />
         {routes()}
       </Fragment>
