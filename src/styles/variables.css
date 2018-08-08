@@ -35,9 +35,11 @@
   /* Button Theming */
   --primary-button-default: var(--primary-color);
   --primary-button-active: color-mod(var(--primary-color) shade(10%));
+  --primary-button-disabled: color-mod(var(--primary-color) tint(40%));
 
   --secondary-button-default: var(--secondary-color);
   --secondary-button-active: color-mod(var(--secondary-color) shade(10%));
+  --secondary-button-disabled: color-mod(var(--secondary-color) tint(50%));
 
   --tertiary-button-default: var(--primary-white);
   --tertiary-button-active: color-mod(var(--primary-white) shade(10%));
