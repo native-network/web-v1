@@ -14,14 +14,23 @@ import { getUserAddress } from '../actions/userAddressActions';
 
 export class App extends Component {
   state = {
-    isWelcomeModalOpen: true,
+    isWelcomeModalOpen: false,
   };
 
   closeWelcomeModal() {
     this.setState({ isWelcomeModalOpen: false });
   }
 
+  finishWelcomeModalSteps() {
+    localStorage.setItem('visited', 1);
+    this.closeWelcomeModal();
+  }
+
   componentDidMount = () => {
+    if (!localStorage.getItem('visited')) {
+      this.setState({ isWelcomeModalOpen: true });
+    }
+
     this.props.getUserAddress();
   };
 
@@ -44,7 +53,9 @@ export class App extends Component {
           isOpen={this.state.isWelcomeModalOpen}
           label="Welcome to Native"
         >
-          <WelcomeDialog dismissDialog={this.closeWelcomeModal.bind(this)} />
+          <WelcomeDialog
+            dismissDialog={this.finishWelcomeModalSteps.bind(this)}
+          />
         </Modal>
         <Header
           session={this.props.user.session}
