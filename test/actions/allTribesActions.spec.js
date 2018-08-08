@@ -12,6 +12,7 @@ import {
   getTribes,
   getTribesSuccess,
   getTribesError,
+  addNewTribe,
 } from '../../src/actions/allTribesActions';
 
 const middlewares = [thunk];
@@ -141,6 +142,40 @@ describe('allTribesActions', () => {
       };
 
       expect(getTribesError(error)).toEqual(expectedAction);
+    });
+  });
+
+  describe('addNewTribe', () => {
+    let tribe;
+
+    beforeEach(() => (tribe = {}), moxios.install(instance));
+    afterEach(() => moxios.uninstall(instance));
+
+    it('should dispatch `ADD_NEW_TRIBE`', async () => {
+      moxios.wait(() => {
+        let req = moxios.requests.mostRecent();
+        req.respondWith({ status: 200 });
+      });
+      await store.dispatch(addNewTribe(tribe));
+
+      const actions = store.getActions();
+      const expectedAction = { type: allTribesActions.ADD_NEW_TRIBE };
+
+      expect(actions[0]).toEqual(expectedAction);
+    });
+
+    it('should dispatch `LOADING` after `ADD_NEW_TRIBE`', async () => {
+      moxios.wait(() => {
+        let req = moxios.requests.mostRecent();
+        req.respondWith({ status: 200 });
+      });
+
+      await store.dispatch(addNewTribe(tribe));
+
+      const actions = store.getActions();
+      const expectedAction = { type: loadingActions.LOADING };
+
+      expect(actions[1]).toEqual(expectedAction);
     });
   });
 });
