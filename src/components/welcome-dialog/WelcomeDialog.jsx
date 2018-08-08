@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
+/* eslint-disable */
+import React, { Component, Fragment } from 'react';
 
 import styles from './WelcomeDialog.css';
 
 import Button from '../shared/button';
 
+import StepOne from './steps/StepOne';
+import StepTwo from './steps/StepTwo';
+import StepThree from './steps/StepThree';
+
 class Welcome extends Component {
-  steps = [
-    {
-      name: 'Foo',
-    },
-    {
-      name: 'bar',
-    },
-    {
-      name: 'baz',
-    },
-  ];
+  steps = [StepOne, StepTwo, StepThree];
 
   state = { activeStep: 0 };
 
   setNextActiveStep() {
     const { activeStep } = this.state;
-
     this.setState({ activeStep: activeStep + 1 });
   }
 
@@ -38,8 +32,14 @@ class Welcome extends Component {
     const step = this.state.activeStep + 1;
     const stepCount = this.steps.length;
     return (
-      <div className={styles.WelcomeContainer}>
-        {this.steps[this.state.activeStep]['name']}
+      <Fragment>
+        <div className={styles.WelcomeContainer}>
+          {(this.steps || [])
+            .filter(step => this.steps.indexOf(step) === this.state.activeStep)
+            .map((step, i) =>
+              React.cloneElement(step(), { key: i }),
+          )}
+        </div>
         <Button
           className={styles.StepCounter}
           outline
@@ -47,7 +47,7 @@ class Welcome extends Component {
           clickHandler={this.handleClick.bind(this)}
           content={`Step ${step} of ${stepCount}`}
         />
-      </div>
+      </Fragment>
     );
   }
 }
