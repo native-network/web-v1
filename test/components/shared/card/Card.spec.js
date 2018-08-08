@@ -1,6 +1,6 @@
 import Card from '../../../../src/components/shared/card';
 
-describe.skip('Card', () => {
+describe('Card', () => {
   let wrapper;
   let props;
 
