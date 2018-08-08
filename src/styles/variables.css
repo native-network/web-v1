@@ -1,6 +1,5 @@
-/* stylelint-disable custom-property-empty-line-before */
+/* stylelint-disable */
 :root {
-
   /* Colors */
   --white-0: #fff;
   --white-1: #fafafa;
@@ -12,6 +11,15 @@
 
   --transparent-black-0: color-mod(var(--black-0) alpha(0%));
   --transparent-black-10: color-mod(var(--black-0) alpha(10%));
+  --transparent-black-20: color-mod(var(--black-0) alpha(20%));
+  --transparent-black-30: color-mod(var(--black-0) alpha(30%));
+  --transparent-black-40: color-mod(var(--black-0) alpha(40%));
+  --transparent-black-50: color-mod(var(--black-0) alpha(50%));
+  --transparent-black-60: color-mod(var(--black-0) alpha(60%));
+  --transparent-black-70: color-mod(var(--black-0) alpha(70%));
+  --transparent-black-80: color-mod(var(--black-0) alpha(80%));
+  --transparent-black-90: color-mod(var(--black-0) alpha(90%));
+  --transparent-black-100: color-mod(var(--black-0) alpha(100%));
 
   --gray-0: #333;
   --gray-1: #444;

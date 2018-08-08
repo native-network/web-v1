@@ -2,6 +2,19 @@
 @custom-selector :--enter :hover, :focus;
 @custom-selector :--outline .Outline;
 
+%button {
+  border: 1px solid;
+  color: var(--primary-white);
+  font-size: 1rem;
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 100ms linear;
+  text-decoration: none;
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+}
+
 %primary-theme {
   &:not(:--outline) {
     background: var(--primary-button-default);
@@ -75,18 +88,7 @@
 }
 
 :--button {
-  border: 1px solid;
-  color: var(--primary-white);
-  font-size: 1rem;
-  padding: 0.5rem 2rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 100ms linear;
-  font-family: 'Montserrat', sans-serif;
-
-  &[disabled] {
-    cursor: not-allowed;
-  }
+  @extend %button;
 
   &.Primary {
     @extend %primary-theme;
