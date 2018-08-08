@@ -32,10 +32,7 @@ describe('allTribesActions', () => {
     afterEach(() => moxios.uninstall(instance));
 
     it('should dispatch `GET_TRIBES`', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
       await store.dispatch(getTribes());
 
       const actions = store.getActions();
@@ -45,10 +42,7 @@ describe('allTribesActions', () => {
     });
 
     it('should dispatch `LOADING` after `GET_TRIBES`', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
       await store.dispatch(getTribes());
 
       const actions = store.getActions();
@@ -58,10 +52,7 @@ describe('allTribesActions', () => {
     });
 
     it('should handle 3 actions', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
 
       await store.dispatch(getTribes());
 
@@ -75,10 +66,7 @@ describe('allTribesActions', () => {
 
       beforeEach(() => {
         response = [{ name: 'foo' }, { name: 'bar' }, { name: 'baz' }];
-        moxios.wait(() => {
-          let req = moxios.requests.mostRecent();
-          req.respondWith({ status: 200, response });
-        });
+        moxiosResponse({ status: 200, response });
       });
 
       it('should finally dispatch `GET_TRIBES_SUCCESS` on success', async () => {
@@ -100,10 +88,8 @@ describe('allTribesActions', () => {
 
       beforeEach(() => {
         response = 'Something went wrong';
-        moxios.wait(() => {
-          let req = moxios.requests.mostRecent();
-          req.respondWith({ status: 400, response });
-        });
+
+        moxiosResponse({ status: 400, response });
       });
 
       it('should finally dispatch `GET_TRIBES_ERROR` on error', async () => {
@@ -148,14 +134,14 @@ describe('allTribesActions', () => {
   describe('addNewTribe', () => {
     let tribe;
 
-    beforeEach(() => (tribe = {}), moxios.install(instance));
+    beforeEach(
+      () => (tribe = { name: 'Foo', id: 3 }),
+      moxios.install(instance),
+    );
     afterEach(() => moxios.uninstall(instance));
 
     it('should dispatch `ADD_NEW_TRIBE`', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
       await store.dispatch(addNewTribe(tribe));
 
       const actions = store.getActions();
@@ -165,10 +151,7 @@ describe('allTribesActions', () => {
     });
 
     it('should dispatch `LOADING` after `ADD_NEW_TRIBE`', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
 
       await store.dispatch(addNewTribe(tribe));
 
@@ -176,6 +159,59 @@ describe('allTribesActions', () => {
       const expectedAction = { type: loadingActions.LOADING };
 
       expect(actions[1]).toEqual(expectedAction);
+    });
+
+    it('should handle 3 actions', async () => {
+      moxiosResponse({ status: 200 });
+      await store.dispatch(addNewTribe(tribe));
+
+      const actions = store.getActions();
+
+      expect(actions).toHaveLength(3);
+    });
+
+    describe('success response', () => {
+      let response;
+
+      beforeEach(() => {
+        response = tribe;
+        moxiosResponse({ status: 200, response });
+      });
+
+      it('should finally dispatch `ADD_NEW_TRIBE_SUCCESS` on success', async () => {
+        await store.dispatch(addNewTribe(tribe));
+
+        const actions = store.getActions();
+        const lastAction = actions[actions.length - 1];
+        const expectedAction = {
+          type: allTribesActions.ADD_NEW_TRIBE_SUCCESS,
+          tribe: response,
+        };
+
+        expect(lastAction).toEqual(expectedAction);
+      });
+    });
+
+    describe('error response', () => {
+      let response;
+
+      beforeEach(() => {
+        response = 'Something went wrong';
+        moxiosResponse({ status: 400, response });
+      });
+
+      it('should finally dispatch `ADD_NEW_TRIBE_ERROR` on error', async () => {
+        await store.dispatch(addNewTribe(tribe));
+
+        const actions = store.getActions();
+        const lastAction = actions[actions.length - 1];
+        const expectedAction = {
+          type: allTribesActions.ADD_NEW_TRIBE_ERROR,
+          error: new Error(response),
+        };
+
+        expect(lastAction).toEqual(expectedAction);
+      });
     });
   });
 });
