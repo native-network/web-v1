@@ -3,65 +3,26 @@ import Loader from '../../components/shared/loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
-import { getTribeVotes } from '../../actions/tribeVotesActions';
+import { getTribePolls } from '../../actions/tribePollsActions';
 
 import TabPanels from '../../components/shared/tab-panels';
-import { VotesAdmin } from '../../components/admin';
+import PollsAdmin from '../../components/admin/polls-admin';
 
 const initiatives = [
   {
-    name: 'Votes',
-    items: [
-      {
-        name: 'Support First thing',
-        description: 'Cast a vote to support something',
-      },
-      {
-        name: 'Support Second Thing',
-        description: 'Cast a vote to support something',
-      },
-      {
-        name: 'Support Third thing',
-        description: 'Cast a vote to support something',
-      },
-    ],
-    render: (items) => <VotesAdmin items={items} />,
+    name: 'Polls',
+    items: [],
+    render: (items) => <PollsAdmin items={items} />,
   },
   {
     name: 'Tasks',
-    items: [
-      {
-        name: 'Task 1',
-        description: 'Do something',
-      },
-      {
-        name: 'Task 2',
-        description: 'Do something',
-      },
-      {
-        name: 'Task 2',
-        description: 'Do something',
-      },
-    ],
-    render: (items) => <VotesAdmin items={items} />,
+    items: [],
+    render: (items) => <PollsAdmin items={items} />,
   },
   {
     name: 'Projects',
-    items: [
-      {
-        name: 'Project 1',
-        description: 'Do Something else',
-      },
-      {
-        name: 'Project 2',
-        description: 'Do Something else',
-      },
-      {
-        name: 'Project 3',
-        description: 'Do Something else',
-      },
-    ],
-    render: (items) => <VotesAdmin items={items} />,
+    items: [],
+    render: (items) => <PollsAdmin items={items} />,
   },
 ];
 
@@ -72,7 +33,15 @@ export class TribeAdmin extends Component {
 
   componentDidMount() {
     this.props.getTribeById(this.props.id);
-    this.props.getTribeVotes(this.props.id);
+    this.props.getTribePolls(this.props.id);
+  }
+
+  componentWillReceiveProps() {
+    // TODO: Redo this when we get more initiatives
+    initiatives[0].items = this.props.polls;
+    this.setState({
+      initiatives: initiatives,
+    });
   }
 
   componentWillUnmount() {
@@ -98,7 +67,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     getTribeById: bindActionCreators(getTribeById, dispatch),
     clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
-    getTribeVotes: bindActionCreators(getTribeVotes, dispatch),
+    getTribePolls: bindActionCreators(getTribePolls, dispatch),
   };
 }
 
@@ -106,10 +75,10 @@ export default connect(
   (state, ownProps) => {
     const { loading, activeTribe } = state;
     const { tribe } = activeTribe;
-    const { votes } = state.votes;
+    const { polls } = state.polls;
     const { tribeId: id } = ownProps.match.params;
 
-    return { tribe, id, isLoading: loading > 0, votes };
+    return { tribe, id, isLoading: loading > 0, polls };
   },
   mapDispatchToProps,
 )(TribeAdmin);

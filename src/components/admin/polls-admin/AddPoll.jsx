@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
 
-export class AddVote extends Component {
+export class AddPoll extends Component {
   state = {
     isModalOpen: false,
   };
@@ -21,16 +21,16 @@ export class AddVote extends Component {
       <div>
         <Button
           theme="secondary"
-          content="Add Vote"
+          content="Add Poll"
           clickHandler={this.openModal.bind(this)}
         />
         <Modal
-          title="Add Vote"
+          title="Add Poll"
           hasCloseButton
           isModalOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
           render={() => {
-            return <div>Add Vote Form</div>;
+            return <div>Add Poll Form</div>;
           }}
         />
       </div>
@@ -38,4 +38,4 @@ export class AddVote extends Component {
   }
 }
 
-export default AddVote;
+export default AddPoll;

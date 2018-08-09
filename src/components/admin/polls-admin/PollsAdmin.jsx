@@ -1,16 +1,16 @@
 import React from 'react';
 
-import AddVote from './AddVote';
+import AddPoll from './AddPoll';
 
-function VotesAdmin({ items }) {
-  const renderItem = ({ index, name, description, startDate, endDate }) => {
+function PollsAdmin({ items }) {
+  const renderItem = ({ index, title, question, startDate, endDate }) => {
     return (
       <div key={index}>
         <div>
-          <p>{name}</p>
+          <p>{title}</p>
         </div>
         <div>
-          <p>{description}</p>
+          <p>{question}</p>
         </div>
         <div>
           <p>{startDate}</p>
@@ -24,7 +24,7 @@ function VotesAdmin({ items }) {
 
   return (
     <div>
-      <AddVote />
+      <AddPoll />
       <div>
         {(items || []).map((item, i) => renderItem({ index: i, ...item }))}
       </div>
@@ -32,4 +32,4 @@ function VotesAdmin({ items }) {
   );
 }
 
-export default VotesAdmin;
+export default PollsAdmin;
