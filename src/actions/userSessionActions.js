@@ -9,8 +9,8 @@ export const getUserSession = () => {
     dispatch(beginAjaxCall());
     try {
       const { data } = await get(`user`);
-      if (data.session) {
-        return dispatch(getUserSessionSuccess(data.session));
+      if (data.user) {
+        return dispatch(getUserSessionSuccess(data.user));
       } else {
         return dispatch(getUserSessionError('No user in session.'));
       }
@@ -44,8 +44,7 @@ export const promptSignature = (signing, address) => {
     try {
       const signature = await promptSign(signing);
       const { data } = await post(`user/authorize`, { signature, address });
-      dispatch(getUserSessionSuccess(data));
-      return dispatch(getUserSignatureSuccess(data));
+      return dispatch(getUserSessionSuccess(data));
     } catch (err) {
       const { message } = err;
       return dispatch(getUserSessionError(message));
@@ -57,13 +56,6 @@ export const getUserSessionSuccess = (session) => {
   return {
     type: actions.GET_USER_SESSION_SUCCESS,
     session,
-  };
-};
-
-export const getUserSignatureSuccess = (signature) => {
-  return {
-    type: actions.GET_USER_SIGNATURE_SUCCESS,
-    signature,
   };
 };
 

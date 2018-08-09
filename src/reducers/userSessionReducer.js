@@ -1,7 +1,9 @@
 import { userSessionActions as actions } from '../actions/actionTypes';
 
 const initialState = {
-  session: {},
+  session: {
+    id: undefined,
+  },
   sessionError: '',
 };
 
