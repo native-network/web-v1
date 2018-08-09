@@ -3,20 +3,30 @@ import React from 'react';
 import AddPoll from './AddPoll';
 
 function PollsAdmin({ items }) {
-  const renderItem = ({ index, title, question, startDate, endDate }) => {
+  const renderItem = ({
+    index,
+    title,
+    question,
+    startDate,
+    endDate,
+    votes,
+  }) => {
     return (
       <div key={index}>
         <div>
-          <p>{title}</p>
+          <p>Title: {title}</p>
         </div>
         <div>
-          <p>{question}</p>
+          <p>Question: {question}</p>
         </div>
         <div>
-          <p>{startDate}</p>
+          <p>Start Date: {startDate}</p>
         </div>
         <div>
-          <p>{endDate}</p>
+          <p>End Date: {endDate}</p>
+        </div>
+        <div>
+          <p>Total Votes: {votes.length}</p>
         </div>
       </div>
     );

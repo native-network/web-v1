@@ -37,7 +37,7 @@ export class TribeAdmin extends Component {
   }
 
   componentWillReceiveProps() {
-    // TODO: Redo this when we get more initiatives
+    // TODO: Need to make this much better once we have another initiative
     initiatives[0].items = this.props.polls;
     this.setState({
       initiatives: initiatives,
