@@ -18,6 +18,11 @@ export default function allTribesReducer(state = initialState, action) {
         tribes: [],
         error: action.error,
       };
+    case actions.ADD_NEW_TRIBE_SUCCESS:
+      return {
+        ...state,
+        tribes: [...state.tribes, action.tribe],
+      };
     default:
       return state;
   }

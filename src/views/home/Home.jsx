@@ -7,9 +7,7 @@ import { getTribes } from '../../actions/allTribesActions';
 
 export class Home extends Component {
   componentDidMount() {
-    if (this.props.tribes && !this.props.tribes.length) {
-      this.props.getTribes();
-    }
+    this.props.getTribes();
   }
 
   render() {
