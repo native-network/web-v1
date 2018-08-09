@@ -2,6 +2,9 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import { instance } from '../../src/requests';
+// import { promptSign } from '../../src/web3.js';
+
+// jest.mock('../../src/web3.js');
 
 import {
   loadingActions,
@@ -146,9 +149,11 @@ describe('userSessionActions', () => {
 
     describe('success response', () => {
       it('should dispatch `PROMPT_SIGNATURE` on success response', async () => {
+        // promptSign.mockReturnValue({ data: 'foo' });
         moxiosResponse({ status: 200, response: { data: 'foo' } });
         await store.dispatch(promptAuthorize(address));
         const actions = store.getActions();
+
         const expectedAction = {
           type: userSessionActions.PROMPT_SIGNATURE,
         };

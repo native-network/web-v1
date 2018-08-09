@@ -4,9 +4,7 @@ import moxios from 'moxios';
 import { instance } from '../../src/requests';
 import { getAddress } from '../../src/web3.js';
 
-jest.mock('../../src/web3.js', () => ({
-  getAddress: jest.fn(),
-}));
+jest.mock('../../src/web3.js');
 
 import {
   loadingActions,
