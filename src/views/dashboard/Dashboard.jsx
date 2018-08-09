@@ -73,19 +73,17 @@ export class Dashboard extends Component {
   renderModal() {
     return (
       <Modal
-        title="Sign in"
-        isModalOpen={!this.state.hasSession}
-        render={() => {
-          return (
-            <Button
-              centered
-              theme="primary"
-              content="Authorize"
-              clickHandler={this.authorize.bind(this)}
-            />
-          );
-        }}
-      />
+        label="Sign in"
+        renderHeader={() => <h1 style={{textAlign: 'center'}}>Sign in</h1>}
+        isOpen={!this.state.hasSession}
+      >
+        <Button
+          centered
+          theme="primary"
+          content="Authorize"
+          clickHandler={this.authorize.bind(this)}
+        />
+      </Modal>
     );
   }
 
