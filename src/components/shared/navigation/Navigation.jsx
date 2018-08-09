@@ -3,29 +3,50 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './Navigation.css';
 
-const shortenedNav = (exact = false, to, name) => {
-  return (
-    <li>
-      <NavLink
-        className={styles.NavLink}
-        exact={exact}
-        activeClassName="active"
-        to={to}
-      >
-        {name}
-      </NavLink>
-    </li>
-  );
-};
-
 function Navigation() {
   return (
     <nav className={styles.Navigation}>
       <ul>
-        {shortenedNav(true, '/', 'All Tribes')}
-        {shortenedNav(true, '/dashboard', 'Dashboard')}
-        {shortenedNav(true, '/learn', 'Learn')}
-        {shortenedNav(true, '/manage', 'Manage')}
+        <li>
+          <NavLink
+            className={styles.NavLink}
+            exact
+            activeClassName="active"
+            to="/"
+          >
+            All Tribes
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className={styles.NavLink}
+            exact
+            activeClassName="active"
+            to="/dashboard"
+          >
+            Dashboard
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className={styles.NavLink}
+            exact
+            activeClassName="active"
+            to="/learn"
+          >
+            Learn
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className={styles.NavLink}
+            exact
+            activeClassName="active"
+            to="/manage"
+          >
+            Manage
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
