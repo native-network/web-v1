@@ -25,14 +25,22 @@ export class AddPoll extends Component {
           clickHandler={this.openModal.bind(this)}
         />
         <Modal
-          title="Add Poll"
-          hasCloseButton
-          isModalOpen={this.state.isModalOpen}
-          closeModal={this.closeModal.bind(this)}
-          render={() => {
-            return <div>Add Poll Form</div>;
-          }}
-        />
+          renderHeader={() => <h1 style={{ textAlign: 'center' }}>Add Poll</h1>}
+          label="Add Poll"
+          isOpen={this.state.isModalOpen}
+        >
+          <div>
+            Add Poll Form
+            <Button
+              clickHandler={this.closeModal.bind(this)}
+              theme="secondary"
+              content="Close"
+              centered
+            >
+              Close Modal
+            </Button>
+          </div>
+        </Modal>
       </div>
     );
   }
