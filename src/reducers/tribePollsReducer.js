@@ -14,8 +14,7 @@ export default function tribePollsReducer(state = initialState, action) {
       };
     case actions.GET_TRIBE_POLLS_ERROR:
       return {
-        ...initialState,
-        polls: [],
+        ...state,
         error: action.error,
       };
     default:
