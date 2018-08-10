@@ -17,18 +17,16 @@ function Navigation({ role }) {
             All Tribes
           </NavLink>
         </li>
-        {role === 'curator' && (
-          <li>
-            <NavLink
-              className={styles.NavLink}
-              exact
-              activeClassName="active"
-              to="/dashboard"
-            >
-              Dashboard
-            </NavLink>
-          </li>
-        )}
+        <li>
+          <NavLink
+            className={styles.NavLink}
+            exact
+            activeClassName="active"
+            to="/dashboard"
+          >
+            Dashboard
+          </NavLink>
+        </li>
         <li>
           <NavLink
             className={styles.NavLink}

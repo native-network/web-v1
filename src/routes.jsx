@@ -39,12 +39,7 @@ export const routes = (isAuthenticated) => {
       <Route exact path="/" component={Home} />
       <Route exact path="/tribes" component={Tribes} />
       <Route exact path="/tribe/:tribeId" component={Tribe} />
-      <PrivateRoute
-        isAuthenticated={isAuthenticated}
-        exact
-        path="/dashboard"
-        component={Dashboard}
-      />
+      <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
       <PrivateRoute
