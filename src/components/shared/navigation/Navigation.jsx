@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './Navigation.css';
 
-function Navigation({ role }) {
+function Navigation({ user }) {
+  const { role, address } = user;
   return (
     <nav className={styles.Navigation}>
       <ul>
@@ -17,16 +18,18 @@ function Navigation({ role }) {
             All Tribes
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            className={styles.NavLink}
-            exact
-            activeClassName="active"
-            to="/dashboard"
-          >
-            Dashboard
-          </NavLink>
-        </li>
+        {address && (
+          <li>
+            <NavLink
+              className={styles.NavLink}
+              exact
+              activeClassName="active"
+              to="/dashboard"
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        )}
         <li>
           <NavLink
             className={styles.NavLink}

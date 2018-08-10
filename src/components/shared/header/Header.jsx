@@ -45,7 +45,7 @@ export class Header extends Component {
             content="Get NT"
           />
           <AuthenticatedStatus user={this.props.user} />
-          <Navigation role={this.props.user && this.props.user.role} />
+          <Navigation user={this.props.user} />
           <div className={metamaskClass}>
             <img src={metamask} alt="Metamask Connected" />
             <svg width="10px" height="10px" viewBox="0 0 10 10">
