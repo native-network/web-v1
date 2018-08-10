@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './Navigation.css';
 
-function Navigation() {
+function Navigation({ role }) {
   return (
     <nav className={styles.Navigation}>
       <ul>
@@ -17,16 +17,18 @@ function Navigation() {
             All Tribes
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            className={styles.NavLink}
-            exact
-            activeClassName="active"
-            to="/dashboard"
-          >
-            Dashboard
-          </NavLink>
-        </li>
+        {role === 'curator' && (
+          <li>
+            <NavLink
+              className={styles.NavLink}
+              exact
+              activeClassName="active"
+              to="/dashboard"
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        )}
         <li>
           <NavLink
             className={styles.NavLink}
@@ -37,16 +39,18 @@ function Navigation() {
             Learn
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            className={styles.NavLink}
-            exact
-            activeClassName="active"
-            to="/manage"
-          >
-            Manage
-          </NavLink>
-        </li>
+        {role === 'curator' && (
+          <li>
+            <NavLink
+              className={styles.NavLink}
+              exact
+              activeClassName="active"
+              to="/manage"
+            >
+              Manage
+            </NavLink>
+          </li>
+        )}
       </ul>
     </nav>
   );

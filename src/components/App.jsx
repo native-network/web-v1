@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Header from './shared/header';
 import Modal from './shared/modal';
@@ -11,11 +12,28 @@ import styles from './App.css';
 import native from '../assets/img/native.svg';
 
 import { getUserAddress } from '../actions/userAddressActions';
+import { getUserSession } from '../actions/userSessionActions';
 
 export class App extends Component {
   state = {
     isWelcomeModalOpen: false,
   };
+
+  componentWillMount() {
+    this.props.getUserAddress();
+    if (!localStorage.getItem('visited')) {
+      this.setState({ isWelcomeModalOpen: true });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { address: oldUserAddress } = prevProps.user;
+    const { address: newUserAddress } = this.props.user;
+
+    if (!!newUserAddress && newUserAddress !== oldUserAddress) {
+      this.props.getUserSession();
+    }
+  }
 
   closeWelcomeModal() {
     this.setState({ isWelcomeModalOpen: false });
@@ -25,14 +43,6 @@ export class App extends Component {
     localStorage.setItem('visited', 1);
     this.closeWelcomeModal();
   }
-
-  componentDidMount = () => {
-    if (!localStorage.getItem('visited')) {
-      this.setState({ isWelcomeModalOpen: true });
-    }
-
-    this.props.getUserAddress();
-  };
 
   render() {
     return (
@@ -58,10 +68,12 @@ export class App extends Component {
           />
         </Modal>
         <Header
-          session={this.props.user.session}
+          user={this.props.user}
           isLoggedIn={this.props.user.isLoggedIn}
         />
-        {routes()}
+        {routes(
+          this.props.user.session && this.props.user.session.role === 'curator',
+        )}
       </Fragment>
     );
   }
@@ -69,7 +81,8 @@ export class App extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUserAddress: () => dispatch(getUserAddress()),
+    getUserAddress: bindActionCreators(getUserAddress, dispatch),
+    getUserSession: bindActionCreators(getUserSession, dispatch),
   };
 }
 

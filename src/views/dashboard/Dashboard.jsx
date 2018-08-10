@@ -51,10 +51,6 @@ export class Dashboard extends Component {
     userCurrencies: currencies,
   };
 
-  componentDidMount() {
-    this.props.getUserSession();
-  }
-
   componentDidUpdate(prevProps) {
     if (
       this.props.hasSession !== prevProps.hasSession &&
