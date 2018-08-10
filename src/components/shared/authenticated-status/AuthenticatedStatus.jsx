@@ -1,7 +1,7 @@
 import React from 'react';
 
-function AuthenticatedStatus(props) {
-  return <div>{props.session ? props.session.address : 'Unauthenticated'}</div>;
+function AuthenticatedStatus({ session }) {
+  return <div>{session ? session : 'Unauthenticated'}</div>;
 }
 
 export default AuthenticatedStatus;

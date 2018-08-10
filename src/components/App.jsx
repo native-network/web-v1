@@ -67,13 +67,8 @@ export class App extends Component {
             dismissDialog={this.finishWelcomeModalSteps.bind(this)}
           />
         </Modal>
-        <Header
-          user={this.props.user}
-          isLoggedIn={this.props.user.isLoggedIn}
-        />
-        {routes(
-          this.props.user.session && this.props.user.session.role === 'curator',
-        )}
+        <Header user={this.props.user} isLoggedIn={this.props.isLoggedIn} />
+        {routes(this.props.user && this.props.user.role === 'curator')}
       </Fragment>
     );
   }
@@ -91,11 +86,8 @@ App = connect(
   (state) => {
     return {
       location: state.router.location,
-      user: {
-        address: state.user.address,
-        session: state.user.session,
-        isLoggedIn: !!state.user.address,
-      },
+      user: state.user,
+      isLoggedIn: !!state.user.address,
     };
   },
   mapDispatchToProps,
