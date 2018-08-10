@@ -133,7 +133,7 @@ export default connect(
   (state) => {
     return {
       isLoading: state.loading > 0,
-      hasSession: state.user.session,
+      hasSession: state.user.session && state.user.session.id,
       user: state.user,
     };
   },
