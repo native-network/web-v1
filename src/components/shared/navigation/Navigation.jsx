@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './Navigation.css';
 
-function Navigation({ role }) {
+function Navigation({ user }) {
+  const { role, address } = user;
   return (
     <nav className={styles.Navigation}>
       <ul>
@@ -17,7 +18,7 @@ function Navigation({ role }) {
             All Tribes
           </NavLink>
         </li>
-        {role === 'curator' && (
+        {address && (
           <li>
             <NavLink
               className={styles.NavLink}

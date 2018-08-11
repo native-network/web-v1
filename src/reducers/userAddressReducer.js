@@ -1,12 +1,6 @@
 import { userAddressActions as actions } from '../actions/actionTypes';
 
-const initialState = {
-  address: '',
-  tribes: [],
-  addressError: '',
-};
-
-export default function userAddressReducer(state = initialState, action) {
+export default function userAddressReducer(state = {}, action) {
   switch (action.type) {
     case actions.GET_USER_ADDRESS_SUCCESS:
       return { ...state, address: action.address, addressError: '' };
