@@ -33,9 +33,20 @@
   --gray-9: #ccc;
   --gray-10: #ddd;
 
-  --primary-color: #2c5e5e;
+  --greenish-blue: #38767d;
+  --native-green: #549387;
+  --dark-green: #2c5e5e;
+
+  --light-blue: #64b4cd;
+  --dark-blue: #288ba9;
+
+  --warm-coral: #f16667;
+  --warm-orange: #ef8822;
+  --warm-yellow: #fbc24d;
+
+  --primary-color: var(--native-green);
   --primary-color--alt: #549387;
-  --secondary-color: #f16667;
+  --secondary-color: var(--warm-coral);
 
   --primary-white: var(--white-0);
   --primary-black: var(--black-0);
