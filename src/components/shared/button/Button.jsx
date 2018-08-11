@@ -15,7 +15,7 @@ function Button({
   clickHandler,
   ...props
 }) {
-  const classNames = cx({
+  const classes = cx({
     Button: true,
     Primary: theme === 'primary',
     Secondary: theme === 'secondary',
@@ -29,7 +29,7 @@ function Button({
     <button
       {...props}
       onClick={clickHandler}
-      className={`${classNames} ${className}`}
+      className={`${classes} ${className}`}
     >
       {content}
     </button>

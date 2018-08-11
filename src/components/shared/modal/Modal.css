@@ -4,9 +4,15 @@
   overflow: hidden;
 }
 
+:global(.ReactModal__Overlay) {
+
+  /* stylelint-disable-next-line declaration-no-important */
+  background: var(--transparent-black-50) !important;
+}
+
 :global(.ReactModal__Content) {
 
-  /* stylelint-disable declaration-no-important */
+  /* stylelint-disable-next-line declaration-no-important */
   border: 0 !important;
   box-shadow: 0 0.25rem 1rem var(--transparent-black-70);
   position: relative;
