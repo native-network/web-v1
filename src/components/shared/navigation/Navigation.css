@@ -1,7 +1,6 @@
 @import '../../../styles/globals.css';
 @import '../../../styles/extends.css';
 @import '../../../styles/media-queries.css';
-
 @import '../button/Button.css';
 
 :root {
@@ -22,7 +21,7 @@
     transition: all 200ms linear;
     width: 60%;
     height: 1px;
-    background: white;
+    background: var(--primary-white);
     position: absolute;
     left: 20%;
     top: 50%;
@@ -45,14 +44,14 @@
         top: 50%;
       }
 
-      &:not(:first-child, :last-child) {
-        left: 50%;
-        width: 0;
-      }
-
       &:last-child {
         top: 50%;
         transform: rotate(-45deg);
+      }
+
+      &:not(:first-child, :last-child) {
+        left: 50%;
+        width: 0;
       }
     }
   }
@@ -64,6 +63,7 @@
 
 .Menu {
   @extend %unstyled-list;
+
   display: none;
   position: absolute;
   background: var(--greenish-blue);
@@ -95,7 +95,7 @@
   }
 
   @media (--medium-viewport) {
-    &:after {
+    &::after {
       display: none;
     }
   }
