@@ -2,25 +2,122 @@
 @import '../../../styles/extends.css';
 @import '../../../styles/media-queries.css';
 
-.Navigation {
-  margin-left: auto;
+@import '../button/Button.css';
 
-  & ul {
-    @extend %unstyled-list;
+:root {
+  --link-padding: 1.5rem;
+}
 
-    display: flex;
+.Hamburger {
+  @extend %button;
+
+  background: transparent;
+  padding: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 100%;
+  position: relative;
+
+  & > span {
+    transition: all 200ms linear;
+    width: 60%;
+    height: 1px;
+    background: white;
+    position: absolute;
+    left: 20%;
+    top: 50%;
+
+    &:first-child {
+      top: 33%;
+    }
+
+    &:last-child {
+      top: 66%;
+    }
+  }
+
+  &.Active {
+
+    & > span {
+
+      &:first-child {
+        transform: rotate(45deg);
+        top: 50%;
+      }
+
+      &:not(:first-child, :last-child) {
+        left: 50%;
+        width: 0;
+      }
+
+      &:last-child {
+        top: 50%;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  @media (--medium-viewport) {
+    display: none;
   }
 }
 
-.NavLink {
-  color: var(--primary-color);
+.Menu {
+  @extend %unstyled-list;
+  display: none;
+  position: absolute;
+  background: var(--greenish-blue);
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  &.MenuOpen {
+    display: block;
+  }
+
+  @media (--medium-viewport) {
+
+    /* stylelint-disable-next-line declaration-no-important */
+    display: flex !important;
+    background: transparent;
+    position: relative;
+  }
+}
+
+.MenuListItem {
+  &:not(:last-child) {
+    @extend %decorator--full-width;
+
+    &::after {
+      background: var(--dark-green);
+    }
+  }
+
+  @media (--medium-viewport) {
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.MenuLink {
+  color: var(--primary-white);
   text-decoration: none;
-  display: inline-flex;
-  margin: 0 1rem;
+  display: block;
   font-weight: 100;
+  padding: var(--link-padding);
 
   &:global(.active) {
-    color: var(--secondary-color);
     font-weight: 700;
+  }
+
+  @media (--medium-viewport) {
+    padding: var(--link-padding) var(--link-padding) calc(var(--link-padding) - 6px);
+    border-bottom: 6px solid transparent;
+
+    &:global(.active) {
+      border-bottom-color: var(--gray-0);
+    }
   }
 }
