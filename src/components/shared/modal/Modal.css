@@ -8,7 +8,7 @@
 :global(.ReactModal__Overlay) {
 
   /* stylelint-disable-next-line declaration-no-important */
-  background: var(--transparent-black-50) !important;
+  background: var(--transparent-black-70) !important;
   z-index: 1000;
 }
 
