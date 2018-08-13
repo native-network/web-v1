@@ -1,4 +1,5 @@
 @import '../button/Button.css';
+@import '../../../styles/media-queries.css';
 
 :global(.ReactModal__Body--open) {
   overflow: hidden;
@@ -8,14 +9,37 @@
 
   /* stylelint-disable-next-line declaration-no-important */
   background: var(--transparent-black-50) !important;
+  z-index: 1000;
 }
 
+/* Overwrite react-modal positioning */
 :global(.ReactModal__Content) {
 
   /* stylelint-disable-next-line declaration-no-important */
   border: 0 !important;
-  box-shadow: 0 0.25rem 1rem var(--transparent-black-70);
+  box-shadow: 0 0.25rem 1rem var(--transparent-black-30);
   position: relative;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  top: 0 !important;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  left: 0 !important;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  right: 0 !important;
+
+  @media (--medium-viewport) {
+
+    /* stylelint-disable-next-line declaration-no-important */
+    top: 40px !important;
+
+    /* stylelint-disable-next-line declaration-no-important */
+    left: 40px !important;
+
+    /* stylelint-disable-next-line declaration-no-important */
+    right: 40px !important;
+  }
 }
 
 .ModalHeader {
