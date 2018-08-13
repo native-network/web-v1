@@ -4,13 +4,13 @@
 .CardList {
   @extend %unstyled-list;
 
-  background: var(--gray-0);
-
   & > li {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+  @media (--medium-viewport) {
+    @extend %container;
+
+    margin-top: 2rem;
   }
 }

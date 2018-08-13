@@ -4,6 +4,13 @@
 .Card {
   background: var(--white-1);
   height: 100%;
+  position: relative;
+
+  @media (--medium-viewport) {
+    box-shadow: 0 0.25rem 1rem var(--transparent-black-30);
+    border-radius: 5px;
+    overflow: hidden;
+  }
 }
 
 .Header {
@@ -57,7 +64,12 @@
   justify-content: space-around;
 
   @media (--medium-viewport) {
-    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    box-shadow: 0 0 0;
+    background: transparent;
   }
 }
 
@@ -79,27 +91,68 @@
   & > button {
     margin-left: 1rem;
   }
+
+  @media (--medium-viewport) {
+    box-shadow: 0 0 0.5rem var(--transparent-black-30);
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    width: auto;
+  }
 }
 
-.TokenDataMobile {
-  & ul {
+.TokenData {
+  & dl {
     @extend %unstyled-list;
 
     display: flex;
-    flex-flow: wrap;
   }
 
-  & li {
-    width: 50%;
-    padding: 2rem;
-    border-bottom: 1px solid var(--gray-9);
+  & dl div {
+    padding: 1.5rem 1rem 1.5rem 1rem;
+  }
 
-    &:nth-child(odd) {
-      border-right: 1px solid var(--gray-9);
+  & dt {
+    margin-bottom: 0.5rem;
+  }
+
+  & dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  &.Mobile {
+    & dl {
+      flex-flow: wrap;
+    }
+
+    & dl div {
+      width: 50%;
+      border-bottom: 1px solid var(--gray-9);
+
+      &:nth-child(odd) {
+        border-right: 1px solid var(--gray-9);
+      }
+    }
+
+    @media (--large-viewport) {
+      display: none;
     }
   }
 
-  @media (--medium-viewport) {
+  &.Desktop {
     display: none;
+    position: absolute;
+    right: 0;
+    color: var(--primary-white);
+    text-align: right;
+
+    @media (--large-viewport) {
+      display: block;
+    }
   }
+}
+
+.Summary,
+.Membership {
+  @extend %container;
 }
