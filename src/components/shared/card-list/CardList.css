@@ -6,7 +6,7 @@
 
   background: var(--gray-0);
 
-  & li {
+  & > li {
     margin-bottom: 1rem;
 
     &:last-child {

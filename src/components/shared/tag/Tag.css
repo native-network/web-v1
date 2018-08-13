@@ -1,7 +1,7 @@
 .Tag {
   font-size: 0.9rem;
-  color: var(--primary-color--alt);
-  border: 1px solid var(--primary-color);
+  color: var(--primary-white);
+  background: var(--greenish-blue);
   display: inline-block;
   padding: 0.5rem 1rem;
   margin: 0.5rem 0.5rem 0.5rem 0;

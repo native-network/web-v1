@@ -1,71 +1,105 @@
 @import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
 
 .Card {
   background: var(--white-1);
   height: 100%;
-  padding: 1rem 0;
 }
 
-.Card_Container {
-  composes: container from global;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-column-gap: 2rem;
-  grid-template-areas:
-    'summary header membership'
-    'summary data membership';
+.Header {
+  min-height: 15rem;
+  position: relative;
+  background-position: center center;
+  background-size: cover;
 
-  & .Header {
-    grid-area: header;
-    text-align: center;
+  @media (--medium-viewport) {
+    min-height: 25rem;
   }
+}
 
-  & .Summary,
-  & .Data,
-  & .Membership {
+.HeaderOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(0deg, var(--transparent-black-100), var(--transparent-black-0) 60%);
+}
 
-    & h4 {
-      @extend %decorator;
+.HeaderContainer {
+  @extend %container;
 
-      text-align: center;
-      position: relative;
-      padding-bottom: 1rem;
-    }
-  }
-
-  & .Summary {
-    grid-area: summary;
-  }
-
-  & .Data {
-    grid-area: data;
-  }
-
-  & .Membership {
-    grid-area: membership;
-  }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 
 .Title,
-.Subtitle {
+.Location {
+  color: var(--primary-white);
+}
+
+.Title {
   margin: 0;
 }
 
-.Title a {
-  color: var(--primary-color);
-  text-decoration: none;
+.Location {
+  margin: 1rem 0;
 }
 
-.Subtitle {
-  color: var(--gray-0);
-  font-weight: 100;
-}
+.CTAMobile {
+  background: var(--gray-9);
+  padding: 1.5rem 0;
+  box-shadow: 0 0 2rem var(--transparent-black-40) inset;
+  display: flex;
+  justify-content: space-around;
 
-.Taglist {
-  @extend %unstyled-list;
-
-  & li {
-    display: inline-block;
+  @media (--medium-viewport) {
+    display: none;
   }
 }
 
+.CTABadge {
+  width: 95%;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background: var(--primary-white);
+  box-shadow: 0 0 2rem var(--transparent-black-40);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > span {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  & > button {
+    margin-left: 1rem;
+  }
+}
+
+.TokenDataMobile {
+  & ul {
+    @extend %unstyled-list;
+
+    display: flex;
+    flex-flow: wrap;
+  }
+
+  & li {
+    width: 50%;
+    padding: 2rem;
+    border-bottom: 1px solid var(--gray-9);
+
+    &:nth-child(odd) {
+      border-right: 1px solid var(--gray-9);
+    }
+  }
+
+  @media (--medium-viewport) {
+    display: none;
+  }
+}
