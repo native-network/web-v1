@@ -83,7 +83,7 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: true,
-                  localIndentName: '[name]__[local]__[hash:base64:5]',
+                  localIdentName: '[name]__[local]__[hash:base64:5]',
                 },
               },
               {
@@ -94,9 +94,13 @@ module.exports = {
                     require('postcss-import')(),
                     require('postcss-extend-rule')(),
                     require('postcss-custom-properties')(),
-                    require('postcss-color-mod-function')(),
                     require('postcss-preset-env')({
                       stage: 0,
+                      features: {
+                        'custom-media': {
+                          preserve: true,
+                        },
+                      },
                     }),
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
