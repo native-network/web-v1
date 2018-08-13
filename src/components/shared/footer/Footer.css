@@ -1,0 +1,45 @@
+@import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
+
+.FooterContainer {
+  @extend %container;
+}
+
+.Footer {
+  background: var(--neutral-gray);
+  color: var(--primary-white);
+  display: flex;
+  flex-direction: column;
+
+  @media (--medium-viewport) {
+    align-items: stretch;
+    flex-direction: row;
+  }
+}
+
+.FooterLogo {
+
+  & svg {
+    width: 4rem;
+  }
+
+  & path {
+    fill: var(--transparent-white-50);
+  }
+}
+
+.SubFooter {
+  padding: 2rem 0;
+  background: var(--primary-black);
+}
+
+.SocialMedia {
+  @extend %unstyled-list;
+
+  display: flex;
+  justify-content: space-evenly;
+
+  & img {
+    width: 50px;
+  }
+}

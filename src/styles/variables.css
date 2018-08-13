@@ -21,6 +21,18 @@
   --transparent-black-90: color-mod(var(--black-0) alpha(90%));
   --transparent-black-100: color-mod(var(--black-0) alpha(100%));
 
+  --transparent-white-0: color-mod(var(--white-0) alpha(0%));
+  --transparent-white-10: color-mod(var(--white-0) alpha(10%));
+  --transparent-white-20: color-mod(var(--white-0) alpha(20%));
+  --transparent-white-30: color-mod(var(--white-0) alpha(30%));
+  --transparent-white-40: color-mod(var(--white-0) alpha(40%));
+  --transparent-white-50: color-mod(var(--white-0) alpha(50%));
+  --transparent-white-60: color-mod(var(--white-0) alpha(60%));
+  --transparent-white-70: color-mod(var(--white-0) alpha(70%));
+  --transparent-white-80: color-mod(var(--white-0) alpha(80%));
+  --transparent-white-90: color-mod(var(--white-0) alpha(90%));
+  --transparent-white-100: color-mod(var(--white-0) alpha(100%));
+
   --gray-0: #333;
   --gray-1: #444;
   --gray-2: #555;
