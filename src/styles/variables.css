@@ -33,6 +33,8 @@
   --gray-9: #ccc;
   --gray-10: #ddd;
 
+  --neutral-gray: var(--gray-0);
+
   --greenish-blue: #38767d;
   --native-green: #549387;
   --dark-green: #2c5e5e;

@@ -5,6 +5,8 @@
 
 :root {
   --link-padding: 1.5rem;
+  --hamburger-animation-duration: 250ms;
+  --transition-timing-function: ease-out;
 }
 
 .Hamburger {
@@ -17,42 +19,81 @@
   border-radius: 100%;
   position: relative;
 
-  & > span {
-    transition: all 200ms linear;
-    width: 60%;
+  & span:first-child,
+  & span:nth-child(2),
+  & span:last-child {
     height: 1px;
     background: var(--primary-white);
     position: absolute;
-    left: 20%;
-    top: 50%;
+  }
 
-    &:first-child {
+  & span:nth-child(2) {
+    transition: all calc(var(--hamburger-animation-duration) / 2) var(--transition-timing-function);
+  }
+
+  &.Inactive {
+    & span:first-child,
+    & span:nth-child(2),
+    & span:last-child {
+      width: 60%;
+      left: 20%;
+    }
+
+    & span:first-child {
       top: 33%;
     }
 
-    &:last-child {
+    & span:nth-child(2) {
+      top: 50%;
+      transition-delay: calc(var(--hamburger-animation-duration) / 2);
+    }
+
+    & span:last-child {
       top: 66%;
     }
   }
 
+  &.TransitionInactive {
+    & span:first-child {
+      animation: top var(--hamburger-animation-duration) var(--transition-timing-function);
+      animation-direction: reverse;
+    }
+
+    & span:last-child {
+      animation: bottom var(--hamburger-animation-duration) var(--transition-timing-function);
+      animation-direction: reverse;
+    }
+  }
+
   &.Active {
+    & span:first-child,
+    & span:last-child {
+      width: 60%;
+      left: 20%;
+      top: 50%;
+    }
 
-    & > span {
+    & span:first-child {
+      transform: rotate(135deg);
+    }
 
-      &:first-child {
-        transform: rotate(45deg);
-        top: 50%;
-      }
+    & span:nth-child(2) {
+      left: 50%;
+      width: 0;
+    }
 
-      &:last-child {
-        top: 50%;
-        transform: rotate(-45deg);
-      }
+    & span:last-child {
+      transform: rotate(225deg);
+    }
+  }
 
-      &:not(:first-child, :last-child) {
-        left: 50%;
-        width: 0;
-      }
+  &.TransitionActive {
+    & span:first-child {
+      animation: top var(--hamburger-animation-duration) var(--transition-timing-function);
+    }
+
+    & span:last-child {
+      animation: bottom var(--hamburger-animation-duration) var(--transition-timing-function);
     }
   }
 
@@ -70,7 +111,7 @@
   top: 100%;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
 
   &.MenuOpen {
     display: block;
@@ -119,5 +160,59 @@
     &:global(.active) {
       border-bottom-color: var(--gray-0);
     }
+  }
+}
+
+@keyframes top {
+  from {
+    top: 33%;
+    width: 60%;
+    left: 20%;
+    transform: rotate(0deg);
+  }
+
+  50% {
+    top: 50%;
+    left: 50%;
+    width: 0%;
+    transform: rotate(0deg);
+  }
+
+  51% {
+    transform: rotate(45deg);
+  }
+
+  to {
+    top: 50%;
+    width: 60%;
+    left: 20%;
+    transform: rotate(135deg);
+  }
+}
+
+@keyframes bottom {
+  from {
+    top: 66%;
+    width: 60%;
+    left: 20%;
+    transform: rotate(0deg);
+  }
+
+  50% {
+    top: 50%;
+    left: 50%;
+    width: 0%;
+    transform: rotate(0deg);
+  }
+
+  51% {
+    transform: rotate(135deg);
+  }
+
+  to {
+    top: 50%;
+    width: 60%;
+    left: 20%;
+    transform: rotate(225deg);
   }
 }
