@@ -77,7 +77,7 @@ class CurrencyConverter extends Component {
                     renderLabel={(currency) => (
                       <CurrencySelector
                         selectHandler={(selection) =>
-                          this.setActiveFromCurrency(selection)
+                          this.setActiveToCurrency(selection)
                         }
                         defaultCurrency={currency}
                         currencies={toCurrencies.filter(
