@@ -1,14 +1,24 @@
+@import '../../../styles/media-queries.css';
+
 .CurrencyInput {
   display: flex;
   width: 100%;
   align-items: stretch;
   border-top: 1px solid var(--gray-8);
   border-bottom: 1px solid var(--gray-8);
+
+  @media (--medium-viewport) {
+    border: 0;
+  }
 }
 
 .Label {
   border-right: 1px solid var(--gray-8);
   flex-basis: 12rem;
+
+  @media (--medium-viewport) {
+    border-right: 0;
+  }
 }
 
 .Input {
@@ -21,5 +31,10 @@
 
   &::placeholder {
     color: var(--gray-8);
+  }
+
+  @media (--medium-viewport) {
+    height: 3rem;
+    border-bottom-color: var(--gray-8);
   }
 }

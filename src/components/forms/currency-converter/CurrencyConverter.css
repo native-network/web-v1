@@ -1,15 +1,28 @@
 @import '../../../styles/media-queries.css';
+@import '../../../styles/extends.css';
+
+.CurrencyForm {
+  display: flex;
+  flex-direction: column;
+
+  @media (--medium-viewport) {
+    @extend %container;
+
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+
+    & .ConversionButton {
+      margin-left: 2rem;
+      align-self: flex-start;
+    }
+  }
+}
 
 .ConversionInputs {
   width: 100%;
   box-shadow: 0 0 1rem var(--transparent-black-30);
   padding: 0 0 1rem;
-
-  & .ConversionButton {
-    margin: 0 auto;
-    display: block;
-    max-width: calc(100% - 4rem);
-  }
 
   @media (--medium-viewport) {
     display: flex;
@@ -25,8 +38,16 @@
   flex-flow: wrap;
 
   @media (--medium-viewport) {
-    flex-basis: calc(50% - 1rem);
+    flex-grow: 1;
+    margin-bottom: 0;
+    flex-direction: column;
   }
+}
+
+.Arrow {
+  font-size: 2rem;
+  color: var(--secondary-color);
+  margin: 0 1rem;
 }
 
 .Error {
@@ -34,4 +55,10 @@
   color: var(--warm-coral);
   text-align: right;
   width: 100%;
+
+  @media (--medium-viewport) {
+    width: auto;
+    margin-top: 0.25rem;
+    align-self: flex-end;
+  }
 }

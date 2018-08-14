@@ -35,7 +35,7 @@ class CurrencyConverter extends Component {
   render() {
     const { activeFrom, activeTo } = this.state;
     const { fromCurrencies, toCurrencies } = this.props;
-    const hasEnoughValue = (value) => this.state.activeFrom.balance >= value && value.length ? undefined : `You don't have enough currency`;
+    const hasEnoughValue = (value) => (value && value.length >= 1) && this.state.activeFrom.balance >= value ? undefined : `You don't have enough currency`;
 
     return (
       <Form
@@ -43,7 +43,7 @@ class CurrencyConverter extends Component {
         className={styles.ConversionInputs}
       >
         {({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
+          <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
             <Field name="fromCurrency" validate={hasEnoughValue}>
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
@@ -67,7 +67,7 @@ class CurrencyConverter extends Component {
                 </div>
               )}
             </Field>
-            <span className="visible-md">&rarr;</span>
+            <span className={`visible-md ${styles.Arrow}`}>&rarr;</span>
             <Field name="toCurrency">
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
@@ -76,7 +76,6 @@ class CurrencyConverter extends Component {
                     currency={activeTo}
                     renderLabel={(currency) => (
                       <CurrencySelector
-                        isFrom
                         selectHandler={(selection) =>
                           this.setActiveFromCurrency(selection)
                         }

@@ -18,7 +18,16 @@
   justify-content: flex-start;
   align-items: center;
 
+  &.NoDropdown {
+    grid-template-columns: 3rem 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      'icon label-1'
+      'icon label-2';
+  }
+
   & .CurrencyIcon {
+    max-height: 2rem;
     width: 2rem;
     margin: 0 auto 0 0.5rem;
     grid-area: icon;
@@ -32,6 +41,7 @@
   & .CurrencyId {
     grid-area: label-2;
     align-self: flex-start;
+    font-weight: 700;
   }
 
   & .MenuToggle {
@@ -68,6 +78,7 @@
   }
 
   & img {
+    max-height: 2rem;
     max-width: 2rem;
     margin-right: 1rem;
   }
