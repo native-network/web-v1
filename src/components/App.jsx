@@ -74,7 +74,7 @@ export class App extends Component {
           isLoggedIn={this.props.isLoggedIn}
         />
         {routes(this.props.user && this.props.user.role === 'curator')}
-        <Footer />
+        <Footer location={this.props.location} user={this.props.user} />
       </Fragment>
     );
   }

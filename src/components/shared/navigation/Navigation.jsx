@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 
 import Hamburger from './Hamburger';
-import MenuItem from './MenuItem';
+import Menu from './Menu';
 
 import styles from './Navigation.css';
 
@@ -30,7 +30,7 @@ class Navigation extends Component {
     const { role, address } = this.props.user;
 
     const classes = cx({
-      Menu: true,
+      PrimaryMenu: true,
       MenuOpen: this.state.isMenuActive,
     });
 
@@ -41,14 +41,14 @@ class Navigation extends Component {
             active={this.state.isMenuActive}
             clickHandler={this.toggleMenu.bind(this)}
           />
-          <ul aria-hidden={!this.state.isMenuActive} className={classes}>
-            <MenuItem path="/" label="All Tribes" exact />
-            {address && <MenuItem path="/dashboard" label="Dashboard" exact />}
-            <MenuItem path="/learn" label="Learn" exact />
-            {role === 'curator' && (
-              <MenuItem path="/manage" label="Manage" exact />
-            )}
-          </ul>
+          <Menu
+            address={address}
+            role={role}
+            hidden={!this.state.isMenuActive}
+            menuClass={classes}
+            menuItemClass={styles.MenuListItem}
+            linkClass={styles.MenuLink}
+          />
         </nav>
       </div>
     );
