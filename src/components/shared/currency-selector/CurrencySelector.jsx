@@ -37,22 +37,24 @@ function CurrencySelector({
               {isFrom ? `Pay with` : `Receive`}
             </span>
             <span className={styles.CurrencyId}>{defaultCurrency.id}</span>
-            <button
-              {...getToggleButtonProps({
-                className: styles.MenuToggle,
-              })}
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded={isOpen}
-            >
-              {isOpen ? (
-                <Fragment>&#9652;</Fragment>
-              ) : (
-                <Fragment>&#9662;</Fragment>
-              )}
-            </button>
+            {currencies.length > 1 ? (
+              <button
+                {...getToggleButtonProps({
+                  className: styles.MenuToggle,
+                })}
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+              >
+                {isOpen ? (
+                  <Fragment>&#9652;</Fragment>
+                ) : (
+                  <Fragment>&#9662;</Fragment>
+                )}
+              </button>
+            ) : null}
           </label>
-          {isOpen ? (
+          {isOpen && currencies.length > 1 ? (
             <ul
               {...getMenuProps({
                 className: styles.Dropdown,

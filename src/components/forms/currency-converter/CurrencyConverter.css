@@ -21,11 +21,17 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  border-top: 1px solid var(--gray-8);
-  border-bottom: 1px solid var(--gray-8);
   margin-bottom: 1rem;
+  flex-flow: wrap;
 
   @media (--medium-viewport) {
     flex-basis: calc(50% - 1rem);
   }
+}
+
+.Error {
+  display: block;
+  color: var(--warm-coral);
+  text-align: right;
+  width: 100%;
 }
