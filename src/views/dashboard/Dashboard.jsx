@@ -94,7 +94,7 @@ export class Dashboard extends Component {
         {this.state.hasSession ? (
           <section className={styles.Dashboard}>
             <h1>Convert Tokens</h1>
-            <CurrencyConverter fromCurrencies={this.state.userCurrencies.filter(curr => curr.balance)} toCurrencies={[this.state.userCurrencies[1]]} />
+            <CurrencyConverter fromCurrencies={this.state.userCurrencies.filter(curr => curr.balance)} toCurrencies={this.state.userCurrencies} />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
             </div>
