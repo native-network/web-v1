@@ -1,24 +1,26 @@
 @import '../../../styles/variables.css';
 
 .TableTitle {
-  grid-area: title;
-  align-self: end;
-  justify-self: center;
+  margin-left: -300px;
 }
 
 .Table {
-  grid-area: table;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-  justify-self: center;
+  width: 100%;
   border-bottom: 1px solid var(--primary-color);
   border-right: 1px solid var(--primary-color);
-  background: #efefef;
+  border-collapse: collapse;
+  border-spacing: none;
+}
+
+.TableRow {
   width: 100%;
+  background: #efefef;
   text-align: center;
 }
 
-.Table > div {
-  border-top: 1px solid var(--primary-color);;
-  border-left: 1px solid var(--primary-color);;
+.TableCell {
+  border-top: 1px solid var(--primary-color);
+  border-left: 1px solid var(--primary-color);
+  padding: 10px;
+  text-align: left;
 }

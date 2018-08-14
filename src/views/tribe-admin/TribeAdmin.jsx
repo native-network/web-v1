@@ -56,7 +56,6 @@ export class TribeAdmin extends Component {
     ) : (
       <main>
         <h2>Manage Your Tribe</h2>
-        <p>{props.tribe.name}</p>
         <TabPanels panels={state.initiatives} />
       </main>
     );

@@ -1,67 +1,82 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import AddPoll from './AddPoll';
 
 import styles from './PollsAdmin.css';
 
-function PollsAdmin({ items }) {
-  const renderItem = ({
-    index,
-    title,
-    question,
-    startDate,
-    endDate,
-    votes,
-  }) => {
+export class PollsAdmin extends Component {
+  renderStat = ({ index, option, item }) => {
+    const optionVoteCount = ++option.votes.length - 1;
+    const voteCount = ++item.votes.length - 1;
+    const votePercentage = ((optionVoteCount / voteCount) * 100).toFixed();
     return (
-      <div key={index} className={styles.Table}>
-        <div>
-          <p>{title}</p>
-        </div>
-        <div>
-          <p>{question}</p>
-        </div>
-        <div>
-          <p>{startDate}</p>
-        </div>
-        <div>
-          <p>{endDate}</p>
-        </div>
-        <div>
-          <p>{votes.length} Total Votes</p>
-          <p>14 Yes 70%</p>
-          <p>6 Yes 30%</p>
-        </div>
-      </div>
+      <p key={index}>
+        {`${option.votes.length - 1} ${option.name} ${votePercentage}%`}
+      </p>
     );
   };
 
-  return (
-    <div>
-      <AddPoll />
-      <div className={styles.TableTitle}>
-        <h1>Current Polls</h1>
+  renderItem = ({ index, item }) => {
+    return (
+      <tr key={index} className={styles.TableRow}>
+        <td className={styles.TableCell}>
+          <p>{item.title}</p>
+        </td>
+        <td className={styles.TableCell}>
+          <p>{item.question}</p>
+        </td>
+        <td className={styles.TableCell}>
+          <p>{new Date(item.startDate).toLocaleDateString()}</p>
+        </td>
+        <td className={styles.TableCell}>
+          <p>{new Date(item.endDate).toLocaleDateString()}</p>
+        </td>
+        <td className={styles.TableCell}>
+          <p>{item.votes.length} Total Votes</p>
+          {(item.options || []).map((option, i) => {
+            return this.renderStat({ index: i, option, item });
+          })}
+        </td>
+      </tr>
+    );
+  };
+
+  render() {
+    return (
+      <div>
+        <AddPoll />
+        <div className={styles.TableTitle}>
+          <h1>Current Polls</h1>
+        </div>
+        <table className={styles.Table}>
+          <thead>
+            <tr className={styles.TableRow}>
+              <th className={styles.TableCell}>
+                <p>Title</p>
+              </th>
+              <th className={styles.TableCell}>
+                <p>Question</p>
+              </th>
+              <th className={styles.TableCell}>
+                <p>Start Date</p>
+              </th>
+              <th className={styles.TableCell}>
+                <p>End Date</p>
+              </th>
+              <th className={styles.TableCell}>
+                <p>Status</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {(this.props.items || []).map((item, i) => {
+              return this.renderItem({ index: i, item });
+            })}
+          </tbody>
+        </table>
       </div>
-      <div className={styles.Table}>
-        <div>
-          <p>Title</p>
-        </div>
-        <div>
-          <p>Question</p>
-        </div>
-        <div>
-          <p>Start Date</p>
-        </div>
-        <div>
-          <p>End Date</p>
-        </div>
-        <div>
-          <p>Status</p>
-        </div>
-      </div>
-      {(items || []).map((item, i) => renderItem({ index: i, ...item }))}
-    </div>
-  );
+    );
+  }
 }
 
 export default PollsAdmin;
