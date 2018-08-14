@@ -64,7 +64,7 @@ describe('userSessionActions', () => {
       let response;
 
       beforeEach(() => {
-        response = { session: {}, user: {} };
+        response = { user: {} };
         moxiosResponse({ status: 200, response });
       });
 
@@ -75,7 +75,7 @@ describe('userSessionActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: userSessionActions.GET_USER_SESSION_SUCCESS,
-          session: response.session,
+          user: response.user,
         };
 
         expect(lastAction).toEqual(expectedAction);

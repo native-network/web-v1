@@ -18,6 +18,7 @@
     "describe": true,
     "expect": true,
     "it": true,
+    "xit": true,
     "buildComponent": true,
     "moxiosResponse": true,
     "shallow": true,
