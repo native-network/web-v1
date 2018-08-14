@@ -2,7 +2,8 @@
 @custom-media --medium-viewport (min-width: 768px);
 @custom-media --large-viewport (min-width: 1024px);
 
-/* Max-width breakpoints
+/*
+ * Max-width breakpoints:
  * Caution: use sparingly, should opt for
  * min-width breakpoints wherever possible
  */
