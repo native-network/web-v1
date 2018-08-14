@@ -1,18 +1,20 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import styles from './CurrencyInput.css';
 
 function CurrencyInput({ currency, renderLabel }) {
   return (
-    <Fragment>
-      {renderLabel && renderLabel(currency)}
+    <div className={styles.CurrencyInput}>
+      <label htmlFor={currency.id} className={styles.Label}>
+        {renderLabel && renderLabel(currency)}
+      </label>
       <input
         id={currency.id}
         type="text"
         placeholder="Enter Amount"
         className={styles.Input}
       />
-    </Fragment>
+    </div>
   );
 }
 

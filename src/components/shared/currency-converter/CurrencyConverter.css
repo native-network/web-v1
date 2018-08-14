@@ -1,19 +1,31 @@
+@import '../../../styles/media-queries.css';
+
 .ConversionInputs {
   width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
+  box-shadow: 0 0 1rem var(--transparent-black-30);
+  padding: 0 0 1rem;
+
+  & .ConversionButton {
+    margin: 0 auto;
+    display: block;
+    max-width: calc(100% - 4rem);
+  }
+
+  @media (--medium-viewport) {
+    display: flex;
+    align-content: center;
+  }
 }
 
 .ConversionInput {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex-grow: 1;
-  margin: 0 1rem 0 0;
+  border-top: 1px solid var(--gray-8);
+  border-bottom: 1px solid var(--gray-8);
+  margin-bottom: 1rem;
 
-  & input {
-    align-self: flex-end;
-    width: 100%;
+  @media (--medium-viewport) {
+    flex-basis: calc(50% - 1rem);
   }
 }

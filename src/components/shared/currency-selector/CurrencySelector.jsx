@@ -22,31 +22,35 @@ function CurrencySelector({
         isOpen,
         highlightedIndex,
       }) => (
-        <div>
+        <div className={styles.SelectorContainer}>
           <label
             {...getLabelProps({
               className: styles.MenuLabel,
             })}
           >
-            <img src={defaultCurrency.thumb} alt="" />
-            <div>
-              <span>{isFrom ? `Pay with` : `Receive`}</span>
-              {defaultCurrency.id}
-              <button
-                {...getToggleButtonProps({
-                  className: styles.MenuToggle,
-                })}
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded={isOpen}
-              >
-                {isOpen ? (
-                  <Fragment>&#9652;</Fragment>
-                ) : (
-                  <Fragment>&#9662;</Fragment>
-                )}
-              </button>
-            </div>
+            <img
+              className={styles.CurrencyIcon}
+              src={defaultCurrency.thumb}
+              alt=""
+            />
+            <span className={styles.CurrencyDirection}>
+              {isFrom ? `Pay with` : `Receive`}
+            </span>
+            <span className={styles.CurrencyId}>{defaultCurrency.id}</span>
+            <button
+              {...getToggleButtonProps({
+                className: styles.MenuToggle,
+              })}
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded={isOpen}
+            >
+              {isOpen ? (
+                <Fragment>&#9652;</Fragment>
+              ) : (
+                <Fragment>&#9662;</Fragment>
+              )}
+            </button>
           </label>
           {isOpen ? (
             <ul

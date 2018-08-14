@@ -8,8 +8,8 @@ import CurrencyInput from '../currency-input';
 
 class CurrencyConverter extends Component {
   state = {
-    activeFrom: this.props.currencies[0],
-    activeTo: this.props.currencies[1],
+    activeFrom: this.props.fromCurrencies[0],
+    activeTo: this.props.toCurrencies[1],
   };
 
   setActiveFromCurrency(selection) {
@@ -29,47 +29,43 @@ class CurrencyConverter extends Component {
           <CurrencyInput
             currency={activeFrom}
             renderLabel={(currency) => (
-              <label
-                htmlFor={currency.id}
-                style={{ position: 'relative', cursor: 'pointer' }}
-              >
-                <CurrencySelector
-                  isFrom
-                  selectHandler={(selection) =>
-                    this.setActiveFromCurrency(selection)
-                  }
-                  defaultCurrency={currency}
-                  currencies={this.props.currencies.filter(
-                    (currency) => currency.balance && currency.balance > 0,
-                  )}
-                />
-              </label>
+              <CurrencySelector
+                isFrom
+                selectHandler={(selection) =>
+                  this.setActiveFromCurrency(selection)
+                }
+                defaultCurrency={currency}
+                currencies={this.props.fromCurrencies.filter(
+                  (currency) => currency.balance && currency.balance > 0,
+                )}
+              />
             )}
           />
         </div>
-        &rarr;
+        <span className="visible-md">&rarr;</span>
         <div className={styles.ConversionInput}>
           <CurrencyInput
             currency={activeTo}
             renderLabel={(currency) => (
-              <label
-                htmlFor={currency.id}
-                style={{ position: 'relative', cursor: 'pointer' }}
-              >
-                <CurrencySelector
-                  selectHandler={(selection) =>
-                    this.setActiveToCurrency(selection)
-                  }
-                  defaultCurrency={currency}
-                  currencies={this.props.currencies.filter(
-                    (curr) => curr.id !== activeFrom.id,
-                  )}
-                />
-              </label>
+              <CurrencySelector
+                selectHandler={(selection) =>
+                  this.setActiveToCurrency(selection)
+                }
+                defaultCurrency={currency}
+                currencies={this.props.toCurrencies.filter(
+                  (curr) => curr.id !== activeFrom.id,
+                )}
+              />
             )}
           />
         </div>
-        <Button content="&#8644; Convert" theme="secondary" />
+        <Button
+          content="&#8644; Convert"
+          centered
+          block
+          theme="secondary"
+          className={styles.ConversionButton}
+        />
       </div>
     );
   }
