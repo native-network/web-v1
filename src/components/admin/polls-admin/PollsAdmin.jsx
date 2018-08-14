@@ -30,6 +30,11 @@ export class PollsAdmin extends Component {
 
   componentWillUnmount() {
     //need to clear some shit
+    //it's not state - someow the store seems to refresh
+    // this.setState({
+    //   currentPolls: [],
+    //   pastPolls: [],
+    // });
   }
 
   render() {

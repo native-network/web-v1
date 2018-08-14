@@ -29,12 +29,13 @@ function PollsList({ polls }) {
   };
 
   const renderStat = ({ index, option, item }) => {
-    const optionVoteCount = ++option.votes.length - 1;
-    const voteCount = ++item.votes.length - 1;
-    const votePercentage = ((optionVoteCount / voteCount) * 100).toFixed();
+    const optionVoteCount = option.votes.length;
+    const voteCount = item.votes.length;
+
+    const votePercentage = voteCount ? (optionVoteCount / voteCount) * 100 : 0;
     return (
       <p key={index}>
-        {`${option.votes.length - 1} ${option.name} ${votePercentage}%`}
+        {`${option.votes.length} ${option.name} ${votePercentage}%`}
       </p>
     );
   };

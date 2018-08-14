@@ -17,6 +17,8 @@ export default function tribePollsReducer(state = initialState, action) {
         ...state,
         error: action.error,
       };
+    case actions.CLEAR_ACTIVE_TRIBE_POLLS:
+      return initialState;
     default:
       return state;
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
+import ManagePollForm from '../../forms/manage-poll';
 
 import styles from './PollsAdmin.css';
 
@@ -18,6 +19,10 @@ export class AddPoll extends Component {
     this.setState({ isModalOpen: false });
   }
 
+  handleSubmit(vals) {
+    console.log(vals) // eslint-disable-line
+  }
+
   render() {
     return (
       <div className={styles.PollButton}>
@@ -32,7 +37,6 @@ export class AddPoll extends Component {
           isOpen={this.state.isModalOpen}
         >
           <div>
-            Add Poll Form
             <Button
               clickHandler={this.closeModal.bind(this)}
               theme="secondary"
@@ -41,6 +45,7 @@ export class AddPoll extends Component {
             >
               Close Modal
             </Button>
+            <ManagePollForm submitForm={this.handleSubmit.bind(this)} />
           </div>
         </Modal>
       </div>

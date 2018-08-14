@@ -29,3 +29,9 @@ export const getTribePollsError = (error) => {
     error,
   };
 };
+
+export const clearActiveTribePolls = () => {
+  return {
+    type: actions.CLEAR_ACTIVE_TRIBE_POLLS,
+  };
+};

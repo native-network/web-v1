@@ -3,7 +3,10 @@ import Loader from '../../components/shared/loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
-import { getTribePolls } from '../../actions/tribePollsActions';
+import {
+  getTribePolls,
+  clearActiveTribePolls,
+} from '../../actions/tribePollsActions';
 
 import TabPanels from '../../components/shared/tab-panels';
 import PollsAdmin from '../../components/admin/polls-admin';
@@ -14,16 +17,16 @@ const initiatives = [
     items: [],
     render: (items) => <PollsAdmin items={items} />,
   },
-  {
-    name: 'Tasks',
-    items: [],
-    render: (items) => <PollsAdmin items={items} />,
-  },
-  {
-    name: 'Projects',
-    items: [],
-    render: (items) => <PollsAdmin items={items} />,
-  },
+  // {
+  //   name: 'Tasks',
+  //   items: [],
+  //   render: (items) => <PollsAdmin items={items} />,
+  // },
+  // {
+  //   name: 'Projects',
+  //   items: [],
+  //   render: (items) => <PollsAdmin items={items} />,
+  // },
 ];
 
 export class TribeAdmin extends Component {
@@ -45,7 +48,7 @@ export class TribeAdmin extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearActiveTribe();
+    this.props.clearActiveTribePolls();
   }
 
   render() {
@@ -67,6 +70,7 @@ export function mapDispatchToProps(dispatch) {
     getTribeById: bindActionCreators(getTribeById, dispatch),
     clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
     getTribePolls: bindActionCreators(getTribePolls, dispatch),
+    clearActiveTribePolls: bindActionCreators(clearActiveTribePolls, dispatch),
   };
 }
 
