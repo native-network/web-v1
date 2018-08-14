@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 // import moment from 'moment';
 
 import styles from './ManagePollForm.css';
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 import Button from '../../shared/button';
 // import FilePicker from '../../shared/file-picker/FilePicker';
@@ -14,8 +15,15 @@ export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   const required = (value) => (value ? undefined : 'Required');
 
-  const ReactDatePickerAdapter = ({ endDate, handleChange }) => (
-    <DatePicker selected={endDate} onChange={handleChange} />
+  const ReactDatePickerAdapter = ({ date, handleChange }) => (
+    <DatePicker
+      selected={date}
+      onChange={handleChange}
+      showTimeSelect
+      timeFormat="HH:mm"
+      timeIntervals={30}
+      timeCaption="Time"
+    />
   );
 
   return (
