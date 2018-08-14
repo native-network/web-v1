@@ -5,9 +5,17 @@
   ],
   "rules": {
     "order/order": [
-      "at-rules",
+      {
+        "type": "at-rule",
+        "hasBlock": false
+      },
       "declarations",
-      "rules"
+      "rules",
+      {
+        "type": "at-rule",
+        "name": "media",
+        "hasBlock": true
+      }
     ],
     "order/properties-order": [
       [

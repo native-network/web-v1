@@ -1,14 +1,23 @@
 @import '../button/Button.css';
+@import '../../../styles/media-queries.css';
 
 :global(.ReactModal__Body--open) {
   overflow: hidden;
 }
 
+:global(.ReactModal__Overlay) {
+
+  /* stylelint-disable-next-line declaration-no-important */
+  background: var(--transparent-black-70) !important;
+  z-index: 1000;
+}
+
+/* Overwrite react-modal positioning */
 :global(.ReactModal__Content) {
 
-  /* stylelint-disable declaration-no-important */
+  /* stylelint-disable-next-line declaration-no-important */
   border: 0 !important;
-  box-shadow: 0 0.25rem 1rem var(--transparent-black-70);
+  box-shadow: 0 0.25rem 1rem var(--transparent-black-30);
   position: relative;
 }
 

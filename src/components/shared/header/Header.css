@@ -2,57 +2,42 @@
 @import '../../../styles/media-queries.css';
 
 .Header {
+  background: var(--primary-color);
+  position: relative;
+}
+
+.HeaderContainer {
   composes: container from global;
-  background: var(--primary-white);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 0.5rem 0;
+  justify-content: flex-end;
+}
+
+.LogoLink {
+  margin-right: auto;
 }
 
 .Logo {
   max-width: 10rem;
 }
 
-.PrimaryNav {
-  margin-left: auto;
-}
+.Wallet {
+  margin: 0 0.5rem;
+  width: 3rem;
 
-.Metamask {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  & img {
-    max-width: 2rem;
-  }
-
-  & svg {
-    margin-left: 0.5rem;
-
-    & circle {
-      fill: var(--primary-color--alt);
-    }
+  & path,
+  & circle {
+    fill: var(--primary-white);
   }
 
   &.Disabled {
-
-    & img {
-      filter: grayscale(100%);
-    }
-
-    & svg circle {
-      fill: var(--secondary-color);
+    & path,
+    & circle {
+      fill: var(--greenish-blue);
     }
   }
-}
 
-.Subheader {
-  background: var(--gray-0);
-  padding: 1rem 0;
-
-  & > div {
-    display: flex;
-    justify-content: flex-end;
+  @media (--medium-viewport) {
+    order: 2;
   }
 }

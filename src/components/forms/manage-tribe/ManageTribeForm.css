@@ -12,17 +12,17 @@
 }
 
 .ManageTribeFields {
-  @media (--medium-viewport) {
-    columns: 2;
-    column-gap: 2rem;
-  }
-
   & > div {
     break-inside: avoid;
   }
 
   & label {
     display: block;
+  }
+
+  @media (--medium-viewport) {
+    columns: 2;
+    column-gap: 2rem;
   }
 }
 

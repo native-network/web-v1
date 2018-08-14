@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import SVG from 'react-inlinesvg';
 import classNames from 'classnames/bind';
 
-import Button from '../button';
 import Navigation from '../navigation';
-import Modal from '../modal';
-import AuthenticatedStatus from '../authenticated-status';
-import logo from '../../../assets/img/logo.svg';
-import metamask from '../../../assets/img/metamask.svg';
+
+import logo from '../../../assets/img/native-white.svg';
+import wallet from '../../../assets/img/wallet.svg';
+import walletDisabled from '../../../assets/img/wallet-disabled.svg';
 
 import styles from './Header.css';
 
@@ -27,42 +27,20 @@ export class Header extends Component {
   }
 
   render() {
-    const metamaskClass = cx({
-      Metamask: true,
-      Disabled: !this.props.isLoggedIn,
+    const walletSrc = this.props.user.address ? wallet : walletDisabled;
+    const walletClass = cx({
+      Wallet: true,
+      Disabled: !this.props.user.address,
     });
-
     return (
-      <header>
-        <div className={styles.Header}>
+      <header className={styles.Header}>
+        <div className={styles.HeaderContainer}>
           <Link className={styles.LogoLink} to="/">
             <img className={styles.Logo} src={logo} alt="Native logo" />
           </Link>
-          <Button
-            outline
-            theme="primary"
-            clickHandler={this.openModal.bind(this)}
-            content="Get NT"
-          />
-          <AuthenticatedStatus user={this.props.user} />
-          <Navigation user={this.props.user} />
-          <div className={metamaskClass}>
-            <img src={metamask} alt="Metamask Connected" />
-            <svg width="10px" height="10px" viewBox="0 0 10 10">
-              <circle r="5" cx="5" cy="5" />
-            </svg>
-          </div>
+          <SVG className={walletClass} src={walletSrc} />
+          <Navigation location={this.props.location} user={this.props.user} />
         </div>
-        <div className={styles.Subheader}>
-          <div className="container" />
-        </div>
-        <Modal
-          label="Lorem Ipsum"
-          isOpen={this.state.isModalOpen}
-          closeModal={this.closeModal.bind(this)}
-        >
-          <div>Foo</div>
-        </Modal>
       </header>
     );
   }

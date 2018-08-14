@@ -67,7 +67,11 @@ export class App extends Component {
             dismissDialog={this.finishWelcomeModalSteps.bind(this)}
           />
         </Modal>
-        <Header user={this.props.user} isLoggedIn={this.props.isLoggedIn} />
+        <Header
+          location={this.props.location}
+          user={this.props.user}
+          isLoggedIn={this.props.isLoggedIn}
+        />
         {routes(this.props.user && this.props.user.role === 'curator')}
       </Fragment>
     );
