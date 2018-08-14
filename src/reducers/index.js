@@ -8,8 +8,19 @@ import userAddressReducer from './userAddressReducer';
 import userSessionReducer from './userSessionReducer';
 import tribePollsReducer from './tribePollsReducer';
 
+const initialUserState = {
+  address: '',
+  tribes: [],
+  addressError: '',
+  sessionError: '',
+};
+
 const rootReducer = combineReducers({
-  user: reduceReducers(userAddressReducer, userSessionReducer),
+  user: reduceReducers(
+    userSessionReducer,
+    userAddressReducer,
+    initialUserState,
+  ),
   loading: loadingReducer,
   tribes: allTribesReducer,
   polls: tribePollsReducer,

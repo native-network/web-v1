@@ -51,10 +51,6 @@ export class Dashboard extends Component {
     userCurrencies: currencies,
   };
 
-  componentDidMount() {
-    this.props.getUserSession();
-  }
-
   componentDidUpdate(prevProps) {
     if (
       this.props.hasSession !== prevProps.hasSession &&
@@ -133,7 +129,7 @@ export default connect(
   (state) => {
     return {
       isLoading: state.loading > 0,
-      hasSession: state.user.session,
+      hasSession: !!state.user.id,
       user: state.user,
     };
   },

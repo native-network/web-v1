@@ -1,5 +1,5 @@
 .LoaderBackground {
-  background: rgba(255, 255, 255, 0.75);
+  background: var(--transparent-black-70);
   position: fixed;
   left: 0;
   top: 0;
@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 
   & .Loader {
     width: 100px;
