@@ -1,6 +1,6 @@
 import { tribePollsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { get } from '../requests';
+import { get, post } from '../requests';
 
 export const getTribePolls = (id) => {
   return async (dispatch) => {
@@ -30,8 +30,31 @@ export const getTribePollsError = (error) => {
   };
 };
 
-export const clearActiveTribePolls = () => {
+export const addNewPoll = (poll) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.ADD_NEW_POLL });
+    dispatch(beginAjaxCall());
+
+    try {
+      const { data } = await post('polls', poll);
+
+      return dispatch(addNewPollSuccess(data));
+    } catch (err) {
+      return dispatch(addNewPollError(err));
+    }
+  };
+};
+
+export const addNewPollSuccess = (poll) => {
   return {
-    type: actions.CLEAR_ACTIVE_TRIBE_POLLS,
+    type: actions.ADD_NEW_POLL_SUCCESS,
+    poll,
+  };
+};
+
+export const addNewPollError = (error) => {
+  return {
+    type: actions.ADD_NEW_POLL_ERROR,
+    error,
   };
 };
