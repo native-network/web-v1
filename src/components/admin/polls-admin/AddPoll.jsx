@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
 
+import styles from './PollsAdmin.css';
+
 export class AddPoll extends Component {
   state = {
     isModalOpen: false,
@@ -18,7 +20,7 @@ export class AddPoll extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.PollButton}>
         <Button
           theme="secondary"
           content="Add Poll"

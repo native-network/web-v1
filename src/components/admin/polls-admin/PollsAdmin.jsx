@@ -1,79 +1,49 @@
 import React, { Component } from 'react';
 
 import AddPoll from './AddPoll';
+import PollList from './PollsList';
 
 import styles from './PollsAdmin.css';
 
 export class PollsAdmin extends Component {
-  renderStat = ({ index, option, item }) => {
-    const optionVoteCount = ++option.votes.length - 1;
-    const voteCount = ++item.votes.length - 1;
-    const votePercentage = ((optionVoteCount / voteCount) * 100).toFixed();
-    return (
-      <p key={index}>
-        {`${option.votes.length - 1} ${option.name} ${votePercentage}%`}
-      </p>
-    );
+  state = {
+    currentPolls: [],
+    pastPolls: [],
   };
 
-  renderItem = ({ index, item }) => {
-    return (
-      <tr key={index} className={styles.TableRow}>
-        <td className={styles.TableCell}>
-          <p>{item.title}</p>
-        </td>
-        <td className={styles.TableCell}>
-          <p>{item.question}</p>
-        </td>
-        <td className={styles.TableCell}>
-          <p>{new Date(item.startDate).toLocaleDateString()}</p>
-        </td>
-        <td className={styles.TableCell}>
-          <p>{new Date(item.endDate).toLocaleDateString()}</p>
-        </td>
-        <td className={styles.TableCell}>
-          <p>{item.votes.length} Total Votes</p>
-          {(item.options || []).map((option, i) => {
-            return this.renderStat({ index: i, option, item });
-          })}
-        </td>
-      </tr>
-    );
-  };
+  componentWillReceiveProps() {
+    console.log('this.props.items') //eslint-disable-line
+    console.log(this.props.items) //eslint-disable-line
+    const today = Date.now();
+    const currentPolls = this.props.items.filter((poll) => {
+      console.log(new Date(poll.endDate) >= today) //eslint-disable-line
+      return new Date(poll.endDate) >= today;
+    });
+    const pastPolls = this.props.items.filter((poll) => {
+      return new Date(poll.endDate) < today;
+    });
+    this.setState({
+      currentPolls: currentPolls,
+      pastPolls: pastPolls,
+    });
+  }
+
+  componentWillUnmount() {
+    //need to clear some shit
+  }
 
   render() {
     return (
       <div>
         <AddPoll />
         <div className={styles.TableTitle}>
-          <h1>Current Polls</h1>
+          <h2>Current Polls</h2>
         </div>
-        <table className={styles.Table}>
-          <thead>
-            <tr className={styles.TableRow}>
-              <th className={styles.TableCell}>
-                <p>Title</p>
-              </th>
-              <th className={styles.TableCell}>
-                <p>Question</p>
-              </th>
-              <th className={styles.TableCell}>
-                <p>Start Date</p>
-              </th>
-              <th className={styles.TableCell}>
-                <p>End Date</p>
-              </th>
-              <th className={styles.TableCell}>
-                <p>Status</p>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {(this.props.items || []).map((item, i) => {
-              return this.renderItem({ index: i, item });
-            })}
-          </tbody>
-        </table>
+        <PollList polls={this.state.currentPolls} />
+        <div className={styles.TableTitle}>
+          <h2>Past Polls</h2>
+        </div>
+        <PollList polls={this.state.pastPolls} />
       </div>
     );
   }

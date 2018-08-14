@@ -1,3 +1,3 @@
-import VotesAdmin from './votes-admin';
+import PollsAdmin from './polls-admin';
 
-export { VotesAdmin };
+export { PollsAdmin };

@@ -1,7 +1,12 @@
 @import '../../../styles/variables.css';
 
 .TableTitle {
-  margin-left: -300px;
+  width: 100%;
+  text-align: center;
+
+  & h2 {
+    color: var(--primary-color);
+  }
 }
 
 .Table {
@@ -23,4 +28,9 @@
   border-left: 1px solid var(--primary-color);
   padding: 10px;
   text-align: left;
+}
+
+.PollButton {
+  display: flex; 
+  justify-content: flex-end;
 }
