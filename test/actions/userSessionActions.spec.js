@@ -64,7 +64,7 @@ describe('userSessionActions', () => {
       let response;
 
       beforeEach(() => {
-        response = { session: { id: 'foo' } };
+        response = { session: {}, user: {} };
         moxiosResponse({ status: 200, response });
       });
 
