@@ -2,6 +2,8 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
+import DatePicker from 'react-datepicker';
+// import moment from 'moment';
 
 import styles from './ManagePollForm.css';
 
@@ -10,12 +12,11 @@ import Button from '../../shared/button';
 
 export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
-  // Validations
-  // const required = (value) => (value ? undefined : 'Required');
-  const charLength = (value) =>
-    value && value.length >= 400 ? `400 Character limit` : undefined;
-  const validateTitle = (value) =>
-    value === 'test' ? 'must not be test' : undefined;
+  const required = (value) => (value ? undefined : 'Required');
+
+  const ReactDatePickerAdapter = ({ endDate, handleChange }) => (
+    <DatePicker selected={endDate} onChange={handleChange} />
+  );
 
   return (
     <Form
@@ -37,7 +38,7 @@ export default function ManagePollForm({ submitForm }) {
       }) => (
         <form className={styles.ManagePollForm} onSubmit={handleSubmit}>
           <div className={styles.ManagePollFields}>
-            <Field name="title" validate={validateTitle}>
+            <Field name="title" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <label>Poll Title</label>
@@ -59,7 +60,7 @@ export default function ManagePollForm({ submitForm }) {
                 </div>
               )}
             </Field>
-            <Field name="question" validate={charLength}>
+            <Field name="question" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <label>Poll Question</label>
@@ -68,6 +69,21 @@ export default function ManagePollForm({ submitForm }) {
                 </div>
               )}
             </Field>
+            <Field name="startDate">
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Start Date</label>
+                  <input {...input} type="date" />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+
+            <div className={styles.FieldGroup}>
+              <label>End Date</label>
+              <Field name="endDate" component={ReactDatePickerAdapter} />
+            </div>
+
             <div className={styles.GroupedFieldGroup}>
               <h2>Options</h2>
 
@@ -75,7 +91,11 @@ export default function ManagePollForm({ submitForm }) {
                 {({ fields }) =>
                   fields.map((name, index) => (
                     <div key={name}>
-                      <Field name={`options[${index}].name`} key={index}>
+                      <Field
+                        name={`options[${index}].name`}
+                        key={index}
+                        validate={index < 2 ? required : ''}
+                      >
                         {({ input, meta }) => (
                           <div className={styles.FieldGroup}>
                             <label>Option {index + 1}</label>
