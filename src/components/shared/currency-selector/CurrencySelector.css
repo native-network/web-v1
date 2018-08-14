@@ -18,21 +18,24 @@
 
   & .CurrencyIcon {
     width: 2rem;
-    margin: 0 0.25rem;
+    margin: 0 auto 0 0.5rem;
     grid-area: icon;
   }
 
   & .CurrencyDirection {
     grid-area: label-1;
+    align-self: flex-end;
   }
 
   & .CurrencyId {
     grid-area: label-2;
+    align-self: flex-start;
   }
 
   & .MenuToggle {
     @extend %link-style;
 
+    color: var(--primary-black);
     height: 100%;
     padding: 0 1rem;
     grid-area: dropdown;
