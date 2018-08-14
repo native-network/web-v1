@@ -23,6 +23,9 @@ export default function ManagePollForm({ submitForm }) {
       mutators={{
         ...arrayMutators,
       }}
+      initialValues={{
+        options: [{}, {}],
+      }}
       render={({
         handleSubmit,
         form: {
