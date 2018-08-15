@@ -14,6 +14,13 @@ import Button from '../../shared/button';
 export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   const required = (value) => (value ? undefined : 'Required');
+  const validateTitle = (value) =>
+    value.length > 9 ? undefined : 'Must be atleast 10 characters';
+  const composeValidators = (...validators) => (value) =>
+    validators.reduce(
+      (error, validator) => error || validator(value),
+      undefined,
+    );
 
   return (
     <Form
@@ -34,7 +41,10 @@ export default function ManagePollForm({ submitForm }) {
       }) => (
         <form className={styles.ManagePollForm} onSubmit={handleSubmit}>
           <div className={styles.ManagePollFields}>
-            <Field name="title" validate={required}>
+            <Field
+              name="title"
+              validate={composeValidators(required, validateTitle)}
+            >
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <label>Poll Title</label>

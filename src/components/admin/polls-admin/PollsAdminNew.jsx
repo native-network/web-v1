@@ -26,18 +26,17 @@ export class AddPoll extends Component {
   }
 
   handleSubmit(vals) {
-    // we need to clean out extra options somewhere
     const newVals = {
       ...vals,
       tribeId: this.props.tribeId,
-      fileUrl:
-        'https://leitesculinaria.com/wp-content/uploads/fly-images/96169/best-hot-dog-recipe-fi-400x300-c.jpg',
+      fileUrl: 'https://www.hotdog.jpg',
     };
     newVals.startDate = moment(
       vals.startDate,
       'MM/DD/YYYY hh:mm a',
     ).toISOString();
     newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY hh:mm a').toISOString();
+    newVals.options = vals.options.filter((option) => option);
     this.props.addNewPoll(newVals);
   }
 

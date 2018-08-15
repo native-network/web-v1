@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { tribePollsActions as actions } from '../actions/actionTypes';
 
 const initialState = {
