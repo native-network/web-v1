@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import { addNewPoll } from '../../../actions/tribePollsActions';
+
+import Loader from '../../shared/loader';
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
 import ManagePollForm from '../../forms/manage-poll';
@@ -24,7 +29,9 @@ export class AddPoll extends Component {
   }
 
   render() {
-    return (
+    return this.props.isLoading ? (
+      <Loader />
+    ) : (
       <div className={styles.PollButton}>
         <Button
           theme="secondary"
@@ -53,4 +60,17 @@ export class AddPoll extends Component {
   }
 }
 
-export default AddPoll;
+export const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewPoll: bindActionCreators(addNewPoll, dispatch),
+  };
+};
+
+export default connect(
+  (state) => {
+    return {
+      isLoading: state.loading > 0,
+    };
+  },
+  mapDispatchToProps,
+)(AddPoll);

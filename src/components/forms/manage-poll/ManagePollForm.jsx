@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import DatePicker from 'react-datepicker';
-// import moment from 'moment';
+import moment from 'moment';
 
 import styles from './ManagePollForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -14,6 +14,8 @@ import Button from '../../shared/button';
 export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   const required = (value) => (value ? undefined : 'Required');
+
+  // const now = moment();
 
   const ReactDatePickerAdapter = ({ date, handleChange }) => (
     <DatePicker
@@ -90,6 +92,26 @@ export default function ManagePollForm({ submitForm }) {
             <div className={styles.FieldGroup}>
               <label>End Date</label>
               <Field name="endDate" component={ReactDatePickerAdapter} />
+            </div>
+
+            <div className={styles.FieldGroup}>
+              <label>Test date</label>
+              <Field name="testDate">
+                {({ input }) => (
+                  <DatePicker
+                    {...input}
+                    selected={input.value ? moment(input.value) : null}
+                    onChange={(date) =>
+                      input.onChange(moment(date).format('MM/DD/YYYY'))
+                    }
+                    dateFormat="MM/DD/YYYY"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    timeCaption="Time"
+                  />
+                )}
+              </Field>
             </div>
 
             <div className={styles.GroupedFieldGroup}>

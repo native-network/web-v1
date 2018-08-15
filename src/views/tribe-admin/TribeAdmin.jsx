@@ -3,7 +3,7 @@ import Loader from '../../components/shared/loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
-import { getTribePolls, addNewPoll } from '../../actions/tribePollsActions';
+import { getTribePolls } from '../../actions/tribePollsActions';
 
 import TabPanels from '../../components/shared/tab-panels';
 import PollsAdmin from '../../components/admin/polls-admin';
@@ -67,7 +67,6 @@ export function mapDispatchToProps(dispatch) {
     getTribeById: bindActionCreators(getTribeById, dispatch),
     clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
     getTribePolls: bindActionCreators(getTribePolls, dispatch),
-    addNewPoll: bindActionCreators(addNewPoll, dispatch),
   };
 }
 

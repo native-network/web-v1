@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './PollsAdmin.css';
+import styles from '../PollsAdmin.css';
 
 function PollsList({ polls }) {
   const renderItem = ({ index, item }) => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import AddPoll from './AddPoll';
-import PollList from './PollsList';
+import AddPoll from './PollsAdminNew';
+import PollList from './shared/PollsAdminList';
 
 import styles from './PollsAdmin.css';
 
@@ -14,27 +14,16 @@ export class PollsAdmin extends Component {
   componentWillReceiveProps() {
     console.log('this.props.items') //eslint-disable-line
     console.log(this.props.items) //eslint-disable-line
-    const today = Date.now();
     const currentPolls = this.props.items.filter((poll) => {
-      console.log(new Date(poll.endDate) >= today) //eslint-disable-line
-      return new Date(poll.endDate) >= today;
+      return new Date(poll.endDate) >= Date.now();
     });
     const pastPolls = this.props.items.filter((poll) => {
-      return new Date(poll.endDate) < today;
+      return new Date(poll.endDate) < Date.now();
     });
     this.setState({
       currentPolls: currentPolls,
       pastPolls: pastPolls,
     });
-  }
-
-  componentWillUnmount() {
-    //need to clear some shit
-    //it's not state - someow the store seems to refresh
-    // this.setState({
-    //   currentPolls: [],
-    //   pastPolls: [],
-    // });
   }
 
   render() {
