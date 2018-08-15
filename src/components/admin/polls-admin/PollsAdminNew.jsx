@@ -26,6 +26,7 @@ export class AddPoll extends Component {
   }
 
   handleSubmit(vals) {
+    // we need to clean out extra options somewhere
     const newVals = {
       ...vals,
       tribeId: this.props.tribeId,

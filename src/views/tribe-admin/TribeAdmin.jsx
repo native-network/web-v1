@@ -36,14 +36,13 @@ export class TribeAdmin extends Component {
     this.props.getTribePolls(this.props.id);
   }
 
-  componentWillReceiveProps() {
-    // TODO: Need to make this much better once we have another initiative
-    console.log('this.props.polls') // eslint-disable-line
-    console.log(this.props.polls) // eslint-disable-line
-    initiatives[0].items = this.props.polls;
-    this.setState({
-      initiatives: initiatives,
-    });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.polls) {
+      initiatives[0].items = nextProps.polls;
+      this.setState({
+        initiatives: initiatives,
+      });
+    }
   }
 
   render() {
