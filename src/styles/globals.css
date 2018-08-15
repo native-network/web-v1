@@ -13,6 +13,14 @@
   margin: 0 auto;
 }
 
+:global(.visible-md) {
+  display: none;
+
+  @media (--medium-viewport) {
+    display: inherit;
+  }
+}
+
 img {
   width: 100%;
   display: block;

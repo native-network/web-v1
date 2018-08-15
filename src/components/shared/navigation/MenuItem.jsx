@@ -1,13 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import styles from './Navigation.css';
-
-function MenuItem({ label, path, exact }) {
+function MenuItem({ label, menuItemClass, linkClass, path, exact }) {
   return (
-    <li className={styles.MenuListItem}>
+    <li className={menuItemClass}>
       <NavLink
-        className={styles.MenuLink}
+        className={linkClass}
         exact={exact}
         activeClassName="active"
         to={path}

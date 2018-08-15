@@ -1,0 +1,81 @@
+@import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
+
+.Footer {
+  background: var(--gray-2);
+  color: var(--primary-white);
+  display: flex;
+  flex-direction: column;
+
+  @media (--medium-viewport) {
+    justify-content: space-between;
+    align-items: stretch;
+    flex-direction: row;
+  }
+}
+
+.PrimaryFooter {
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+
+  @media (--max-small-viewport) {
+    @extend %container;
+  }
+}
+
+.FooterNav {
+  flex-grow: 1;
+  text-align: right;
+
+  & .FooterMenu {
+    @extend %unstyled-list;
+  }
+
+  & .FooterMenuItem {
+    margin: 0.5rem 0;
+  }
+
+  & .FooterLink {
+    text-decoration: none;
+    color: var(--primary-white);
+  }
+}
+
+.FooterLogo {
+  & svg {
+    width: 8rem;
+  }
+
+  & path {
+    fill: var(--transparent-white-50);
+  }
+
+  & :global(path.logo-text) {
+    display: none;
+
+    @media (--medium-viewport) {
+      display: block;
+    }
+  }
+}
+
+.FooterSocial {
+  padding: 2rem 0;
+  background: var(--neutral-gray);
+}
+
+.SocialMedia {
+  @extend %unstyled-list;
+
+  display: flex;
+  justify-content: space-evenly;
+
+  & img {
+    width: 50px;
+  }
+
+  @media (--max-small-viewport) {
+    @extend %container;
+  }
+}

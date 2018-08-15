@@ -11,6 +11,7 @@ function Button({
   rounded,
   outline,
   centered,
+  block,
   content,
   clickHandler,
   ...props
@@ -23,6 +24,7 @@ function Button({
     Rounded: rounded,
     Centered: centered,
     Outline: outline,
+    Block: block,
   });
 
   return (
