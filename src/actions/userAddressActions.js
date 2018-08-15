@@ -1,6 +1,6 @@
 import { userAddressActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { getAddress } from '../web3';
+import { getAddress } from '../Web3Service';
 
 export const getUserAddress = () => {
   return async (dispatch) => {

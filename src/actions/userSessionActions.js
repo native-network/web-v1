@@ -2,7 +2,7 @@ import { push } from 'connected-react-router';
 import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
-import { promptSign } from '../web3';
+import { promptSign } from '../Web3Service';
 
 export const getUserSession = () => {
   return async (dispatch, getState) => {
