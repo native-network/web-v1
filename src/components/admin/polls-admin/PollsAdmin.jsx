@@ -11,8 +11,8 @@ export class PollsAdmin extends Component {
     pastPolls: [],
   };
 
-  componentWillReceiveProps() {
-    console.log('this.props.items') //eslint-disable-line
+  componentDidMount() {
+    console.log('this.props.items in mounter') //eslint-disable-line
     console.log(this.props.items) //eslint-disable-line
     const currentPolls = this.props.items.filter((poll) => {
       return new Date(poll.endDate) >= Date.now();
@@ -24,6 +24,11 @@ export class PollsAdmin extends Component {
       currentPolls: currentPolls,
       pastPolls: pastPolls,
     });
+  }
+
+  componentWillReceiveProps() {
+    console.log('this.props.items in proper') //eslint-disable-line
+    console.log(this.props.items) //eslint-disable-line
   }
 
   render() {
