@@ -1,0 +1,64 @@
+@import '../../../styles/media-queries.css';
+@import '../../../styles/extends.css';
+
+.CurrencyForm {
+  display: flex;
+  flex-direction: column;
+
+  @media (--medium-viewport) {
+    @extend %container;
+
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+
+    & .ConversionButton {
+      margin-left: 2rem;
+      align-self: flex-start;
+    }
+  }
+}
+
+.ConversionInputs {
+  width: 100%;
+  box-shadow: 0 0 1rem var(--transparent-black-30);
+  padding: 0 0 1rem;
+
+  @media (--medium-viewport) {
+    display: flex;
+    align-content: center;
+  }
+}
+
+.ConversionInput {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  flex-flow: wrap;
+
+  @media (--medium-viewport) {
+    flex-grow: 1;
+    margin-bottom: 0;
+    flex-direction: column;
+  }
+}
+
+.Arrow {
+  font-size: 2rem;
+  color: var(--secondary-color);
+  margin: 0 1rem;
+}
+
+.Error {
+  display: block;
+  color: var(--warm-coral);
+  text-align: right;
+  width: 100%;
+
+  @media (--medium-viewport) {
+    width: auto;
+    margin-top: 0.25rem;
+    align-self: flex-end;
+  }
+}

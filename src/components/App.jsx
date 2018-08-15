@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Header from './shared/header';
+import Footer from './shared/footer';
 import Modal from './shared/modal';
 import WelcomeDialog from './welcome-dialog';
 import { routes } from '../routes';
@@ -73,6 +74,7 @@ export class App extends Component {
           isLoggedIn={this.props.isLoggedIn}
         />
         {routes(this.props.user && this.props.user.role === 'curator')}
+        <Footer location={this.props.location} user={this.props.user} />
       </Fragment>
     );
   }
