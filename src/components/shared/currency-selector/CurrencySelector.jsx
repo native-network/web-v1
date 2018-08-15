@@ -9,6 +9,8 @@ function CurrencySelector({
   selectHandler,
   isFrom,
 }) {
+  const hasDropdown = currencies.length > 1;
+
   return (
     <Downshift
       itemToString={(item) => (item ? item.id : '')}
@@ -22,16 +24,24 @@ function CurrencySelector({
         isOpen,
         highlightedIndex,
       }) => (
-        <div>
+        <div className={styles.SelectorContainer}>
           <label
             {...getLabelProps({
-              className: styles.MenuLabel,
+              className: `${styles.MenuLabel} ${
+                !hasDropdown ? styles.NoDropdown : undefined
+              }`,
             })}
           >
-            <img src={defaultCurrency.thumb} alt="" />
-            <div>
-              <span>{isFrom ? `Pay with` : `Receive`}</span>
-              {defaultCurrency.id}
+            <img
+              className={styles.CurrencyIcon}
+              src={defaultCurrency.thumb}
+              alt=""
+            />
+            <span className={styles.CurrencyDirection}>
+              {isFrom ? `Pay with` : `Receive`}
+            </span>
+            <span className={styles.CurrencyId}>{defaultCurrency.id}</span>
+            {hasDropdown ? (
               <button
                 {...getToggleButtonProps({
                   className: styles.MenuToggle,
@@ -46,9 +56,9 @@ function CurrencySelector({
                   <Fragment>&#9662;</Fragment>
                 )}
               </button>
-            </div>
+            ) : null}
           </label>
-          {isOpen ? (
+          {isOpen && hasDropdown ? (
             <ul
               {...getMenuProps({
                 className: styles.Dropdown,

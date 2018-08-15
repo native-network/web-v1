@@ -1,13 +1,3 @@
-.Dashboard {
-  composes: container from global;
-  display: grid;
-  grid-template-areas:
-    'balances conversion'
-    'balances title'
-    'table table';
-  grid-template-columns: 300px 1fr;
-}
-
 .TokenBalance {
   grid-area: balances;
 

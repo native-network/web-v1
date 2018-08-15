@@ -13,7 +13,7 @@ import {
 import Loader from '../../components/shared/loader';
 import Modal from '../../components/shared/modal';
 import Button from '../../components/shared/button';
-import CurrencyConverter from '../../components/shared/currency-converter';
+import CurrencyConverter from '../../components/forms/currency-converter';
 
 import eth from '../../assets/img/eth.svg';
 import native from '../../assets/img/native.svg';
@@ -34,14 +34,17 @@ const currencies = [
   {
     id: 'EGTT',
     thumb: 'http://placehold.it/50x50',
+    balance: 1.9234,
   },
   {
     id: 'CCTT',
     thumb: 'http://placehold.it/50x50',
+    balance: 1.9234,
   },
   {
     id: 'IFTT',
     thumb: 'http://placehold.it/50x50',
+    balance: 1.9234,
   },
 ];
 
@@ -90,18 +93,8 @@ export class Dashboard extends Component {
       <Fragment>
         {this.state.hasSession ? (
           <section className={styles.Dashboard}>
-            <div className={styles.TokenBalance}>
-              <h1>Convert Tokens</h1>
-              {this.state.userCurrencies
-                .filter((currency) => currency.balance && currency.balance > 0)
-                .map((currency, i) => (
-                  <span key={i} className={styles.Balance}>
-                    <img src={currency.thumb} />
-                    {currency.id} {currency.balance} {currency.inUsd}
-                  </span>
-                ))}
-            </div>
-            <CurrencyConverter currencies={this.state.userCurrencies} />
+            <h1>Convert Tokens</h1>
+            <CurrencyConverter fromCurrencies={this.state.userCurrencies.filter(curr => curr.balance)} toCurrencies={this.state.userCurrencies} />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
             </div>
