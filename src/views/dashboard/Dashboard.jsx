@@ -24,30 +24,34 @@ const currencies = [
     thumb: eth,
     balance: 3.14,
     inUsd: '$1,353.34',
+    inEth: 1,
   },
   {
     id: 'NT',
     thumb: native,
-    balance: 1.9234,
+    balance: 1491.9234,
     inUsd: '$1,353.34',
+    inEth: 0.83749,
   },
   {
     id: 'EGTT',
-    thumb: 'http://placehold.it/50x50',
-    balance: 1.9234,
+    thumb: '/static/media/earth_icon.png',
+    balance: 157.985,
+    inEth: 0.0183749,
   },
   {
     id: 'CCTT',
-    thumb: 'http://placehold.it/50x50',
-    balance: 1.9234,
+    thumb: '/static/media/cloud_icon.png',
+    balance: 100.9234,
+    inEth: 0.4137,
   },
   {
     id: 'IFTT',
-    thumb: 'http://placehold.it/50x50',
-    balance: 1.9234,
+    thumb: '/static/media/imaginal_icon.png',
+    balance: 15.9234,
+    inEth: 0.21,
   },
 ];
-
 export class Dashboard extends Component {
   state = {
     hasSession: this.props.hasSession || false,
@@ -94,7 +98,10 @@ export class Dashboard extends Component {
         {this.state.hasSession ? (
           <section className={styles.Dashboard}>
             <h1>Convert Tokens</h1>
-            <CurrencyConverter fromCurrencies={this.state.userCurrencies.filter(curr => curr.balance)} toCurrencies={this.state.userCurrencies} />
+            <CurrencyConverter
+              sendCurrencies={this.state.userCurrencies.filter(curr => curr.balance && (curr.id === 'ETH' || curr.id === 'NT'))}
+              receiveCurrencies={this.state.userCurrencies.filter(curr => curr.id !== 'ETH')}
+            />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
             </div>
