@@ -75,7 +75,7 @@ export default function ManagePollForm({ submitForm }) {
                     {...input}
                     selected={input.value ? moment(input.value) : null}
                     onChange={(date) =>
-                      input.onChange(moment(date).toISOString())
+                      input.onChange(moment(date).format('LLL'))
                     }
                     showTimeSelect
                     timeFormat="HH:mm"
@@ -94,7 +94,7 @@ export default function ManagePollForm({ submitForm }) {
                     {...input}
                     selected={input.value ? moment(input.value) : null}
                     onChange={(date) =>
-                      input.onChange(moment(date).toISOString())
+                      input.onChange(moment(date).format('LLL'))
                     }
                     showTimeSelect
                     timeFormat="HH:mm"
