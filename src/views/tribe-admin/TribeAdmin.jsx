@@ -14,16 +14,16 @@ const initiatives = [
     items: [],
     render: (items) => <PollsAdmin items={items} />,
   },
-  // {
-  //   name: 'Tasks',
-  //   items: [],
-  //   render: (items) => <PollsAdmin items={items} />,
-  // },
-  // {
-  //   name: 'Projects',
-  //   items: [],
-  //   render: (items) => <PollsAdmin items={items} />,
-  // },
+  {
+    name: 'Tasks',
+    items: [],
+    render: (items) => <PollsAdmin items={items} />,
+  },
+  {
+    name: 'Projects',
+    items: [],
+    render: (items) => <PollsAdmin items={items} />,
+  },
 ];
 
 export class TribeAdmin extends Component {
@@ -42,10 +42,6 @@ export class TribeAdmin extends Component {
     this.setState({
       initiatives: initiatives,
     });
-  }
-
-  componentWillUnmount() {
-    this.props.clearActiveTribePolls();
   }
 
   render() {

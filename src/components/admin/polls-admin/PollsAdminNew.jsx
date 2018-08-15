@@ -25,7 +25,13 @@ export class AddPoll extends Component {
   }
 
   handleSubmit(vals) {
-    console.log(vals) // eslint-disable-line
+    const newVals = {
+      ...vals,
+      tribeId: this.props.tribeId,
+      fileUrl:
+        'https://leitesculinaria.com/wp-content/uploads/fly-images/96169/best-hot-dog-recipe-fi-400x300-c.jpg',
+    };
+    this.props.addNewPoll(newVals);
   }
 
   render() {
@@ -69,6 +75,7 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => {
     return {
+      tribeId: state.activeTribe.id,
       isLoading: state.loading > 0,
     };
   },
