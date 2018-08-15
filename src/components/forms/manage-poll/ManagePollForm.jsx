@@ -15,19 +15,6 @@ export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   const required = (value) => (value ? undefined : 'Required');
 
-  // const now = moment();
-
-  const ReactDatePickerAdapter = ({ date, handleChange }) => (
-    <DatePicker
-      selected={date}
-      onChange={handleChange}
-      showTimeSelect
-      timeFormat="HH:mm"
-      timeIntervals={30}
-      timeCaption="Time"
-    />
-  );
-
   return (
     <Form
       onSubmit={(values) => submitForm(values)}
@@ -79,32 +66,36 @@ export default function ManagePollForm({ submitForm }) {
                 </div>
               )}
             </Field>
-            <Field name="startDate">
-              {({ input, meta }) => (
-                <div className={styles.FieldGroup}>
-                  <label>Start Date</label>
-                  <input {...input} type="date" />
-                  {meta.error && meta.touched && renderError(meta.error)}
-                </div>
-              )}
-            </Field>
 
             <div className={styles.FieldGroup}>
-              <label>End Date</label>
-              <Field name="endDate" component={ReactDatePickerAdapter} />
-            </div>
-
-            <div className={styles.FieldGroup}>
-              <label>Test date</label>
-              <Field name="testDate">
+              <label>Start date</label>
+              <Field name="startDate">
                 {({ input }) => (
                   <DatePicker
                     {...input}
                     selected={input.value ? moment(input.value) : null}
                     onChange={(date) =>
-                      input.onChange(moment(date).format('MM/DD/YYYY'))
+                      input.onChange(moment(date).toISOString())
                     }
-                    dateFormat="MM/DD/YYYY"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    timeCaption="Time"
+                  />
+                )}
+              </Field>
+            </div>
+
+            <div className={styles.FieldGroup}>
+              <label>End date</label>
+              <Field name="endDate">
+                {({ input }) => (
+                  <DatePicker
+                    {...input}
+                    selected={input.value ? moment(input.value) : null}
+                    onChange={(date) =>
+                      input.onChange(moment(date).toISOString())
+                    }
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
