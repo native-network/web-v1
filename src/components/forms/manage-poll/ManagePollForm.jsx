@@ -31,7 +31,6 @@ export default function ManagePollForm({ submitForm }) {
         },
         pristine,
         invalid,
-        values,
       }) => (
         <form className={styles.ManagePollForm} onSubmit={handleSubmit}>
           <div className={styles.ManagePollFields}>
@@ -67,50 +66,57 @@ export default function ManagePollForm({ submitForm }) {
               )}
             </Field>
 
-            <div className={styles.FieldGroup}>
-              <label>Start date</label>
-              <Field name="startDate">
-                {({ input }) => (
-                  <DatePicker
-                    {...input}
-                    selected={
-                      input.value
-                        ? moment(input.value, 'MM/DD/YYYY hh:mm a')
-                        : null
-                    }
-                    onChange={(date) =>
-                      input.onChange(moment(date).format('MM/DD/YYYY hh:mm a'))
-                    }
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={30}
-                    timeCaption="Time"
-                  />
-                )}
-              </Field>
-            </div>
+            <div className={styles.GroupedFieldGroup}>
+              <h2>Timeframe</h2>
+              <div className={styles.FieldGroup}>
+                <label>Start date</label>
+                <Field name="startDate">
+                  {({ input }) => (
+                    <DatePicker
+                      {...input}
+                      selected={
+                        input.value
+                          ? moment(input.value, 'MM/DD/YYYY hh:mm a')
+                          : null
+                      }
+                      onChange={(date) =>
+                        input.onChange(
+                          moment(date).format('MM/DD/YYYY hh:mm a'),
+                        )
+                      }
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={30}
+                      timeCaption="Time"
+                    />
+                  )}
+                </Field>
+              </div>
 
-            <div className={styles.FieldGroup}>
-              <label>End date</label>
-              <Field name="endDate">
-                {({ input }) => (
-                  <DatePicker
-                    {...input}
-                    selected={
-                      input.value
-                        ? moment(input.value, 'MM/DD/YYYY hh:mm a')
-                        : null
-                    }
-                    onChange={(date) =>
-                      input.onChange(moment(date).format('MM/DD/YYYY hh:mm a'))
-                    }
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={30}
-                    timeCaption="Time"
-                  />
-                )}
-              </Field>
+              <div className={styles.FieldGroup}>
+                <label>End date</label>
+                <Field name="endDate">
+                  {({ input }) => (
+                    <DatePicker
+                      {...input}
+                      selected={
+                        input.value
+                          ? moment(input.value, 'MM/DD/YYYY hh:mm a')
+                          : null
+                      }
+                      onChange={(date) =>
+                        input.onChange(
+                          moment(date).format('MM/DD/YYYY hh:mm a'),
+                        )
+                      }
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={30}
+                      timeCaption="Time"
+                    />
+                  )}
+                </Field>
+              </div>
             </div>
 
             <div className={styles.GroupedFieldGroup}>
@@ -150,7 +156,6 @@ export default function ManagePollForm({ submitForm }) {
             </div>
             {/* <Field name="pollImage" component={FilePicker} type="file" /> */}
           </div>
-          <code>{JSON.stringify(values)}</code>
           <Button
             centered
             type="submit"

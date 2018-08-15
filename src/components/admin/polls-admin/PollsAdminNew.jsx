@@ -8,6 +8,7 @@ import Loader from '../../shared/loader';
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
 import ManagePollForm from '../../forms/manage-poll';
+import moment from 'moment';
 
 import styles from './PollsAdmin.css';
 
@@ -31,6 +32,11 @@ export class AddPoll extends Component {
       fileUrl:
         'https://leitesculinaria.com/wp-content/uploads/fly-images/96169/best-hot-dog-recipe-fi-400x300-c.jpg',
     };
+    newVals.startDate = moment(
+      vals.startDate,
+      'MM/DD/YYYY hh:mm a',
+    ).toISOString();
+    newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY hh:mm a').toISOString();
     this.props.addNewPoll(newVals);
   }
 
@@ -75,7 +81,7 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => {
     return {
-      tribeId: state.activeTribe.id,
+      tribeId: state.activeTribe.tribe.id,
       isLoading: state.loading > 0,
     };
   },
