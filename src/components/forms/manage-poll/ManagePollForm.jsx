@@ -73,9 +73,13 @@ export default function ManagePollForm({ submitForm }) {
                 {({ input }) => (
                   <DatePicker
                     {...input}
-                    selected={input.value ? moment(input.value) : null}
+                    selected={
+                      input.value
+                        ? moment(input.value, 'MM/DD/YYYY hh:mm a')
+                        : null
+                    }
                     onChange={(date) =>
-                      input.onChange(moment(date).format('LLL'))
+                      input.onChange(moment(date).format('MM/DD/YYYY hh:mm a'))
                     }
                     showTimeSelect
                     timeFormat="HH:mm"
@@ -92,9 +96,13 @@ export default function ManagePollForm({ submitForm }) {
                 {({ input }) => (
                   <DatePicker
                     {...input}
-                    selected={input.value ? moment(input.value) : null}
+                    selected={
+                      input.value
+                        ? moment(input.value, 'MM/DD/YYYY hh:mm a')
+                        : null
+                    }
                     onChange={(date) =>
-                      input.onChange(moment(date).format('LLL'))
+                      input.onChange(moment(date).format('MM/DD/YYYY hh:mm a'))
                     }
                     showTimeSelect
                     timeFormat="HH:mm"
