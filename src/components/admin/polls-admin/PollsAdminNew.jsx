@@ -51,19 +51,21 @@ export class AddPoll extends Component {
           clickHandler={this.openModal.bind(this)}
         />
         <Modal
-          renderHeader={() => <h1 style={{ textAlign: 'center' }}>Add Poll</h1>}
+          renderHeader={() => (
+            <div className={styles.ModalHeader}>
+              <h1>Add Poll</h1>
+              <button
+                style={{ color: 'black' }}
+                onClick={this.closeModal.bind(this)}
+              >
+                x
+              </button>
+            </div>
+          )}
           label="Add Poll"
           isOpen={this.state.isModalOpen}
         >
           <div>
-            <Button
-              clickHandler={this.closeModal.bind(this)}
-              theme="secondary"
-              content="Close"
-              centered
-            >
-              Close Modal
-            </Button>
             <ManagePollForm submitForm={this.handleSubmit.bind(this)} />
           </div>
         </Modal>

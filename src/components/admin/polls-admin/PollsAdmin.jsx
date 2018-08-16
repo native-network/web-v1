@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import AddPoll from './PollsAdminNew';
 import PollList from './shared/PollsAdminList';
@@ -13,10 +14,10 @@ export class PollsAdmin extends Component {
 
   componentDidMount() {
     const currentPolls = this.props.items.filter((poll) => {
-      return new Date(poll.endDate) >= Date.now();
+      return moment(poll.endDate).isAfter(moment());
     });
     const pastPolls = this.props.items.filter((poll) => {
-      return new Date(poll.endDate) < Date.now();
+      return moment(poll.endDate).isBefore(moment());
     });
     this.setState({
       currentPolls: currentPolls,

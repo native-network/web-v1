@@ -78,10 +78,10 @@ export default function ManagePollForm({ submitForm }) {
 
             <div className={styles.GroupedFieldGroup}>
               <h2>Timeframe</h2>
-              <div className={styles.FieldGroup}>
-                <label>Start date</label>
-                <Field name="startDate">
-                  {({ input }) => (
+              <Field name="startDate">
+                {({ input }) => (
+                  <div className={styles.FieldGroup}>
+                    <label>Start date</label>
                     <DatePicker
                       {...input}
                       selected={
@@ -99,14 +99,14 @@ export default function ManagePollForm({ submitForm }) {
                       timeIntervals={30}
                       timeCaption="Time"
                     />
-                  )}
-                </Field>
-              </div>
+                  </div>
+                )}
+              </Field>
 
-              <div className={styles.FieldGroup}>
-                <label>End date</label>
-                <Field name="endDate">
-                  {({ input }) => (
+              <Field name="endDate">
+                {({ input }) => (
+                  <div className={styles.FieldGroup}>
+                    <label>End date</label>
                     <DatePicker
                       {...input}
                       selected={
@@ -124,14 +124,13 @@ export default function ManagePollForm({ submitForm }) {
                       timeIntervals={30}
                       timeCaption="Time"
                     />
-                  )}
-                </Field>
-              </div>
+                  </div>
+                )}
+              </Field>
             </div>
 
             <div className={styles.GroupedFieldGroup}>
               <h2>Options</h2>
-
               <FieldArray name="options">
                 {({ fields }) =>
                   fields.map((name, index) => (

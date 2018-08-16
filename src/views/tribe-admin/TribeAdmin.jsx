@@ -38,9 +38,15 @@ export class TribeAdmin extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.polls) {
-      initiatives[0].items = nextProps.polls;
+      // this will also assign projects and tasks in the future
+      const updatedInitiatives = initiatives.map((initiative) => {
+        if (initiative.name === 'Polls') {
+          initiative.items = nextProps.polls;
+        }
+        return initiative;
+      });
       this.setState({
-        initiatives: initiatives,
+        initiatives: updatedInitiatives,
       });
     }
   }
