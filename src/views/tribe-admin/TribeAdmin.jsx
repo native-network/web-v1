@@ -36,16 +36,19 @@ export class TribeAdmin extends Component {
     this.props.getTribePolls(this.props.id);
   }
 
-  componentWillReceiveProps() {
-    // TODO: Need to make this much better once we have another initiative
-    initiatives[0].items = this.props.polls;
-    this.setState({
-      initiatives: initiatives,
-    });
-  }
-
-  componentWillUnmount() {
-    this.props.clearActiveTribe();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.polls) {
+      // this will also assign projects and tasks in the future
+      const updatedInitiatives = initiatives.map((initiative) => {
+        if (initiative.name === 'Polls') {
+          initiative.items = nextProps.polls;
+        }
+        return initiative;
+      });
+      this.setState({
+        initiatives: updatedInitiatives,
+      });
+    }
   }
 
   render() {
@@ -56,7 +59,6 @@ export class TribeAdmin extends Component {
     ) : (
       <main>
         <h2>Manage Your Tribe</h2>
-        <p>{props.tribe.name}</p>
         <TabPanels panels={state.initiatives} />
       </main>
     );

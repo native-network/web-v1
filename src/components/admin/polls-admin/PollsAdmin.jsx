@@ -1,45 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
+import moment from 'moment';
 
-import AddPoll from './AddPoll';
+import AddPoll from './PollsAdminNew';
+import PollList from './shared/PollsAdminList';
 
-function PollsAdmin({ items }) {
-  const renderItem = ({
-    index,
-    title,
-    question,
-    startDate,
-    endDate,
-    votes,
-  }) => {
-    return (
-      <div key={index}>
-        <div>
-          <p>Title: {title}</p>
-        </div>
-        <div>
-          <p>Question: {question}</p>
-        </div>
-        <div>
-          <p>Start Date: {startDate}</p>
-        </div>
-        <div>
-          <p>End Date: {endDate}</p>
-        </div>
-        <div>
-          <p>Total Votes: {votes.length}</p>
-        </div>
-      </div>
-    );
+import styles from './PollsAdmin.css';
+
+export class PollsAdmin extends Component {
+  state = {
+    currentPolls: [],
+    pastPolls: [],
   };
 
-  return (
-    <div>
-      <AddPoll />
+  componentDidMount() {
+    const currentPolls = this.props.items.filter((poll) => {
+      return moment(poll.endDate).isAfter(moment());
+    });
+    const pastPolls = this.props.items.filter((poll) => {
+      return moment(poll.endDate).isBefore(moment());
+    });
+    this.setState({
+      currentPolls: currentPolls,
+      pastPolls: pastPolls,
+    });
+  }
+
+  render() {
+    return (
       <div>
-        {(items || []).map((item, i) => renderItem({ index: i, ...item }))}
+        <AddPoll />
+        <div className={styles.TableTitle}>
+          <h2>Current Polls</h2>
+        </div>
+        <PollList polls={this.state.currentPolls} />
+        <div className={styles.TableTitle}>
+          <h2>Past Polls</h2>
+        </div>
+        <PollList polls={this.state.pastPolls} />
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default PollsAdmin;

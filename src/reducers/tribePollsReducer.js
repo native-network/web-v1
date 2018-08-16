@@ -17,6 +17,16 @@ export default function tribePollsReducer(state = initialState, action) {
         ...state,
         error: action.error,
       };
+    case actions.ADD_NEW_POLL_SUCCESS:
+      return {
+        ...state,
+        polls: [...state.polls, action.poll],
+      };
+    case actions.ADD_NEW_POLL_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
     default:
       return state;
   }
