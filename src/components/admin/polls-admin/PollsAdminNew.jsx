@@ -31,11 +31,8 @@ export class AddPoll extends Component {
       tribeId: this.props.tribeId,
       fileUrl: 'https://www.hotdog.jpg',
     };
-    newVals.startDate = moment(
-      vals.startDate,
-      'MM/DD/YYYY hh:mm a',
-    ).toISOString();
-    newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY hh:mm a').toISOString();
+    newVals.startDate = moment().toISOString();
+    newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
     newVals.options = vals.options.filter((option) => option);
     this.props.addNewPoll(newVals);
   }
