@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
+import TribeWeb3 from '../../TribeWeb3';
+import { getWeb3ServiceInstance } from '../../Web3Service';
 
 import Loader from '../../components/shared/loader';
 import Card from '../../components/shared/card';
@@ -90,12 +92,21 @@ const initiatives = [
 ];
 
 export class Tribe extends Component {
+  web3;
+
   state = {
     initiatives: initiatives,
   };
 
   componentDidMount() {
     this.props.getTribeById(this.props.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.tribe !== this.props.tribe) {
+      this.web3 = new TribeWeb3(this.props.tribe, getWeb3ServiceInstance());
+    }
+    console.log(this.web3.tribe); // eslint-disable-line
   }
 
   componentWillUnmount() {
@@ -137,7 +148,11 @@ export default connect(
     const { tribe } = activeTribe;
     const { tribeId: id } = ownProps.match.params;
 
-    return { tribe, id, isLoading: loading > 0 };
+    return {
+      tribe,
+      id,
+      isLoading: loading > 0,
+    };
   },
   mapDispatchToProps,
 )(Tribe);
