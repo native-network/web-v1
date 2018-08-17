@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -77,7 +76,7 @@ export class Dashboard extends Component {
     return (
       <Modal
         label="Sign in"
-        renderHeader={() => <h1 style={{textAlign: 'center'}}>Sign in</h1>}
+        renderHeader={() => <h1 style={{ textAlign: 'center' }}>Sign in</h1>}
         isOpen={!this.state.hasSession}
       >
         <Button
@@ -99,15 +98,23 @@ export class Dashboard extends Component {
           <section className={styles.Dashboard}>
             <h1>Convert Tokens</h1>
             <CurrencyConverter
-              sendCurrencies={this.state.userCurrencies.filter(curr => curr.balance && (curr.id === 'ETH' || curr.id === 'NT'))}
-              receiveCurrencies={this.state.userCurrencies.filter(curr => curr.id !== 'ETH')}
+              sendCurrencies={this.state.userCurrencies.filter(
+                (curr) =>
+                  curr.balance && (curr.id === 'ETH' || curr.id === 'NT'),
+              )}
+              receiveCurrencies={this.state.userCurrencies.filter(
+                (curr) => curr.id !== 'ETH',
+              )}
             />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
             </div>
             <div className={styles.Table}>
               &lt;Tabular Data&gt;
-              {this.props.tribes && this.props.tribes.map((tribe) => <div key={tribe.name}>{tribe.name}</div>)}
+              {this.props.tribes &&
+                this.props.tribes.map((tribe) => (
+                  <div key={tribe.name}>{tribe.name}</div>
+                ))}
             </div>
           </section>
         ) : (
