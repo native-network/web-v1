@@ -41,96 +41,62 @@ export default function ManagePollForm({ submitForm }) {
       }) => (
         <form className={styles.ManagePollForm} onSubmit={handleSubmit}>
           <div className={styles.ManagePollFields}>
-            <Field
-              name="title"
-              validate={composeValidators(required, validateTitle)}
-            >
-              {({ input, meta }) => (
-                <div className={styles.FieldGroup}>
-                  <label>Poll Title</label>
-                  <input {...input} type="text" placeholder="Poll Title" />
-                  {meta.error && meta.touched && renderError(meta.error)}
-                </div>
-              )}
-            </Field>
-            <Field name="description">
-              {({ input, meta }) => (
-                <div className={styles.FieldGroup}>
-                  <label>Poll Description</label>
-                  <textarea
-                    rows="6"
-                    {...input}
-                    placeholder="Poll Description"
-                  />
-                  {meta.error && meta.touched && renderError(meta.error)}
-                </div>
-              )}
-            </Field>
-            <Field name="question" validate={required}>
-              {({ input, meta }) => (
-                <div className={styles.FieldGroup}>
-                  <label>Poll Question</label>
-                  <input {...input} type="text" placeholder="Poll Question" />
-                  {meta.error && meta.touched && renderError(meta.error)}
-                </div>
-              )}
-            </Field>
-
             <div className={styles.GroupedFieldGroup}>
-              <h2>Timeframe</h2>
-              <Field name="startDate">
-                {({ input }) => (
+              <Field
+                name="title"
+                validate={composeValidators(required, validateTitle)}
+              >
+                {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Start date</label>
-                    <DatePicker
-                      {...input}
-                      selected={
-                        input.value
-                          ? moment(input.value, 'MM/DD/YYYY hh:mm a')
-                          : null
-                      }
-                      onChange={(date) =>
-                        input.onChange(
-                          moment(date).format('MM/DD/YYYY hh:mm a'),
-                        )
-                      }
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      timeIntervals={30}
-                      timeCaption="Time"
-                    />
+                    <label>Poll Title</label>
+                    <input {...input} type="text" placeholder="Poll Title" />
+                    {meta.error && meta.touched && renderError(meta.error)}
                   </div>
                 )}
               </Field>
-
+              <Field name="description">
+                {({ input, meta }) => (
+                  <div className={styles.FieldGroup}>
+                    <label>Poll Description</label>
+                    <textarea
+                      rows="6"
+                      {...input}
+                      placeholder="Poll Description"
+                    />
+                    {meta.error && meta.touched && renderError(meta.error)}
+                  </div>
+                )}
+              </Field>
+              <Field name="question" validate={required}>
+                {({ input, meta }) => (
+                  <div className={styles.FieldGroup}>
+                    <label>Poll Question</label>
+                    <input {...input} type="text" placeholder="Poll Question" />
+                    {meta.error && meta.touched && renderError(meta.error)}
+                  </div>
+                )}
+              </Field>
               <Field name="endDate">
                 {({ input }) => (
                   <div className={styles.FieldGroup}>
                     <label>End date</label>
                     <DatePicker
                       {...input}
+                      minDate={moment().add(1, 'days')}
                       selected={
-                        input.value
-                          ? moment(input.value, 'MM/DD/YYYY hh:mm a')
-                          : null
+                        input.value ? moment(input.value, 'MM/DD/YYYY') : null
                       }
                       onChange={(date) =>
-                        input.onChange(
-                          moment(date).format('MM/DD/YYYY hh:mm a'),
-                        )
+                        input.onChange(moment(date).format('MM/DD/YYYY'))
                       }
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      timeIntervals={30}
-                      timeCaption="Time"
                     />
                   </div>
                 )}
               </Field>
+              <p>Poll will start today: {moment().format('MM/DD/YYYY')}</p>
             </div>
 
             <div className={styles.GroupedFieldGroup}>
-              <h2>Options</h2>
               <FieldArray name="options">
                 {({ fields }) =>
                   fields.map((name, index) => (
