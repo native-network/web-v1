@@ -1,4 +1,4 @@
 import ManagePolls from './manage-polls';
-// import ManageProjects from './manage-projects';
+import ManageProjects from './manage-projects';
 
-export { ManagePolls };
+export { ManagePolls, ManageProjects };
