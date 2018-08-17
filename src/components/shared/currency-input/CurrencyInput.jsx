@@ -3,16 +3,19 @@ import React from 'react';
 
 import styles from './CurrencyInput.css';
 
-function CurrencyInput ({currency, renderLabel, ...rest}) {
+function CurrencyInput({ currency, renderLabel, ...rest }) {
   return (
     <div className={styles.CurrencyInput}>
-      <label htmlFor={currency.id} className={styles.Label}>
-        {renderLabel && renderLabel(currency)}
-      </label>
+      {renderLabel && (
+        <label htmlFor={currency.id} className={styles.Label}>
+          {renderLabel(currency)}
+        </label>
+      )}
       <input
         {...rest}
+        step="0.01"
         id={currency.id}
-        type="text"
+        type="number"
         placeholder="Enter Amount"
         className={styles.Input}
       />
