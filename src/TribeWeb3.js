@@ -11,8 +11,6 @@ export default class TribeService {
   web3Service;
   tribe;
   tribeContractAddress;
-  tribeStorageContractAddress;
-  loggerContractAddress;
   tribeSmartTokenContractAddress;
 
   constructor(tribe, web3Instance) {
@@ -25,7 +23,7 @@ export default class TribeService {
       tribeAbi,
       this.tribe.address,
     );
-    this.smartTokenContractWS = await this.web3Service.initContract(
+    this.smartTokenContractWS = await this.web3Service.initContractSocket(
       smartTokenAbi,
       this.tribe.tokenAddress,
     );

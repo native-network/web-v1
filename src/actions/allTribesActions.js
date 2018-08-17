@@ -72,15 +72,19 @@ export const getTokenContractByTribeId = (id) => {
 
     const tribe3 = new TribeWeb3(id, service);
     await tribe3.initContracts();
+    const priceInWei = await tribe3.smartTokenContractWS.methods
+      .priceInWei()
+      .call();
+    console.log(priceInWei);
 
-    service.web3.eth
-      .sendTransaction({
-        from: account,
-        to: tribe3.tribe.tokenAddress,
-        value: '10000000000000000000',
-      })
-      .then(function(receipt) {
-        console.log(receipt);
-      });
+    // service.web3.eth
+    //   .sendTransaction({
+    //     from: account,
+    //     to: tribe3.tribe.tokenAddress,
+    //     value: '10000000000000000000',
+    //   })
+    //   .then(function(receipt) {
+    //     console.log(receipt);
+    //   });
   };
 };
