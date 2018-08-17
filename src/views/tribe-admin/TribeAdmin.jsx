@@ -6,7 +6,11 @@ import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
 import { getTribePolls } from '../../actions/tribePollsActions';
 
 import TabPanels from '../../components/shared/tab-panels';
-import { ManagePolls, ManageProjects } from '../../components/curators';
+import {
+  ManagePolls,
+  ManageProjects,
+  ManageTasks,
+} from '../../components/curators';
 
 const initiatives = [
   {
@@ -17,7 +21,7 @@ const initiatives = [
   {
     name: 'Tasks',
     items: [],
-    render: (items) => <ManagePolls items={items} />,
+    render: (items) => <ManageTasks items={items} />,
   },
   {
     name: 'Projects',
