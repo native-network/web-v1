@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
-import TribeWeb3 from '../../TribeWeb3';
-import { getWeb3ServiceInstance } from '../../Web3Service';
+import { getTokenContractByTribeId } from '../../actions/allTribesActions';
 
 import Loader from '../../components/shared/loader';
 import Card from '../../components/shared/card';
@@ -104,9 +103,8 @@ export class Tribe extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.tribe !== this.props.tribe) {
-      this.web3 = new TribeWeb3(this.props.tribe, getWeb3ServiceInstance());
+      this.props.getTokenContractByTribeId(this.props.tribe);
     }
-    console.log(this.web3.tribe); // eslint-disable-line
   }
 
   componentWillUnmount() {
@@ -139,6 +137,10 @@ export function mapDispatchToProps(dispatch) {
   return {
     getTribeById: bindActionCreators(getTribeById, dispatch),
     clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
+    getTokenContractByTribeId: bindActionCreators(
+      getTokenContractByTribeId,
+      dispatch,
+    ),
   };
 }
 

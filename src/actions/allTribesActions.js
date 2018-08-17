@@ -1,10 +1,13 @@
-import { allTribesActions as actions } from './actionTypes';
+/* eslint-disable */
+import { allTribesActions as tribesActions, tokenActions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
+import TribeWeb3 from '../TribeWeb3';
+import { getWeb3ServiceInstance } from '../Web3Service';
 
 export const getTribes = () => {
   return async (dispatch) => {
-    dispatch({ type: actions.GET_TRIBES });
+    dispatch({ type: tribesActions.GET_TRIBES });
     dispatch(beginAjaxCall());
     try {
       const { data } = await get('tribes');
@@ -18,21 +21,21 @@ export const getTribes = () => {
 
 export const getTribesSuccess = (tribes) => {
   return {
-    type: actions.GET_TRIBES_SUCCESS,
+    type: tribesActions.GET_TRIBES_SUCCESS,
     tribes,
   };
 };
 
 export const getTribesError = (error) => {
   return {
-    type: actions.GET_TRIBES_ERROR,
+    type: tribesActions.GET_TRIBES_ERROR,
     error,
   };
 };
 
 export const addNewTribe = (tribe) => {
   return async (dispatch) => {
-    dispatch({ type: actions.ADD_NEW_TRIBE });
+    dispatch({ type: tribesActions.ADD_NEW_TRIBE });
     dispatch(beginAjaxCall());
 
     try {
@@ -47,14 +50,37 @@ export const addNewTribe = (tribe) => {
 
 export const addNewTribeSuccess = (tribe) => {
   return {
-    type: actions.ADD_NEW_TRIBE_SUCCESS,
+    type: tribesActions.ADD_NEW_TRIBE_SUCCESS,
     tribe,
   };
 };
 
 export const addNewTribeError = (error) => {
   return {
-    type: actions.ADD_NEW_TRIBE_ERROR,
+    type: tribesActions.ADD_NEW_TRIBE_ERROR,
     error,
+  };
+};
+
+export const getTokenContractByTribeId = (id) => {
+  return async (dispatch) => {
+    dispatch({ type: tokenActions.GET_TOKEN_BY_TRIBE_ID });
+
+    const service = getWeb3ServiceInstance();
+
+    const account = await service.getMainAccount();
+
+    const tribe3 = new TribeWeb3(id, service);
+    await tribe3.initContracts();
+
+    service.web3.eth
+      .sendTransaction({
+        from: account,
+        to: tribe3.tribe.tokenAddress,
+        value: '10000000000000000000',
+      })
+      .then(function(receipt) {
+        console.log(receipt);
+      });
   };
 };

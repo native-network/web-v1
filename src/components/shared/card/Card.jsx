@@ -113,7 +113,7 @@ class Card extends Component {
           />
         </Modal>
         <div
-          style={{ backgroundImage: `url("${tribe.image}")` }}
+          style={{ backgroundImage: `url("/${tribe.image}")` }}
           className={styles.Header}
         >
           <div className={styles.HeaderOverlay}>
