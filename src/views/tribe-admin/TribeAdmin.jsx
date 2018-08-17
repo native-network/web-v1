@@ -6,23 +6,23 @@ import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
 import { getTribePolls } from '../../actions/tribePollsActions';
 
 import TabPanels from '../../components/shared/tab-panels';
-import PollsAdmin from '../../components/admin/polls-admin';
+import { ManagePolls } from '../../components/curators';
 
 const initiatives = [
   {
     name: 'Polls',
     items: [],
-    render: (items) => <PollsAdmin items={items} />,
+    render: (items) => <ManagePolls items={items} />,
   },
   {
     name: 'Tasks',
     items: [],
-    render: (items) => <PollsAdmin items={items} />,
+    render: (items) => <ManagePolls items={items} />,
   },
   {
     name: 'Projects',
     items: [],
-    render: (items) => <PollsAdmin items={items} />,
+    render: (items) => <ManagePolls items={items} />,
   },
 ];
 
