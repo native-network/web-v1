@@ -30,7 +30,7 @@
   text-align: left;
 }
 
-.PollButton {
+.ProjectButton {
   display: flex;
   justify-content: flex-end;
 }

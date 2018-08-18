@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import moment from 'moment';
 import ManageProjectsList from './shared/ManageProjectsList';
+import ManageProjectsNew from './ManageProjectsNew';
 
 import styles from './ManageProjects.css';
 
@@ -28,7 +29,7 @@ export class ManageProjects extends Component {
   render() {
     return (
       <div>
-        {/* <ManageProjectsNew /> */}
+        <ManageProjectsNew />
         <div className={styles.TableTitle}>
           <h2>Current Projects</h2>
         </div>
@@ -36,7 +37,7 @@ export class ManageProjects extends Component {
         <div className={styles.TableTitle}>
           <h2>Past Projects</h2>
         </div>
-        {/* <ManageProjectsList projects={this.state.pastProjects} /> */}
+        <ManageProjectsList projects={this.state.pastProjects} />
       </div>
     );
   }
