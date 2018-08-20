@@ -2,10 +2,10 @@
 import sigUtil from 'eth-sig-util';
 import ethUtil from 'ethereumjs-util';
 import Web3 from 'web3';
-import { loggerAbi } from './contracts/abi/logger';
-import { tribeAbi } from './contracts/abi/tribe';
-import { smartTokenAbi } from './contracts/abi/smarttoken';
-import { tribeStorageAbi } from './contracts/abi/tribestorage';
+import { loggerAbi } from '../contracts/abi/logger';
+import { tribeAbi } from '../contracts/abi/tribe';
+import { smartTokenAbi } from '../contracts/abi/smarttoken';
+import { tribeStorageAbi } from '../contracts/abi/tribestorage';
 
 export default class TribeService {
   web3Service;
