@@ -2,10 +2,47 @@ import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
 
 import Button from '../button';
+import Modal from '../modal';
+import CurrencyConverter from '../../forms/currency-converter';
 import TokenData from '../token-data';
 import Tag from '../tag';
 
 import styles from './Card.css';
+
+import eth from '../../../assets/img/eth.svg';
+import native from '../../../assets/img/native.svg';
+
+const ANIMATION_DURATION = 200;
+
+const currencies = [
+  {
+    id: 'ETH',
+    thumb: eth,
+    balance: 3.14,
+    inUsd: '$1,353.34',
+  },
+  {
+    id: 'NT',
+    thumb: native,
+    balance: 1.9234,
+    inUsd: '$1,353.34',
+  },
+  {
+    id: 'EGTT',
+    thumb: '/static/media/earth_icon.png',
+    balance: 1.9234,
+  },
+  {
+    id: 'CCTT',
+    thumb: '/static/media/cloud_icon.png',
+    balance: 1.9234,
+  },
+  {
+    id: 'IFTT',
+    thumb: '/static/media/imaginal_icon.png',
+    balance: 1.9234,
+  },
+];
 
 const tokenData = {
   value: '.031 NT ($0.09)',
@@ -19,11 +56,20 @@ class Card extends Component {
   panelHeight = undefined;
   state = {
     isReadMoreOpen: true,
+    isModalOpen: false,
   };
 
   componentDidMount() {
     this.panelHeight = this.panel.offsetHeight;
     this.setState({ isReadMoreOpen: false });
+  }
+
+  openModal() {
+    this.setState({ isModalOpen: true });
+  }
+
+  closeModal() {
+    this.setState({ isModalOpen: false });
   }
 
   toggleReadMore() {
@@ -35,8 +81,7 @@ class Card extends Component {
     const { tribe, render } = props;
     const { isReadMoreOpen } = state;
 
-    const transitionDuration = 200;
-    const transition = `all ${transitionDuration}ms linear`;
+    const transition = `all ${ANIMATION_DURATION}ms linear`;
     const defaultStyles = {
       height: '0px',
       opacity: 0,
@@ -48,8 +93,25 @@ class Card extends Component {
       exited: defaultStyles,
     };
 
+    const minRequirement = (value) =>
+      parseInt(value, 10) >= 10 ? undefined : `You don't have enough to stake`;
+
     return (
       <div className={styles.Card}>
+        <Modal
+          hasCloseButton
+          isOpen={this.state.isModalOpen}
+          closeModal={this.closeModal.bind(this)}
+          renderHeader={() => <h1>Support {tribe.name}</h1>}
+        >
+          <CurrencyConverter
+            sendCurrencies={currencies.filter(
+              (curr) => curr.id === 'ETH' || curr.id === 'NT',
+            )}
+            receiveCurrencies={[currencies[4]]}
+            toValidation={minRequirement}
+          />
+        </Modal>
         <div
           style={{ backgroundImage: `url("${tribe.image}")` }}
           className={styles.Header}
@@ -70,7 +132,11 @@ class Card extends Component {
         <div className={styles.CTAMobile}>
           <div className={styles.CTABadge}>
             <span> Support {tribe.name}</span>
-            <Button theme="primary" content="100 NT" />
+            <Button
+              clickHandler={this.openModal.bind(this)}
+              theme="primary"
+              content="100 NT"
+            />
           </div>
         </div>
         <TokenData
@@ -85,7 +151,7 @@ class Card extends Component {
         <Transition
           mountOnEnter
           in={isReadMoreOpen}
-          timeout={transitionDuration}
+          timeout={ANIMATION_DURATION}
         >
           {(state) => (
             <div

@@ -14,7 +14,7 @@
 
 .Label {
   border-right: 1px solid var(--gray-8);
-  flex-basis: 12rem;
+  flex-basis: 10rem;
 
   @media (--medium-viewport) {
     border-right: 0;
@@ -31,6 +31,13 @@
 
   &::placeholder {
     color: var(--gray-8);
+  }
+
+  &::-webkit-inner-spin-button {
+    margin: 0;
+
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
   }
 
   @media (--medium-viewport) {

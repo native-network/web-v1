@@ -1,16 +1,21 @@
+import { push } from 'connected-react-router';
 import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { promptSign } from '../web3';
 
 export const getUserSession = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { state } = getState().router.location;
     dispatch({ type: actions.GET_USER_SESSION });
     dispatch(beginAjaxCall());
     try {
       const { data } = await get(`user`);
       if (data.user) {
-        return dispatch(getUserSessionSuccess(data.user));
+        dispatch(getUserSessionSuccess(data.user));
+        if (state && state.from) {
+          return dispatch(push(state.from.pathname));
+        }
       } else {
         return dispatch(getUserSessionError('No user in session.'));
       }

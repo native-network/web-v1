@@ -9,7 +9,7 @@ function CurrencySelector({
   selectHandler,
   isFrom,
 }) {
-  const hasDropdown = currencies.length > 1;
+  const hasDropdown = currencies.length >= 1;
 
   return (
     <Downshift
@@ -64,26 +64,24 @@ function CurrencySelector({
                 className: styles.Dropdown,
               })}
             >
-              {currencies
-                .filter((item) => item.id !== defaultCurrency.id)
-                .map((item, index) => (
-                  <li
-                    key={item.id}
-                    {...getItemProps({
-                      item,
-                      className: styles.SubmenuItem,
-                      style: {
-                        backgroundColor:
-                          highlightedIndex === index
-                            ? 'rgba(0, 0, 0, .1)'
-                            : 'transparent',
-                      },
-                    })}
-                  >
-                    <img src={item.thumb} alt="" />
-                    {item.id}
-                  </li>
-                ))}
+              {currencies.map((item, index) => (
+                <li
+                  key={item.id}
+                  {...getItemProps({
+                    item,
+                    className: styles.SubmenuItem,
+                    style: {
+                      backgroundColor:
+                        highlightedIndex === index
+                          ? 'rgba(0, 0, 0, .1)'
+                          : 'transparent',
+                    },
+                  })}
+                >
+                  <img src={item.thumb} alt="" />
+                  {item.id}
+                </li>
+              ))}
             </ul>
           ) : null}
         </div>

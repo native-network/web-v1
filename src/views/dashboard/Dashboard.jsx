@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,30 +23,34 @@ const currencies = [
     thumb: eth,
     balance: 3.14,
     inUsd: '$1,353.34',
+    inEth: 1,
   },
   {
     id: 'NT',
     thumb: native,
-    balance: 1.9234,
+    balance: 1491.9234,
     inUsd: '$1,353.34',
+    inEth: 0.83749,
   },
   {
     id: 'EGTT',
-    thumb: 'http://placehold.it/50x50',
-    balance: 1.9234,
+    thumb: '/static/media/earth_icon.png',
+    balance: 157.985,
+    inEth: 0.0183749,
   },
   {
     id: 'CCTT',
-    thumb: 'http://placehold.it/50x50',
-    balance: 1.9234,
+    thumb: '/static/media/cloud_icon.png',
+    balance: 100.9234,
+    inEth: 0.4137,
   },
   {
     id: 'IFTT',
-    thumb: 'http://placehold.it/50x50',
-    balance: 1.9234,
+    thumb: '/static/media/imaginal_icon.png',
+    balance: 15.9234,
+    inEth: 0.21,
   },
 ];
-
 export class Dashboard extends Component {
   state = {
     hasSession: this.props.hasSession || false,
@@ -73,7 +76,7 @@ export class Dashboard extends Component {
     return (
       <Modal
         label="Sign in"
-        renderHeader={() => <h1 style={{textAlign: 'center'}}>Sign in</h1>}
+        renderHeader={() => <h1 style={{ textAlign: 'center' }}>Sign in</h1>}
         isOpen={!this.state.hasSession}
       >
         <Button
@@ -94,13 +97,24 @@ export class Dashboard extends Component {
         {this.state.hasSession ? (
           <section className={styles.Dashboard}>
             <h1>Convert Tokens</h1>
-            <CurrencyConverter fromCurrencies={this.state.userCurrencies.filter(curr => curr.balance)} toCurrencies={this.state.userCurrencies} />
+            <CurrencyConverter
+              sendCurrencies={this.state.userCurrencies.filter(
+                (curr) =>
+                  curr.balance && (curr.id === 'ETH' || curr.id === 'NT'),
+              )}
+              receiveCurrencies={this.state.userCurrencies.filter(
+                (curr) => curr.id !== 'ETH',
+              )}
+            />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
             </div>
             <div className={styles.Table}>
               &lt;Tabular Data&gt;
-              {this.props.tribes && this.props.tribes.map((tribe) => <div key={tribe.name}>{tribe.name}</div>)}
+              {this.props.tribes &&
+                this.props.tribes.map((tribe) => (
+                  <div key={tribe.name}>{tribe.name}</div>
+                ))}
             </div>
           </section>
         ) : (

@@ -10,7 +10,7 @@
   height: 100%;
   display: grid;
   grid-column-gap: 0.25rem;
-  grid-template-columns: 3rem 1fr 3rem;
+  grid-template-columns: 3rem 1fr 2rem;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
     'icon label-1 dropdown'
@@ -52,7 +52,6 @@
     justify-self: end;
     color: var(--primary-black);
     height: 100%;
-    padding: 0 1rem;
     grid-area: dropdown;
   }
 }
