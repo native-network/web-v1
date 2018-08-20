@@ -1,9 +1,7 @@
-/* eslint-disable */
-import { allTribesActions as tribesActions, tokenActions } from './actionTypes';
+import { allTribesActions as tribesActions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
+import { getCurrencyPriceByTribeId } from './currencyActions';
 import { get, post } from '../requests';
-import TribeWeb3 from '../TribeWeb3';
-import { getWeb3ServiceInstance } from '../Web3Service';
 
 export const getTribes = () => {
   return async (dispatch) => {
@@ -11,6 +9,8 @@ export const getTribes = () => {
     dispatch(beginAjaxCall());
     try {
       const { data } = await get('tribes');
+
+      (data || []).map((tribe) => dispatch(getCurrencyPriceByTribeId(tribe)));
 
       return dispatch(getTribesSuccess(data));
     } catch (err) {
@@ -43,7 +43,8 @@ export const addNewTribe = (tribe) => {
 
       return dispatch(addNewTribeSuccess(data));
     } catch (err) {
-      return dispatch(addNewTribeError(err));
+      const { message } = err;
+      return dispatch(addNewTribeError(message));
     }
   };
 };
@@ -62,25 +63,41 @@ export const addNewTribeError = (error) => {
   };
 };
 
-export const getTokenContractByTribeId = (id) => {
-  return async (dispatch) => {
-    dispatch({ type: tokenActions.GET_TOKEN_BY_TRIBE_ID });
+// export const getTokenContractByTribeId = (id) => {
+//   return async (dispatch) => {
+//     dispatch({ type: tokenActions.GET_TOKEN_BY_TRIBE_ID });
+//     dispatch(beginAjaxCall());
 
-    const service = getWeb3ServiceInstance();
+//     const service = getWeb3ServiceInstance();
 
-    const account = await service.getMainAccount();
+//     // const account = await service.getMainAccount();
 
-    const tribe3 = new TribeWeb3(id, service);
-    await tribe3.initContracts();
+//     const tribe3 = new TribeWeb3(id, service);
+//     await tribe3.initContracts();
 
-    service.web3.eth
-      .sendTransaction({
-        from: account,
-        to: tribe3.tribe.tokenAddress,
-        value: '10000000000000000000',
-      })
-      .then(function(receipt) {
-        console.log(receipt);
-      });
-  };
-};
+//     return dispatch(
+//       getTokenContractByTribeIdSuccess(
+//         id,
+//         await tribe3.smartTokenContractWS.methods.priceInWei().call(),
+//       ),
+//     );
+
+//     // service.web3.eth
+//     //   .sendTransaction({
+//     //     from: account,
+//     //     to: tribe3.tribe.tokenAddress,
+//     //     value: '10000000000000000000',
+//     //   })
+//     //   .then(function(receipt) {
+//     //     console.log(receipt);
+//     //   });
+//   };
+// };
+
+// export const getTokenContractByTribeIdSuccess = (tribeId, contract) => {
+//   return {
+//     type: tokenActions.GET_TOKEN_BY_TRIBE_ID_SUCCESS,
+//     tribeId,
+//     contract,
+//   };
+// };
