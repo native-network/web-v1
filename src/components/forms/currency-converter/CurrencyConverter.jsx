@@ -1,6 +1,5 @@
-/* eslint-disable */
 import React, { Component } from 'react';
-import { Form, Field, FormSpy } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import createDecorator from 'final-form-calculate';
 
 import { BigNumber } from 'bignumber.js';
@@ -13,8 +12,18 @@ import CurrencyInput from '../../shared/currency-input';
 
 const bigNumber = (n) => new BigNumber(n.toString());
 
-const equation = (n) => n ? bigNumber(n).multipliedBy(4).toString() : n;
-const reverseEq = (n) => n ? bigNumber(n).dividedBy(4).toString() : n;
+const equation = (n) =>
+  n
+    ? bigNumber(n)
+        .multipliedBy(4)
+        .toString()
+    : n;
+const reverseEq = (n) =>
+  n
+    ? bigNumber(n)
+        .dividedBy(4)
+        .toString()
+    : n;
 
 const calculate = createDecorator({
   field: 'sendCurrency',
@@ -54,11 +63,12 @@ class CurrencyConverter extends Component {
   }
 
   changeReceiveCurrency() {
-    const newActiveReceive = (this.props.receiveCurrencies || [])
-    .find(currency => currency !== this.state.activeSend);
+    const newActiveReceive = (this.props.receiveCurrencies || []).find(
+      (currency) => currency !== this.state.activeSend,
+    );
 
     if (newActiveReceive) {
-      this.setState({activeReceive: newActiveReceive});
+      this.setState({ activeReceive: newActiveReceive });
     }
   }
 
@@ -84,23 +94,21 @@ class CurrencyConverter extends Component {
     const { activeSend, activeReceive } = this.state;
     const { sendCurrencies, receiveCurrencies, toValidation } = this.props;
     const hasEnoughBalance = (value) =>
-      value > activeSend.balance
-        ? `You don't have enough currency`
-        : undefined;
+      value > activeSend.balance ? `You don't have enough currency` : undefined;
 
     return (
       <Form
         decorators={[calculate, reverse]}
-        initialValues={{ sendCurrency: activeSend.balance, receiveCurrency: equation(activeSend.balance) }}
+        initialValues={{
+          sendCurrency: activeSend.balance,
+          receiveCurrency: equation(activeSend.balance),
+        }}
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
       >
-        {({ handleSubmit, invalid, pristine }) => (
+        {({ handleSubmit, invalid }) => (
           <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
-            <Field
-              name="sendCurrency"
-              validate={hasEnoughBalance}
-            >
+            <Field name="sendCurrency" validate={hasEnoughBalance}>
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
@@ -140,7 +148,10 @@ class CurrencyConverter extends Component {
                         }
                         defaultCurrency={currency}
                         currencies={receiveCurrencies.filter(
-                          (curr) => curr && curr.id !== activeSend.id && curr.id !== currency.id,
+                          (curr) =>
+                            curr &&
+                            curr.id !== activeSend.id &&
+                            curr.id !== currency.id,
                         )}
                       />
                     )}
