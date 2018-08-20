@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
-import { getTokenContractByTribeId } from '../../actions/allTribesActions';
 
 import Loader from '../../components/shared/loader';
 import Card from '../../components/shared/card';
@@ -101,12 +100,6 @@ export class Tribe extends Component {
     this.props.getTribeById(this.props.id);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.tribe !== this.props.tribe) {
-      this.props.getTokenContractByTribeId(this.props.tribe);
-    }
-  }
-
   componentWillUnmount() {
     this.props.clearActiveTribe();
   }
@@ -137,10 +130,6 @@ export function mapDispatchToProps(dispatch) {
   return {
     getTribeById: bindActionCreators(getTribeById, dispatch),
     clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
-    getTokenContractByTribeId: bindActionCreators(
-      getTokenContractByTribeId,
-      dispatch,
-    ),
   };
 }
 

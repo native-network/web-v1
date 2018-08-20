@@ -12,6 +12,8 @@ export class Manage extends Component {
     const newVals = {
       ...vals,
       address: '0x3imaginalfilms',
+      tokenAddress: 'foo',
+      loggerAddress: 'foo',
       subtitle: 'Foo',
       image: 'static/media/cloud_header.png',
       icon: 'static/media/cloud_header.png',
