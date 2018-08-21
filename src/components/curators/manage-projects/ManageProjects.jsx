@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import moment from 'moment';
+import moment from 'moment';
 import ManageProjectsList from './ManageProjectsList';
 import ManageProjectsNew from './ManageProjectsNew';
 
@@ -12,17 +12,15 @@ export class ManageProjects extends Component {
   };
 
   componentDidMount() {
-    const currentProjects = this.props.items;
-    // TODO: missing dates on project model
-    // const currentProjects = this.props.items.filter((project) => {
-    //   return moment(project.endDate).isAfter(moment());
-    // });
-    // const pastProjects = this.props.items.filter((project) => {
-    //   return moment(project.endDate).isBefore(moment());
-    // });
+    const currentProjects = this.props.items.filter((project) => {
+      return moment(project.endDate).isAfter(moment());
+    });
+    const pastProjects = this.props.items.filter((project) => {
+      return moment(project.endDate).isBefore(moment());
+    });
     this.setState({
       currentProjects: currentProjects,
-      // pastProjects: pastProjects,
+      pastProjects: pastProjects,
     });
   }
 
