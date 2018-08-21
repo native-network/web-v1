@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';

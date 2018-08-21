@@ -20,7 +20,7 @@ function ManageProjectsList({ projects }) {
         <td className={styles.TableCell}>{item.tribe.quorum} %</td>
         <td className={styles.TableCell}>TBD</td>
         <td className={styles.TableCell}>
-          <ManageProjectsEdit />
+          <ManageProjectsEdit project={item} />
         </td>
       </tr>
     );

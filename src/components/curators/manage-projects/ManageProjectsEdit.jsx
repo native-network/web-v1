@@ -26,9 +26,15 @@ export class ManageProjectsEdit extends Component {
 
   handleSubmit(vals) {
     console.log(vals) // eslint-disable-line
-    // const newVals = {
-    //   ...vals,
-    // };
+
+    const newVals = {
+      costBreakdownUrl: vals.costBreakdownUrl,
+      roadmapUrl: vals.roadmapUrl,
+      imageUrl: vals.imageUrl,
+      additionalInfo: vals.additionalInfo,
+    };
+
+    console.log(newVals) // eslint-disable-line
 
     // this.props.addNewProject(newVals);
   }
@@ -59,7 +65,10 @@ export class ManageProjectsEdit extends Component {
           isOpen={this.state.isModalOpen}
         >
           <div>
-            <ManageProjectForm submitForm={this.handleSubmit.bind(this)} />
+            <ManageProjectForm
+              submitForm={this.handleSubmit.bind(this)}
+              project={this.props.project}
+            />
           </div>
         </Modal>
       </div>
