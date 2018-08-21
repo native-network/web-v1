@@ -1,10 +1,8 @@
-/* eslint-disable */
 import React from 'react';
 
 import styles from './CurrencyInput.css';
 
 function CurrencyInput({ currency, renderLabel, ...rest }) {
-  console.log(currency);
   return (
     <div className={styles.CurrencyInput}>
       {renderLabel && (
