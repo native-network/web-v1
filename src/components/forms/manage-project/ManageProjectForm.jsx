@@ -75,7 +75,7 @@ export default function ManageProjectForm({ submitForm }) {
               )}
             </Field>
             <Field name="endDate" validate={required}>
-              {({ input }) => (
+              {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <p>
                     Project voting will open today:{' '}
@@ -92,6 +92,7 @@ export default function ManageProjectForm({ submitForm }) {
                       input.onChange(moment(date).format('MM/DD/YYYY'))
                     }
                   />
+                  {meta.error && meta.touched && renderError(meta.error)}
                 </div>
               )}
             </Field>

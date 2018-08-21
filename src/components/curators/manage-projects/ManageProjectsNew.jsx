@@ -79,7 +79,6 @@ export const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
-    console.log(state); // eslint-disable-line
     return {
       tribeId: state.activeTribe.tribe.id,
       isLoading: state.loading > 0,

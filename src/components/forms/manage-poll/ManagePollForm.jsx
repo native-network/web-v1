@@ -78,7 +78,7 @@ export default function ManagePollForm({ submitForm }) {
                 )}
               </Field>
               <Field name="endDate" validate={required}>
-                {({ input }) => (
+                {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
                     <label>End date</label>
                     <DatePicker
@@ -91,6 +91,7 @@ export default function ManagePollForm({ submitForm }) {
                         input.onChange(moment(date).format('MM/DD/YYYY'))
                       }
                     />
+                    {meta.error && meta.touched && renderError(meta.error)}
                   </div>
                 )}
               </Field>

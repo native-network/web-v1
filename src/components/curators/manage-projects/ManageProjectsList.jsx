@@ -18,7 +18,7 @@ function ManageProjectsList({ projects }) {
         </td>
         <td className={styles.TableCell}>{item.totalCost} NT</td>
         <td className={styles.TableCell}>{item.tribe.quorum} %</td>
-        <td className={styles.TableCell}>20%</td>
+        <td className={styles.TableCell}>TBD</td>
         <td className={styles.TableCell}>
           <ManageProjectsEdit />
         </td>
