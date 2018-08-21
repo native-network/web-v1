@@ -10,9 +10,9 @@ export default function currencyReducer(state = initialState.currency, action) {
           ...state.currencies,
           {
             tribeId: action.tribe.id,
-            ...action.data,
             iconUrl: action.tribe.icon,
             minimumStake: '100',
+            ...action.data,
           },
         ],
       };
