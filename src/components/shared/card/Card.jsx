@@ -7,27 +7,11 @@ import CurrencyConverter from '../../forms/currency-converter';
 import TokenData from '../token-data';
 import Tag from '../tag';
 
+import { currencies } from '../../../utils/constants';
+
 import styles from './Card.css';
 
-import eth from '../../../assets/img/eth.svg';
-import native from '../../../assets/img/native.svg';
-
 const ANIMATION_DURATION = 200;
-
-const currencies = [
-  {
-    symbol: 'ETH',
-    iconUrl: eth,
-    balance: 50,
-    inUsd: '$1,353.34',
-  },
-  {
-    symbol: 'NT',
-    iconUrl: native,
-    balance: 1.9234,
-    inUsd: '$1,353.34',
-  },
-];
 
 const tokenData = {
   value: '.031 NT ($0.09)',

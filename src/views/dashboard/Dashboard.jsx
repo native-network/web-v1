@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,25 +14,8 @@ import Modal from '../../components/shared/modal';
 import Button from '../../components/shared/button';
 import CurrencyConverter from '../../components/forms/currency-converter';
 
-import eth from '../../assets/img/eth.svg';
-import native from '../../assets/img/native.svg';
+import { currencies } from '../../utils/constants';
 
-const currencies = [
-  {
-    symbol: 'ETH',
-    iconUrl: eth,
-    balance: 3.14,
-    inUsd: '$1,353.34',
-    inEth: 1,
-  },
-  {
-    symbol: 'NT',
-    iconUrl: native,
-    balance: 1491.9234,
-    inUsd: '$1,353.34',
-    inEth: 0.83749,
-  },
-];
 export class Dashboard extends Component {
   state = {
     hasSession: this.props.hasSession || false,
@@ -59,7 +41,7 @@ export class Dashboard extends Component {
     return (
       <Modal
         label="Sign in"
-        renderHeader={() => <h1 style={{textAlign: 'center'}}>Sign in</h1>}
+        renderHeader={() => <h1 style={{ textAlign: 'center' }}>Sign in</h1>}
         isOpen={!this.state.hasSession}
       >
         <Button
@@ -73,7 +55,6 @@ export class Dashboard extends Component {
   }
 
   render() {
-    console.log(this.props.currencies) // els
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -94,7 +75,10 @@ export class Dashboard extends Component {
             </div>
             <div className={styles.Table}>
               &lt;Tabular Data&gt;
-              {this.props.tribes && this.props.tribes.map((tribe) => <div key={tribe.name}>{tribe.name}</div>)}
+              {this.props.tribes &&
+                this.props.tribes.map((tribe) => (
+                  <div key={tribe.name}>{tribe.name}</div>
+                ))}
             </div>
           </section>
         ) : (
@@ -114,7 +98,6 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
-    console.log(state);
     return {
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
