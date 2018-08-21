@@ -64,10 +64,12 @@ export class Dashboard extends Component {
             <h1>Convert Tokens</h1>
             <CurrencyConverter
               defaultValues={{
-                send: undefined,
-                receive: undefined,
+                sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
+                sendValue: undefined,
+                receiveCurrency: this.props.currencies[0],
+                receiveValue: undefined,
               }}
-              sendCurrencies={this.state.userCurrencies}
+              sendCurrencies={currencies}
               receiveCurrencies={this.props.currencies}
             />
             <div className={styles.TableTitle}>

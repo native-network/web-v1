@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
+import { BigNumber } from 'bignumber.js';
+import Web3 from 'web3';
 
 import Button from '../button';
 import Modal from '../modal';
@@ -11,6 +13,7 @@ import { currencies } from '../../../utils/constants';
 
 import styles from './Card.css';
 
+const web3 = new Web3();
 const ANIMATION_DURATION = 200;
 
 const tokenData = {
@@ -50,6 +53,10 @@ class Card extends Component {
     const { tribe, render } = props;
     const { isReadMoreOpen } = state;
 
+    const stakeInWei = new BigNumber(tribe.currency.priceInWei).multipliedBy(
+      tribe.currency.minimumStake,
+    );
+
     const transition = `all ${ANIMATION_DURATION}ms linear`;
     const defaultStyles = {
       height: '0px',
@@ -75,8 +82,10 @@ class Card extends Component {
         >
           <CurrencyConverter
             defaultValues={{
-              send: undefined,
-              receive: tribe.currency.minimumStake,
+              sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
+              sendValue: web3.utils.fromWei(stakeInWei.toString()),
+              receiveCurrency: tribe.currency,
+              receiveValue: tribe.currency.minimumStake,
             }}
             sendCurrencies={currencies}
             receiveCurrencies={[tribe.currency]}

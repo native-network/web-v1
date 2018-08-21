@@ -1,6 +1,8 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import createDecorator from 'final-form-calculate';
+import Web3 from 'web3';
 
 import { BigNumber } from 'bignumber.js';
 
@@ -11,6 +13,7 @@ import CurrencySelector from '../../shared/currency-selector';
 import CurrencyInput from '../../shared/currency-input';
 
 const bigNumber = (n) => new BigNumber(n.toString());
+const web3 = new Web3();
 
 const equation = (n) =>
   n
@@ -25,19 +28,32 @@ const reverseEq = (n) =>
         .toString()
     : n;
 
-const calculate = createDecorator({
-  field: 'sendCurrency',
-  updates: {
-    receiveCurrency: (val) => equation(val),
-  },
-});
+const calculate = createDecorator(
+  {
+    field: /Currency/,
+    updates: (value, name, allValues) => {
+      const { priceInWei } = value;
+      const { sendValue, receiveValue } = allValues;
+      const convertToWei = (n = 0) => bigNumber(n || 1).multipliedBy(priceInWei).toString();
 
-const reverse = createDecorator({
-  field: 'receiveCurrency',
-  updates: {
-    sendCurrency: (val) => reverseEq(val),
+      if (/send/.test(name)) {
+        return { receiveValue: web3.utils.fromWei(convertToWei(sendValue)) }
+      } else {
+        return { sendValue: web3.utils.fromWei(convertToWei(receiveValue)) };
+      }
+    },
   },
-});
+  // {
+  //   field: /Value/,
+  //   updates: (value, name, allValues) => {
+  //     console.log(value);
+  //     console.log(name);
+  //     console.log(allValues);
+
+  //     return null;
+  //   }
+  // }
+);
 
 class CurrencyConverter extends Component {
   state = {
@@ -73,6 +89,7 @@ class CurrencyConverter extends Component {
   }
 
   setActiveSend(selection) {
+    console.log(selection); // eslint-disable-line
     this.setState({ activeSend: selection });
   }
 
@@ -81,49 +98,53 @@ class CurrencyConverter extends Component {
   }
 
   handleSubmit(values) {
-    const { sendCurrency, receiveCurrency } = values;
-    alert(
-      JSON.stringify({
-        send: { [this.state.activeSend.symbol]: sendCurrency },
-        receive: { [this.state.activeReceive.symbol]: receiveCurrency },
-      }),
-    );
+    console.log(values) // eslint-disable-line
+    // const { sendCurrency, receiveCurrency } = values;
+    // alert(
+    //   JSON.stringify({
+    //     send: { [this.state.activeSend.symbol]: sendCurrency },
+    //     receive: { [this.state.activeReceive.symbol]: receiveCurrency },
+    //   }),
+    // );
   }
 
   render() {
     const { activeSend, activeReceive } = this.state;
-    const { sendCurrencies, receiveCurrencies, toValidation } = this.props;
+    const {
+      sendCurrencies,
+      receiveCurrencies,
+      toValidation,
+      defaultValues,
+    } = this.props;
     const hasEnoughBalance = (value) =>
       value > activeSend.balance ? `You don't have enough currency` : undefined;
 
     return (
       <Form
-        decorators={[calculate, reverse]}
+        decorators={[calculate]}
         initialValues={{
-          sendCurrency: this.props.defaultValues.send,
-          receiveCurrency: this.props.defaultValues.receive,
+          sendCurrency: defaultValues.sendCurrency,
+          sendValue: defaultValues.sendValue,
+          receiveCurrency: defaultValues.receiveCurrency,
+          receiveValue: defaultValues.receiveValue,
         }}
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
       >
         {({ handleSubmit, invalid }) => (
           <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
-            <Field name="sendCurrency" validate={hasEnoughBalance}>
+            <Field name="sendValue" validate={hasEnoughBalance}>
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
                     {...input}
                     currency={activeSend}
-                    renderLabel={(currency) => (
-                      <CurrencySelector
+                    renderLabel={() => (
+                      <Field
                         isFrom
-                        selectHandler={(selection) =>
-                          this.setActiveSend(selection)
-                        }
-                        defaultCurrency={currency}
-                        currencies={sendCurrencies.filter(
-                          (curr) => curr.symbol !== currency.symbol,
-                        )}
+                        component={CurrencySelector}
+                        name="sendCurrency"
+                        currencies={sendCurrencies}
                       />
                     )}
                   />
@@ -135,24 +156,17 @@ class CurrencyConverter extends Component {
               )}
             </Field>
             <span className={`visible-md ${styles.Arrow}`}>&rarr;</span>
-            <Field name="receiveCurrency" validate={toValidation}>
+            <Field name="receiveValue" validate={toValidation}>
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
                     {...input}
                     currency={activeReceive}
-                    renderLabel={(currency) => (
-                      <CurrencySelector
-                        selectHandler={(selection) =>
-                          this.setActiveReceive(selection)
-                        }
-                        defaultCurrency={currency}
-                        currencies={receiveCurrencies.filter(
-                          (curr) =>
-                            curr &&
-                            curr.symbol !== activeSend.symbol &&
-                            curr.symbol !== currency.symbol,
-                        )}
+                    renderLabel={() => (
+                      <Field
+                        component={CurrencySelector}
+                        name="receiveCurrency"
+                        currencies={receiveCurrencies}
                       />
                     )}
                   />

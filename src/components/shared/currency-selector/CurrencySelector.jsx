@@ -3,17 +3,14 @@ import Downshift from 'downshift';
 
 import styles from './CurrencySelector.css';
 
-function CurrencySelector({
-  defaultCurrency,
-  currencies,
-  selectHandler,
-  isFrom,
-}) {
+function CurrencySelector({ input, currencies, isFrom }) {
   const hasDropdown = currencies.length >= 1;
   return (
     <Downshift
       itemToString={(item) => (item ? item.symbol : '')}
-      onChange={(selection) => selectHandler(selection)}
+      onChange={(select) => input.onChange(select)}
+      defaultSelectedItem={input.value}
+      {...input}
     >
       {({
         getLabelProps,
@@ -22,6 +19,7 @@ function CurrencySelector({
         getItemProps,
         isOpen,
         highlightedIndex,
+        selectedItem,
       }) => (
         <div className={styles.SelectorContainer}>
           <label
@@ -33,15 +31,13 @@ function CurrencySelector({
           >
             <img
               className={styles.CurrencyIcon}
-              src={defaultCurrency && defaultCurrency.iconUrl}
+              src={selectedItem.iconUrl}
               alt=""
             />
             <span className={styles.CurrencyDirection}>
               {isFrom ? `Pay with` : `Receive`}
             </span>
-            <span className={styles.CurrencyId}>
-              {defaultCurrency && defaultCurrency.symbol}
-            </span>
+            <span className={styles.CurrencyId}>{selectedItem.symbol}</span>
             {hasDropdown ? (
               <button
                 {...getToggleButtonProps({
@@ -65,24 +61,26 @@ function CurrencySelector({
                 className: styles.Dropdown,
               })}
             >
-              {currencies.map((item, index) => (
-                <li
-                  key={item.symbol}
-                  {...getItemProps({
-                    item,
-                    className: styles.SubmenuItem,
-                    style: {
-                      backgroundColor:
-                        highlightedIndex === index
-                          ? 'rgba(0, 0, 0, .1)'
-                          : 'transparent',
-                    },
-                  })}
-                >
-                  <img src={item.iconUrl} alt="" />
-                  {item.symbol}
-                </li>
-              ))}
+              {currencies
+                .filter((item) => item !== selectedItem)
+                .map((item, index) => (
+                  <li
+                    key={item.symbol}
+                    {...getItemProps({
+                      item,
+                      className: styles.SubmenuItem,
+                      style: {
+                        backgroundColor:
+                          highlightedIndex === index
+                            ? 'rgba(0, 0, 0, .1)'
+                            : 'transparent',
+                      },
+                    })}
+                  >
+                    <img src={item.iconUrl} alt="" />
+                    {item.symbol}
+                  </li>
+                ))}
             </ul>
           ) : null}
         </div>
