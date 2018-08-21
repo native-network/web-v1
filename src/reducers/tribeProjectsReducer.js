@@ -27,6 +27,18 @@ export default function tribeProjectsReducer(state = initialState, action) {
         ...state,
         error: action.error,
       };
+    case actions.UPDATE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        projects: state.projects.map((project) => {
+          return project.id === action.project.id ? action.project : project;
+        }),
+      };
+    case actions.UPDATE_PROJECT_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
     default:
       return state;
   }

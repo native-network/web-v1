@@ -1,6 +1,6 @@
 import { tribeProjectsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { get, post } from '../requests';
+import { get, post, put } from '../requests';
 
 export const getTribeProjects = (id) => {
   return async (dispatch) => {
@@ -55,6 +55,35 @@ export const addNewProjectSuccess = (project) => {
 export const addNewProjectError = (error) => {
   return {
     type: actions.ADD_NEW_PROJECT_ERROR,
+    error,
+  };
+};
+
+export const updateProject = (projectId, update) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.UPDATE_PROJECT });
+    dispatch(beginAjaxCall());
+
+    try {
+      const { data } = await put(`projects/${projectId}`, update);
+
+      return dispatch(updateProjectSuccess(data));
+    } catch (err) {
+      return dispatch(updateProjectError(err));
+    }
+  };
+};
+
+export const updateProjectSuccess = (project) => {
+  return {
+    type: actions.UPDATE_PROJECT_SUCCESS,
+    project,
+  };
+};
+
+export const updateProjectError = (error) => {
+  return {
+    type: actions.UPDATE_PROJECT_ERROR,
     error,
   };
 };

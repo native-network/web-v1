@@ -32,3 +32,12 @@ export const post = async (endpoint, payload) => {
     throw new Error(error);
   }
 };
+
+export const put = async (endpoint, payload) => {
+  try {
+    return await instance.put(`/${endpoint}`, payload);
+  } catch (err) {
+    const { data: error } = err && err.response;
+    throw new Error(error);
+  }
+};

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewProject } from '../../../actions/tribeProjectsActions';
+import { updateProject } from '../../../actions/tribeProjectsActions';
 
 import Loader from '../../shared/loader';
 import Button from '../../shared/button';
@@ -25,8 +25,6 @@ export class ManageProjectsEdit extends Component {
   }
 
   handleSubmit(vals) {
-    console.log(vals) // eslint-disable-line
-
     const newVals = {
       costBreakdownUrl: vals.costBreakdownUrl,
       roadmapUrl: vals.roadmapUrl,
@@ -34,9 +32,7 @@ export class ManageProjectsEdit extends Component {
       additionalInfo: vals.additionalInfo,
     };
 
-    console.log(newVals) // eslint-disable-line
-
-    // this.props.addNewProject(newVals);
+    this.props.updateProject(vals.id, newVals);
   }
 
   render() {
@@ -78,7 +74,7 @@ export class ManageProjectsEdit extends Component {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    addNewProject: bindActionCreators(addNewProject, dispatch),
+    updateProject: bindActionCreators(updateProject, dispatch),
   };
 };
 
