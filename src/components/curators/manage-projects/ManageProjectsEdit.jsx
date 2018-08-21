@@ -11,7 +11,7 @@ import ManageProjectForm from '../../forms/manage-project';
 
 import styles from './ManageProjects.css';
 
-export class ManageProjectsNew extends Component {
+export class ManageProjectsEdit extends Component {
   state = {
     isModalOpen: false,
   };
@@ -25,12 +25,12 @@ export class ManageProjectsNew extends Component {
   }
 
   handleSubmit(vals) {
-    const newVals = {
-      ...vals,
-      tribeId: this.props.tribeId,
-    };
+    console.log(vals) // eslint-disable-line
+    // const newVals = {
+    //   ...vals,
+    // };
 
-    this.props.addNewProject(newVals);
+    // this.props.addNewProject(newVals);
   }
 
   render() {
@@ -40,13 +40,13 @@ export class ManageProjectsNew extends Component {
       <div className={styles.ProjectButton}>
         <Button
           theme="secondary"
-          content="Add Project"
+          content="Edit"
           clickHandler={this.openModal.bind(this)}
         />
         <Modal
           renderHeader={() => (
             <div className={styles.ModalHeader}>
-              <h1>Add Project</h1>
+              <h1>Edit Project</h1>
               <button
                 style={{ color: 'black' }}
                 onClick={this.closeModal.bind(this)}
@@ -55,7 +55,7 @@ export class ManageProjectsNew extends Component {
               </button>
             </div>
           )}
-          label="Add Project"
+          label="Edit Project"
           isOpen={this.state.isModalOpen}
         >
           <div>
@@ -76,9 +76,8 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => {
     return {
-      tribeId: state.activeTribe.tribe.id,
       isLoading: state.loading > 0,
     };
   },
   mapDispatchToProps,
-)(ManageProjectsNew);
+)(ManageProjectsEdit);

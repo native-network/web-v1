@@ -6,20 +6,16 @@ function ManagePollsList({ polls }) {
   const renderItem = ({ index, item }) => {
     return (
       <tr key={index} className={styles.TableRow}>
+        <td className={styles.TableCell}>{item.title}</td>
+        <td className={styles.TableCell}>{item.question}</td>
         <td className={styles.TableCell}>
-          <p>{item.title}</p>
+          {new Date(item.startDate).toLocaleDateString()}
         </td>
         <td className={styles.TableCell}>
-          <p>{item.question}</p>
+          {new Date(item.endDate).toLocaleDateString()}
         </td>
         <td className={styles.TableCell}>
-          <p>{new Date(item.startDate).toLocaleDateString()}</p>
-        </td>
-        <td className={styles.TableCell}>
-          <p>{new Date(item.endDate).toLocaleDateString()}</p>
-        </td>
-        <td className={styles.TableCell}>
-          <p>{item.votes.length} Total Votes</p>
+          <p>{item.votes.length} - Total Votes</p>
           {(item.options || []).map((option, i) => {
             return renderStat({ index: i, option, item });
           })}
@@ -37,7 +33,7 @@ function ManagePollsList({ polls }) {
       : 0;
     return (
       <p key={index}>
-        {`${option.votes.length} ${option.name} - ${votePercentage}%`}
+        {`${option.votes.length} - ${option.name}: ${votePercentage}%`}
       </p>
     );
   };
@@ -46,21 +42,11 @@ function ManagePollsList({ polls }) {
     <table className={styles.Table}>
       <thead>
         <tr className={styles.TableRow}>
-          <th className={styles.TableCell}>
-            <p>Title</p>
-          </th>
-          <th className={styles.TableCell}>
-            <p>Question</p>
-          </th>
-          <th className={styles.TableCell}>
-            <p>Start Date</p>
-          </th>
-          <th className={styles.TableCell}>
-            <p>End Date</p>
-          </th>
-          <th className={styles.TableCell}>
-            <p>Status</p>
-          </th>
+          <th className={styles.TableCell}>Title</th>
+          <th className={styles.TableCell}>Question</th>
+          <th className={styles.TableCell}>Start Date</th>
+          <th className={styles.TableCell}>End Date</th>
+          <th className={styles.TableCell}>Status</th>
         </tr>
       </thead>
       <tbody>

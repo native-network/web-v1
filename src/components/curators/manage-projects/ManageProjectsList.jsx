@@ -1,16 +1,26 @@
 import React from 'react';
 
+import ManageProjectsEdit from './ManageProjectsEdit';
+
 import styles from './ManageProjects.css';
 
 function ManageProjectsList({ projects }) {
   const renderItem = ({ index, item }) => {
     return (
       <tr key={index} className={styles.TableRow}>
+        <td className={styles.TableCell}>{item.name}</td>
+        <td className={styles.TableCell}>subtitle</td>
         <td className={styles.TableCell}>
-          <p>{item.name}</p>
+          {new Date(item.createdAt).toLocaleDateString()}
         </td>
         <td className={styles.TableCell}>
-          <p>{new Date(item.createdAt).toLocaleDateString()}</p>
+          {new Date(item.createdAt).toLocaleDateString()}
+        </td>
+        <td className={styles.TableCell}>100 nt</td>
+        <td className={styles.TableCell}>51%</td>
+        <td className={styles.TableCell}>20%</td>
+        <td className={styles.TableCell}>
+          <ManageProjectsEdit />
         </td>
       </tr>
     );
@@ -20,12 +30,14 @@ function ManageProjectsList({ projects }) {
     <table className={styles.Table}>
       <thead>
         <tr className={styles.TableRow}>
-          <th className={styles.TableCell}>
-            <p>Name</p>
-          </th>
-          <th className={styles.TableCell}>
-            <p>Created At</p>
-          </th>
+          <th className={styles.TableCell}>Name</th>
+          <th className={styles.TableCell}>Subtitle</th>
+          <th className={styles.TableCell}>Start Date</th>
+          <th className={styles.TableCell}>End Date</th>
+          <th className={styles.TableCell}>Total Cost</th>
+          <th className={styles.TableCell}>Quorum</th>
+          <th className={styles.TableCell}>Status</th>
+          <th className={styles.TableCell} />
         </tr>
       </thead>
       <tbody>
