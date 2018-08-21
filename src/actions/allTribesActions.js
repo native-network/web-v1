@@ -11,7 +11,6 @@ export const getTribes = () => {
       const { data } = await get('tribes');
 
       (data || []).map((tribe) => dispatch(getCurrencyPriceByTribeId(tribe)));
-
       return dispatch(getTribesSuccess(data));
     } catch (err) {
       return dispatch(getTribesError(err));

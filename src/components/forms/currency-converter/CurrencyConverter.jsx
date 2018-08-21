@@ -84,8 +84,8 @@ class CurrencyConverter extends Component {
     const { sendCurrency, receiveCurrency } = values;
     alert(
       JSON.stringify({
-        send: { [this.state.activeSend.id]: sendCurrency },
-        receive: { [this.state.activeReceive.id]: receiveCurrency },
+        send: { [this.state.activeSend.symbol]: sendCurrency },
+        receive: { [this.state.activeReceive.symbol]: receiveCurrency },
       }),
     );
   }
@@ -100,8 +100,8 @@ class CurrencyConverter extends Component {
       <Form
         decorators={[calculate, reverse]}
         initialValues={{
-          sendCurrency: activeSend.balance,
-          receiveCurrency: equation(activeSend.balance),
+          sendCurrency: this.props.defaultValues.send,
+          receiveCurrency: this.props.defaultValues.receive,
         }}
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
@@ -122,7 +122,7 @@ class CurrencyConverter extends Component {
                         }
                         defaultCurrency={currency}
                         currencies={sendCurrencies.filter(
-                          (curr) => curr.id !== currency.id,
+                          (curr) => curr.symbol !== currency.symbol,
                         )}
                       />
                     )}
@@ -150,8 +150,8 @@ class CurrencyConverter extends Component {
                         currencies={receiveCurrencies.filter(
                           (curr) =>
                             curr &&
-                            curr.id !== activeSend.id &&
-                            curr.id !== currency.id,
+                            curr.symbol !== activeSend.symbol &&
+                            curr.symbol !== currency.symbol,
                         )}
                       />
                     )}

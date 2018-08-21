@@ -10,10 +10,9 @@ function CurrencySelector({
   isFrom,
 }) {
   const hasDropdown = currencies.length >= 1;
-
   return (
     <Downshift
-      itemToString={(item) => (item ? item.id : '')}
+      itemToString={(item) => (item ? item.symbol : '')}
       onChange={(selection) => selectHandler(selection)}
     >
       {({
@@ -34,13 +33,15 @@ function CurrencySelector({
           >
             <img
               className={styles.CurrencyIcon}
-              src={defaultCurrency.thumb}
+              src={defaultCurrency && defaultCurrency.iconUrl}
               alt=""
             />
             <span className={styles.CurrencyDirection}>
               {isFrom ? `Pay with` : `Receive`}
             </span>
-            <span className={styles.CurrencyId}>{defaultCurrency.id}</span>
+            <span className={styles.CurrencyId}>
+              {defaultCurrency && defaultCurrency.symbol}
+            </span>
             {hasDropdown ? (
               <button
                 {...getToggleButtonProps({
@@ -66,7 +67,7 @@ function CurrencySelector({
             >
               {currencies.map((item, index) => (
                 <li
-                  key={item.id}
+                  key={item.symbol}
                   {...getItemProps({
                     item,
                     className: styles.SubmenuItem,
@@ -78,8 +79,8 @@ function CurrencySelector({
                     },
                   })}
                 >
-                  <img src={item.thumb} alt="" />
-                  {item.id}
+                  <img src={item.iconUrl} alt="" />
+                  {item.symbol}
                 </li>
               ))}
             </ul>

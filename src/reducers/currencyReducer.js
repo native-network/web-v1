@@ -8,7 +8,12 @@ export default function currencyReducer(state = initialState.currency, action) {
         ...state,
         currencies: [
           ...state.currencies,
-          { tribeId: action.tribe.id, price: action.contract },
+          {
+            tribeId: action.tribe.id,
+            ...action.data,
+            iconUrl: action.tribe.icon,
+            minimumStake: '100',
+          },
         ],
       };
     case actions.GET_CURRENCY_PRICE_BY_TRIBE_ID_ERROR:

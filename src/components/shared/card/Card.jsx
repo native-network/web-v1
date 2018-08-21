@@ -16,31 +16,16 @@ const ANIMATION_DURATION = 200;
 
 const currencies = [
   {
-    id: 'ETH',
-    thumb: eth,
-    balance: 3.14,
+    symbol: 'ETH',
+    iconUrl: eth,
+    balance: 50,
     inUsd: '$1,353.34',
   },
   {
-    id: 'NT',
-    thumb: native,
+    symbol: 'NT',
+    iconUrl: native,
     balance: 1.9234,
     inUsd: '$1,353.34',
-  },
-  {
-    id: 'EGTT',
-    thumb: '/static/media/earth_icon.png',
-    balance: 1.9234,
-  },
-  {
-    id: 'CCTT',
-    thumb: '/static/media/cloud_icon.png',
-    balance: 1.9234,
-  },
-  {
-    id: 'IFTT',
-    thumb: '/static/media/imaginal_icon.png',
-    balance: 1.9234,
   },
 ];
 
@@ -105,10 +90,12 @@ class Card extends Component {
           renderHeader={() => <h1>Support {tribe.name}</h1>}
         >
           <CurrencyConverter
-            sendCurrencies={currencies.filter(
-              (curr) => curr.id === 'ETH' || curr.id === 'NT',
-            )}
-            receiveCurrencies={[currencies[4]]}
+            defaultValues={{
+              send: undefined,
+              receive: tribe.currency.minimumStake,
+            }}
+            sendCurrencies={currencies}
+            receiveCurrencies={[tribe.currency]}
             toValidation={minRequirement}
           />
         </Modal>
@@ -135,7 +122,9 @@ class Card extends Component {
             <Button
               clickHandler={this.openModal.bind(this)}
               theme="primary"
-              content="100 NT"
+              content={`${tribe.currency.minimumStake} ${
+                tribe.currency.symbol
+              }`}
             />
           </div>
         </div>

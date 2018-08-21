@@ -14,11 +14,25 @@ export const getCurrencyPriceByTribeId = (tribeId) => {
 
       await tribe3.initContracts();
 
-      const contract = await tribe3.smartTokenContractWS.methods
-        .priceInWei()
-        .call();
-
-      return dispatch(getCurrencyPriceByTribeIdSuccess(tribeId, contract));
+      return Promise.all([
+        tribe3.smartTokenContractWS.methods.priceInWei().call(),
+        tribe3.smartTokenContractWS.methods.symbol().call(),
+        tribe3.smartTokenContractWS.methods.totalSupply().call(),
+      ])
+        .then((data) => {
+          const [price, symbol, totalSupply] = data;
+          return dispatch(
+            getCurrencyPriceByTribeIdSuccess(tribeId, {
+              price,
+              symbol,
+              totalSupply,
+            }),
+          );
+        })
+        .catch((err) => {
+          const { message } = err;
+          return dispatch(getCurrencyPriceByTribeIdError(message));
+        });
     } catch (err) {
       const { message } = err;
       return dispatch(getCurrencyPriceByTribeIdError(message));
@@ -26,11 +40,11 @@ export const getCurrencyPriceByTribeId = (tribeId) => {
   };
 };
 
-export const getCurrencyPriceByTribeIdSuccess = (tribeId, contract) => {
+export const getCurrencyPriceByTribeIdSuccess = (tribeId, data) => {
   return {
     type: actions.GET_CURRENCY_PRICE_BY_TRIBE_ID_SUCCESS,
     tribe: tribeId,
-    contract,
+    data,
   };
 };
 
