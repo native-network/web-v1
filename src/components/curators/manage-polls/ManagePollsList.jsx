@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../ManagePolls.css';
+import styles from './ManagePolls.css';
 
 function ManagePollsList({ polls }) {
   const renderItem = ({ index, item }) => {
@@ -32,10 +32,12 @@ function ManagePollsList({ polls }) {
     const optionVoteCount = option.votes.length;
     const voteCount = item.votes.length;
 
-    const votePercentage = voteCount ? (optionVoteCount / voteCount) * 100 : 0;
+    const votePercentage = voteCount
+      ? ((optionVoteCount / voteCount) * 100).toFixed(2)
+      : 0;
     return (
       <p key={index}>
-        {`${option.votes.length} ${option.name} ${votePercentage}%`}
+        {`${option.votes.length} ${option.name} - ${votePercentage}%`}
       </p>
     );
   };

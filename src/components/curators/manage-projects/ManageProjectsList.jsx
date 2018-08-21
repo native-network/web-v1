@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../ManageProjects.css';
+import styles from './ManageProjects.css';
 
 function ManageProjectsList({ projects }) {
   const renderItem = ({ index, item }) => {

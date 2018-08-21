@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import moment from 'moment';
-import ManageProjectsList from './shared/ManageProjectsList';
+import ManageProjectsList from './ManageProjectsList';
 import ManageProjectsNew from './ManageProjectsNew';
 
 import styles from './ManageProjects.css';

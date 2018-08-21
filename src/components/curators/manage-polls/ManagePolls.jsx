@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import ManagePollsNew from './ManagePollsNew';
-import ManagePollsList from './shared/ManagePollsList';
+import ManagePollsList from './ManagePollsList';
 
 import styles from './ManagePolls.css';
 

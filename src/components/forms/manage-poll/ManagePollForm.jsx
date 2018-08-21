@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -76,10 +77,11 @@ export default function ManagePollForm({ submitForm }) {
                   </div>
                 )}
               </Field>
-              <Field name="endDate">
+              <Field name="endDate" validate={required}>
                 {({ input }) => (
                   <div className={styles.FieldGroup}>
                     <label>End date</label>
+                    <label>{input.value}</label>
                     <DatePicker
                       {...input}
                       minDate={moment().add(1, 'days')}
