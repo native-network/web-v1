@@ -8,16 +8,16 @@ function ManageProjectsList({ projects }) {
   const renderItem = ({ index, item }) => {
     return (
       <tr key={index} className={styles.TableRow}>
-        <td className={styles.TableCell}>{item.name}</td>
-        <td className={styles.TableCell}>subtitle</td>
+        <td className={styles.TableCell}>{item.title}</td>
+        <td className={styles.TableCell}>{item.subtitle}</td>
         <td className={styles.TableCell}>
-          {new Date(item.createdAt).toLocaleDateString()}
+          {new Date(item.startDate).toLocaleDateString()}
         </td>
         <td className={styles.TableCell}>
-          {new Date(item.createdAt).toLocaleDateString()}
+          {new Date(item.startDate).toLocaleDateString()}
         </td>
-        <td className={styles.TableCell}>100 nt</td>
-        <td className={styles.TableCell}>51%</td>
+        <td className={styles.TableCell}>{item.totalCost} NT</td>
+        <td className={styles.TableCell}>{item.tribe.quorum} %</td>
         <td className={styles.TableCell}>20%</td>
         <td className={styles.TableCell}>
           <ManageProjectsEdit />

@@ -34,6 +34,7 @@ const initiatives = [
 export class TribeAdmin extends Component {
   state = {
     initiatives: initiatives,
+    activeTab: 1,
   };
 
   componentDidMount() {
@@ -66,7 +67,7 @@ export class TribeAdmin extends Component {
       <Loader />
     ) : (
       <main>
-        <h2>Manage Your Tribe</h2>
+        <h2>Manage Your Community</h2>
         <TabPanels panels={state.initiatives} />
       </main>
     );

@@ -81,7 +81,6 @@ export default function ManagePollForm({ submitForm }) {
                 {({ input }) => (
                   <div className={styles.FieldGroup}>
                     <label>End date</label>
-                    <label>{input.value}</label>
                     <DatePicker
                       {...input}
                       minDate={moment().add(1, 'days')}

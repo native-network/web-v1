@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
 import { addNewProject } from '../../../actions/tribeProjectsActions';
 
@@ -29,6 +30,9 @@ export class ManageProjectsNew extends Component {
       ...vals,
       tribeId: this.props.tribeId,
     };
+    newVals.startDate = moment().toISOString();
+    newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
+    newVals.totalCost = +vals.totalCost;
 
     this.props.addNewProject(newVals);
   }
@@ -75,6 +79,7 @@ export const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
+    console.log(state); // eslint-disable-line
     return {
       tribeId: state.activeTribe.tribe.id,
       isLoading: state.loading > 0,
