@@ -32,11 +32,12 @@ function ManageTasksList({ tasks, handleExpand, expandedTask }) {
             <td colSpan="6" className={styles.TableCell}>
               <div className={styles.ExpandedCell}>
                 <div>
-                  <p>Claimed By:</p> Testing
+                  <p>Claimed By:</p>
+                  {item.userEmail !== 'null' && item.userEmail}
                 </div>
                 <div>
                   <p>Comments:</p>
-                  {item.comments}
+                  {item.comments !== 'null' && item.comments}
                 </div>
                 <div className={styles.ExpandedCell}>
                   <div className={styles.CellButton}>

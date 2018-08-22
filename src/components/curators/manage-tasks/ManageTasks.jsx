@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import ManageTasksList from './ManageTasksList';
+import ManageTasksNew from './ManageTasksNew';
 
 import styles from './ManageTasks.css';
 
@@ -34,7 +35,7 @@ export class ManageTasks extends Component {
   render() {
     return (
       <div>
-        {/* <ManageTasksNew /> */}
+        <ManageTasksNew />
         <div className={styles.TableTitle}>
           <h2>Current Tasks</h2>
         </div>
