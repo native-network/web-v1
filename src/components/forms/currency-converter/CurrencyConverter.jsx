@@ -31,7 +31,7 @@ const decorator = createDecorator(
         .dividedBy(fromWei(receivePriceInWei))
         .toString();
 
-      return value ? { receiveValue } : {};
+      return value ? { receiveValue } : { receiveValue: '' };
     },
   },
   {
@@ -45,7 +45,7 @@ const decorator = createDecorator(
         .dividedBy(fromWei(sendPriceInWei))
         .toString();
 
-      return value ? { sendValue } : {};
+      return value ? { sendValue } : { sendValue: '' };
     },
   },
   {
