@@ -30,7 +30,7 @@ function ManageProjectsList({ projects }) {
     <table className={styles.Table}>
       <thead>
         <tr className={styles.TableRow}>
-          <th className={styles.TableCell}>Name</th>
+          <th className={styles.TableCell}>Title</th>
           <th className={styles.TableCell}>Subtitle</th>
           <th className={styles.TableCell}>Start Date</th>
           <th className={styles.TableCell}>End Date</th>

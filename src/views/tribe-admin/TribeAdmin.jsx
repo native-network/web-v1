@@ -46,17 +46,14 @@ export class TribeAdmin extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.polls) {
-      const updatedInitiatives = initiatives.map((initiative) => {
+    this.setState({
+      initiatives: initiatives.map((initiative) => {
         return {
           ...initiative,
           items: nextProps[initiative.name.toLowerCase()],
         };
-      });
-      this.setState({
-        initiatives: updatedInitiatives,
-      });
-    }
+      }),
+    });
   }
 
   render() {

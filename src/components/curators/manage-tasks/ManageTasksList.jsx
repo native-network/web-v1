@@ -1,19 +1,59 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+
+import Button from '../../shared/button';
 
 import styles from './ManageTasks.css';
 
-function ManageTasksList({ tasks }) {
+function ManageTasksList({ tasks, handleExpand, expandedTask }) {
   const renderItem = ({ index, item }) => {
     return (
-      <tr key={index} className={styles.TableRow}>
-        <td className={styles.TableCell}>{item.title}</td>
-        <td className={styles.TableCell}>
-          {new Date(item.startDate).toLocaleDateString()}
-        </td>
-        <td className={styles.TableCell}>
-          {new Date(item.startDate).toLocaleDateString()}
-        </td>
-      </tr>
+      <Fragment key={index}>
+        <tr className={styles.TableRow}>
+          <td className={styles.TableCell}>{item.title}</td>
+          <td className={styles.TableCell}>{item.status}</td>
+          <td className={styles.TableCell}>
+            {new Date(item.startDate).toLocaleDateString()}
+          </td>
+          <td className={styles.TableCell}>
+            {new Date(item.startDate).toLocaleDateString()}
+          </td>
+          <td className={styles.TableCell}>{item.reward} NT</td>
+          <td className={styles.TableCell}>
+            <Button
+              theme="secondary"
+              content="View"
+              disabled={expandedTask === item.id}
+              clickHandler={() => handleExpand(item.id)}
+            />
+          </td>
+        </tr>
+        {expandedTask === item.id && (
+          <tr className={styles.TableRow}>
+            <td colSpan="6" className={styles.TableCell}>
+              <div className={styles.ExpandedCell}>
+                <div>
+                  <p>Claimed By:</p> Testing
+                </div>
+                <div>
+                  <p>Comments:</p>
+                  {item.comments}
+                </div>
+                <div className={styles.ExpandedCell}>
+                  <div className={styles.CellButton}>
+                    <Button theme="secondary" content="Send NT" />
+                  </div>
+                  <div className={styles.CellButton}>
+                    <Button theme="secondary" content="Reject" />
+                  </div>
+                  <div className={styles.CellButton}>
+                    <Button theme="secondary" content="Delete" />
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        )}
+      </Fragment>
     );
   };
 
@@ -22,8 +62,11 @@ function ManageTasksList({ tasks }) {
       <thead>
         <tr className={styles.TableRow}>
           <th className={styles.TableCell}>Title</th>
+          <th className={styles.TableCell}>Status</th>
           <th className={styles.TableCell}>Start Date</th>
           <th className={styles.TableCell}>End Date</th>
+          <th className={styles.TableCell}>Reward</th>
+          <th className={styles.TableCell}>View Details</th>
         </tr>
       </thead>
       <tbody>
