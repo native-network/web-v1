@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
 import { BigNumber } from 'bignumber.js';
-import Web3 from 'web3';
+import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 
 import Button from '../button';
 import Modal from '../modal';
@@ -13,7 +13,9 @@ import { currencies } from '../../../utils/constants';
 
 import styles from './Card.css';
 
-const web3 = new Web3();
+const { web3 } = getWeb3ServiceInstance();
+const { fromWei } = web3.utils;
+
 const ANIMATION_DURATION = 200;
 
 const tokenData = {
@@ -85,7 +87,7 @@ class Card extends Component {
           <CurrencyConverter
             defaultValues={{
               sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
-              sendValue: web3.utils.fromWei(stakeInWei.toString()),
+              sendValue: fromWei(stakeInWei.toString()),
               receiveCurrency: tribe.currency,
               receiveValue: tribe.currency.minimumStake,
             }}
