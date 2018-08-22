@@ -1,8 +1,7 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import createDecorator from 'final-form-calculate';
-import Web3 from 'web3';
+import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 
 import { BigNumber } from 'bignumber.js';
 
@@ -12,133 +11,138 @@ import Button from '../../shared/button';
 import CurrencySelector from '../../shared/currency-selector';
 import CurrencyInput from '../../shared/currency-input';
 
-const bigNumber = (n) => new BigNumber(n.toString());
-const web3 = new Web3();
+const bigNumber = (n = 0) => new BigNumber(n.toString());
+const { web3 } = getWeb3ServiceInstance();
+const { fromWei } = web3.utils;
+const computeValueToEth = (v = 1, p) =>
+  bigNumber(v)
+    .multipliedBy(fromWei(p))
+    .toString();
 
-const equation = (n) =>
-  n
-    ? bigNumber(n)
-        .multipliedBy(4)
-        .toString()
-    : n;
-const reverseEq = (n) =>
-  n
-    ? bigNumber(n)
-        .dividedBy(4)
-        .toString()
-    : n;
-
-const calculate = createDecorator(
+const decorator = createDecorator(
   {
-    field: /Currency/,
+    field: 'sendValue',
     updates: (value, name, allValues) => {
-      const { priceInWei } = value;
-      const { sendValue, receiveValue } = allValues;
-      const convertToWei = (n = 0) => bigNumber(n || 1).multipliedBy(priceInWei).toString();
+      const { sendCurrency, receiveCurrency } = allValues;
+      const { priceInWei: sendPriceInWei } = sendCurrency;
+      const { priceInWei: receivePriceInWei } = receiveCurrency;
+      const valueInEth = computeValueToEth(value, sendPriceInWei);
 
-      if (/send/.test(name)) {
-        return { receiveValue: web3.utils.fromWei(convertToWei(sendValue)) }
+      if (value) {
+        return {
+          receiveValue: bigNumber(valueInEth)
+            .dividedBy(fromWei(receivePriceInWei))
+            .toString(),
+        };
       } else {
-        return { sendValue: web3.utils.fromWei(convertToWei(receiveValue)) };
+        return { receiveValue: '' };
       }
     },
   },
-  // {
-  //   field: /Value/,
-  //   updates: (value, name, allValues) => {
-  //     console.log(value);
-  //     console.log(name);
-  //     console.log(allValues);
+  {
+    field: 'receiveValue',
+    updates: (value, name, allValues) => {
+      const { sendCurrency, receiveCurrency } = allValues;
+      const { priceInWei: sendPriceInWei } = sendCurrency;
+      const { priceInWei: receivePriceInWei } = receiveCurrency;
+      const valueInEth = computeValueToEth(value, receivePriceInWei);
 
-  //     return null;
-  //   }
-  // }
+      if (value) {
+        return {
+          sendValue: bigNumber(valueInEth)
+            .dividedBy(fromWei(sendPriceInWei))
+            .toString(),
+        };
+      } else {
+        return { sendValue: '' };
+      }
+    },
+  },
+  {
+    field: /Currency/,
+    updates: (value, name, allValues) => {
+      let valueInEth;
+      const { priceInWei } = value;
+      const {
+        sendCurrency,
+        sendValue,
+        receiveCurrency,
+        receiveValue,
+      } = allValues;
+      const isSend = /send/.test(name);
+
+      if (isSend) {
+        valueInEth = computeValueToEth(sendValue || 1, priceInWei);
+        return sendValue
+          ? {
+              receiveValue: bigNumber(valueInEth)
+                .dividedBy(fromWei(receiveCurrency.priceInWei))
+                .toString(),
+            }
+          : {};
+      } else {
+        valueInEth = computeValueToEth(receiveValue || 1, priceInWei);
+        return receiveValue
+          ? {
+              sendValue: bigNumber(valueInEth)
+                .dividedBy(fromWei(sendCurrency.priceInWei))
+                .toString(),
+            }
+          : {};
+      }
+    },
+  },
 );
 
 class CurrencyConverter extends Component {
-  state = {
-    activeSend: this.props.sendCurrencies[0],
-    activeReceive: this.props.receiveCurrencies[0],
-  };
-
-  componentDidMount() {
-    if (this.state.activeSend === this.state.activeReceive) {
-      this.changeReceiveCurrency();
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { activeSend: prevFrom } = prevState;
-    const { activeSend: newFrom } = this.state;
-
-    if (prevFrom !== newFrom) {
-      if (newFrom === this.state.activeReceive) {
-        this.changeReceiveCurrency(this.state.activeReceive);
-      }
-    }
-  }
-
-  changeReceiveCurrency() {
-    const newActiveReceive = (this.props.receiveCurrencies || []).find(
-      (currency) => currency !== this.state.activeSend,
-    );
-
-    if (newActiveReceive) {
-      this.setState({ activeReceive: newActiveReceive });
-    }
-  }
-
-  setActiveSend(selection) {
-    console.log(selection); // eslint-disable-line
-    this.setState({ activeSend: selection });
-  }
-
-  setActiveReceive(selection) {
-    this.setState({ activeReceive: selection });
-  }
-
   handleSubmit(values) {
-    console.log(values) // eslint-disable-line
-    // const { sendCurrency, receiveCurrency } = values;
-    // alert(
-    //   JSON.stringify({
-    //     send: { [this.state.activeSend.symbol]: sendCurrency },
-    //     receive: { [this.state.activeReceive.symbol]: receiveCurrency },
-    //   }),
-    // );
+    const { sendCurrency, sendValue, receiveCurrency, receiveValue } = values;
+    const { symbol: sendSymbol } = sendCurrency;
+    const { symbol: receiveSymbol } = receiveCurrency;
+
+    alert(
+      JSON.stringify({
+        send: { [sendSymbol]: sendValue },
+        receive: { [receiveSymbol]: receiveValue },
+      }),
+    );
   }
 
   render() {
-    const { activeSend, activeReceive } = this.state;
     const {
       sendCurrencies,
       receiveCurrencies,
       toValidation,
       defaultValues,
     } = this.props;
-    const hasEnoughBalance = (value) =>
-      value > activeSend.balance ? `You don't have enough currency` : undefined;
 
     return (
       <Form
-        decorators={[calculate]}
+        decorators={[decorator]}
         initialValues={{
           sendCurrency: defaultValues.sendCurrency,
-          sendValue: defaultValues.sendValue,
+          sendValue: defaultValues.sendValue || '',
           receiveCurrency: defaultValues.receiveCurrency,
-          receiveValue: defaultValues.receiveValue,
+          receiveValue: defaultValues.receiveValue || '',
         }}
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
       >
-        {({ handleSubmit, invalid }) => (
+        {({ handleSubmit, invalid, form }) => (
           <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
-            <Field name="sendValue" validate={hasEnoughBalance}>
+            <Field
+              name="sendValue"
+              validate={(value, allValues) => {
+                return value > allValues.sendCurrency.balance
+                  ? `You don't have enough currency`
+                  : undefined;
+              }}
+            >
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
                     {...input}
-                    currency={activeSend}
+                    currency={form.getState().values.sendCurrency}
                     renderLabel={() => (
                       <Field
                         isFrom
@@ -161,7 +165,7 @@ class CurrencyConverter extends Component {
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
                     {...input}
-                    currency={activeReceive}
+                    currency={form.getState().values.receiveCurrency}
                     renderLabel={() => (
                       <Field
                         component={CurrencySelector}

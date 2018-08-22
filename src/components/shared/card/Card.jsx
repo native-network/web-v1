@@ -70,7 +70,9 @@ class Card extends Component {
     };
 
     const minRequirement = (value) =>
-      parseInt(value, 10) >= 10 ? undefined : `You don't have enough to stake`;
+      parseInt(value, 10) < tribe.currency.minimumStake
+        ? `You don't have enough to stake`
+        : undefined;
 
     return (
       <div className={styles.Card}>

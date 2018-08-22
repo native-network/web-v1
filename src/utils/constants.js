@@ -16,7 +16,7 @@ export const currencies = [
     symbol: 'NT',
     iconUrl: native,
     balance: 1.9234,
-    priceInWei: web3.utils.toWei('0.000322374232234', 'ether').toString(),
+    priceInWei: web3.utils.toWei('0.5', 'ether').toString(),
     inUsd: '$1,353.34',
   },
 ];

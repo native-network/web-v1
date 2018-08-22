@@ -4,7 +4,8 @@ import Downshift from 'downshift';
 import styles from './CurrencySelector.css';
 
 function CurrencySelector({ input, currencies, isFrom }) {
-  const hasDropdown = currencies.length >= 1;
+  const filteredCurrencies = currencies.filter((c) => c !== input.value);
+  const hasDropdown = filteredCurrencies.length >= 1;
   return (
     <Downshift
       itemToString={(item) => (item ? item.symbol : '')}
@@ -61,26 +62,24 @@ function CurrencySelector({ input, currencies, isFrom }) {
                 className: styles.Dropdown,
               })}
             >
-              {currencies
-                .filter((item) => item !== selectedItem)
-                .map((item, index) => (
-                  <li
-                    key={item.symbol}
-                    {...getItemProps({
-                      item,
-                      className: styles.SubmenuItem,
-                      style: {
-                        backgroundColor:
-                          highlightedIndex === index
-                            ? 'rgba(0, 0, 0, .1)'
-                            : 'transparent',
-                      },
-                    })}
-                  >
-                    <img src={item.iconUrl} alt="" />
-                    {item.symbol}
-                  </li>
-                ))}
+              {filteredCurrencies.map((item, index) => (
+                <li
+                  key={item.symbol}
+                  {...getItemProps({
+                    item,
+                    className: styles.SubmenuItem,
+                    style: {
+                      backgroundColor:
+                        highlightedIndex === index
+                          ? 'rgba(0, 0, 0, .1)'
+                          : 'transparent',
+                    },
+                  })}
+                >
+                  <img src={item.iconUrl} alt="" />
+                  {item.symbol}
+                </li>
+              ))}
             </ul>
           ) : null}
         </div>
