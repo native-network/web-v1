@@ -27,16 +27,11 @@ const decorator = createDecorator(
       const { priceInWei: sendPriceInWei } = sendCurrency;
       const { priceInWei: receivePriceInWei } = receiveCurrency;
       const valueInEth = computeValueToEth(value, sendPriceInWei);
+      const receiveValue = bigNumber(valueInEth)
+        .dividedBy(fromWei(receivePriceInWei))
+        .toString();
 
-      if (value) {
-        return {
-          receiveValue: bigNumber(valueInEth)
-            .dividedBy(fromWei(receivePriceInWei))
-            .toString(),
-        };
-      } else {
-        return { receiveValue: '' };
-      }
+      return value ? { receiveValue } : {};
     },
   },
   {
@@ -46,16 +41,11 @@ const decorator = createDecorator(
       const { priceInWei: sendPriceInWei } = sendCurrency;
       const { priceInWei: receivePriceInWei } = receiveCurrency;
       const valueInEth = computeValueToEth(value, receivePriceInWei);
+      const sendValue = bigNumber(valueInEth)
+        .dividedBy(fromWei(sendPriceInWei))
+        .toString();
 
-      if (value) {
-        return {
-          sendValue: bigNumber(valueInEth)
-            .dividedBy(fromWei(sendPriceInWei))
-            .toString(),
-        };
-      } else {
-        return { sendValue: '' };
-      }
+      return value ? { sendValue } : {};
     },
   },
   {
