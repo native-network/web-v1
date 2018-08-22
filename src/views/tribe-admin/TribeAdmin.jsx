@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { getTribeById, clearActiveTribe } from '../../actions/tribeActions';
 import { getTribePolls } from '../../actions/tribePollsActions';
 import { getTribeProjects } from '../../actions/tribeProjectsActions';
+import { getTribeTasks } from '../../actions/tribeTasksActions';
 
 import TabPanels from '../../components/shared/tab-panels';
 import {
@@ -41,18 +42,16 @@ export class TribeAdmin extends Component {
     this.props.getTribeById(this.props.id);
     this.props.getTribePolls(this.props.id);
     this.props.getTribeProjects(this.props.id);
+    this.props.getTribeTasks(this.props.id);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.polls) {
       const updatedInitiatives = initiatives.map((initiative) => {
-        if (initiative.name === 'Polls') {
-          initiative.items = nextProps.polls;
-        }
-        if (initiative.name === 'Projects') {
-          initiative.items = nextProps.projects;
-        }
-        return initiative;
+        return {
+          ...initiative,
+          items: nextProps[initiative.name.toLowerCase()],
+        };
       });
       this.setState({
         initiatives: updatedInitiatives,
@@ -80,6 +79,7 @@ export function mapDispatchToProps(dispatch) {
     clearActiveTribe: bindActionCreators(clearActiveTribe, dispatch),
     getTribePolls: bindActionCreators(getTribePolls, dispatch),
     getTribeProjects: bindActionCreators(getTribeProjects, dispatch),
+    getTribeTasks: bindActionCreators(getTribeTasks, dispatch),
   };
 }
 
@@ -89,9 +89,10 @@ export default connect(
     const { tribe } = activeTribe;
     const { polls } = state.polls;
     const { projects } = state.projects;
+    const { tasks } = state.tasks;
     const { tribeId: id } = ownProps.match.params;
 
-    return { tribe, id, isLoading: loading > 0, polls, projects };
+    return { tribe, id, isLoading: loading > 0, polls, projects, tasks };
   },
   mapDispatchToProps,
 )(TribeAdmin);

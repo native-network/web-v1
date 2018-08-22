@@ -8,6 +8,7 @@ import userAddressReducer from './userAddressReducer';
 import userSessionReducer from './userSessionReducer';
 import tribePollsReducer from './tribePollsReducer';
 import tribeProjectsReducer from './tribeProjectsReducer';
+import tribeTasksReducer from './tribeTasksReducer';
 
 const initialUserState = {
   address: '',
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   tribes: allTribesReducer,
   polls: tribePollsReducer,
   projects: tribeProjectsReducer,
+  tasks: tribeTasksReducer,
   activeTribe: tribeReducer,
 });
 
