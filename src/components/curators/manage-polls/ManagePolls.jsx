@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import AddPoll from './PollsAdminNew';
-import PollList from './shared/PollsAdminList';
+import ManagePollsNew from './ManagePollsNew';
+import ManagePollsList from './ManagePollsList';
 
-import styles from './PollsAdmin.css';
+import styles from './ManagePolls.css';
 
-export class PollsAdmin extends Component {
+export class ManagePolls extends Component {
   state = {
     currentPolls: [],
     pastPolls: [],
@@ -28,18 +28,18 @@ export class PollsAdmin extends Component {
   render() {
     return (
       <div>
-        <AddPoll />
+        <ManagePollsNew />
         <div className={styles.TableTitle}>
           <h2>Current Polls</h2>
         </div>
-        <PollList polls={this.state.currentPolls} />
+        <ManagePollsList polls={this.state.currentPolls} />
         <div className={styles.TableTitle}>
           <h2>Past Polls</h2>
         </div>
-        <PollList polls={this.state.pastPolls} />
+        <ManagePollsList polls={this.state.pastPolls} />
       </div>
     );
   }
 }
 
-export default PollsAdmin;
+export default ManagePolls;

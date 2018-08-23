@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
-import { addNewPoll } from '../../../actions/tribePollsActions';
+import { addNewProject } from '../../../actions/tribeProjectsActions';
 
 import Loader from '../../shared/loader';
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
-import ManagePollForm from '../../forms/manage-poll';
-import moment from 'moment';
+import ManageProjectForm from '../../forms/manage-project';
 
-import styles from './PollsAdmin.css';
+import styles from './ManageProjects.css';
 
-export class AddPoll extends Component {
+export class ManageProjectsNew extends Component {
   state = {
     isModalOpen: false,
   };
@@ -29,28 +29,28 @@ export class AddPoll extends Component {
     const newVals = {
       ...vals,
       tribeId: this.props.tribeId,
-      fileUrl: 'https://www.hotdog.jpg',
     };
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
-    newVals.options = vals.options.filter((option) => option);
-    this.props.addNewPoll(newVals);
+    newVals.totalCost = +vals.totalCost;
+
+    this.props.addNewProject(newVals);
   }
 
   render() {
     return this.props.isLoading ? (
       <Loader />
     ) : (
-      <div className={styles.PollButton}>
+      <div className={styles.ProjectButton}>
         <Button
           theme="secondary"
-          content="Add Poll"
+          content="Add Project"
           clickHandler={this.openModal.bind(this)}
         />
         <Modal
           renderHeader={() => (
             <div className={styles.ModalHeader}>
-              <h1>Add Poll</h1>
+              <h1>Add Project</h1>
               <button
                 style={{ color: 'black' }}
                 onClick={this.closeModal.bind(this)}
@@ -59,11 +59,11 @@ export class AddPoll extends Component {
               </button>
             </div>
           )}
-          label="Add Poll"
+          label="Add Project"
           isOpen={this.state.isModalOpen}
         >
           <div>
-            <ManagePollForm submitForm={this.handleSubmit.bind(this)} />
+            <ManageProjectForm submitForm={this.handleSubmit.bind(this)} />
           </div>
         </Modal>
       </div>
@@ -73,7 +73,7 @@ export class AddPoll extends Component {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    addNewPoll: bindActionCreators(addNewPoll, dispatch),
+    addNewProject: bindActionCreators(addNewProject, dispatch),
   };
 };
 
@@ -85,4 +85,4 @@ export default connect(
     };
   },
   mapDispatchToProps,
-)(AddPoll);
+)(ManageProjectsNew);
