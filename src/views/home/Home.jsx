@@ -2,14 +2,8 @@ import React, { Component } from 'react';
 import Loader from '../../components/shared/loader';
 import CardList from '../../components/shared/card-list';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getTribes } from '../../actions/allTribesActions';
 
 export class Home extends Component {
-  componentDidMount() {
-    this.props.getTribes();
-  }
-
   render() {
     const { isLoading } = this.props;
     return isLoading ? (
@@ -22,15 +16,18 @@ export class Home extends Component {
   }
 }
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    getTribes: bindActionCreators(getTribes, dispatch),
-  };
-}
-
 export default connect(
   (state) => {
-    return { tribes: state.tribes.tribes, isLoading: state.loading > 0 };
+    return {
+      tribes: state.tribes.tribes.map((tribe) => {
+        const curr = state.currencies.currencies.find(
+          (c) => c.tribeId === tribe.id,
+        );
+
+        if (curr) return { ...tribe, currency: curr };
+      }),
+      isLoading: state.loading > 0,
+    };
   },
-  mapDispatchToProps,
+  null,
 )(Home);

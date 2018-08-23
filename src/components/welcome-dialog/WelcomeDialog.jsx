@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component, Fragment } from 'react';
 
 import styles from './WelcomeDialog.css';
@@ -35,10 +34,10 @@ class Welcome extends Component {
       <Fragment>
         <div className={styles.WelcomeContainer}>
           {(this.steps || [])
-            .filter(step => this.steps.indexOf(step) === this.state.activeStep)
-            .map((step, i) =>
-              React.cloneElement(step(), { key: i }),
-          )}
+            .filter(
+              (step) => this.steps.indexOf(step) === this.state.activeStep,
+            )
+            .map((step, i) => React.cloneElement(step(), { key: i }))}
         </div>
         <Button
           className={styles.StepCounter}

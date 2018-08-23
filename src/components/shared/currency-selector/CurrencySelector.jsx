@@ -3,18 +3,15 @@ import Downshift from 'downshift';
 
 import styles from './CurrencySelector.css';
 
-function CurrencySelector({
-  defaultCurrency,
-  currencies,
-  selectHandler,
-  isFrom,
-}) {
-  const hasDropdown = currencies.length >= 1;
-
+function CurrencySelector({ input, currencies, isFrom }) {
+  const filteredCurrencies = currencies.filter((c) => c !== input.value);
+  const hasDropdown = filteredCurrencies.length >= 1;
   return (
     <Downshift
-      itemToString={(item) => (item ? item.id : '')}
-      onChange={(selection) => selectHandler(selection)}
+      itemToString={(item) => (item ? item.symbol : '')}
+      onChange={(select) => input.onChange(select)}
+      defaultSelectedItem={input.value}
+      {...input}
     >
       {({
         getLabelProps,
@@ -23,6 +20,7 @@ function CurrencySelector({
         getItemProps,
         isOpen,
         highlightedIndex,
+        selectedItem,
       }) => (
         <div className={styles.SelectorContainer}>
           <label
@@ -34,13 +32,13 @@ function CurrencySelector({
           >
             <img
               className={styles.CurrencyIcon}
-              src={defaultCurrency.thumb}
+              src={selectedItem.iconUrl}
               alt=""
             />
             <span className={styles.CurrencyDirection}>
               {isFrom ? `Pay with` : `Receive`}
             </span>
-            <span className={styles.CurrencyId}>{defaultCurrency.id}</span>
+            <span className={styles.CurrencyId}>{selectedItem.symbol}</span>
             {hasDropdown ? (
               <button
                 {...getToggleButtonProps({
@@ -64,9 +62,9 @@ function CurrencySelector({
                 className: styles.Dropdown,
               })}
             >
-              {currencies.map((item, index) => (
+              {filteredCurrencies.map((item, index) => (
                 <li
-                  key={item.id}
+                  key={item.symbol}
                   {...getItemProps({
                     item,
                     className: styles.SubmenuItem,
@@ -78,8 +76,8 @@ function CurrencySelector({
                     },
                   })}
                 >
-                  <img src={item.thumb} alt="" />
-                  {item.id}
+                  <img src={item.iconUrl} alt="" />
+                  {item.symbol}
                 </li>
               ))}
             </ul>

@@ -1,14 +1,16 @@
-import { allTribesActions as actions } from './actionTypes';
+import { allTribesActions as tribesActions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
+import { getCurrencyPriceByTribeId } from './currencyActions';
 import { get, post } from '../requests';
 
 export const getTribes = () => {
   return async (dispatch) => {
-    dispatch({ type: actions.GET_TRIBES });
+    dispatch({ type: tribesActions.GET_TRIBES });
     dispatch(beginAjaxCall());
     try {
       const { data } = await get('tribes');
 
+      (data || []).map((tribe) => dispatch(getCurrencyPriceByTribeId(tribe)));
       return dispatch(getTribesSuccess(data));
     } catch (err) {
       return dispatch(getTribesError(err));
@@ -18,21 +20,21 @@ export const getTribes = () => {
 
 export const getTribesSuccess = (tribes) => {
   return {
-    type: actions.GET_TRIBES_SUCCESS,
+    type: tribesActions.GET_TRIBES_SUCCESS,
     tribes,
   };
 };
 
 export const getTribesError = (error) => {
   return {
-    type: actions.GET_TRIBES_ERROR,
+    type: tribesActions.GET_TRIBES_ERROR,
     error,
   };
 };
 
 export const addNewTribe = (tribe) => {
   return async (dispatch) => {
-    dispatch({ type: actions.ADD_NEW_TRIBE });
+    dispatch({ type: tribesActions.ADD_NEW_TRIBE });
     dispatch(beginAjaxCall());
 
     try {
@@ -40,21 +42,22 @@ export const addNewTribe = (tribe) => {
 
       return dispatch(addNewTribeSuccess(data));
     } catch (err) {
-      return dispatch(addNewTribeError(err));
+      const { message } = err;
+      return dispatch(addNewTribeError(message));
     }
   };
 };
 
 export const addNewTribeSuccess = (tribe) => {
   return {
-    type: actions.ADD_NEW_TRIBE_SUCCESS,
+    type: tribesActions.ADD_NEW_TRIBE_SUCCESS,
     tribe,
   };
 };
 
 export const addNewTribeError = (error) => {
   return {
-    type: actions.ADD_NEW_TRIBE_ERROR,
+    type: tribesActions.ADD_NEW_TRIBE_ERROR,
     error,
   };
 };

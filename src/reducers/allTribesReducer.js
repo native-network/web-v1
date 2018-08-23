@@ -1,11 +1,7 @@
 import { allTribesActions as actions } from '../actions/actionTypes';
+import { initialState } from './initialState';
 
-const initialState = {
-  tribes: [],
-  error: '',
-};
-
-export default function allTribesReducer(state = initialState, action) {
+export default function allTribesReducer(state = initialState.tribes, action) {
   switch (action.type) {
     case actions.GET_TRIBES_SUCCESS:
       return {

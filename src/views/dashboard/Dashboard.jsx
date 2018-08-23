@@ -14,43 +14,8 @@ import Modal from '../../components/shared/modal';
 import Button from '../../components/shared/button';
 import CurrencyConverter from '../../components/forms/currency-converter';
 
-import eth from '../../assets/img/eth.svg';
-import native from '../../assets/img/native.svg';
+import { currencies } from '../../utils/constants';
 
-const currencies = [
-  {
-    id: 'ETH',
-    thumb: eth,
-    balance: 3.14,
-    inUsd: '$1,353.34',
-    inEth: 1,
-  },
-  {
-    id: 'NT',
-    thumb: native,
-    balance: 1491.9234,
-    inUsd: '$1,353.34',
-    inEth: 0.83749,
-  },
-  {
-    id: 'EGTT',
-    thumb: '/static/media/earth_icon.png',
-    balance: 157.985,
-    inEth: 0.0183749,
-  },
-  {
-    id: 'CCTT',
-    thumb: '/static/media/cloud_icon.png',
-    balance: 100.9234,
-    inEth: 0.4137,
-  },
-  {
-    id: 'IFTT',
-    thumb: '/static/media/imaginal_icon.png',
-    balance: 15.9234,
-    inEth: 0.21,
-  },
-];
 export class Dashboard extends Component {
   state = {
     hasSession: this.props.hasSession || false,
@@ -98,13 +63,14 @@ export class Dashboard extends Component {
           <section className={styles.Dashboard}>
             <h1>Convert Tokens</h1>
             <CurrencyConverter
-              sendCurrencies={this.state.userCurrencies.filter(
-                (curr) =>
-                  curr.balance && (curr.id === 'ETH' || curr.id === 'NT'),
-              )}
-              receiveCurrencies={this.state.userCurrencies.filter(
-                (curr) => curr.id !== 'ETH',
-              )}
+              defaultValues={{
+                sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
+                sendValue: undefined,
+                receiveCurrency: this.props.currencies[0],
+                receiveValue: undefined,
+              }}
+              sendCurrencies={currencies}
+              receiveCurrencies={this.props.currencies}
             />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
@@ -138,6 +104,7 @@ export default connect(
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,
+      currencies: state.currencies.currencies,
     };
   },
   mapDispatchToProps,

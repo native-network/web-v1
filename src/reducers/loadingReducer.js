@@ -1,4 +1,5 @@
 import { loadingActions as loading } from '../actions/actionTypes';
+import { initialState } from './initialState';
 
 function actionTypeEndsInSuccess(type) {
   return type && type.substring(type.length - 8) === '_SUCCESS';
@@ -8,7 +9,7 @@ function actionTypeEndsInError(type) {
   return type && type.substring(type.length - 6) === '_ERROR';
 }
 
-export default function loadingReducer(state = 0, action) {
+export default function loadingReducer(state = initialState.loading, action) {
   if (action.type === loading.LOADING) {
     return state + 1;
   } else if (

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
+import { BigNumber } from 'bignumber.js';
+import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 
 import Button from '../button';
 import Modal from '../modal';
@@ -7,42 +9,14 @@ import CurrencyConverter from '../../forms/currency-converter';
 import TokenData from '../token-data';
 import Tag from '../tag';
 
+import { currencies } from '../../../utils/constants';
+
 import styles from './Card.css';
 
-import eth from '../../../assets/img/eth.svg';
-import native from '../../../assets/img/native.svg';
+const { web3 } = getWeb3ServiceInstance();
+const { fromWei } = web3.utils;
 
 const ANIMATION_DURATION = 200;
-
-const currencies = [
-  {
-    id: 'ETH',
-    thumb: eth,
-    balance: 3.14,
-    inUsd: '$1,353.34',
-  },
-  {
-    id: 'NT',
-    thumb: native,
-    balance: 1.9234,
-    inUsd: '$1,353.34',
-  },
-  {
-    id: 'EGTT',
-    thumb: '/static/media/earth_icon.png',
-    balance: 1.9234,
-  },
-  {
-    id: 'CCTT',
-    thumb: '/static/media/cloud_icon.png',
-    balance: 1.9234,
-  },
-  {
-    id: 'IFTT',
-    thumb: '/static/media/imaginal_icon.png',
-    balance: 1.9234,
-  },
-];
 
 const tokenData = {
   value: '.031 NT ($0.09)',
@@ -81,6 +55,10 @@ class Card extends Component {
     const { tribe, render } = props;
     const { isReadMoreOpen } = state;
 
+    const stakeInWei = new BigNumber(tribe.currency.priceInWei).multipliedBy(
+      tribe.currency.minimumStake,
+    );
+
     const transition = `all ${ANIMATION_DURATION}ms linear`;
     const defaultStyles = {
       height: '0px',
@@ -94,7 +72,9 @@ class Card extends Component {
     };
 
     const minRequirement = (value) =>
-      parseInt(value, 10) >= 10 ? undefined : `You don't have enough to stake`;
+      parseInt(value, 10) < tribe.currency.minimumStake
+        ? `You don't have enough to stake`
+        : undefined;
 
     return (
       <div className={styles.Card}>
@@ -105,15 +85,19 @@ class Card extends Component {
           renderHeader={() => <h1>Support {tribe.name}</h1>}
         >
           <CurrencyConverter
-            sendCurrencies={currencies.filter(
-              (curr) => curr.id === 'ETH' || curr.id === 'NT',
-            )}
-            receiveCurrencies={[currencies[4]]}
+            defaultValues={{
+              sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
+              sendValue: fromWei(stakeInWei.toString()),
+              receiveCurrency: tribe.currency,
+              receiveValue: tribe.currency.minimumStake,
+            }}
+            sendCurrencies={currencies}
+            receiveCurrencies={[tribe.currency]}
             toValidation={minRequirement}
           />
         </Modal>
         <div
-          style={{ backgroundImage: `url("${tribe.image}")` }}
+          style={{ backgroundImage: `url("/${tribe.image}")` }}
           className={styles.Header}
         >
           <div className={styles.HeaderOverlay}>
@@ -135,7 +119,9 @@ class Card extends Component {
             <Button
               clickHandler={this.openModal.bind(this)}
               theme="primary"
-              content="100 NT"
+              content={`${tribe.currency.minimumStake} ${
+                tribe.currency.symbol
+              }`}
             />
           </div>
         </div>

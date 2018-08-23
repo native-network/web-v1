@@ -1,11 +1,7 @@
 import { tribePollsActions as actions } from '../actions/actionTypes';
+import { initialState } from './initialState';
 
-const initialState = {
-  polls: [],
-  error: '',
-};
-
-export default function tribePollsReducer(state = initialState, action) {
+export default function tribePollsReducer(state = initialState.polls, action) {
   switch (action.type) {
     case actions.GET_TRIBE_POLLS_SUCCESS:
       return {

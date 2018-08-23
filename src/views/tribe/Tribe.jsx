@@ -90,6 +90,8 @@ const initiatives = [
 ];
 
 export class Tribe extends Component {
+  web3;
+
   state = {
     initiatives: initiatives,
   };
@@ -137,7 +139,11 @@ export default connect(
     const { tribe } = activeTribe;
     const { tribeId: id } = ownProps.match.params;
 
-    return { tribe, id, isLoading: loading > 0 };
+    return {
+      tribe,
+      id,
+      isLoading: loading > 0,
+    };
   },
   mapDispatchToProps,
 )(Tribe);
