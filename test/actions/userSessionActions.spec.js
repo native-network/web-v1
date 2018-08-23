@@ -24,7 +24,11 @@ describe('userSessionActions', () => {
   let store;
 
   beforeEach(() => {
-    initialState = {};
+    initialState = {
+      router: {
+        location: '',
+      },
+    };
     store = mockStore(initialState);
   });
 
@@ -35,7 +39,6 @@ describe('userSessionActions', () => {
     it('should dispatch `GET_USER_SESSION`', async () => {
       moxiosResponse({ status: 200 });
       await store.dispatch(getUserSession());
-
       const actions = store.getActions();
       const expectedAction = { type: userSessionActions.GET_USER_SESSION };
 

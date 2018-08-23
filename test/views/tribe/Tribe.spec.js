@@ -26,6 +26,10 @@ describe('Tribe', () => {
 
   it('calls `clearActiveTribe` on unmount', () => {
     wrapper = buildComponent(Tribe, props, mount);
+    const instance = wrapper.instance();
+    instance.panel = {
+      panelHeight: 100,
+    };
 
     wrapper.unmount();
 
