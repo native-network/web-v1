@@ -11,6 +11,7 @@ import userAddressReducer from './userAddressReducer';
 import userSessionReducer from './userSessionReducer';
 import tribePollsReducer from './tribePollsReducer';
 import tribeProjectsReducer from './tribeProjectsReducer';
+import tribeTasksReducer from './tribeTasksReducer';
 
 const rootReducer = combineReducers({
   user: reduceReducers(
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   currencies: currencyReducer,
   polls: tribePollsReducer,
   projects: tribeProjectsReducer,
+  tasks: tribeTasksReducer,
   activeTribe: tribeReducer,
 });
 

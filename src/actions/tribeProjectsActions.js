@@ -11,7 +11,8 @@ export const getTribeProjects = (id) => {
 
       return dispatch(getTribeProjectsSuccess(data));
     } catch (err) {
-      return dispatch(getTribeProjectsError(err));
+      const { message } = err;
+      return dispatch(getTribeProjectsError(message));
     }
   };
 };
@@ -40,7 +41,8 @@ export const addNewProject = (project) => {
 
       return dispatch(addNewProjectSuccess(data));
     } catch (err) {
-      return dispatch(addNewProjectError(err));
+      const { message } = err;
+      return dispatch(addNewProjectError(message));
     }
   };
 };
@@ -69,7 +71,8 @@ export const updateProject = (projectId, update) => {
 
       return dispatch(updateProjectSuccess(data));
     } catch (err) {
-      return dispatch(updateProjectError(err));
+      const { message } = err;
+      return dispatch(updateProjectError(message));
     }
   };
 };

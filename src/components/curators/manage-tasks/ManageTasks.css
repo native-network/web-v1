@@ -30,6 +30,20 @@
   text-align: left;
 }
 
+.ExpandedCell {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  & p {
+    margin-top: 0;
+  }
+}
+
+.CellButton {
+  padding: 10px;
+}
+
 .PollButton {
   display: flex;
   justify-content: flex-end;
