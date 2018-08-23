@@ -11,7 +11,8 @@ export const getTribePolls = (id) => {
 
       return dispatch(getTribePollsSuccess(data));
     } catch (err) {
-      return dispatch(getTribePollsError(err));
+      const { message } = err;
+      return dispatch(getTribePollsError(message));
     }
   };
 };
@@ -40,7 +41,8 @@ export const addNewPoll = (poll) => {
 
       return dispatch(addNewPollSuccess(data));
     } catch (err) {
-      return dispatch(addNewPollError(err));
+      const { message } = err;
+      return dispatch(addNewPollError(message));
     }
   };
 };

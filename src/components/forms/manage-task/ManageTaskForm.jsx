@@ -37,7 +37,7 @@ export default function ManageTaskForm({ submitForm }) {
                   <label>Task Reward (NT)</label>
                   <input
                     {...input}
-                    type="text"
+                    type="number"
                     placeholder="Task Reward (NT)"
                   />
                   {meta.error && meta.touched && renderError(meta.error)}

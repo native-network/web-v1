@@ -69,3 +69,8 @@
 .RadioField {
   margin-right: 0.75rem;
 }
+
+input[type=number]::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}

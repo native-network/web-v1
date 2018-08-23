@@ -11,7 +11,8 @@ export const getTribeTasks = (id) => {
 
       return dispatch(getTribeTasksSuccess(data));
     } catch (err) {
-      return dispatch(getTribeTasksError(err));
+      const { message } = err;
+      return dispatch(getTribeTasksError(message));
     }
   };
 };
@@ -40,7 +41,8 @@ export const addNewTask = (task) => {
 
       return dispatch(addNewTaskSuccess(data));
     } catch (err) {
-      return dispatch(addNewTaskError(err));
+      const { message } = err;
+      return dispatch(addNewTaskError(message));
     }
   };
 };

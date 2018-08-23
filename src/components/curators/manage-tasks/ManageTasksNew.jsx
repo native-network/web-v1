@@ -35,9 +35,6 @@ export class ManageTasksNew extends Component {
     newVals.reward = +vals.reward;
     newVals.timeToComplete = +vals.timeToComplete;
     this.props.addNewTask(newVals);
-
-    console.log('vals') // eslint-disable-line
-    console.log(vals) // eslint-disable-line
   }
 
   render() {
