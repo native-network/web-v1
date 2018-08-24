@@ -30,6 +30,10 @@ export default class Web3Service {
     return accounts[0];
   }
 
+  async getAccountBalance(address) {
+    return await new this.web3.eth.getBalance(address);
+  }
+
   async initContract(abi, address) {
     return await new this.web3.eth.Contract(abi, address);
   }
@@ -62,6 +66,10 @@ export const getWeb3ServiceInstance = () => {
 
 export const getAddress = async () => {
   return await web3Service.getMainAccount();
+};
+
+export const getBalance = async (address) => {
+  return await web3Service.getAccountBalance(address);
 };
 
 export const promptSign = async (rawMessage) => {
