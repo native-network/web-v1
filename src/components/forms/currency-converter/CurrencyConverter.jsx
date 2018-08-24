@@ -120,7 +120,6 @@ class CurrencyConverter extends Component {
             <Field
               name="sendValue"
               validate={(value, allValues) => {
-                console.log(allValues.sendCurrency.balance) // eslint-disable-line
                 return value > parseInt(allValues.sendCurrency.balance)
                   ? `You don't have enough currency`
                   : undefined;
