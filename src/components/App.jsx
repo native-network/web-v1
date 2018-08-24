@@ -12,7 +12,8 @@ import { routes } from '../routes';
 import styles from './App.css';
 import native from '../assets/img/native.svg';
 
-import { getUserAddress } from '../actions/userAddressActions';
+import { getTribes } from '../actions/allTribesActions';
+import { getUserWalletAddress } from '../actions/userWalletActions';
 import { getUserSession } from '../actions/userSessionActions';
 
 export class App extends Component {
@@ -21,15 +22,16 @@ export class App extends Component {
   };
 
   componentWillMount() {
-    this.props.getUserAddress();
+    this.props.getUserWalletAddress();
+    this.props.getTribes();
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { address: oldUserAddress } = prevProps.user;
-    const { address: newUserAddress } = this.props.user;
+    const { address: oldUserAddress } = prevProps.user.wallet;
+    const { address: newUserAddress } = this.props.user.wallet;
 
     if (!!newUserAddress && newUserAddress !== oldUserAddress) {
       this.props.getUserSession();
@@ -82,7 +84,8 @@ export class App extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUserAddress: bindActionCreators(getUserAddress, dispatch),
+    getTribes: bindActionCreators(getTribes, dispatch),
+    getUserWalletAddress: bindActionCreators(getUserWalletAddress, dispatch),
     getUserSession: bindActionCreators(getUserSession, dispatch),
   };
 }
@@ -93,7 +96,7 @@ App = connect(
     return {
       location: state.router.location,
       user: state.user,
-      isLoggedIn: !!state.user.address,
+      isLoggedIn: !!state.user.wallet.address,
     };
   },
   mapDispatchToProps,
