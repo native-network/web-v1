@@ -7,7 +7,7 @@ import loadingReducer from './loadingReducer';
 import allTribesReducer from './allTribesReducer';
 import currencyReducer from './currencyReducer';
 import tribeReducer from './tribeReducer';
-import userAddressReducer from './userAddressReducer';
+import userWalletReducer from './userWalletReducer';
 import userSessionReducer from './userSessionReducer';
 import tribePollsReducer from './tribePollsReducer';
 import tribeProjectsReducer from './tribeProjectsReducer';
@@ -15,7 +15,7 @@ import tribeProjectsReducer from './tribeProjectsReducer';
 const rootReducer = combineReducers({
   user: reduceReducers(
     userSessionReducer,
-    userAddressReducer,
+    userWalletReducer,
     initialState.user,
   ),
   loading: loadingReducer,
