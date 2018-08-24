@@ -11,7 +11,10 @@ function NativeModal({
   isOpen,
   children,
 }) {
-  Modal.setAppElement('#root');
+  if (process.env.NODE_ENV !== 'test') {
+    // prevent enzyme bug in tests around full render
+    Modal.setAppElement('#root');
+  }
   return (
     <Modal isOpen={isOpen} contentLabel={label}>
       <div className={styles.ModalHeader}>

@@ -30,10 +30,7 @@ describe('tribeActions', () => {
     afterEach(() => moxios.uninstall(instance));
 
     it('should dispatch `GET_TRIBE_BY_ID', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
       await store.dispatch(getTribeById(3));
 
       const actions = store.getActions();
@@ -43,10 +40,7 @@ describe('tribeActions', () => {
     });
 
     it('should dispatch `LOADING` after `GET_TRIBE_BY_ID`', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
 
       await store.dispatch(getTribeById(3));
 
@@ -57,10 +51,7 @@ describe('tribeActions', () => {
     });
 
     it('should handle 3 actions', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
 
       await store.dispatch(getTribeById(3));
 
@@ -78,10 +69,7 @@ describe('tribeActions', () => {
           name: 'Foo',
         };
 
-        moxios.wait(() => {
-          let req = moxios.requests.mostRecent();
-          req.respondWith({ status: 200, response });
-        });
+        moxiosResponse({ status: 200, response });
       });
 
       it('should finally dispatch `GET_TRIBE_BY_ID_SUCCESS` on success', async () => {
@@ -103,10 +91,7 @@ describe('tribeActions', () => {
 
       beforeEach(() => {
         response = 'Something went wrong';
-        moxios.wait(() => {
-          let req = moxios.requests.mostRecent();
-          req.respondWith({ status: 400, response });
-        });
+        moxiosResponse({ status: 400, response });
       });
 
       it('should finally dispatch `GET_TRIBE_BY_ID_ERROR` on error', async () => {

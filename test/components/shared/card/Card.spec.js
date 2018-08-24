@@ -13,7 +13,7 @@ describe('Card', () => {
       },
       // render: jest.fn(),
     };
-    wrapper = buildComponent(Card, props);
+    wrapper = buildComponent(Card, props, mount);
   });
 
   it('should render without crashing', () => {
