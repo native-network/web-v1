@@ -1,3 +1,4 @@
+@import '../../../styles/globals.css';
 @import '../../../styles/media-queries.css';
 
 %label {
@@ -49,6 +50,13 @@
     padding: 0.5rem;
     resize: none;
   }
+
+  & input[type="text"]:disabled,
+  & input[type="number"]:disabled,
+  & input[type="date"]:disabled,
+  & textarea:disabled {
+    color: var(--gray-6);
+  }
 }
 
 .GroupedFieldGroup {
@@ -60,12 +68,6 @@
 
     margin: 0;
   }
-
-  /* & label {
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--primary-black);
-  } */
 }
 
 .Error {

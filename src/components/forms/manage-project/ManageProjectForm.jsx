@@ -102,27 +102,41 @@ export default function ManageProjectForm({ submitForm, project }) {
             <div className={styles.ManageProjectFields}>
               <div className={styles.FieldGroup}>
                 <label>Project Title</label>
-                <p>{project.title}</p>
+                <input
+                  type="text"
+                  disabled
+                  value={project.title}
+                  className={styles.DisabledField}
+                />
               </div>
               <div className={styles.FieldGroup}>
                 <label>Project Subtitle</label>
-                <p>{project.subtitle}</p>
+                <input type="text" disabled value={project.subtitle} />
               </div>
               <div className={styles.FieldGroup}>
                 <label>Project Description</label>
-                <p>{project.description}</p>
+                <textarea
+                  rows="6"
+                  disabled
+                  value={project.description}
+                  placeholder="Project Description"
+                />
               </div>
               <div className={styles.FieldGroup}>
                 <label>Total Cost (NT)</label>
-                <p>{project.totalCost}</p>
+                <input type="number" disabled value={project.totalCost} />
               </div>
               <div className={styles.FieldGroup}>
                 <label>Funds Release Address</label>
-                <p>{project.address}</p>
+                <input type="text" disabled value={project.address} />
               </div>
               <div className={styles.FieldGroup}>
                 <label>End Date</label>
-                <p>{project.endDate}</p>
+                <input
+                  type="text"
+                  disabled
+                  value={moment(project.endDate).format('MM/DD/YYYY')}
+                />
               </div>
             </div>
           )}
