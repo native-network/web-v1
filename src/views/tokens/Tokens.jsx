@@ -21,7 +21,7 @@ export class Tokens extends Component {
             alt=""
           />
           Metamask ID: <br />
-          {this.props.user.address}
+          {this.props.user.wallet.address}
         </div>
       </div>
     );
