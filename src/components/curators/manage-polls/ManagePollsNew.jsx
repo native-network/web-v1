@@ -32,7 +32,9 @@ export class ManagePollsNew extends Component {
       fileUrl: 'https://www.hotdog.jpg',
     };
     newVals.startDate = moment().toISOString();
-    newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
+    newVals.endDate = moment()
+      .add(+vals.endDate, 'days')
+      .toISOString();
     newVals.options = vals.options.filter((option) => option);
     this.props.addNewPoll(newVals);
   }

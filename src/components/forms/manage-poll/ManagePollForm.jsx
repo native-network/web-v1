@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import styles from './ManagePollForm.css';
@@ -30,6 +29,7 @@ export default function ManagePollForm({ submitForm }) {
       }}
       initialValues={{
         options: [{}, {}],
+        endDate: '1',
       }}
       render={({
         handleSubmit,
@@ -76,25 +76,38 @@ export default function ManagePollForm({ submitForm }) {
                   </div>
                 )}
               </Field>
-              <Field name="endDate" validate={required}>
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>End date</label>
-                    <DatePicker
-                      {...input}
-                      minDate={moment().add(1, 'days')}
-                      selected={
-                        input.value ? moment(input.value, 'MM/DD/YYYY') : null
-                      }
-                      onChange={(date) =>
-                        input.onChange(moment(date).format('MM/DD/YYYY'))
-                      }
-                    />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-              <p>Poll will start today: {moment().format('MM/DD/YYYY')}</p>
+
+              <div className={styles.FieldGroup}>
+                <p>Poll will start today: {moment().format('MM/DD/YYYY')}</p>
+                <label>When will the poll end?</label>
+              </div>
+              <label className={styles.RadioField}>
+                <Field
+                  name="endDate"
+                  component="input"
+                  type="radio"
+                  value="1"
+                />
+                1 Day
+              </label>
+              <label className={styles.RadioField}>
+                <Field
+                  name="endDate"
+                  component="input"
+                  type="radio"
+                  value="3"
+                />
+                3 Days
+              </label>
+              <label className={styles.RadioField}>
+                <Field
+                  name="endDate"
+                  component="input"
+                  type="radio"
+                  value="5"
+                />
+                5 Days
+              </label>
             </div>
 
             <div className={styles.GroupedFieldGroup}>
