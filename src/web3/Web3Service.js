@@ -12,7 +12,7 @@ export default class Web3Service {
     if (typeof window.web3 !== 'undefined') {
       this.web3 = new Web3(window.web3.currentProvider);
     }
-    let providerType =
+    const providerType =
       process.env.WEB3_PROVIDER_TYPE === 'websocket'
         ? 'WebSocketProvider'
         : 'HttpProvider';
