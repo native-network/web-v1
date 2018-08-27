@@ -8,7 +8,7 @@ import styles from './ManagePollForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 import Button from '../../shared/button';
-// import FilePicker from '../../shared/file-picker/FilePicker';
+import FileUpload from '../../shared/file-upload/FileUpload';
 
 export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
@@ -134,6 +134,16 @@ export default function ManagePollForm({ submitForm }) {
                   ))
                 }
               </FieldArray>
+
+              <Field name="file">
+                {({ input, meta }) => (
+                  <div className={styles.FieldGroup}>
+                    <label>File</label>
+                    <FileUpload {...input} />
+                    {meta.error && meta.touched && renderError(meta.error)}
+                  </div>
+                )}
+              </Field>
 
               <Button
                 centered
