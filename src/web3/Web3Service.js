@@ -13,10 +13,12 @@ export default class Web3Service {
       this.web3 = new Web3(window.web3.currentProvider);
     }
     const providerType =
-      process.env.WEB3_PROVIDER_TYPE === 'websocket'
+      process.env.REMOTE_WEB3_PROVIDER_TYPE === 'websocket'
         ? 'WebSocketProvider'
         : 'HttpProvider';
-    provider = new Web3.providers[providerType](process.env.WEB3_PROVIDER);
+    provider = new Web3.providers[providerType](
+      process.env.REMOTE_WEB3_PROVIDER,
+    );
 
     this.web3Remote = new Web3(provider);
     this.mainAccount = await this.getMainAccount();
