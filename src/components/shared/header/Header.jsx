@@ -33,11 +33,12 @@ export class Header extends Component {
   }
 
   render() {
-    const walletSrc = this.props.user.address ? wallet : walletDisabled;
+    const walletSrc = this.props.user.wallet.address ? wallet : walletDisabled;
     const walletClass = cx({
       Wallet: true,
-      Disabled: !this.props.user.address,
+      Disabled: !this.props.user.wallet.address,
     });
+
     return (
       <header className={styles.Header}>
         <div className={styles.HeaderContainer}>

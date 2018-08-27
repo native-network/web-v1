@@ -11,6 +11,7 @@ export default function currencyReducer(state = initialState.currency, action) {
           {
             tribeId: action.tribe.id,
             iconUrl: action.tribe.icon,
+            tokenAddress: action.tribe.tokenAddress,
             minimumStake: '100',
             ...action.data,
           },
@@ -18,6 +19,10 @@ export default function currencyReducer(state = initialState.currency, action) {
       };
     case actions.GET_CURRENCY_PRICE_BY_TRIBE_ID_ERROR:
       return { ...state, error: action.error };
+    case actions.SEND_TRANSACTION_SUCCESS:
+      return { ...state };
+    case actions.SEND_TRANSACTION_ERROR:
+      return state;
     default:
       return state;
   }

@@ -17,7 +17,10 @@ export const initialState = {
     error: '',
   },
   user: {
-    address: '',
+    wallet: {
+      address: '',
+      currencies: [],
+    },
     tribes: [],
     addressError: '',
     sessionError: '',

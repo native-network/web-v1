@@ -8,15 +8,15 @@ jest.mock('../../src/web3.js');
 
 import {
   loadingActions,
-  userAddressActions,
+  userWalletActions,
 } from '../../src/actions/actionTypes';
 
-import { getUserAddress } from '../../src/actions/userAddressActions';
+import { getUserWalletAddress } from '../../src/actions/userWalletActions';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('userAddressActions', () => {
+describe('userWalletActions', () => {
   let initialState;
   let store;
 
@@ -25,22 +25,22 @@ describe('userAddressActions', () => {
     store = mockStore(initialState);
   });
 
-  describe('getUserAddress', () => {
+  describe('getUserWalletAddress', () => {
     beforeEach(() => moxios.install(instance));
     afterEach(() => moxios.uninstall(instance));
 
     it('should dispatch `GET_USER_ADDRESS', async () => {
       moxiosResponse({ status: 200 });
-      await store.dispatch(getUserAddress());
+      await store.dispatch(getUserWalletAddress());
 
       const actions = store.getActions();
-      const expectedAction = { type: userAddressActions.GET_USER_ADDRESS };
+      const expectedAction = { type: userWalletActions.GET_USER_ADDRESS };
 
       expect(actions[0]).toEqual(expectedAction);
     });
 
     it('should dispatch `LOADING` after `GET_USER_ADDRESS`', async () => {
-      await store.dispatch(getUserAddress());
+      await store.dispatch(getUserWalletAddress());
 
       const actions = store.getActions();
       const expectedAction = { type: loadingActions.LOADING };
@@ -49,7 +49,7 @@ describe('userAddressActions', () => {
     });
 
     it('should handle 3 actions', async () => {
-      await store.dispatch(getUserAddress());
+      await store.dispatch(getUserWalletAddress());
 
       const actions = store.getActions();
 
@@ -60,11 +60,11 @@ describe('userAddressActions', () => {
       beforeEach(() => getAddress.mockReturnValueOnce('foo'));
 
       it('should finally dispatch `GET_USER_ADDRESS_SUCCESS` on success', async () => {
-        await store.dispatch(getUserAddress());
+        await store.dispatch(getUserWalletAddress());
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
-          type: userAddressActions.GET_USER_ADDRESS_SUCCESS,
+          type: userWalletActions.GET_USER_ADDRESS_SUCCESS,
           address: 'foo',
         };
 
@@ -76,11 +76,11 @@ describe('userAddressActions', () => {
       beforeEach(() =>
         getAddress.mockReturnValue(Promise.reject({ message: 'foo' })));
       it('should finally dispatch `GET_USER_ADDRESS_ERROR` on error', async () => {
-        await store.dispatch(getUserAddress());
+        await store.dispatch(getUserWalletAddress());
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
-          type: userAddressActions.GET_USER_ADDRESS_ERROR,
+          type: userWalletActions.GET_USER_ADDRESS_ERROR,
           error: 'foo',
         };
 

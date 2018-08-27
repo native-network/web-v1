@@ -8,6 +8,7 @@ import {
   getUserSession,
   promptAuthorize,
 } from '../../actions/userSessionActions';
+import { sendTransaction } from '../../actions/currencyActions';
 
 import Loader from '../../components/shared/loader';
 import Modal from '../../components/shared/modal';
@@ -32,9 +33,13 @@ export class Dashboard extends Component {
   }
 
   authorize() {
-    if (this.props.user.address) {
-      this.props.promptAuthorize(this.props.user.address);
+    if (this.props.user.wallet.address) {
+      this.props.promptAuthorize(this.props.user.wallet.address);
     }
+  }
+
+  submitTransaction(tribe, amount) {
+    this.props.sendTransaction(tribe, amount);
   }
 
   renderModal() {
@@ -64,13 +69,16 @@ export class Dashboard extends Component {
             <h1>Convert Tokens</h1>
             <CurrencyConverter
               defaultValues={{
-                sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
+                sendCurrency: this.props.user.wallet.currencies.find(
+                  (c) => c.symbol === 'ETH',
+                ),
                 sendValue: undefined,
                 receiveCurrency: this.props.currencies[0],
                 receiveValue: undefined,
               }}
-              sendCurrencies={currencies}
+              sendCurrencies={this.props.user.wallet.currencies}
               receiveCurrencies={this.props.currencies}
+              submitHandler={this.submitTransaction.bind(this)}
             />
             <div className={styles.TableTitle}>
               <h1>Your Tribes</h1>
@@ -93,6 +101,7 @@ export class Dashboard extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    sendTransaction: bindActionCreators(sendTransaction, dispatch),
     getUserSession: bindActionCreators(getUserSession, dispatch),
     promptAuthorize: bindActionCreators(promptAuthorize, dispatch),
   };
