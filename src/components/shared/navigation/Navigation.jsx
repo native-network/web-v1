@@ -27,7 +27,8 @@ class Navigation extends Component {
   }
 
   render() {
-    const { role, address } = this.props.user;
+    const { role, wallet } = this.props.user;
+    const { address } = wallet;
 
     const classes = cx({
       PrimaryMenu: true,

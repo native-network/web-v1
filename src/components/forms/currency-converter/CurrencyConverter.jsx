@@ -86,16 +86,13 @@ const decorator = createDecorator(
 
 class CurrencyConverter extends Component {
   handleSubmit(values) {
-    const { sendCurrency, sendValue, receiveCurrency, receiveValue } = values;
-    const { symbol: sendSymbol } = sendCurrency;
-    const { symbol: receiveSymbol } = receiveCurrency;
-
-    alert(
-      JSON.stringify({
-        send: { [sendSymbol]: sendValue },
-        receive: { [receiveSymbol]: receiveValue },
-      }),
+    const { sendValue, receiveCurrency } = values;
+    const token = (this.props.receiveCurrencies || []).find(
+      (t) => t.symbol === receiveCurrency.symbol,
     );
+    const { tokenAddress } = token;
+
+    this.props.submitHandler(tokenAddress, sendValue);
   }
 
   render() {
@@ -123,7 +120,7 @@ class CurrencyConverter extends Component {
             <Field
               name="sendValue"
               validate={(value, allValues) => {
-                return value > allValues.sendCurrency.balance
+                return value > parseInt(allValues.sendCurrency.balance)
                   ? `You don't have enough currency`
                   : undefined;
               }}

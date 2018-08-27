@@ -55,9 +55,13 @@ class Card extends Component {
     const { tribe, render } = props;
     const { isReadMoreOpen } = state;
 
-    const stakeInWei = new BigNumber(tribe.currency.priceInWei).multipliedBy(
-      tribe.currency.minimumStake,
-    );
+    const stakeInWei =
+      (tribe &&
+        tribe.currency &&
+        new BigNumber(tribe.currency.priceInWei || 0).multipliedBy(
+          tribe.currency.minimumStake,
+        )) ||
+      0;
 
     const transition = `all ${ANIMATION_DURATION}ms linear`;
     const defaultStyles = {
@@ -89,11 +93,13 @@ class Card extends Component {
               sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
               sendValue: fromWei(stakeInWei.toString()),
               receiveCurrency: tribe.currency,
-              receiveValue: tribe.currency.minimumStake,
+              receiveValue:
+                (tribe.currency && tribe.currency.minimumStake) || 0,
             }}
             sendCurrencies={currencies}
             receiveCurrencies={[tribe.currency]}
             toValidation={minRequirement}
+            submitHandler={tribe.submitTransaction}
           />
         </Modal>
         <div
@@ -119,9 +125,8 @@ class Card extends Component {
             <Button
               clickHandler={this.openModal.bind(this)}
               theme="primary"
-              content={`${tribe.currency.minimumStake} ${
-                tribe.currency.symbol
-              }`}
+              content={`${(tribe.currency && tribe.currency.minimumStake) ||
+                0} ${(tribe.currency && tribe.currency.symbol) || ''}`}
             />
           </div>
         </div>
