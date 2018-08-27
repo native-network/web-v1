@@ -4,21 +4,21 @@ import Web3 from 'web3';
 
 export default class Web3Service {
   web3;
-  web3Socket;
+  web3Remote;
   mainAccount;
-  tribeContractWS;
-  tribeStorageContractWS;
-  loggerContractWS;
-  smartTokenContractWS;
 
   async init() {
+    let provider;
     if (typeof window.web3 !== 'undefined') {
       this.web3 = new Web3(window.web3.currentProvider);
     }
-    const provider = new Web3.providers.WebsocketProvider(
-      'ws://localhost:8545',
-    );
-    this.web3Socket = new Web3(provider);
+    let providerType =
+      process.env.WEB3_PROVIDER_TYPE === 'websocket'
+        ? 'WebSocketProvider'
+        : 'HttpProvider';
+    provider = new Web3.providers[providerType](process.env.WEB3_PROVIDER);
+
+    this.web3Remote = new Web3(provider);
     this.mainAccount = await this.getMainAccount();
   }
 
@@ -38,20 +38,8 @@ export default class Web3Service {
     return await new this.web3.eth.Contract(abi, address);
   }
 
-  async initContractSocket(abi, address) {
-    return await new this.web3Socket.eth.Contract(abi, address);
-  }
-
-  async tribeIsMember(address) {
-    return await this.tribeContractWS.methods
-      .isMember(address)
-      .call({ from: this.mainAccount });
-  }
-
-  async tribeAvailableDevFund() {
-    return await this.tribeContractWS.methods
-      .getAvailableDevFund()
-      .call({ from: this.mainAccount });
+  async initContractRemote(abi, address) {
+    return await new this.web3Remote.eth.Contract(abi, address);
   }
 }
 
