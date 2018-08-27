@@ -2,6 +2,7 @@ import CurrencyConverter from '../../../../src/components/forms/currency-convert
 
 describe('CurrencyConverter', () => {
   let wrapper;
+
   let props;
 
   beforeEach(() => {
