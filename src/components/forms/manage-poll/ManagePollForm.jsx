@@ -8,7 +8,7 @@ import styles from './ManagePollForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 import Button from '../../shared/button';
-import FileUpload from '../../shared/file-upload/FileUpload';
+import FileUploader from '../../shared/file-uploader/FileUploader';
 
 export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
@@ -38,6 +38,7 @@ export default function ManagePollForm({ submitForm }) {
         },
         pristine,
         invalid,
+        values,
       }) => (
         <form className={styles.ManagePollForm} onSubmit={handleSubmit}>
           <div className={styles.ManagePollFields}>
@@ -135,15 +136,24 @@ export default function ManagePollForm({ submitForm }) {
                 }
               </FieldArray>
 
-              <Field name="file">
+              <Field name="fileUrl" type="file">
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
                     <label>File</label>
-                    <FileUpload {...input} />
+                    <FileUploader
+                      {...input}
+                      onChange={(file) => {
+                        console.log('parent file') // eslint-disable-line
+                        console.log(file) // eslint-disable-line
+                        input.onChange(file.fileKey);
+                      }}
+                    />
                     {meta.error && meta.touched && renderError(meta.error)}
                   </div>
                 )}
               </Field>
+
+              <code>{JSON.stringify(values)}</code>
 
               <Button
                 centered
@@ -153,7 +163,6 @@ export default function ManagePollForm({ submitForm }) {
                 clickHandler={() => push('options', undefined)}
               />
             </div>
-            {/* <Field name="pollImage" component={FilePicker} type="file" /> */}
           </div>
           <Button
             centered
