@@ -52,7 +52,6 @@ export class ManagePollsNew extends Component {
           renderHeader={() => (
             <div className={styles.ModalHeader}>
               <h1>Add Poll</h1>
-              <img src="http://127.0.0.1:3000/s3uploader/uploads/hotdog.png" />
               <button
                 style={{ color: 'black' }}
                 onClick={this.closeModal.bind(this)}

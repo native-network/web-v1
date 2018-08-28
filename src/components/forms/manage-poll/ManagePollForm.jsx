@@ -38,7 +38,6 @@ export default function ManagePollForm({ submitForm }) {
         },
         pristine,
         invalid,
-        values,
       }) => (
         <form className={styles.ManagePollForm} onSubmit={handleSubmit}>
           <div className={styles.ManagePollFields}>
@@ -143,8 +142,6 @@ export default function ManagePollForm({ submitForm }) {
                     <FileUploader
                       {...input}
                       onChange={(file) => {
-                        console.log('parent file') // eslint-disable-line
-                        console.log(file) // eslint-disable-line
                         input.onChange(file.fileKey);
                       }}
                     />
@@ -152,8 +149,6 @@ export default function ManagePollForm({ submitForm }) {
                   </div>
                 )}
               </Field>
-
-              <code>{JSON.stringify(values)}</code>
 
               <Button
                 centered

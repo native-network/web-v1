@@ -15,6 +15,10 @@ export const instance = axios.create({
   withCredentials: true,
 });
 
+export const s3Path = (fileName) => {
+  return `${baseURL}/s3uploader/uploads/${fileName}`;
+};
+
 export const get = async (endpoint) => {
   try {
     return await instance.get(`/${endpoint}`);

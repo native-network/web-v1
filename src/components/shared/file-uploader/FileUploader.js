@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactS3Uploader from 'react-s3-uploader';
 
+import S3Image from '../s3-image/S3Image';
+
 import styles from './FileUploader.css';
 
 class FileUpload extends Component {
@@ -19,9 +21,7 @@ class FileUpload extends Component {
   onUploadFinish = (res) => {
     this.props.onChange(res);
     this.setState({
-      image: `${process.env.REACT_APP_API_HOST}:${
-        process.env.REACT_APP_API_PORT
-      }/s3uploader/uploads/${res.fileKey}`,
+      image: res.fileKey,
     });
   };
 
@@ -58,7 +58,9 @@ class FileUpload extends Component {
           <span>Upload progress: {state.uploadProgress} %</span>
         )}
         {state.image &&
-          !isPdf && <img src={state.image} className={styles.PreviewImage} />}
+          !isPdf && (
+            <S3Image fileName={state.image} className={styles.PreviewImage} />
+          )}
       </div>
     );
   }
