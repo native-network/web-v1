@@ -12,9 +12,10 @@ function CurrencyInput({ currency, renderLabel, ...rest }) {
       )}
       <input
         {...rest}
-        step="0.01"
+        step="any"
         id={currency.symbol}
         type="number"
+        min="0"
         placeholder="Enter Amount"
         className={styles.Input}
       />

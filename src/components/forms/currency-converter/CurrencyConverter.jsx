@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
+import { Field as Field5 } from 'react-final-form-html5-validation';
 import createDecorator from 'final-form-calculate';
 import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 
@@ -29,16 +30,34 @@ const decorator = createDecorator(
         const { sendCurrency, receiveCurrency } = allValues;
         const { priceInWei: sendPriceInWei } = sendCurrency;
         const { priceInWei: receivePriceInWei } = receiveCurrency;
-        if (typeof value === 'object') {
-          console.log(
-            value
-              .multipliedBy(sendPriceInWei)
-              .dividedBy(receivePriceInWei)
-              .toString(),
-          );
+
+        if (value) {
+          return bigNumber(value)
+            .multipliedBy(sendPriceInWei)
+            .dividedBy(receivePriceInWei)
+            .toString();
+        } else {
+          return '';
         }
-        console.log(receivePriceInWei);
-        return typeof value === 'object' ? '' : '';
+      },
+    },
+  },
+  {
+    field: 'receiveValue',
+    updates: {
+      sendValue: (value, allValues) => {
+        const { sendCurrency, receiveCurrency } = allValues;
+        const { priceInWei: sendPriceInWei } = sendCurrency;
+        const { priceInWei: receivePriceInWei } = receiveCurrency;
+
+        if (value) {
+          return bigNumber(value)
+            .multipliedBy(receivePriceInWei)
+            .dividedBy(sendPriceInWei)
+            .toString();
+        } else {
+          return '';
+        }
       },
     },
   },
@@ -80,40 +99,40 @@ const decorator = createDecorator(
   //     return {};
   //   },
   // },
-  // {
-  //   field: /Currency/,
-  //   updates: (value, name, allValues) => {
-  //     let valueInEth;
-  //     const { priceInWei } = value;
-  //     const {
-  //       sendCurrency,
-  //       sendValue,
-  //       receiveCurrency,
-  //       receiveValue,
-  //     } = allValues;
-  //     const isSend = /send/.test(name);
+  {
+    field: /Currency/,
+    updates: (value, name, allValues) => {
+      let valueInEth;
+      const { priceInWei } = value;
+      const {
+        sendCurrency,
+        sendValue,
+        receiveCurrency,
+        receiveValue,
+      } = allValues;
+      const isSend = /send/.test(name);
 
-  //     if (isSend) {
-  //       valueInEth = computeValueToEth(sendValue || 1, priceInWei);
-  //       return sendValue
-  //         ? {
-  //             receiveValue: bigNumber(valueInEth)
-  //               .dividedBy(fromWei(receiveCurrency.priceInWei))
-  //               .toString(),
-  //           }
-  //         : {};
-  //     } else {
-  //       valueInEth = computeValueToEth(receiveValue || 1, priceInWei);
-  //       return receiveValue
-  //         ? {
-  //             sendValue: bigNumber(valueInEth)
-  //               .dividedBy(fromWei(sendCurrency.priceInWei))
-  //               .toString(),
-  //           }
-  //         : {};
-  //     }
-  //   },
-  // },
+      if (isSend) {
+        valueInEth = computeValueToEth(sendValue || 1, priceInWei);
+        return sendValue
+          ? {
+              receiveValue: bigNumber(valueInEth)
+                .dividedBy(fromWei(receiveCurrency.priceInWei))
+                .toString(),
+            }
+          : {};
+      } else {
+        valueInEth = computeValueToEth(receiveValue || 1, priceInWei);
+        return receiveValue
+          ? {
+              sendValue: bigNumber(valueInEth)
+                .dividedBy(fromWei(sendCurrency.priceInWei))
+                .toString(),
+            }
+          : {};
+      }
+    },
+  },
 );
 
 class CurrencyConverter extends Component {
@@ -137,6 +156,7 @@ class CurrencyConverter extends Component {
 
     return (
       <Form
+        decorators={[decorator]}
         initialValues={{
           sendCurrency: defaultValues.sendCurrency,
           sendValue: defaultValues.sendValue || '',
@@ -148,27 +168,7 @@ class CurrencyConverter extends Component {
       >
         {({ handleSubmit, invalid, form, values }) => (
           <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
-            <Field
-              name="sendValue"
-              parse={(value) =>
-                value
-                  ? bigNumber(value).multipliedBy(
-                      values.sendCurrency.priceInWei,
-                    )
-                  : ''
-              }
-              format={(value) =>
-                typeof value === 'object'
-                  ? value.dividedBy(values.sendCurrency.priceInWei).toString()
-                  : ''
-              }
-              validate={(value, allValues) => {
-                return fromWei(value.toString()) >
-                  parseInt(allValues.sendCurrency.balance)
-                  ? `You don't have enough currency`
-                  : undefined;
-              }}
-            >
+            <Field5 name="sendValue">
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
@@ -189,26 +189,9 @@ class CurrencyConverter extends Component {
                     )}
                 </div>
               )}
-            </Field>
+            </Field5>
             <span className={`visible-md ${styles.Arrow}`}>&rarr;</span>
-            <Field
-              parse={(value) =>
-                value
-                  ? bigNumber(value).multipliedBy(
-                      values.receiveCurrency.priceInWei,
-                    )
-                  : ''
-              }
-              format={(value) =>
-                typeof value === 'object'
-                  ? value
-                      .dividedBy(values.receiveCurrency.priceInWei)
-                      .toString()
-                  : ''
-              }
-              name="receiveValue"
-              validate={toValidation}
-            >
+            <Field5 name="receiveValue" validate={toValidation}>
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
@@ -227,7 +210,7 @@ class CurrencyConverter extends Component {
                   )}
                 </div>
               )}
-            </Field>
+            </Field5>
             <Button
               content="&#8644; Convert"
               centered
