@@ -207,7 +207,7 @@ describe('allTribesActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: allTribesActions.ADD_NEW_TRIBE_ERROR,
-          error: new Error(response),
+          error: response,
         };
 
         expect(lastAction).toEqual(expectedAction);

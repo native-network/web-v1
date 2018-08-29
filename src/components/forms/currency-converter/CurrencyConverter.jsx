@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import createDecorator from 'final-form-calculate';
-import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
+import { getWeb3ServiceInstance } from '../../../../src/web3/Web3Service';
 
 import { BigNumber } from 'bignumber.js';
 

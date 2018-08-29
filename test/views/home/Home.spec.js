@@ -41,10 +41,4 @@ describe('Home', () => {
 
     expect(list.props().listItems).toHaveLength(2);
   });
-
-  it('should call `getTribes` on mount', () => {
-    wrapper = buildComponent(Home, { ...props, tribes: [] }, mount);
-
-    expect(wrapper.props().getTribes).toHaveBeenCalled();
-  });
 });

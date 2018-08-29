@@ -1,6 +1,7 @@
 import sigUtil from 'eth-sig-util';
 import ethUtil from 'ethereumjs-util';
 import Web3 from 'web3';
+import Web3ServiceMock from './Web3ServiceMock';
 
 export default class Web3Service {
   web3;
@@ -45,7 +46,8 @@ export default class Web3Service {
   }
 }
 
-const web3Service = new Web3Service();
+const web3Service =
+  process.env.NODE_ENV === 'test' ? new Web3ServiceMock() : new Web3Service();
 (async () => {
   await web3Service.init();
 })();

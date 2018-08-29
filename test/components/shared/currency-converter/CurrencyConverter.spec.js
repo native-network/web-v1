@@ -9,6 +9,7 @@ describe('CurrencyConverter', () => {
     props = {
       sendCurrencies: [{}, {}],
       receiveCurrencies: [{}, {}],
+      defaultValues: {},
     };
     wrapper = buildComponent(CurrencyConverter, props);
   });
