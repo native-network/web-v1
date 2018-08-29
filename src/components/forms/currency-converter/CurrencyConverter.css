@@ -8,6 +8,7 @@
   @media (--medium-viewport) {
     @extend %container;
 
+    flex-flow: wrap;
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
@@ -15,6 +16,11 @@
     & .ConversionButton {
       margin-left: 2rem;
       align-self: flex-start;
+    }
+
+    & code {
+      width: 100%;
+      font-family: 'Courier New', Courier, monospace;
     }
   }
 }
