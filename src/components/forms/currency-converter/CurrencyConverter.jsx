@@ -1,4 +1,5 @@
-/* eslint-disable */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import createDecorator from 'final-form-calculate';
@@ -29,12 +30,17 @@ const decorator = createDecorator(
         const { priceInWei: sendPriceInWei } = sendCurrency;
         const { priceInWei: receivePriceInWei } = receiveCurrency;
         if (typeof value === 'object') {
-          console.log(value.dividedBy(receivePriceInWei).toString());
+          console.log(
+            value
+              .multipliedBy(sendPriceInWei)
+              .dividedBy(receivePriceInWei)
+              .toString(),
+          );
         }
         console.log(receivePriceInWei);
-        return typeof value === 'object' ? value.dividedBy(receivePriceInWei) : '';
-      }
-    }
+        return typeof value === 'object' ? '' : '';
+      },
+    },
   },
   // {
   //   field: /Value/,
@@ -131,7 +137,6 @@ class CurrencyConverter extends Component {
 
     return (
       <Form
-        decorators={[decorator]}
         initialValues={{
           sendCurrency: defaultValues.sendCurrency,
           sendValue: defaultValues.sendValue || '',
@@ -141,100 +146,113 @@ class CurrencyConverter extends Component {
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
       >
-        {({ handleSubmit, invalid, form, values }) => {
-          const formState = form.getState();
-          console.log(values);
-          return (
-            <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
-              <Field
-                name="sendValue"
-                parse={(value) => (value ? bigNumber(value).multipliedBy(values.sendCurrency.priceInWei) : '')}
-                format={(value) => {
-                  console.log(fromWei(value.toString()))
-                  return value ? fromWei(value.toString()) : '';
-                }}
-                validate={(value, allValues) => {
-                  return fromWei(value.toString()) > parseInt(allValues.sendCurrency.balance)
-                    ? `You don't have enough currency`
-                    : undefined;
-                }}
-              >
-                {({ input, meta }) => (
-                  <div className={styles.ConversionInput}>
-                    <CurrencyInput
-                      {...input}
-                      currency={form.getState().values.sendCurrency}
-                      renderLabel={() => (
-                        <Field
-                          isFrom
-                          component={CurrencySelector}
-                          name="sendCurrency"
-                          currencies={sendCurrencies}
-                        />
-                      )}
-                    />
-                    {meta.error &&
-                      !!input.value && (
-                        <span className={styles.Error}>{meta.error}</span>
-                      )}
-                  </div>
-                )}
-              </Field>
-              <span className={`visible-md ${styles.Arrow}`}>&rarr;</span>
-              <Field
-                parse={(value) => (value ? bigNumber(value).multipliedBy(values.receiveCurrency.priceInWei) : '')}
-                format={(value) => {
-                  console.log(value.toString())
-                  return value ? value.toString() : ''
-                }}
-                name="receiveValue"
-                validate={toValidation}
-              >
-                {({ input, meta }) => (
-                  <div className={styles.ConversionInput}>
-                    <CurrencyInput
-                      {...input}
-                      currency={form.getState().values.receiveCurrency}
-                      renderLabel={() => (
-                        <Field
-                          component={CurrencySelector}
-                          name="receiveCurrency"
-                          currencies={receiveCurrencies}
-                        />
-                      )}
-                    />
-                    {meta.error && (
+        {({ handleSubmit, invalid, form, values }) => (
+          <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
+            <Field
+              name="sendValue"
+              parse={(value) =>
+                value
+                  ? bigNumber(value).multipliedBy(
+                      values.sendCurrency.priceInWei,
+                    )
+                  : ''
+              }
+              format={(value) =>
+                typeof value === 'object'
+                  ? value.dividedBy(values.sendCurrency.priceInWei).toString()
+                  : ''
+              }
+              validate={(value, allValues) => {
+                return fromWei(value.toString()) >
+                  parseInt(allValues.sendCurrency.balance)
+                  ? `You don't have enough currency`
+                  : undefined;
+              }}
+            >
+              {({ input, meta }) => (
+                <div className={styles.ConversionInput}>
+                  <CurrencyInput
+                    {...input}
+                    currency={form.getState().values.sendCurrency}
+                    renderLabel={() => (
+                      <Field
+                        isFrom
+                        component={CurrencySelector}
+                        name="sendCurrency"
+                        currencies={sendCurrencies}
+                      />
+                    )}
+                  />
+                  {meta.error &&
+                    !!input.value && (
                       <span className={styles.Error}>{meta.error}</span>
                     )}
-                  </div>
-                )}
-              </Field>
-              <Button
-                content="&#8644; Convert"
-                centered
-                disabled={invalid}
-                theme="secondary"
-                type="submit"
-                className={styles.ConversionButton}
-              />
-              <br />
-              <code>
-                <pre>
-                  {JSON.stringify(
-                    Object.entries(values)
-                      .filter((entry) => /Value/.test(entry[0]))
-                      .reduce((acc, entry) => {
-                        /* eslint-disable */
-                        acc[entry[0]] = entry[1];
-
-                        return acc;
-                      }, {}),
+                </div>
+              )}
+            </Field>
+            <span className={`visible-md ${styles.Arrow}`}>&rarr;</span>
+            <Field
+              parse={(value) =>
+                value
+                  ? bigNumber(value).multipliedBy(
+                      values.receiveCurrency.priceInWei,
+                    )
+                  : ''
+              }
+              format={(value) =>
+                typeof value === 'object'
+                  ? value
+                      .dividedBy(values.receiveCurrency.priceInWei)
+                      .toString()
+                  : ''
+              }
+              name="receiveValue"
+              validate={toValidation}
+            >
+              {({ input, meta }) => (
+                <div className={styles.ConversionInput}>
+                  <CurrencyInput
+                    {...input}
+                    currency={form.getState().values.receiveCurrency}
+                    renderLabel={() => (
+                      <Field
+                        component={CurrencySelector}
+                        name="receiveCurrency"
+                        currencies={receiveCurrencies}
+                      />
+                    )}
+                  />
+                  {meta.error && (
+                    <span className={styles.Error}>{meta.error}</span>
                   )}
-                </pre>
-              </code>
-            </form>
-          )
-        }}
+                </div>
+              )}
+            </Field>
+            <Button
+              content="&#8644; Convert"
+              centered
+              disabled={invalid}
+              theme="secondary"
+              type="submit"
+              className={styles.ConversionButton}
+            />
+            <br />
+            <code>
+              <pre>
+                {JSON.stringify(
+                  Object.entries(values)
+                    .filter((entry) => /Value/.test(entry[0]))
+                    .reduce((acc, entry) => {
+                      /* eslint-disable */
+                      acc[entry[0]] = entry[1];
+
+                      return acc;
+                    }, {}),
+                )}
+              </pre>
+            </code>
+          </form>
+        )}
       </Form>
     );
   }
