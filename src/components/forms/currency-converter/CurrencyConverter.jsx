@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import { Field as Field5 } from 'react-final-form-html5-validation';
-import createDecorator from 'final-form-calculate';
 import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 
 import { BigNumber } from 'bignumber.js';
@@ -14,126 +13,7 @@ import Button from '../../shared/button';
 import CurrencySelector from '../../shared/currency-selector';
 import CurrencyInput from '../../shared/currency-input';
 
-const bigNumber = (n = 0) => new BigNumber(n.toString());
-const { web3 } = getWeb3ServiceInstance();
-const { fromWei, toWei } = web3.utils;
-const computeValueToEth = (v = 1, p) =>
-  bigNumber(v)
-    .multipliedBy(fromWei(p))
-    .toString();
-
-const decorator = createDecorator(
-  {
-    field: 'sendValue',
-    updates: {
-      receiveValue: (value, allValues) => {
-        const { sendCurrency, receiveCurrency } = allValues;
-        const { priceInWei: sendPriceInWei } = sendCurrency;
-        const { priceInWei: receivePriceInWei } = receiveCurrency;
-
-        if (value) {
-          return bigNumber(value)
-            .multipliedBy(sendPriceInWei)
-            .dividedBy(receivePriceInWei)
-            .toString();
-        } else {
-          return '';
-        }
-      },
-    },
-  },
-  {
-    field: 'receiveValue',
-    updates: {
-      sendValue: (value, allValues) => {
-        const { sendCurrency, receiveCurrency } = allValues;
-        const { priceInWei: sendPriceInWei } = sendCurrency;
-        const { priceInWei: receivePriceInWei } = receiveCurrency;
-
-        if (value) {
-          return bigNumber(value)
-            .multipliedBy(receivePriceInWei)
-            .dividedBy(sendPriceInWei)
-            .toString();
-        } else {
-          return '';
-        }
-      },
-    },
-  },
-  // {
-  //   field: /Value/,
-  //   updates: (value, name, allValues) => {
-  //     console.log(name, typeof value);
-  //     const isSend = /send/.test(name);
-
-  //     if (isSend) {
-
-  //     } else {
-
-  //     }
-  //     // const { sendCurrency, receiveCurrency } = allValues;
-  //     // const { priceInWei: sendPriceInWei } = sendCurrency;
-  //     // const { priceInWei: receivePriceInWei } = receiveCurrency;
-  //     // const valueInEth = computeValueToEth(value, sendPriceInWei);
-  //     // const receiveValue = bigNumber(valueInEth)
-  //     //   .dividedBy(fromWei(receivePriceInWei));
-
-  //     // return value ? { receiveValue } : { receiveValue: '' };
-  //     return {};
-  //   },
-  // },
-  // {
-  //   field: 'receiveValue',
-  //   updates: (value, name, allValues) => {
-
-  //     console.log(name, typeof value);
-  //     // const { sendCurrency, receiveCurrency } = allValues;
-  //     // const { priceInWei: sendPriceInWei } = sendCurrency;
-  //     // const { priceInWei: receivePriceInWei } = receiveCurrency;
-  //     // const valueInEth = computeValueToEth(value, receivePriceInWei);
-  //     // const sendValue = bigNumber(valueInEth)
-  //     //   .dividedBy(fromWei(sendPriceInWei));
-
-  //     // return value ? { sendValue } : { sendValue: '' };
-  //     return {};
-  //   },
-  // },
-  {
-    field: /Currency/,
-    updates: (value, name, allValues) => {
-      let valueInEth;
-      const { priceInWei } = value;
-      const {
-        sendCurrency,
-        sendValue,
-        receiveCurrency,
-        receiveValue,
-      } = allValues;
-      const isSend = /send/.test(name);
-
-      if (isSend) {
-        valueInEth = computeValueToEth(sendValue || 1, priceInWei);
-        return sendValue
-          ? {
-              receiveValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(receiveCurrency.priceInWei))
-                .toString(),
-            }
-          : {};
-      } else {
-        valueInEth = computeValueToEth(receiveValue || 1, priceInWei);
-        return receiveValue
-          ? {
-              sendValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(sendCurrency.priceInWei))
-                .toString(),
-            }
-          : {};
-      }
-    },
-  },
-);
+import { CurrencyConverterDecorator } from '../decorators/CurrencyConverterDecorator';
 
 class CurrencyConverter extends Component {
   handleSubmit(values) {
@@ -156,7 +36,7 @@ class CurrencyConverter extends Component {
 
     return (
       <Form
-        decorators={[decorator]}
+        decorators={[CurrencyConverterDecorator]}
         initialValues={{
           sendCurrency: defaultValues.sendCurrency,
           sendValue: defaultValues.sendValue || '',
@@ -219,21 +99,6 @@ class CurrencyConverter extends Component {
               type="submit"
               className={styles.ConversionButton}
             />
-            <br />
-            <code>
-              <pre>
-                {JSON.stringify(
-                  Object.entries(values)
-                    .filter((entry) => /Value/.test(entry[0]))
-                    .reduce((acc, entry) => {
-                      /* eslint-disable */
-                      acc[entry[0]] = entry[1];
-
-                      return acc;
-                    }, {}),
-                )}
-              </pre>
-            </code>
           </form>
         )}
       </Form>
