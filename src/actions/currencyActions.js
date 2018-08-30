@@ -15,7 +15,7 @@ export const getCurrencyPriceByTribeId = (tribeId) => {
       await tribe3.initContracts();
 
       return Promise.all([
-        tribe3.smartTokenContractWS.methods.priceInWei().call(),
+        tribe3.smartTokenContractWS.methods.price().call(),
         tribe3.smartTokenContractWS.methods.symbol().call(),
         tribe3.smartTokenContractWS.methods.totalSupply().call(),
       ])
