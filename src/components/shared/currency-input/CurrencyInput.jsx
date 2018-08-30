@@ -4,10 +4,16 @@ import styles from './CurrencyInput.css';
 
 function CurrencyInput({ currency, renderLabel, ...rest }) {
   const sanitize = (e) => {
-    if (e.target.value === '.') {
-      e.target.value = '0.';
+    let { value } = e.target;
+    if (value === '.') {
+      value = '0.';
     }
-    e.target.value = e.target.value.replace(/[^0-9\.]/g, ''); // eslint-disable-line
+    e.target.value = value
+      .replace(/[^0-9.]/g, '') // remove non-digits and periods
+      .replace(/^([^.]*\.)(.*)$/, (a, b, c) => {
+        // only allow one period
+        return b + c.replace(/\./g, '');
+      });
     rest.onChange(e);
   };
   return (

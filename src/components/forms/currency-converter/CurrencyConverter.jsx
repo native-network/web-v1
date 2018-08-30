@@ -1,11 +1,6 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import { Field as Field5 } from 'react-final-form-html5-validation';
-import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
-
-import { BigNumber } from 'bignumber.js';
 
 import styles from './CurrencyConverter.css';
 
@@ -46,7 +41,7 @@ class CurrencyConverter extends Component {
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
       >
-        {({ handleSubmit, invalid, form, values }) => (
+        {({ handleSubmit, invalid, form }) => (
           <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
             <Field5 name="sendValue">
               {({ input, meta }) => (
