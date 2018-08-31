@@ -9,7 +9,6 @@ const initialState = {
 describe('tribeReducer', () => {
   it('should return the initial state', () => {
     const reducedState = tribeReducer(undefined, {});
-
     expect(reducedState).toEqual(initialState);
   });
 
