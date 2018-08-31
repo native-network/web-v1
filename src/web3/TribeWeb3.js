@@ -43,7 +43,6 @@ export default class TribeService {
   }
 
   async getTokenBalance(address) {
-    console.log(address); // eslint-disable-line
     return await this.smartTokenContractWS.methods.balanceOf(address).call();
   }
 
