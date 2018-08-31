@@ -20,10 +20,10 @@ export const getCurrencyPriceByTribeId = (tribeId) => {
         tribe3.smartTokenContractWS.methods.totalSupply().call(),
       ])
         .then((data) => {
-          const [priceInWei, symbol, totalSupply] = data;
+          const [price, symbol, totalSupply] = data;
           return dispatch(
             getCurrencyPriceByTribeIdSuccess(tribeId, {
-              priceInWei,
+              price,
               symbol,
               totalSupply,
             }),

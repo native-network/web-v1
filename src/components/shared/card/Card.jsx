@@ -58,7 +58,7 @@ class Card extends Component {
     const stakeInWei =
       (tribe &&
         tribe.currency &&
-        new BigNumber(tribe.currency.priceInWei || 0).multipliedBy(
+        new BigNumber(tribe.currency.price || 0).multipliedBy(
           tribe.currency.minimumStake,
         )) ||
       0;

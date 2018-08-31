@@ -33,7 +33,7 @@ export const CurrencyConverterDecorator = createDecorator(
     field: /Currency/,
     updates: (value, name, allValues) => {
       let valueInEth;
-      const { priceInWei } = value;
+      const { price } = value;
       const {
         sendCurrency,
         sendValue,
@@ -43,20 +43,20 @@ export const CurrencyConverterDecorator = createDecorator(
       const isSend = /send/.test(name);
 
       if (isSend) {
-        valueInEth = computeValueToEth(sendValue || 1, priceInWei);
+        valueInEth = computeValueToEth(sendValue || 1, price);
         return sendValue
           ? {
               receiveValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(receiveCurrency.priceInWei))
+                .dividedBy(fromWei(receiveCurrency.price))
                 .toString(),
             }
           : {};
       } else {
-        valueInEth = computeValueToEth(receiveValue || 1, priceInWei);
+        valueInEth = computeValueToEth(receiveValue || 1, price);
         return receiveValue
           ? {
               sendValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(sendCurrency.priceInWei))
+                .dividedBy(fromWei(sendCurrency.price))
                 .toString(),
             }
           : {};
@@ -69,8 +69,8 @@ function convert(value, initialCurrency, convertCurrency) {
   const valueBN = bigNumber(value);
   if (value && valueBN.gt(0)) {
     return valueBN
-      .multipliedBy(initialCurrency.priceInWei)
-      .dividedBy(convertCurrency.priceInWei)
+      .multipliedBy(initialCurrency.price)
+      .dividedBy(convertCurrency.price)
       .toString();
   }
 }
