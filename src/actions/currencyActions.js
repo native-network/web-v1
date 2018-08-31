@@ -1,5 +1,6 @@
 import { currencyActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
+import { getUserWalletCommunityBalance } from './userWalletActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
 import { tribeContractInstance } from '../utils/constants';
 
@@ -17,13 +18,14 @@ export const getCurrencyDataByTribe = (tribe) => {
         ])
           .then((data) => {
             const [price, symbol, totalSupply] = data;
-            return dispatch(
+            dispatch(
               getCurrencyDataByTribeSuccess(tribe, {
                 price,
                 symbol,
                 totalSupply,
               }),
             );
+            dispatch(getUserWalletCommunityBalance());
           })
           .catch((err) => {
             const { message } = err;

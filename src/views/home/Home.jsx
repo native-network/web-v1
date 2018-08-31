@@ -43,7 +43,7 @@ export default connect(
           (c) => c.tribeId === tribe.id,
         );
 
-        if (currency) return { ...tribe, currency };
+        return currency ? { ...tribe, currency } : tribe;
       }),
       isLoading: state.loading > 0,
     };
