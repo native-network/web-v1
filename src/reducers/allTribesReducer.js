@@ -1,7 +1,11 @@
+/* eslint-disable */
 import { allTribesActions as actions } from '../actions/actionTypes';
 import { initialState } from './initialState';
 
-export default function allTribesReducer(state = initialState.tribes, action) {
+export default function allTribesReducer(
+  state = initialState.tribes,
+  action,
+) {
   switch (action.type) {
     case actions.GET_TRIBES_SUCCESS:
       return {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { userWalletActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import {
@@ -5,6 +6,7 @@ import {
   getBalance,
   getWeb3ServiceInstance,
 } from '../web3/Web3Service';
+import { allTribeContractInstances } from '../utils/constants';
 
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
@@ -39,12 +41,27 @@ export const getUserWalletAddressError = (error) => {
 };
 
 export const getUserWalletBalance = (address) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const { tribes } = state.tribes;
     dispatch({ type: actions.GET_USER_WALLET_BALANCE });
     dispatch(beginAjaxCall());
 
     try {
       const balance = await getBalance(address);
+
+      Promise.all(allTribeContractInstances(tribes))
+        .then((tribeInstances) => {
+          return tribeInstances.map(async ({id, tribe3}) => {
+            const tribe = tribes.find((t) => t.id === id);
+            return {
+              tribeId: id,
+              iconUrl: tribe && tribe.icon,
+              balance: await tribe3.getTokenBalance(address),
+            };
+          }
+        )})
+        // .then((data) => data.map(async (d) => console.log(await d)));
 
       return dispatch(getUserWalletBalanceSuccess(fromWei(balance)));
     } catch (err) {

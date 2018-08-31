@@ -1,6 +1,6 @@
 import { allTribesActions as tribesActions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { getCurrencyPriceByTribeId } from './currencyActions';
+import { getCurrencyDataByTribe } from './currencyActions';
 import { get, post } from '../requests';
 
 export const getTribes = () => {
@@ -10,8 +10,10 @@ export const getTribes = () => {
     try {
       const { data } = await get('tribes');
 
-      (data || []).map((tribe) => dispatch(getCurrencyPriceByTribeId(tribe)));
-      return dispatch(getTribesSuccess(data));
+      dispatch(getTribesSuccess(data));
+      return (data || []).map((tribe) =>
+        dispatch(getCurrencyDataByTribe(tribe)),
+      );
     } catch (err) {
       return dispatch(getTribesError(err));
     }
