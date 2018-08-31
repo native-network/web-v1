@@ -9,7 +9,7 @@ function CurrencyInput({ currency, renderLabel, ...rest }) {
       value = '0.';
     }
     e.target.value = value
-      .replace(/[^0-9.]/g, '') // remove non-digits and periods
+      .replace(/[^0-9.]/g, '')
       .replace(/^([^.]*\.)(.*)$/, (a, b, c) => {
         // only allow one period
         return b + c.replace(/\./g, '');

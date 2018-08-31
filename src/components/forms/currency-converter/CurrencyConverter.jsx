@@ -9,6 +9,7 @@ import CurrencySelector from '../../shared/currency-selector';
 import CurrencyInput from '../../shared/currency-input';
 
 import { CurrencyConverterDecorator } from '../decorators/CurrencyConverterDecorator';
+import BigNumber from 'bignumber.js';
 
 class CurrencyConverter extends Component {
   handleSubmit(values) {
@@ -43,7 +44,14 @@ class CurrencyConverter extends Component {
       >
         {({ handleSubmit, invalid, form }) => (
           <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
-            <Field5 name="sendValue">
+            <Field5
+              name="sendValue"
+              validate={(value, allValues) => {
+                return new BigNumber(value).gt(allValues.sendCurrency.balance)
+                  ? `You don't have enough currency`
+                  : undefined;
+              }}
+            >
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
