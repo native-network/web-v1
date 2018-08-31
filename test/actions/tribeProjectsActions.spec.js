@@ -15,7 +15,7 @@ import {
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('tribePollsActions', () => {
+describe('tribeProjectsActions', () => {
   let initialState;
   let store;
 
@@ -63,14 +63,14 @@ describe('tribePollsActions', () => {
       });
 
       it('should dispatch `GET_TRIBE_PROJECTS_ERROR` on error', async () => {
-        moxiosResponse({ status: 400, response });
+        moxiosResponse({ status: 400 });
         await store.dispatch(getTribeProjects());
 
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: tribeProjectsActions.GET_TRIBE_PROJECTS_ERROR,
-          error: new Error(response),
+          error: '',
         };
 
         expect(lastAction).toEqual(expectedAction);
@@ -116,14 +116,14 @@ describe('tribePollsActions', () => {
       });
 
       it('should dispatch `ADD_NEW_PROJECT_ERROR` on error', async () => {
-        moxiosResponse({ status: 400, response });
+        moxiosResponse({ status: 400 });
         await store.dispatch(addNewProject({}));
 
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: tribeProjectsActions.ADD_NEW_PROJECT_ERROR,
-          error: new Error(response),
+          error: '',
         };
         expect(lastAction).toEqual(expectedAction);
       });
@@ -162,14 +162,14 @@ describe('tribePollsActions', () => {
       });
 
       it('should dispatch `UPDATE_PROJECT_ERROR` on error', async () => {
-        moxiosResponse({ status: 400, response });
+        moxiosResponse({ status: 400 });
         await store.dispatch(updateProject(3, {}));
 
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: tribeProjectsActions.UPDATE_PROJECT_ERROR,
-          error: new Error(response),
+          error: '',
         };
         expect(lastAction).toEqual(expectedAction);
       });
