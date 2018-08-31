@@ -47,7 +47,7 @@ export const getUserWalletEthBalance = (address) => {
 
     try {
       const balance = await getBalance(address);
-      console.log(balance);
+      console.log(address);
       dispatch(getUserWalletEthBalanceSuccess(fromWei(balance)));
       return dispatch(getUserWalletCommunityBalance(address));
     } catch (err) {
@@ -73,39 +73,51 @@ export const getUserWalletEthBalanceError = (error) => {
 };
 
 export const getUserWalletCommunityBalance = (address) => {
+
   return async (dispatch, getState) => {
-    const { tribes } = getState().tribes;
-    const { currencies } = getState().currencies;
-    dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
-    dispatch(beginAjaxCall());
+    if (address) {
+      const { tribes } = getState().tribes;
+      const { currencies } = getState().currencies;
+      dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
+      dispatch(beginAjaxCall());
+      try {
+        const instances = await Promise.all(allTribeContractInstances(tribes))
 
-    try {
-      Promise.all(allTribeContractInstances(tribes))
-        .then((tribeInstances) => {
-          return tribeInstances.map(async ({id, tribe3}) => {
-            const tribe = tribes.find((t) => t.id === id);
-            const currency = currencies.find(c => c.tribeId === id);
-            if (tribe && currency) {
-              return {
-                symbol: currency && currency.symbol,
-                tribeId: id,
-                iconUrl: tribe && tribe.icon,
-                balance: await tribe3.getTokenBalance(address),
-              };
-            }
-          }
-        )})
-        .then((data) => data.map(async (d) => {
-          const balance = await d;
-          console.log(balance);
-          return balance ? getUserWalletCommunityBalanceSuccess(balance) : null;
-        }));
+        // Race condition, currencies may still be undefined
+        instances.map(async ({id, tribe3}) => {
+          console.log(currencies);
+          const tribe = tribes.find(t => t.id === id);
+          console.log(tribe, await tribe3.getTokenBalance(address))
+        })
+          // .then((tribeInstances) => {
+          //   return tribeInstances.map(async ({id, tribe3}) => {
+          //     const tribe = tribes.find((t) => t.id === id);
+          //     const currency = currencies.find(c => c.tribeId === id);
+          //     if (tribe && currency) {
+          //       return {
+          //         symbol: currency && currency.symbol,
+          //         tribeId: id,
+          //         iconUrl: tribe && tribe.icon,
+          //         balance: await tribe3.getTokenBalance(address),
+          //       };
+          //     }
+          //   }
+          // )})
+          // .then((data) =>
+          //   data
+          //     .map(async (balance) => {
+          //       const b = await balance;
+          //       if (b) console.log(b);
+          //       return b ? getUserWalletCommunityBalanceSuccess(b) : null;
+          //     })
+          // );
 
-      dispatch({type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_SUCCESS})
-    } catch (err) {
-      const { message } = err;
+        dispatch({type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_SUCCESS})
+      } catch (err) {
+        const { message } = err;
 
-      return dispatch(getUserWalletCommunityBalanceError(message));
+        return dispatch(getUserWalletCommunityBalanceError(message));
+      }
     }
 
   };
