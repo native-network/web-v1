@@ -58,11 +58,11 @@ export const smartTokenAbi = [
   {
     constant: true,
     inputs: [],
-    name: 'priceInWei',
+    name: 'beneficiary',
     outputs: [
       {
         name: '',
-        type: 'uint256',
+        type: 'address',
       },
     ],
     payable: false,
@@ -151,6 +151,34 @@ export const smartTokenAbi = [
   {
     constant: true,
     inputs: [],
+    name: 'payableTokenAddress',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'price',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
     name: 'transfersEnabled',
     outputs: [
       {
@@ -170,6 +198,20 @@ export const smartTokenAbi = [
       {
         name: '',
         type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'buyModeEth',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
       },
     ],
     payable: false,
@@ -335,7 +377,7 @@ export const smartTokenAbi = [
       },
       {
         indexed: false,
-        name: '_priceInWei',
+        name: '_price',
         type: 'uint256',
       },
       {
@@ -563,15 +605,53 @@ export const smartTokenAbi = [
         type: 'uint256',
       },
       {
-        name: '_priceInWei',
+        name: '_price',
         type: 'uint256',
       },
       {
         name: '_amountForSale',
         type: 'uint256',
       },
+      {
+        name: '_beneficiary',
+        type: 'address',
+      },
     ],
     name: 'initializeTokenSale',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: '_saleStartTime',
+        type: 'uint256',
+      },
+      {
+        name: '_saleEndTime',
+        type: 'uint256',
+      },
+      {
+        name: '_price',
+        type: 'uint256',
+      },
+      {
+        name: '_amountForSale',
+        type: 'uint256',
+      },
+      {
+        name: '_beneficiary',
+        type: 'address',
+      },
+      {
+        name: '_tokenAddress',
+        type: 'address',
+      },
+    ],
+    name: 'initializeTokenSaleWithToken',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -623,11 +703,11 @@ export const smartTokenAbi = [
     constant: false,
     inputs: [
       {
-        name: '_newPriceInWei',
+        name: '_newPrice',
         type: 'uint256',
       },
     ],
-    name: 'updatePriceInWei',
+    name: 'updatePrice',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -649,6 +729,24 @@ export const smartTokenAbi = [
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: '_token',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'buyWithToken',
+    outputs: [],
+    payable: true,
+    stateMutability: 'payable',
     type: 'function',
   },
 ];
