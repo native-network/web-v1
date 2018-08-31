@@ -1,10 +1,6 @@
 import tribeReducer from '../../src/reducers/tribeReducer';
 import { tribeActions as actions } from '../../src/actions/actionTypes';
-
-const initialState = {
-  tribe: {},
-  error: '',
-};
+import { initialState } from '../../src/reducers/initialState';
 
 describe('tribeReducer', () => {
   it('should return the initial state', () => {

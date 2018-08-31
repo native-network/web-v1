@@ -20,8 +20,12 @@ export class Header extends Component {
 
   static defaultProps = {
     user: {
-      address: '',
+      wallet: {
+        address: '',
+      },
     },
+    location: '',
+    isLoggedIn: false,
   };
 
   openModal() {

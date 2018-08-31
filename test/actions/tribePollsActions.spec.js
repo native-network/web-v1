@@ -74,14 +74,8 @@ describe('tribePollsActions', () => {
     });
 
     describe('Error response', () => {
-      let response;
       beforeEach(() => {
-        response = {
-          data: {
-            polls: [],
-          },
-        };
-        moxiosResponse({ status: 400, response });
+        moxiosResponse({ status: 400 });
       });
 
       it('should finally dispatch `GET_TRIBE_POLLS_ERROR` after `GET_TRIBE_POLLS` error', async () => {
@@ -91,7 +85,7 @@ describe('tribePollsActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: tribePollsActions.GET_TRIBE_POLLS_ERROR,
-          error: new Error(response),
+          error: '',
         };
 
         expect(lastAction).toEqual(expectedAction);
@@ -147,14 +141,13 @@ describe('tribePollsActions', () => {
     });
 
     it('should dispatch `ADD_NEW_POLL_ERROR` on error of addNewPoll', async () => {
-      const response = {};
-      moxiosResponse({ status: 400, response });
+      moxiosResponse({ status: 400 });
 
       await store.dispatch(addNewPoll(3));
 
       const expectedAction = {
         type: tribePollsActions.ADD_NEW_POLL_ERROR,
-        error: new Error(response),
+        error: '',
       };
 
       const actions = store.getActions();

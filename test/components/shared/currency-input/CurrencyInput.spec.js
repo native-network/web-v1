@@ -7,7 +7,7 @@ describe('CurrencyInput', () => {
   beforeEach(() => {
     props = {
       currency: {
-        id: 0,
+        symbol: 'eth',
       },
     };
     wrapper = buildComponent(CurrencyInput, props);
