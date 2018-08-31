@@ -24,11 +24,11 @@ const decorator = createDecorator(
     field: 'sendValue',
     updates: (value, name, allValues) => {
       const { sendCurrency, receiveCurrency } = allValues;
-      const { priceInWei: sendPriceInWei } = sendCurrency;
-      const { priceInWei: receivePriceInWei } = receiveCurrency;
-      const valueInEth = computeValueToEth(value, sendPriceInWei);
+      const { price: sendPrice } = sendCurrency;
+      const { price: receivePrice } = receiveCurrency;
+      const valueInEth = computeValueToEth(value, sendPrice);
       const receiveValue = bigNumber(valueInEth)
-        .dividedBy(fromWei(receivePriceInWei))
+        .dividedBy(fromWei(receivePrice))
         .toString();
 
       return value ? { receiveValue } : { receiveValue: '' };
@@ -38,11 +38,11 @@ const decorator = createDecorator(
     field: 'receiveValue',
     updates: (value, name, allValues) => {
       const { sendCurrency, receiveCurrency } = allValues;
-      const { priceInWei: sendPriceInWei } = sendCurrency;
-      const { priceInWei: receivePriceInWei } = receiveCurrency;
-      const valueInEth = computeValueToEth(value, receivePriceInWei);
+      const { price: sendPrice } = sendCurrency;
+      const { price: receivePrice } = receiveCurrency;
+      const valueInEth = computeValueToEth(value, receivePrice);
       const sendValue = bigNumber(valueInEth)
-        .dividedBy(fromWei(sendPriceInWei))
+        .dividedBy(fromWei(sendPrice))
         .toString();
 
       return value ? { sendValue } : { sendValue: '' };
@@ -52,7 +52,7 @@ const decorator = createDecorator(
     field: /Currency/,
     updates: (value, name, allValues) => {
       let valueInEth;
-      const { priceInWei } = value;
+      const { price } = value;
       const {
         sendCurrency,
         sendValue,
@@ -62,20 +62,20 @@ const decorator = createDecorator(
       const isSend = /send/.test(name);
 
       if (isSend) {
-        valueInEth = computeValueToEth(sendValue || 1, priceInWei);
+        valueInEth = computeValueToEth(sendValue || 1, price);
         return sendValue
           ? {
               receiveValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(receiveCurrency.priceInWei))
+                .dividedBy(fromWei(receiveCurrency.price))
                 .toString(),
             }
           : {};
       } else {
-        valueInEth = computeValueToEth(receiveValue || 1, priceInWei);
+        valueInEth = computeValueToEth(receiveValue || 1, price);
         return receiveValue
           ? {
               sendValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(sendCurrency.priceInWei))
+                .dividedBy(fromWei(sendCurrency.price))
                 .toString(),
             }
           : {};
