@@ -3,6 +3,19 @@ import React from 'react';
 import styles from './CurrencyInput.css';
 
 function CurrencyInput({ currency, renderLabel, ...rest }) {
+  const sanitize = (e) => {
+    let { value } = e.target;
+    if (value === '.') {
+      value = '0.';
+    }
+    e.target.value = value
+      .replace(/[^0-9.]/g, '') // remove non-digits and periods
+      .replace(/^([^.]*\.)(.*)$/, (a, b, c) => {
+        // only allow one period
+        return b + c.replace(/\./g, '');
+      });
+    rest.onChange(e);
+  };
   return (
     <div className={styles.CurrencyInput}>
       {renderLabel && (
@@ -12,9 +25,11 @@ function CurrencyInput({ currency, renderLabel, ...rest }) {
       )}
       <input
         {...rest}
-        step="0.01"
+        step="any"
         id={currency.symbol}
-        type="number"
+        type="text"
+        onChange={sanitize}
+        min="0"
         placeholder="Enter Amount"
         className={styles.Input}
       />
