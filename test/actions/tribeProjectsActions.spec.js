@@ -38,7 +38,7 @@ describe('tribeProjectsActions', () => {
       expect(actions[0]).toEqual(expectedAction);
     });
 
-    describe('success and error', () => {
+    describe('success', () => {
       let response;
       beforeEach(() => {
         response = {
@@ -46,10 +46,10 @@ describe('tribeProjectsActions', () => {
             projects: [],
           },
         };
+        moxiosResponse({ status: 200, response });
       });
 
       it('should dispatch `GET_TRIBE_PROJECTS_SUCCESSS` on success', async () => {
-        moxiosResponse({ status: 200, response });
         await store.dispatch(getTribeProjects(3));
 
         const actions = store.getActions();
@@ -61,9 +61,12 @@ describe('tribeProjectsActions', () => {
 
         expect(lastAction).toEqual(expectedAction);
       });
+    });
+
+    describe('success and error', () => {
+      beforeEach(() => moxiosResponse({ status: 400 }));
 
       it('should dispatch `GET_TRIBE_PROJECTS_ERROR` on error', async () => {
-        moxiosResponse({ status: 400 });
         await store.dispatch(getTribeProjects());
 
         const actions = store.getActions();
