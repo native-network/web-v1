@@ -10,8 +10,7 @@ export default function allTribesReducer(state = initialState.tribes, action) {
       };
     case actions.GET_TRIBES_ERROR:
       return {
-        ...initialState,
-        tribes: [],
+        ...state,
         error: action.error,
       };
     case actions.ADD_NEW_TRIBE_SUCCESS:
