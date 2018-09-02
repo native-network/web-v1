@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
-import createDecorator from 'final-form-calculate';
-import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
-
-import { BigNumber } from 'bignumber.js';
+import { Field as Field5 } from 'react-final-form-html5-validation';
 
 import styles from './CurrencyConverter.css';
 
@@ -11,78 +8,8 @@ import Button from '../../shared/button';
 import CurrencySelector from '../../shared/currency-selector';
 import CurrencyInput from '../../shared/currency-input';
 
-const bigNumber = (n = 0) => new BigNumber(n.toString());
-const { web3 } = getWeb3ServiceInstance();
-const { fromWei } = web3.utils;
-const computeValueToEth = (v = 1, p) =>
-  bigNumber(v)
-    .multipliedBy(fromWei(p))
-    .toString();
-
-const decorator = createDecorator(
-  {
-    field: 'sendValue',
-    updates: (value, name, allValues) => {
-      const { sendCurrency, receiveCurrency } = allValues;
-      const { price: sendPrice } = sendCurrency;
-      const { price: receivePrice } = receiveCurrency;
-      const valueInEth = computeValueToEth(value, sendPrice);
-      const receiveValue = bigNumber(valueInEth)
-        .dividedBy(fromWei(receivePrice))
-        .toString();
-
-      return value ? { receiveValue } : { receiveValue: '' };
-    },
-  },
-  {
-    field: 'receiveValue',
-    updates: (value, name, allValues) => {
-      const { sendCurrency, receiveCurrency } = allValues;
-      const { price: sendPrice } = sendCurrency;
-      const { price: receivePrice } = receiveCurrency;
-      const valueInEth = computeValueToEth(value, receivePrice);
-      const sendValue = bigNumber(valueInEth)
-        .dividedBy(fromWei(sendPrice))
-        .toString();
-
-      return value ? { sendValue } : { sendValue: '' };
-    },
-  },
-  {
-    field: /Currency/,
-    updates: (value, name, allValues) => {
-      let valueInEth;
-      const { price } = value;
-      const {
-        sendCurrency,
-        sendValue,
-        receiveCurrency,
-        receiveValue,
-      } = allValues;
-      const isSend = /send/.test(name);
-
-      if (isSend) {
-        valueInEth = computeValueToEth(sendValue || 1, price);
-        return sendValue
-          ? {
-              receiveValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(receiveCurrency.price))
-                .toString(),
-            }
-          : {};
-      } else {
-        valueInEth = computeValueToEth(receiveValue || 1, price);
-        return receiveValue
-          ? {
-              sendValue: bigNumber(valueInEth)
-                .dividedBy(fromWei(sendCurrency.price))
-                .toString(),
-            }
-          : {};
-      }
-    },
-  },
-);
+import { CurrencyConverterDecorator } from '../decorators/CurrencyConverterDecorator';
+import BigNumber from 'bignumber.js';
 
 class CurrencyConverter extends Component {
   handleSubmit(values) {
@@ -105,7 +32,7 @@ class CurrencyConverter extends Component {
 
     return (
       <Form
-        decorators={[decorator]}
+        decorators={[CurrencyConverterDecorator]}
         initialValues={{
           sendCurrency: defaultValues.sendCurrency,
           sendValue: defaultValues.sendValue || '',
@@ -117,10 +44,10 @@ class CurrencyConverter extends Component {
       >
         {({ handleSubmit, invalid, form }) => (
           <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
-            <Field
+            <Field5
               name="sendValue"
               validate={(value, allValues) => {
-                return value > parseInt(allValues.sendCurrency.balance)
+                return new BigNumber(value).gt(allValues.sendCurrency.balance)
                   ? `You don't have enough currency`
                   : undefined;
               }}
@@ -145,9 +72,9 @@ class CurrencyConverter extends Component {
                     )}
                 </div>
               )}
-            </Field>
+            </Field5>
             <span className={`visible-md ${styles.Arrow}`}>&rarr;</span>
-            <Field name="receiveValue" validate={toValidation}>
+            <Field5 name="receiveValue" validate={toValidation}>
               {({ input, meta }) => (
                 <div className={styles.ConversionInput}>
                   <CurrencyInput
@@ -166,7 +93,7 @@ class CurrencyConverter extends Component {
                   )}
                 </div>
               )}
-            </Field>
+            </Field5>
             <Button
               content="&#8644; Convert"
               centered
