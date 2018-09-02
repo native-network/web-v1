@@ -12,7 +12,7 @@ import { routes } from '../routes';
 import styles from './App.css';
 import native from '../assets/img/native.svg';
 
-import { getTribes } from '../actions/allTribesActions';
+import { getCommunities } from '../actions/allCommunitiesActions';
 import { getUserWalletAddress } from '../actions/userWalletActions';
 import { getUserSession } from '../actions/userSessionActions';
 
@@ -23,7 +23,7 @@ export class App extends Component {
 
   componentWillMount() {
     this.props.getUserWalletAddress();
-    this.props.getTribes();
+    this.props.getCommunities();
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }
@@ -84,7 +84,7 @@ export class App extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getTribes: bindActionCreators(getTribes, dispatch),
+    getCommunities: bindActionCreators(getCommunities, dispatch),
     getUserWalletAddress: bindActionCreators(getUserWalletAddress, dispatch),
     getUserSession: bindActionCreators(getUserSession, dispatch),
   };

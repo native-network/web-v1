@@ -52,14 +52,14 @@ class Card extends Component {
 
   render() {
     const { props, state } = this;
-    const { tribe, render } = props;
+    const { community, render } = props;
     const { isReadMoreOpen } = state;
 
     const stakeInWei =
-      (tribe &&
-        tribe.currency &&
-        new BigNumber(tribe.currency.priceInWei || 0).multipliedBy(
-          tribe.currency.minimumStake,
+      (community &&
+        community.currency &&
+        new BigNumber(community.currency.price || 0).multipliedBy(
+          community.currency.minimumStake,
         )) ||
       0;
 
@@ -76,7 +76,7 @@ class Card extends Component {
     };
 
     const minRequirement = (value) =>
-      parseInt(value, 10) < tribe.currency.minimumStake
+      parseInt(value, 10) < community.currency.minimumStake
         ? `You don't have enough to stake`
         : undefined;
 
@@ -86,31 +86,31 @@ class Card extends Component {
           hasCloseButton
           isOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
-          renderHeader={() => <h1>Support {tribe.name}</h1>}
+          renderHeader={() => <h1>Support {community.name}</h1>}
         >
           <CurrencyConverter
             defaultValues={{
               sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
               sendValue: fromWei(stakeInWei.toString()),
-              receiveCurrency: tribe.currency,
+              receiveCurrency: community.currency,
               receiveValue:
-                (tribe.currency && tribe.currency.minimumStake) || 0,
+                (community.currency && community.currency.minimumStake) || 0,
             }}
             sendCurrencies={currencies}
-            receiveCurrencies={[tribe.currency]}
+            receiveCurrencies={[community.currency]}
             toValidation={minRequirement}
-            submitHandler={tribe.submitTransaction}
+            submitHandler={community.submitTransaction}
           />
         </Modal>
         <div
-          style={{ backgroundImage: `url("/${tribe.image}")` }}
+          style={{ backgroundImage: `url("/${community.image}")` }}
           className={styles.Header}
         >
           <div className={styles.HeaderOverlay}>
             <div className={styles.HeaderContainer}>
-              <Tag name={tribe.subtitle} />
-              <h2 className={styles.Title}>{tribe.name}</h2>
-              <span className={styles.Location}>{tribe.location}</span>
+              <Tag name={community.subtitle} />
+              <h2 className={styles.Title}>{community.name}</h2>
+              <span className={styles.Location}>{community.location}</span>
               <TokenData
                 {...tokenData}
                 containerClass={`${styles.TokenData} ${styles.Desktop}`}
@@ -121,12 +121,13 @@ class Card extends Component {
         </div>
         <div className={styles.CTAMobile}>
           <div className={styles.CTABadge}>
-            <span> Support {tribe.name}</span>
+            <span> Support {community.name}</span>
             <Button
               clickHandler={this.openModal.bind(this)}
               theme="primary"
-              content={`${(tribe.currency && tribe.currency.minimumStake) ||
-                0} ${(tribe.currency && tribe.currency.symbol) || ''}`}
+              content={`${(community.currency &&
+                community.currency.minimumStake) ||
+                0} ${(community.currency && community.currency.symbol) || ''}`}
             />
           </div>
         </div>
@@ -137,7 +138,7 @@ class Card extends Component {
         />
         <div className={styles.Summary}>
           <h3>About:</h3>
-          <p className={styles.Intro}>{tribe.tribeIntro}</p>
+          <p className={styles.Intro}>{community.communityIntro}</p>
         </div>
         <Transition
           mountOnEnter
@@ -154,8 +155,8 @@ class Card extends Component {
               }}
             >
               <h3>Membership</h3>
-              <p>Location: {tribe.location}</p>
-              <p>{tribe.tribePurpose}</p>
+              <p>Location: {community.location}</p>
+              <p>{community.communityPurpose}</p>
             </div>
           )}
         </Transition>

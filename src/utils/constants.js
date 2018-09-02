@@ -10,14 +10,14 @@ export const currencies = [
     symbol: 'ETH',
     iconUrl: eth,
     balance: 50,
-    priceInWei: toWei('1', 'ether').toString(),
+    price: toWei('1', 'ether').toString(),
     inUsd: '$1,353.34',
   },
   {
     symbol: 'NT',
     iconUrl: native,
     balance: 1.9234,
-    priceInWei: toWei('0.5', 'ether').toString(),
+    price: toWei('0.5', 'ether').toString(),
     inUsd: '$1,353.34',
   },
 ];

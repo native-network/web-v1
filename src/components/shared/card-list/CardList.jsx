@@ -6,7 +6,7 @@ import styles from './CardList.css';
 const renderListItem = (item, index) => {
   return (
     <li className={styles.CardListItem} key={index}>
-      <Card tribe={item} />
+      <Card community={item} />
     </li>
   );
 };

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewPoll } from '../../../actions/tribePollsActions';
+import { addNewPoll } from '../../../actions/communityPollsActions';
 
 import Loader from '../../shared/loader';
 import Button from '../../shared/button';
@@ -28,7 +28,8 @@ export class ManagePollsNew extends Component {
   handleSubmit(vals) {
     const newVals = {
       ...vals,
-      tribeId: this.props.tribeId,
+      communityId: this.props.communityId,
+      fileUrl: 'https://www.hotdog.jpg',
     };
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment()
@@ -81,7 +82,7 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => {
     return {
-      tribeId: state.activeTribe.tribe.id,
+      communityId: state.activeCommunity.community.id,
       isLoading: state.loading > 0,
     };
   },

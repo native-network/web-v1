@@ -1,7 +1,7 @@
 import loadingReducer from '../../src/reducers/loadingReducer';
 import {
   loadingActions as actions,
-  allTribesActions,
+  allCommunitiesActions,
 } from '../../src/actions/actionTypes';
 
 const initialState = 0;
@@ -29,7 +29,7 @@ describe('loadingReducer', () => {
 
   it('should decrement state for a successful async action', () => {
     const reducedState = loadingReducer(1, {
-      type: allTribesActions.GET_TRIBES_SUCCESS,
+      type: allCommunitiesActions.GET_COMMUNITIES_SUCCESS,
     });
 
     expect(reducedState).toEqual(0);
@@ -37,7 +37,7 @@ describe('loadingReducer', () => {
 
   it('should decrement state for an error async action', () => {
     const reducedState = loadingReducer(1, {
-      type: allTribesActions.GET_TRIBES_ERROR,
+      type: allCommunitiesActions.GET_COMMUNITIES_ERROR,
     });
 
     expect(reducedState).toEqual(0);

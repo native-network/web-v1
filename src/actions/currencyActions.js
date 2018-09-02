@@ -1,29 +1,29 @@
 import { currencyActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
-import TribeWeb3 from '../web3/TribeWeb3';
+import CommunityWeb3 from '../web3/CommunityWeb3';
 
-export const getCurrencyPriceByTribeId = (tribeId) => {
+export const getCurrencyPriceByCommunityId = (communityId) => {
   return async (dispatch) => {
-    dispatch({ type: actions.GET_CURRENCY_PRICE_BY_TRIBE_ID });
+    dispatch({ type: actions.GET_CURRENCY_PRICE_BY_COMMUNITY_ID });
     dispatch(beginAjaxCall());
 
     try {
       const service = getWeb3ServiceInstance();
-      const tribe3 = new TribeWeb3(tribeId, service);
+      const community3 = new CommunityWeb3(communityId, service);
 
-      await tribe3.initContracts();
+      await community3.initContracts();
 
       return Promise.all([
-        tribe3.smartTokenContractWS.methods.priceInWei().call(),
-        tribe3.smartTokenContractWS.methods.symbol().call(),
-        tribe3.smartTokenContractWS.methods.totalSupply().call(),
+        community3.smartTokenContractWS.methods.price().call(),
+        community3.smartTokenContractWS.methods.symbol().call(),
+        community3.smartTokenContractWS.methods.totalSupply().call(),
       ])
         .then((data) => {
-          const [priceInWei, symbol, totalSupply] = data;
+          const [price, symbol, totalSupply] = data;
           return dispatch(
-            getCurrencyPriceByTribeIdSuccess(tribeId, {
-              priceInWei,
+            getCurrencyPriceByCommunityIdSuccess(communityId, {
+              price,
               symbol,
               totalSupply,
             }),
@@ -31,26 +31,26 @@ export const getCurrencyPriceByTribeId = (tribeId) => {
         })
         .catch((err) => {
           const { message } = err;
-          return dispatch(getCurrencyPriceByTribeIdError(message));
+          return dispatch(getCurrencyPriceByCommunityIdError(message));
         });
     } catch (err) {
       const { message } = err;
-      return dispatch(getCurrencyPriceByTribeIdError(message));
+      return dispatch(getCurrencyPriceByCommunityIdError(message));
     }
   };
 };
 
-export const getCurrencyPriceByTribeIdSuccess = (tribeId, data) => {
+export const getCurrencyPriceByCommunityIdSuccess = (communityId, data) => {
   return {
-    type: actions.GET_CURRENCY_PRICE_BY_TRIBE_ID_SUCCESS,
-    tribe: tribeId,
+    type: actions.GET_CURRENCY_PRICE_BY_COMMUNITY_ID_SUCCESS,
+    community: communityId,
     data,
   };
 };
 
-export const getCurrencyPriceByTribeIdError = (error) => {
+export const getCurrencyPriceByCommunityIdError = (error) => {
   return {
-    type: actions.GET_CURRENCY_PRICE_BY_TRIBE_ID_ERROR,
+    type: actions.GET_CURRENCY_PRICE_BY_COMMUNITY_ID_ERROR,
     error,
   };
 };
