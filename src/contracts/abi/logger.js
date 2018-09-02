@@ -251,7 +251,7 @@ export const loggerAbi = [
         type: 'address',
       },
     ],
-    name: 'NewTribeAddress',
+    name: 'NewCommunityAddress',
     type: 'event',
   },
   {

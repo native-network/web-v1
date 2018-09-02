@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { updateProject } from '../../../actions/tribeProjectsActions';
+import { updateProject } from '../../../actions/communityProjectsActions';
 
 import Loader from '../../shared/loader';
 import Button from '../../shared/button';

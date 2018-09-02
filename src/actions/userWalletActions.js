@@ -6,7 +6,7 @@ import {
   getBalance,
   getWeb3ServiceInstance,
 } from '../web3/Web3Service';
-import { allTribeContractInstances } from '../utils/constants';
+import { allCommunityContractInstances } from '../utils/constants';
 
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
@@ -76,29 +76,29 @@ export const getUserWalletCommunityBalance = (address) => {
 
   return async (dispatch, getState) => {
     if (address) {
-      const { tribes } = getState().tribes;
+      const { communities } = getState().communities;
       const { currencies } = getState().currencies;
       dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
       dispatch(beginAjaxCall());
       try {
-        const instances = await Promise.all(allTribeContractInstances(tribes))
+        const instances = await Promise.all(allCommunityContractInstances(communities))
 
         // Race condition, currencies may still be undefined
-        instances.map(async ({id, tribe3}) => {
+        instances.map(async ({id, community3}) => {
           console.log(currencies);
-          const tribe = tribes.find(t => t.id === id);
-          console.log(tribe, await tribe3.getTokenBalance(address))
+          const community = communities.find(t => t.id === id);
+          console.log(community, await community3.getTokenBalance(address))
         })
-          // .then((tribeInstances) => {
-          //   return tribeInstances.map(async ({id, tribe3}) => {
-          //     const tribe = tribes.find((t) => t.id === id);
-          //     const currency = currencies.find(c => c.tribeId === id);
-          //     if (tribe && currency) {
+          // .then((communityInstances) => {
+          //   return communityInstances.map(async ({id, community3}) => {
+          //     const community = communities.find((t) => t.id === id);
+          //     const currency = currencies.find(c => c.communityId === id);
+          //     if (community && currency) {
           //       return {
           //         symbol: currency && currency.symbol,
-          //         tribeId: id,
-          //         iconUrl: tribe && tribe.icon,
-          //         balance: await tribe3.getTokenBalance(address),
+          //         communityId: id,
+          //         iconUrl: community && community.icon,
+          //         balance: await community3.getTokenBalance(address),
           //       };
           //     }
           //   }

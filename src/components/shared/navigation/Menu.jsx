@@ -17,7 +17,7 @@ function Menu({
         menuItemClass={menuItemClass}
         linkClass={linkClass}
         path="/"
-        label="All Tribes"
+        label="All Communities"
         exact
       />
       {address && (

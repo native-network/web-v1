@@ -6,7 +6,7 @@ describe('Home', () => {
 
   beforeEach(() => {
     props = {
-      getTribes: jest.fn(),
+      getCommunities: jest.fn(),
     };
     wrapper = buildComponent(Home, props);
   });
@@ -35,16 +35,16 @@ describe('Home', () => {
     expect(list).toHaveLength(1);
   });
 
-  it('should add tribes into `CardList`', () => {
-    wrapper = buildComponent(Home, { ...props, tribes: [{}, {}] });
+  it('should add communities into `CardList`', () => {
+    wrapper = buildComponent(Home, { ...props, communities: [{}, {}] });
     const list = wrapper.find('CardList');
 
     expect(list.props().listItems).toHaveLength(2);
   });
 
-  it('should call `getTribes` on mount', () => {
-    wrapper = buildComponent(Home, { ...props, tribes: [] }, mount);
+  it('should call `getCommunities` on mount', () => {
+    wrapper = buildComponent(Home, { ...props, communities: [] }, mount);
 
-    expect(wrapper.props().getTribes).toHaveBeenCalled();
+    expect(wrapper.props().getCommunities).toHaveBeenCalled();
   });
 });

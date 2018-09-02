@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 
-import { addNewProject } from '../../../actions/tribeProjectsActions';
+import { addNewProject } from '../../../actions/communityProjectsActions';
 
 import Loader from '../../shared/loader';
 import Button from '../../shared/button';
@@ -28,7 +28,7 @@ export class ManageProjectsNew extends Component {
   handleSubmit(vals) {
     const newVals = {
       ...vals,
-      tribeId: this.props.tribeId,
+      communityId: this.props.communityId,
     };
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
@@ -80,7 +80,7 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => {
     return {
-      tribeId: state.activeTribe.tribe.id,
+      communityId: state.activeCommunity.community.id,
       isLoading: state.loading > 0,
     };
   },

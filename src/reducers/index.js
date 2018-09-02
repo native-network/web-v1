@@ -4,14 +4,14 @@ import reduceReducers from 'reduce-reducers';
 import { initialState } from './initialState';
 
 import loadingReducer from './loadingReducer';
-import allTribesReducer from './allTribesReducer';
+import allCommunitiesReducer from './allCommunitiesReducer';
 import currencyReducer from './currencyReducer';
-import tribeReducer from './tribeReducer';
+import communityReducer from './communityReducer';
 import userWalletReducer from './userWalletReducer';
 import userSessionReducer from './userSessionReducer';
-import tribePollsReducer from './tribePollsReducer';
-import tribeProjectsReducer from './tribeProjectsReducer';
-import tribeTasksReducer from './tribeTasksReducer';
+import communityPollsReducer from './communityPollsReducer';
+import communityProjectsReducer from './communityProjectsReducer';
+import communityTasksReducer from './communityTasksReducer';
 
 const rootReducer = combineReducers({
   user: reduceReducers(
@@ -20,12 +20,12 @@ const rootReducer = combineReducers({
     initialState.user,
   ),
   loading: loadingReducer,
-  tribes: allTribesReducer,
+  communities: allCommunitiesReducer,
   currencies: currencyReducer,
-  polls: tribePollsReducer,
-  projects: tribeProjectsReducer,
-  tasks: tribeTasksReducer,
-  activeTribe: tribeReducer,
+  polls: communityPollsReducer,
+  projects: communityProjectsReducer,
+  tasks: communityTasksReducer,
+  activeCommunity: communityReducer,
 });
 
 export default rootReducer;

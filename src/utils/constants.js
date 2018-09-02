@@ -1,6 +1,6 @@
 import eth from '../assets/img/eth.svg';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
-import Tribe3 from '../web3/TribeWeb3';
+import Community3 from '../web3/CommunityWeb3';
 
 const { web3 } = getWeb3ServiceInstance();
 const { toWei } = web3.utils;
@@ -13,12 +13,12 @@ export const currencies = [
   },
 ];
 
-export const tribeContractInstance = async (tribe) => {
-  const { id } = tribe;
-  const tribe3 = new Tribe3(tribe, getWeb3ServiceInstance());
-  await tribe3.initContracts();
-  return { id, tribe3 };
+export const communityContractInstance = async (community) => {
+  const { id } = community;
+  const community3 = new Community3(community, getWeb3ServiceInstance());
+  await community3.initContracts();
+  return { id, community3 };
 };
 
-export const allTribeContractInstances = (array) =>
-  array.map((tribe) => tribeContractInstance(tribe));
+export const allCommunityContractInstances = (array) =>
+  array.map((community) => communityContractInstance(community));

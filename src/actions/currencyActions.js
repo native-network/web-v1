@@ -2,24 +2,24 @@ import { currencyActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { getUserWalletCommunityBalance } from './userWalletActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
-import { tribeContractInstance } from '../utils/constants';
+import { communityContractInstance } from '../utils/constants';
 
-export const getCurrencyDataByTribe = (tribe) => {
+export const getCurrencyDataByCommunity = (community) => {
   return async (dispatch) => {
-    dispatch({ type: actions.GET_CURRENCY_DATA_BY_TRIBE });
+    dispatch({ type: actions.GET_CURRENCY_DATA_BY_COMMUNITY });
     dispatch(beginAjaxCall());
 
     try {
-      tribeContractInstance(tribe).then(({ tribe3 }) => {
+      communityContractInstance(community).then(({ community3 }) => {
         Promise.all([
-          tribe3.getPrice(),
-          tribe3.getSymbol(),
-          tribe3.getTotalSupply(),
+          community3.getPrice(),
+          community3.getSymbol(),
+          community3.getTotalSupply(),
         ])
           .then((data) => {
             const [price, symbol, totalSupply] = data;
             dispatch(
-              getCurrencyDataByTribeSuccess(tribe, {
+              getCurrencyDataByCommunitySuccess(community, {
                 price,
                 symbol,
                 totalSupply,
@@ -29,27 +29,27 @@ export const getCurrencyDataByTribe = (tribe) => {
           })
           .catch((err) => {
             const { message } = err;
-            return dispatch(getCurrencyDataByTribeError(message));
+            return dispatch(getCurrencyDataByCommunityError(message));
           });
       });
     } catch (err) {
       const { message } = err;
-      return dispatch(getCurrencyDataByTribeError(message));
+      return dispatch(getCurrencyDataByCommunityError(message));
     }
   };
 };
 
-export const getCurrencyDataByTribeSuccess = (tribe, data) => {
+export const getCurrencyDataByCommunitySuccess = (community, data) => {
   return {
-    type: actions.GET_CURRENCY_DATA_BY_TRIBE_SUCCESS,
-    tribe,
+    type: actions.GET_CURRENCY_DATA_BY_COMMUNITY_SUCCESS,
+    community,
     data,
   };
 };
 
-export const getCurrencyDataByTribeError = (error) => {
+export const getCurrencyDataByCommunityError = (error) => {
   return {
-    type: actions.GET_CURRENCY_DATA_BY_TRIBE_ERROR,
+    type: actions.GET_CURRENCY_DATA_BY_COMMUNITY_ERROR,
     error,
   };
 };
