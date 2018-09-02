@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewTask } from '../../../actions/tribeTasksActions';
+import { addNewTask } from '../../../actions/communityTasksActions';
 
 import Loader from '../../shared/loader';
 import Button from '../../shared/button';
@@ -28,7 +28,7 @@ export class ManageTasksNew extends Component {
   handleSubmit(vals) {
     const newVals = {
       ...vals,
-      tribeId: this.props.tribeId,
+      communityId: this.props.communityId,
     };
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
@@ -80,7 +80,7 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => {
     return {
-      tribeId: state.activeTribe.tribe.id,
+      communityId: state.activeCommunity.community.id,
       isLoading: state.loading > 0,
     };
   },

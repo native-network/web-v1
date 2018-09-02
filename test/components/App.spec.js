@@ -7,7 +7,7 @@ describe('Home', () => {
 
   beforeEach(() => {
     props = {
-      getTribes: jest.fn(),
+      getCommunities: jest.fn(),
     };
     reduxState = {
       router: {
@@ -26,9 +26,9 @@ describe('Home', () => {
     expect(wrapper).toHaveLength(1);
   });
 
-  xit('should call `getTribes` on mount', () => {
-    wrapper = buildComponent(App, { ...props, tribes: [] }, mount);
+  xit('should call `getCommunities` on mount', () => {
+    wrapper = buildComponent(App, { ...props, communities: [] }, mount);
 
-    expect(wrapper.props().getTribes).toHaveBeenCalled();
+    expect(wrapper.props().getCommunities).toHaveBeenCalled();
   });
 });

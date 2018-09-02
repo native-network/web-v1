@@ -8,8 +8,8 @@ import CardList from '../../components/shared/card-list';
 import { sendTransaction } from '../../actions/currencyActions';
 
 export class Home extends Component {
-  submitTransaction(tribe, amount) {
-    this.props.sendTransaction(tribe, amount);
+  submitTransaction(community, amount) {
+    this.props.sendTransaction(community, amount);
   }
 
   render() {
@@ -19,8 +19,8 @@ export class Home extends Component {
     ) : (
       <main>
         <CardList
-          listItems={(this.props.tribes || []).map((tribe) => ({
-            ...tribe,
+          listItems={(this.props.communities || []).map((community) => ({
+            ...community,
             submitTransaction: this.submitTransaction.bind(this),
           }))}
         />
@@ -38,12 +38,12 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   (state) => {
     return {
-      tribes: state.tribes.tribes.map((tribe) => {
+      communities: state.communities.communities.map((community) => {
         const currency = state.currencies.currencies.find(
-          (c) => c.tribeId === tribe.id,
+          (c) => c.communityId === community.id,
         );
 
-        if (currency) return { ...tribe, currency };
+        if (currency) return { ...community, currency };
       }),
       isLoading: state.loading > 0,
     };

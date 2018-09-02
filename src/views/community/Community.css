@@ -1,0 +1,11 @@
+.CommunityPanels {
+  position: relative;
+}
+
+.CommunityCTA {
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  display: inline-block;
+  line-height: 2.5;
+}

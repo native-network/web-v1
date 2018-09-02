@@ -38,8 +38,8 @@ export class Dashboard extends Component {
     }
   }
 
-  submitTransaction(tribe, amount) {
-    this.props.sendTransaction(tribe, amount);
+  submitTransaction(community, amount) {
+    this.props.sendTransaction(community, amount);
   }
 
   renderModal() {
@@ -81,13 +81,13 @@ export class Dashboard extends Component {
               submitHandler={this.submitTransaction.bind(this)}
             />
             <div className={styles.TableTitle}>
-              <h1>Your Tribes</h1>
+              <h1>Your Communities</h1>
             </div>
             <div className={styles.Table}>
               &lt;Tabular Data&gt;
-              {this.props.tribes &&
-                this.props.tribes.map((tribe) => (
-                  <div key={tribe.name}>{tribe.name}</div>
+              {this.props.communities &&
+                this.props.communities.map((community) => (
+                  <div key={community.name}>{community.name}</div>
                 ))}
             </div>
           </section>

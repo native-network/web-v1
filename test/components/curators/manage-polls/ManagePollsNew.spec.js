@@ -8,8 +8,8 @@ describe('ManagePollsNew', () => {
   beforeEach(() => {
     props = {};
     reduxState = {
-      activeTribe: {
-        tribe: {
+      activeCommunity: {
+        community: {
           id: 1,
         },
       },
@@ -25,8 +25,8 @@ describe('ManagePollsNew', () => {
   it('should render `Loading` while props.isLoading is true', () => {
     props = {};
     reduxState = {
-      activeTribe: {
-        tribe: {
+      activeCommunity: {
+        community: {
           id: 1,
         },
       },
@@ -40,8 +40,8 @@ describe('ManagePollsNew', () => {
   it('should not render `Loading` while props.isLoading is false', () => {
     props = {};
     reduxState = {
-      activeTribe: {
-        tribe: {
+      activeCommunity: {
+        community: {
           id: 1,
         },
       },
