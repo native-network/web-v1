@@ -17,7 +17,7 @@ function ManageProjectsList({ projects }) {
           {new Date(item.startDate).toLocaleDateString()}
         </td>
         <td className={styles.TableCell}>{item.totalCost} NT</td>
-        <td className={styles.TableCell}>{item.tribe.quorum} %</td>
+        <td className={styles.TableCell}>{item.community.quorum} %</td>
         <td className={styles.TableCell}>TBD</td>
         <td className={styles.TableCell}>
           <ManageProjectsEdit project={item} />

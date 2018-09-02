@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewTribe } from '../../actions/allTribesActions';
+import { addNewCommunity } from '../../actions/allCommunitiesActions';
 
 import Loader from '../../components/shared/loader';
-import ManageTribeForm from '../../components/forms/manage-tribe';
+import ManageCommunityForm from '../../components/forms/manage-community';
 
 export class Manage extends Component {
   handleSubmit(vals) {
@@ -19,21 +19,21 @@ export class Manage extends Component {
       icon: 'static/media/cloud_header.png',
       dataImage: 'static/media/cloud_header.png',
     };
-    this.props.addNewTribe(newVals);
+    this.props.addNewCommunity(newVals);
   }
 
   render() {
     return this.props.isLoading ? (
       <Loader />
     ) : (
-      <ManageTribeForm submitForm={this.handleSubmit.bind(this)} />
+      <ManageCommunityForm submitForm={this.handleSubmit.bind(this)} />
     );
   }
 }
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    addNewTribe: bindActionCreators(addNewTribe, dispatch),
+    addNewCommunity: bindActionCreators(addNewCommunity, dispatch),
   };
 };
 

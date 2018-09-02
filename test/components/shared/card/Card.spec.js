@@ -6,7 +6,7 @@ describe('Card', () => {
 
   beforeEach(() => {
     props = {
-      tribe: {
+      community: {
         id: 0,
         name: 'Foo',
         image: 'assets/image.jpg',

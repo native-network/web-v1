@@ -1,6 +1,6 @@
 export const initialState = {
-  tribes: {
-    tribes: [],
+  communities: {
+    communities: [],
     error: '',
   },
   currency: {
@@ -12,8 +12,8 @@ export const initialState = {
     polls: [],
     error: '',
   },
-  activeTribe: {
-    tribe: {},
+  activeCommunity: {
+    community: {},
     error: '',
   },
   user: {
@@ -21,7 +21,7 @@ export const initialState = {
       address: '',
       currencies: [],
     },
-    tribes: [],
+    communities: [],
     addressError: '',
     sessionError: '',
   },
