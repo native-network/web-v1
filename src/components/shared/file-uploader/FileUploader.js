@@ -34,6 +34,8 @@ class FileUpload extends Component {
   render() {
     const { state } = this;
     const isPdf = state.image.indexOf('.pdf') > 0;
+    const showUploading =
+      state.uploadProgress > 0 && state.uploadProgress < 100;
 
     return (
       <div>
@@ -54,9 +56,7 @@ class FileUpload extends Component {
           autoUpload={true}
         />
         {state.error && <span>{state.error}</span>}
-        {state.uploadProgress && (
-          <span>Upload progress: {state.uploadProgress} %</span>
-        )}
+        {showUploading > 0 && <span>Uploading: {state.uploadProgress} %</span>}
         {state.image &&
           !isPdf && (
             <S3Image fileName={state.image} className={styles.PreviewImage} />

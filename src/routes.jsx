@@ -42,13 +42,12 @@ export const routes = (isAuthenticated) => {
       <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
-      <Route exact path="/manage/:communityId" component={CommunityAdmin} />
-      {/* <PrivateRoute
+      <PrivateRoute
         isAuthenticated={isAuthenticated}
         exact
         path="/manage/:communityId"
         component={CommunityAdmin}
-      /> */}
+      />
       <PrivateRoute
         isAuthenticated={isAuthenticated}
         exact

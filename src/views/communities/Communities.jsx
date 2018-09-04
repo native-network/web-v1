@@ -27,6 +27,7 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   (state) => {
+    console.log(state) // eslint-disable-line
     const { communities } = state.communities;
 
     return {

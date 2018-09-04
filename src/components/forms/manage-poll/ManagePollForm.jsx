@@ -110,6 +110,21 @@ export default function ManagePollForm({ submitForm }) {
               </label>
             </div>
 
+            <Field name="fileUrl" type="file">
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>File</label>
+                  <FileUploader
+                    {...input}
+                    onChange={(file) => {
+                      input.onChange(file.fileKey);
+                    }}
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+
             <div className={styles.GroupedFieldGroup}>
               <FieldArray name="options">
                 {({ fields }) =>
@@ -134,21 +149,6 @@ export default function ManagePollForm({ submitForm }) {
                   ))
                 }
               </FieldArray>
-
-              <Field name="fileUrl" type="file">
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>File</label>
-                    <FileUploader
-                      {...input}
-                      onChange={(file) => {
-                        input.onChange(file.fileKey);
-                      }}
-                    />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
 
               <Button
                 centered
