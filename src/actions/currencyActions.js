@@ -9,14 +9,14 @@ export const getCurrencyDataByCommunity = (community) => {
     dispatch({ type: actions.GET_CURRENCY_DATA_BY_COMMUNITY });
     dispatch(beginAjaxCall());
 
-    try {
-      communityContractInstance(community).then(({ community3 }) => {
-        Promise.all([
-          community3.getPrice(),
-          community3.getSymbol(),
-          community3.getTotalSupply(),
-        ])
-          .then((data) => {
+    return communityContractInstance(community).then(({ community3 }) => {
+      Promise.all([
+        community3.getPrice(),
+        community3.getSymbol(),
+        community3.getTotalSupply(),
+      ])
+        .then((data) => {
+          if (data) {
             const [price, symbol, totalSupply] = data;
             dispatch(
               getCurrencyDataByCommunitySuccess(community, {
@@ -25,17 +25,14 @@ export const getCurrencyDataByCommunity = (community) => {
                 totalSupply,
               }),
             );
-            dispatch(getUserWalletCommunityBalance());
-          })
-          .catch((err) => {
-            const { message } = err;
-            return dispatch(getCurrencyDataByCommunityError(message));
-          });
-      });
-    } catch (err) {
-      const { message } = err;
-      return dispatch(getCurrencyDataByCommunityError(message));
-    }
+            return dispatch(getUserWalletCommunityBalance());
+          }
+        })
+        .catch((err) => {
+          const { message } = err;
+          return dispatch(getCurrencyDataByCommunityError(message));
+        });
+    });
   };
 };
 
