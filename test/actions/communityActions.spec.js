@@ -46,10 +46,7 @@ describe('communityActions', () => {
     });
 
     it('should dispatch `LOADING` after `GET_COMMUNITY_BY_ID`', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
 
       await store.dispatch(getCommunityById(3));
 
@@ -60,10 +57,7 @@ describe('communityActions', () => {
     });
 
     it('should handle 3 actions', async () => {
-      moxios.wait(() => {
-        let req = moxios.requests.mostRecent();
-        req.respondWith({ status: 200 });
-      });
+      moxiosResponse({ status: 200 });
 
       await store.dispatch(getCommunityById(3));
 
@@ -81,10 +75,7 @@ describe('communityActions', () => {
           name: 'Foo',
         };
 
-        moxios.wait(() => {
-          let req = moxios.requests.mostRecent();
-          req.respondWith({ status: 200, response });
-        });
+        moxiosResponse({ status: 200, response });
       });
 
       it('should finally dispatch `GET_COMMUNITY_BY_ID_SUCCESS` on success', async () => {
@@ -106,10 +97,7 @@ describe('communityActions', () => {
 
       beforeEach(() => {
         response = 'Something went wrong';
-        moxios.wait(() => {
-          let req = moxios.requests.mostRecent();
-          req.respondWith({ status: 400, response });
-        });
+        moxiosResponse({ status: 400, response });
       });
 
       it('should finally dispatch `GET_COMMUNITY_BY_ID_ERROR` on error', async () => {

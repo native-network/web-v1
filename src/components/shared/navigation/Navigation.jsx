@@ -13,6 +13,12 @@ class Navigation extends Component {
     isMenuActive: false,
   };
 
+  static defaultProps = {
+    user: {
+      role: '',
+    },
+  };
+
   componentDidUpdate(prevProps) {
     const { location: oldLocation } = prevProps;
     const { location: newLocation } = this.props;

@@ -27,6 +27,11 @@ describe('Community', () => {
   it('calls `clearActiveCommunity` on unmount', () => {
     wrapper = buildComponent(Community, props, mount);
 
+    const instance = wrapper.instance();
+    instance.panel = {
+      panelHeight: 100,
+    };
+
     wrapper.unmount();
 
     expect(props.clearActiveCommunity).toHaveBeenCalled();

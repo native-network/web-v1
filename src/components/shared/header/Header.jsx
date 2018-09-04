@@ -18,6 +18,16 @@ export class Header extends Component {
     isModalOpen: false,
   };
 
+  static defaultProps = {
+    user: {
+      wallet: {
+        address: '',
+      },
+    },
+    location: '',
+    isLoggedIn: false,
+  };
+
   openModal() {
     this.setState({ isModalOpen: true });
   }

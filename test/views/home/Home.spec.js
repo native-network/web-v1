@@ -41,10 +41,4 @@ describe('Home', () => {
 
     expect(list.props().listItems).toHaveLength(2);
   });
-
-  it('should call `getCommunities` on mount', () => {
-    wrapper = buildComponent(Home, { ...props, communities: [] }, mount);
-
-    expect(wrapper.props().getCommunities).toHaveBeenCalled();
-  });
 });

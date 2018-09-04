@@ -13,8 +13,7 @@ export default function allCommunitiesReducer(
       };
     case actions.GET_COMMUNITIES_ERROR:
       return {
-        ...initialState,
-        communities: [],
+        ...state,
         error: action.error,
       };
     case actions.ADD_NEW_COMMUNITY_SUCCESS:

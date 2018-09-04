@@ -57,10 +57,10 @@ export const promptSignature = (signing, address) => {
   };
 };
 
-export const getUserSessionSuccess = (session) => {
+export const getUserSessionSuccess = (user) => {
   return {
     type: actions.GET_USER_SESSION_SUCCESS,
-    session,
+    user,
   };
 };
 

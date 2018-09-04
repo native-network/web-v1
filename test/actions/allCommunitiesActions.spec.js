@@ -207,7 +207,7 @@ describe('allCommunitiesActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: allCommunitiesActions.ADD_NEW_COMMUNITY_ERROR,
-          error: new Error(response),
+          error: response,
         };
 
         expect(lastAction).toEqual(expectedAction);

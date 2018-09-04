@@ -24,7 +24,11 @@ describe('userSessionActions', () => {
   let store;
 
   beforeEach(() => {
-    initialState = {};
+    initialState = {
+      router: {
+        location: '',
+      },
+    };
     store = mockStore(initialState);
   });
 
@@ -35,7 +39,6 @@ describe('userSessionActions', () => {
     it('should dispatch `GET_USER_SESSION`', async () => {
       moxiosResponse({ status: 200 });
       await store.dispatch(getUserSession());
-
       const actions = store.getActions();
       const expectedAction = { type: userSessionActions.GET_USER_SESSION };
 
@@ -64,7 +67,7 @@ describe('userSessionActions', () => {
       let response;
 
       beforeEach(() => {
-        response = { session: { id: 'foo' } };
+        response = { user: {} };
         moxiosResponse({ status: 200, response });
       });
 
@@ -75,7 +78,7 @@ describe('userSessionActions', () => {
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
           type: userSessionActions.GET_USER_SESSION_SUCCESS,
-          session: response.session,
+          user: response.user,
         };
 
         expect(lastAction).toEqual(expectedAction);

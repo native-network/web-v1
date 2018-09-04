@@ -7,7 +7,7 @@ describe('CurrencyInput', () => {
   beforeEach(() => {
     props = {
       currency: {
-        id: 0,
+        symbol: 'eth',
       },
     };
     wrapper = buildComponent(CurrencyInput, props);
@@ -25,7 +25,7 @@ describe('CurrencyInput', () => {
   it('should assign `id` to `input` id', () => {
     const input = wrapper.find('input');
 
-    expect(input.props().id).toEqual(0);
+    expect(input.props().id).toEqual('eth');
   });
 
   it('should call `renderLabel` when provided a `renderLabel` prop', () => {
