@@ -67,19 +67,21 @@ export class Dashboard extends Component {
         {this.state.hasSession ? (
           <section className={styles.Dashboard}>
             <h1>Convert Tokens</h1>
-            <CurrencyConverter
-              defaultValues={{
-                sendCurrency: this.props.user.wallet.currencies.find(
-                  (c) => c.symbol === 'ETH',
-                ),
-                sendValue: undefined,
-                receiveCurrency: this.props.currencies[0],
-                receiveValue: undefined,
-              }}
-              sendCurrencies={this.props.user.wallet.currencies}
-              receiveCurrencies={this.props.currencies}
-              submitHandler={this.submitTransaction.bind(this)}
-            />
+            {this.props.currencies.length ? (
+              <CurrencyConverter
+                defaultValues={{
+                  sendCurrency: this.props.user.wallet.currencies.find(
+                    (c) => c.symbol === 'ETH',
+                  ),
+                  sendValue: undefined,
+                  receiveCurrency: this.props.currencies[0],
+                  receiveValue: undefined,
+                }}
+                sendCurrencies={this.props.user.wallet.currencies}
+                receiveCurrencies={this.props.currencies}
+                submitHandler={this.submitTransaction.bind(this)}
+              />
+            ) : null}
             <div className={styles.TableTitle}>
               <h1>Your Communities</h1>
             </div>
