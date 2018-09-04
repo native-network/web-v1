@@ -141,9 +141,11 @@ export default connect(
     const { loading, activeCommunity } = state;
     const { community } = activeCommunity;
     const { communityId: id } = ownProps.match.params;
-
+    const currency = state.currencies.currencies.find(
+      (cur) => cur.communityId === community.id,
+    );
     return {
-      community,
+      community: { ...community, currency },
       id,
       isLoading: loading > 0,
     };
