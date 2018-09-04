@@ -12,7 +12,7 @@ export const getCommunities = () => {
 
       dispatch(getCommunitiesSuccess(data));
       if (data.length > 0) {
-        return (data || []).map((community) =>
+        return data.map((community) =>
           dispatch(getCurrencyDataByCommunity(community)),
         );
       }

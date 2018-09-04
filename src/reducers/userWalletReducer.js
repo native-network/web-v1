@@ -28,6 +28,17 @@ export default function userWalletReducer(state = {}, action) {
           ],
         },
       };
+    case actions.GET_USER_WALLET_COMMUNITY_BALANCE_SUCCESS:
+      return {
+        ...state,
+        wallet: {
+          ...state.wallet,
+          currencies: [
+            ...state.wallet.currencies.filter((c) => c !== action.currency),
+            action.currency,
+          ],
+        },
+      };
     default:
       return state;
   }

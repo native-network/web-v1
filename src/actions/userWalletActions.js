@@ -47,9 +47,8 @@ export const getUserWalletEthBalance = (address) => {
 
     try {
       const balance = await getBalance(address);
-      console.log(address);
-      dispatch(getUserWalletEthBalanceSuccess(fromWei(balance)));
-      return dispatch(getUserWalletCommunityBalance(address));
+      return dispatch(getUserWalletEthBalanceSuccess(fromWei(balance)));
+      // return dispatch(getUserWalletCommunityBalance(address));
     } catch (err) {
       const { message } = err;
 
@@ -75,59 +74,36 @@ export const getUserWalletEthBalanceError = (error) => {
 export const getUserWalletCommunityBalance = (address) => {
 
   return async (dispatch, getState) => {
-    if (address) {
-      const { communities } = getState().communities;
-      const { currencies } = getState().currencies;
-      dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
-      dispatch(beginAjaxCall());
-      try {
-        const instances = await Promise.all(allCommunityContractInstances(communities))
+    const state = getState();
+    const { communities } = state.communities;
+    const { currencies } = state.currencies;
 
-        // Race condition, currencies may still be undefined
-        instances.map(async ({id, community3}) => {
-          console.log(currencies);
-          const community = communities.find(t => t.id === id);
-          console.log(community, await community3.getTokenBalance(address))
-        })
-          // .then((communityInstances) => {
-          //   return communityInstances.map(async ({id, community3}) => {
-          //     const community = communities.find((t) => t.id === id);
-          //     const currency = currencies.find(c => c.communityId === id);
-          //     if (community && currency) {
-          //       return {
-          //         symbol: currency && currency.symbol,
-          //         communityId: id,
-          //         iconUrl: community && community.icon,
-          //         balance: await community3.getTokenBalance(address),
-          //       };
-          //     }
-          //   }
-          // )})
-          // .then((data) =>
-          //   data
-          //     .map(async (balance) => {
-          //       const b = await balance;
-          //       if (b) console.log(b);
-          //       return b ? getUserWalletCommunityBalanceSuccess(b) : null;
-          //     })
-          // );
+    const instances = allCommunityContractInstances(communities);
 
-        dispatch({type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_SUCCESS})
-      } catch (err) {
-        const { message } = err;
+    return Promise.all(instances)
+      .then((instances) => {
 
-        return dispatch(getUserWalletCommunityBalanceError(message));
-      }
-    }
+        return instances
+          .map(async ({id, community3}) => {
 
+            dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
+            dispatch(beginAjaxCall());
+            const currency = currencies.find(c => c.communityId === id);
+            const balance = await community3.getTokenBalance(address);
+            return dispatch(getUserWalletCommunityBalanceSuccess({
+              ...currency,
+              balance,
+            }));
+          })
+      })
+      .catch(err => console.log(err));
   };
 }
 
-export const getUserWalletCommunityBalanceSuccess = (balance) => {
-  console.log(balance);
+export const getUserWalletCommunityBalanceSuccess = (currency) => {
   return {
     type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_SUCCESS,
-    balance
+    currency
   }
 }
 
