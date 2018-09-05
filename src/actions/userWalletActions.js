@@ -48,7 +48,6 @@ export const getUserWalletEthBalance = (address) => {
     try {
       const balance = await getBalance(address);
       return dispatch(getUserWalletEthBalanceSuccess(fromWei(balance)));
-      // return dispatch(getUserWalletCommunityBalance(address));
     } catch (err) {
       const { message } = err;
 
