@@ -48,16 +48,16 @@ export default function ManagePollForm({ submitForm }) {
               >
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Poll Title</label>
+                    <label>Poll Title*</label>
                     <input {...input} type="text" placeholder="Poll Title" />
                     {meta.error && meta.touched && renderError(meta.error)}
                   </div>
                 )}
               </Field>
-              <Field name="description">
+              <Field name="description" validate={required}>
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Poll Description</label>
+                    <label>Poll Description*</label>
                     <textarea
                       rows="6"
                       {...input}
@@ -70,7 +70,7 @@ export default function ManagePollForm({ submitForm }) {
               <Field name="question" validate={required}>
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Poll Question</label>
+                    <label>Poll Question*</label>
                     <input {...input} type="text" placeholder="Poll Question" />
                     {meta.error && meta.touched && renderError(meta.error)}
                   </div>
@@ -113,7 +113,7 @@ export default function ManagePollForm({ submitForm }) {
             <Field name="fileUrl" type="file">
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>File</label>
+                  <label>Poll Image</label>
                   <FileUploader
                     {...input}
                     onChange={(file) => {
@@ -137,7 +137,9 @@ export default function ManagePollForm({ submitForm }) {
                       >
                         {({ input, meta }) => (
                           <div className={styles.FieldGroup}>
-                            <label>Option {index + 1}</label>
+                            <label>
+                              Option {index + 1} {index < 2 ? `*` : ''}
+                            </label>
                             <input {...input} type="text" />
                             {meta.error &&
                               meta.touched &&
@@ -164,7 +166,7 @@ export default function ManagePollForm({ submitForm }) {
             type="submit"
             theme="secondary"
             disabled={pristine || invalid}
-            content="Save"
+            content="Save Poll"
           />
         </form>
       )}

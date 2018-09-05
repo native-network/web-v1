@@ -7,11 +7,18 @@ import styles from './ManageTaskForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 import Button from '../../shared/button';
-// import FilePicker from '../../shared/file-picker/FilePicker';
+import FileUploader from '../../shared/file-uploader/FileUploader';
 
 export default function ManageTaskForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   const required = (value) => (value ? undefined : 'Required');
+  const validateNumber = (value) =>
+    value > 0 ? undefined : 'Must be more than 0';
+  const composeValidators = (...validators) => (value) =>
+    validators.reduce(
+      (error, validator) => error || validator(value),
+      undefined,
+    );
 
   return (
     <Form
@@ -19,22 +26,25 @@ export default function ManageTaskForm({ submitForm }) {
       initialValues={{
         timeToCompleteUnit: 'minutes',
       }}
-      render={({ handleSubmit, pristine, invalid }) => (
+      render={({ handleSubmit, pristine, invalid, values }) => (
         <form className={styles.ManageTaskForm} onSubmit={handleSubmit}>
           <div className={styles.ManageTaskFields}>
             <Field name="title" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Task Title</label>
+                  <label>Task Title*</label>
                   <input {...input} type="text" placeholder="Task Title" />
                   {meta.error && meta.touched && renderError(meta.error)}
                 </div>
               )}
             </Field>
-            <Field name="reward" validate={required}>
+            <Field
+              name="reward"
+              validate={composeValidators(required, validateNumber)}
+            >
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Task Reward (NT)</label>
+                  <label>Task Reward (NT)*</label>
                   <input
                     {...input}
                     type="number"
@@ -47,7 +57,7 @@ export default function ManageTaskForm({ submitForm }) {
             <Field name="description" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Task Description</label>
+                  <label>Task Description*</label>
                   <textarea
                     rows="6"
                     {...input}
@@ -57,11 +67,26 @@ export default function ManageTaskForm({ submitForm }) {
                 </div>
               )}
             </Field>
-            <p>Task will start today: {moment().format('MM/DD/YYYY')}</p>
+            <Field name="imageUrl" type="file">
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Vote Image</label>
+                  <FileUploader
+                    {...input}
+                    onChange={(file) => {
+                      input.onChange(file.fileKey);
+                    }}
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+
             <Field name="endDate" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>End date</label>
+                  <p>Task will start today: {moment().format('MM/DD/YYYY')}</p>
+                  <label>End date*</label>
                   <DatePicker
                     {...input}
                     minDate={moment().add(1, 'days')}
@@ -79,11 +104,11 @@ export default function ManageTaskForm({ submitForm }) {
             <Field name="timeToComplete" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Time to Complete</label>
+                  <label>Time to Complete*</label>
                   <input
                     {...input}
                     type="number"
-                    placeholder="Minutes, Hours or Days"
+                    placeholder={`In ${values.timeToCompleteUnit}`}
                   />
                   {meta.error && meta.touched && renderError(meta.error)}
                 </div>
@@ -116,16 +141,6 @@ export default function ManageTaskForm({ submitForm }) {
               />
               Days
             </label>
-
-            <Field name="imageUrl">
-              {({ input, meta }) => (
-                <div className={styles.FieldGroup}>
-                  <label>Vote Image (Optional)</label>
-                  <input {...input} type="text" placeholder="Image Url" />
-                  {meta.error && meta.touched && renderError(meta.error)}
-                </div>
-              )}
-            </Field>
           </div>
           <Button
             centered
