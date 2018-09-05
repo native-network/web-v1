@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { userWalletActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import {
@@ -71,7 +70,6 @@ export const getUserWalletEthBalanceError = (error) => {
 };
 
 export const getUserWalletCommunityBalance = (address) => {
-
   return async (dispatch, getState) => {
     const state = getState();
     const { communities } = state.communities;
@@ -81,34 +79,33 @@ export const getUserWalletCommunityBalance = (address) => {
 
     return Promise.all(instances)
       .then((instances) => {
-
-        return instances
-          .map(async ({id, community3}) => {
-
-            dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
-            dispatch(beginAjaxCall());
-            const currency = currencies.find(c => c.communityId === id);
-            const balance = await community3.getTokenBalance(address);
-            return dispatch(getUserWalletCommunityBalanceSuccess({
+        return instances.map(async ({ id, community3 }) => {
+          dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
+          dispatch(beginAjaxCall());
+          const currency = currencies.find((c) => c.communityId === id);
+          const balance = await community3.getTokenBalance(address);
+          return dispatch(
+            getUserWalletCommunityBalanceSuccess({
               ...currency,
               balance,
-            }));
-          })
+            }),
+          );
+        });
       })
-      .catch(err => console.log(err));
+      .catch((err) => getUserWalletCommunityBalanceError(err));
   };
-}
+};
 
 export const getUserWalletCommunityBalanceSuccess = (currency) => {
   return {
     type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_SUCCESS,
-    currency
-  }
-}
+    currency,
+  };
+};
 
 export const getUserWalletCommunityBalanceError = (error) => {
   return {
     type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_ERROR,
-    error
-  }
-}
+    error,
+  };
+};
