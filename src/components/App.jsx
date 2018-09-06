@@ -12,9 +12,8 @@ import { routes } from '../routes';
 import styles from './App.css';
 import native from '../assets/img/native.svg';
 
-import { getCommunities } from '../actions/allCommunitiesActions';
-import { getUserWalletAddress } from '../actions/userWalletActions';
 import { getUserSession } from '../actions/userSessionActions';
+import { getUserWalletCommunityBalance } from '../actions/userWalletActions';
 
 export class App extends Component {
   state = {
@@ -22,8 +21,6 @@ export class App extends Component {
   };
 
   componentWillMount() {
-    this.props.getUserWalletAddress();
-    this.props.getCommunities();
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }
@@ -35,6 +32,15 @@ export class App extends Component {
 
     if (!!newUserAddress && newUserAddress !== oldUserAddress) {
       this.props.getUserSession();
+    }
+
+    if (
+      !!this.props.currencies &&
+      !!newUserAddress &&
+      this.props.currencies !== prevProps.currencies &&
+      this.props.communities.length === this.props.currencies.length
+    ) {
+      this.props.getUserWalletCommunityBalance(newUserAddress);
     }
   }
 
@@ -84,8 +90,10 @@ export class App extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCommunities: bindActionCreators(getCommunities, dispatch),
-    getUserWalletAddress: bindActionCreators(getUserWalletAddress, dispatch),
+    getUserWalletCommunityBalance: bindActionCreators(
+      getUserWalletCommunityBalance,
+      dispatch,
+    ),
     getUserSession: bindActionCreators(getUserSession, dispatch),
   };
 }
@@ -93,10 +101,16 @@ function mapDispatchToProps(dispatch) {
 // eslint-disable-next-line no-class-assign
 App = connect(
   (state) => {
+    const { communities } = state.communities;
+    const { currencies } = state.currencies;
+    const { location } = state.router;
+    const { user } = state;
     return {
-      location: state.router.location,
-      user: state.user,
-      isLoggedIn: !!state.user.wallet.address,
+      communities,
+      currencies,
+      location,
+      user,
+      isLoggedIn: !!user.wallet.address,
     };
   },
   mapDispatchToProps,

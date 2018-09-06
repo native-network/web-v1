@@ -5,6 +5,7 @@ import {
   getBalance,
   getWeb3ServiceInstance,
 } from '../web3/Web3Service';
+import { allCommunityContractInstances } from '../utils/constants';
 
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
@@ -16,7 +17,7 @@ export const getUserWalletAddress = () => {
     try {
       const data = await getAddress();
       dispatch(getUserWalletAddressSuccess(data));
-      return dispatch(getUserWalletBalance(data));
+      return dispatch(getUserWalletEthBalance(data));
     } catch (err) {
       const { message } = err;
       return dispatch(getUserWalletAddressError(message));
@@ -38,33 +39,73 @@ export const getUserWalletAddressError = (error) => {
   };
 };
 
-export const getUserWalletBalance = (address) => {
+export const getUserWalletEthBalance = (address) => {
   return async (dispatch) => {
-    dispatch({ type: actions.GET_USER_WALLET_BALANCE });
+    dispatch({ type: actions.GET_USER_WALLET_ETH_BALANCE });
     dispatch(beginAjaxCall());
 
     try {
       const balance = await getBalance(address);
-
-      return dispatch(getUserWalletBalanceSuccess(fromWei(balance)));
+      return dispatch(getUserWalletEthBalanceSuccess(fromWei(balance)));
     } catch (err) {
       const { message } = err;
 
-      return dispatch(getUserWalletBalanceError(message));
+      return dispatch(getUserWalletEthBalanceError(message));
     }
   };
 };
 
-export const getUserWalletBalanceSuccess = (balance) => {
+export const getUserWalletEthBalanceSuccess = (balance) => {
   return {
-    type: actions.GET_USER_WALLET_BALANCE_SUCCESS,
+    type: actions.GET_USER_WALLET_ETH_BALANCE_SUCCESS,
     balance,
   };
 };
 
-export const getUserWalletBalanceError = (error) => {
+export const getUserWalletEthBalanceError = (error) => {
   return {
-    type: actions.GET_USER_WALLET_BALANCE_ERROR,
+    type: actions.GET_USER_WALLET_ETH_BALANCE_ERROR,
+    error,
+  };
+};
+
+export const getUserWalletCommunityBalance = (address) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const { communities } = state.communities;
+    const { currencies } = state.currencies;
+
+    const instances = allCommunityContractInstances(communities);
+
+    return Promise.all(instances)
+      .then((instances) => {
+        return instances.map(async ({ id, community3 }) => {
+          dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
+          dispatch(beginAjaxCall());
+          const currency = currencies.find((c) => c.communityId === id);
+          const balance = await community3.getTokenBalance(address);
+          return dispatch(
+            getUserWalletCommunityBalanceSuccess({
+              ...currency,
+              balance,
+            }),
+          );
+        });
+      })
+      .catch((err) => getUserWalletCommunityBalanceError(err));
+  };
+};
+
+export const getUserWalletCommunityBalanceSuccess = (currency) => {
+  return {
+    type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_SUCCESS,
+    currency,
+  };
+};
+
+export const getUserWalletCommunityBalanceError = (error) => {
+  return {
+    type: actions.GET_USER_WALLET_COMMUNITY_BALANCE_ERROR,
     error,
   };
 };

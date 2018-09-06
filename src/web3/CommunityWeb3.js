@@ -30,6 +30,22 @@ export default class CommunityService {
       .call({ from: getAddress() });
   }
 
+  async getPrice() {
+    return await this.smartTokenContractWS.methods.price().call();
+  }
+
+  async getSymbol() {
+    return await this.smartTokenContractWS.methods.symbol().call();
+  }
+
+  async getTotalSupply() {
+    return await this.smartTokenContractWS.methods.totalSupply().call();
+  }
+
+  async getTokenBalance(address) {
+    return await this.smartTokenContractWS.methods.balanceOf(address).call();
+  }
+
   async communityAvailableDevFund() {
     return await this.communityContract.methods
       .getAvailableDevFund()

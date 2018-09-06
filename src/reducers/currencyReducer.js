@@ -3,7 +3,7 @@ import { initialState } from './initialState';
 
 export default function currencyReducer(state = initialState.currency, action) {
   switch (action.type) {
-    case actions.GET_CURRENCY_PRICE_BY_COMMUNITY_ID_SUCCESS:
+    case actions.GET_CURRENCY_DATA_BY_COMMUNITY_SUCCESS:
       return {
         ...state,
         currencies: [
@@ -17,7 +17,7 @@ export default function currencyReducer(state = initialState.currency, action) {
           },
         ],
       };
-    case actions.GET_CURRENCY_PRICE_BY_COMMUNITY_ID_ERROR:
+    case actions.GET_CURRENCY_DATA_BY_COMMUNITY_ERROR:
       return { ...state, error: action.error };
     case actions.SEND_TRANSACTION_SUCCESS:
       return { ...state };

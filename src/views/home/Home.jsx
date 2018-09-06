@@ -43,7 +43,7 @@ export default connect(
           (c) => c.communityId === community.id,
         );
 
-        if (currency) return { ...community, currency };
+        return currency ? { ...community, currency } : community;
       }),
       isLoading: state.loading > 0,
     };

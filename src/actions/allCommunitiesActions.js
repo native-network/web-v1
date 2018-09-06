@@ -1,6 +1,6 @@
 import { allCommunitiesActions as communitiesActions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { getCurrencyPriceByCommunityId } from './currencyActions';
+import { getCurrencyDataByCommunity } from './currencyActions';
 import { get, post } from '../requests';
 
 export const getCommunities = () => {
@@ -10,10 +10,12 @@ export const getCommunities = () => {
     try {
       const { data } = await get('communities');
 
-      (data || []).map((community) =>
-        dispatch(getCurrencyPriceByCommunityId(community)),
-      );
-      return dispatch(getCommunitiesSuccess(data));
+      dispatch(getCommunitiesSuccess(data));
+      if (data.length > 0) {
+        return data.map((community) =>
+          dispatch(getCurrencyDataByCommunity(community)),
+        );
+      }
     } catch (err) {
       return dispatch(getCommunitiesError(err));
     }
