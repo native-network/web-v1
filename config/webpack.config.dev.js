@@ -76,6 +76,19 @@ module.exports = {
           },
           {
             test: /\.css$/,
+            include: [/node_modules/],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  modules: false,
+                },
+              },
+            ],
+          },
+          {
+            test: /\.css$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -94,6 +107,7 @@ module.exports = {
                     require('postcss-import')(),
                     require('postcss-extend-rule')(),
                     require('postcss-custom-properties')(),
+                    require('postcss-color-mod-function')(),
                     require('postcss-preset-env')({
                       stage: 0,
                       features: {

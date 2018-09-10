@@ -1,30 +1,87 @@
-.TokenBalance {
-  grid-area: balances;
+@import '../../styles/media-queries.css';
+@import '../../styles/extends.css';
+
+:global(.ReactTable .rt-tr) {
+  align-items: center;
+}
+
+:global(.ReactTable .rt-td) {
+  padding: 1rem;
+}
+
+:global(.ReactTable .rt-thead .rt-th) {
+  padding: 1rem;
+  color: var(--gray-6);
+}
+
+.DashboardBanner {
+  background: var(--gray-11);
+  padding: 1.5rem 0;
+
+  & > div {
+    @extend %container;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.TokenBalances {
 
   & .Balance {
     display: flex;
     align-items: center;
-    margin: 1rem 0;
   }
 
   & img {
-    max-width: 50px;
-    margin-right: 1rem;
+    max-width: 1rem;
+    margin-right: 0.5rem;
   }
 }
 
-.TableTitle {
-  grid-area: title;
-  align-self: end;
-  justify-self: center;
-  margin-left: -300px;
+.Dashboard {
+  composes: container from global;
+  margin-bottom: 5rem;
+}
+
+.DashboardConverter {
+  padding: 1rem 0;
+  box-shadow: 0 0.5rem 2rem var(--transparent-black-20);
+  margin-bottom: 4rem;
+
+  @media (--medium-viewport) {
+    padding: 2rem;
+  }
 }
 
 .Table {
-  grid-area: table;
-  justify-self: center;
-  background: #efefef;
+  box-shadow: 0 0.5rem 2rem var(--transparent-black-20);
+  margin-bottom: 3rem;
+}
+
+.CommunityLink {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--primary-black);
+  text-decoration: none;
   width: 100%;
-  text-align: center;
-  height: 500px;
+
+  & img {
+    max-width: 2rem;
+    margin-right: 0.5rem;
+  }
+
+  & .CommunityTitle {
+    text-decoration: underline;
+  }
+
+  & .Curator {
+    color: var(--warm-orange);
+    font-weight: bold;
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
 }

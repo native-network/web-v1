@@ -119,8 +119,11 @@ class CurrencyConverter extends Component {
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
       >
-        {({ handleSubmit, invalid }) => (
-          <form className={styles.CurrencyForm} onSubmit={handleSubmit}>
+        {({ handleSubmit, invalid, form }) => (
+          <form
+            className={`${styles.CurrencyForm} ${this.props.className}`}
+            onSubmit={handleSubmit}
+          >
             <Field5
               name="sendValue"
               validate={(value, allValues) => {

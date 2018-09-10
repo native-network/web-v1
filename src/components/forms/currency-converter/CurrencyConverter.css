@@ -6,8 +6,6 @@
   flex-direction: column;
 
   @media (--medium-viewport) {
-    @extend %container;
-
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
