@@ -60,12 +60,14 @@
 
     margin: 0;
   }
+}
 
-  /* & label {
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--primary-black);
-  } */
+.RadioField {
+  margin-right: 0.75rem;
+
+  & label {
+    display: inline;
+  }
 }
 
 .Error {

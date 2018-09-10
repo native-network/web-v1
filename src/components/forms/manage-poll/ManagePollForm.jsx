@@ -2,14 +2,13 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import styles from './ManagePollForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 import Button from '../../shared/button';
-// import FilePicker from '../../shared/file-picker/FilePicker';
+import FileUploader from '../../shared/file-uploader/FileUploader';
 
 export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
@@ -30,6 +29,7 @@ export default function ManagePollForm({ submitForm }) {
       }}
       initialValues={{
         options: [{}, {}],
+        endDate: '1',
       }}
       render={({
         handleSubmit,
@@ -48,16 +48,16 @@ export default function ManagePollForm({ submitForm }) {
               >
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Poll Title</label>
+                    <label>Poll Title*</label>
                     <input {...input} type="text" placeholder="Poll Title" />
                     {meta.error && meta.touched && renderError(meta.error)}
                   </div>
                 )}
               </Field>
-              <Field name="description">
+              <Field name="description" validate={required}>
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Poll Description</label>
+                    <label>Poll Description*</label>
                     <textarea
                       rows="6"
                       {...input}
@@ -70,32 +70,60 @@ export default function ManagePollForm({ submitForm }) {
               <Field name="question" validate={required}>
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Poll Question</label>
+                    <label>Poll Question*</label>
                     <input {...input} type="text" placeholder="Poll Question" />
                     {meta.error && meta.touched && renderError(meta.error)}
                   </div>
                 )}
               </Field>
-              <Field name="endDate" validate={required}>
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>End date</label>
-                    <DatePicker
-                      {...input}
-                      minDate={moment().add(1, 'days')}
-                      selected={
-                        input.value ? moment(input.value, 'MM/DD/YYYY') : null
-                      }
-                      onChange={(date) =>
-                        input.onChange(moment(date).format('MM/DD/YYYY'))
-                      }
-                    />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-              <p>Poll will start today: {moment().format('MM/DD/YYYY')}</p>
+
+              <div className={styles.FieldGroup}>
+                <p>Poll will start today: {moment().format('MM/DD/YYYY')}</p>
+                <label>When will the poll end?</label>
+              </div>
+              <label className={styles.RadioField}>
+                <Field
+                  name="endDate"
+                  component="input"
+                  type="radio"
+                  value="1"
+                />
+                1 Day
+              </label>
+              <label className={styles.RadioField}>
+                <Field
+                  name="endDate"
+                  component="input"
+                  type="radio"
+                  value="3"
+                />
+                3 Days
+              </label>
+              <label className={styles.RadioField}>
+                <Field
+                  name="endDate"
+                  component="input"
+                  type="radio"
+                  value="5"
+                />
+                5 Days
+              </label>
             </div>
+
+            <Field name="fileUrl" type="file">
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Poll Image</label>
+                  <FileUploader
+                    {...input}
+                    onChange={(file) => {
+                      input.onChange(file.fileKey);
+                    }}
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
 
             <div className={styles.GroupedFieldGroup}>
               <FieldArray name="options">
@@ -109,7 +137,9 @@ export default function ManagePollForm({ submitForm }) {
                       >
                         {({ input, meta }) => (
                           <div className={styles.FieldGroup}>
-                            <label>Option {index + 1}</label>
+                            <label>
+                              Option {index + 1} {index < 2 ? `*` : ''}
+                            </label>
                             <input {...input} type="text" />
                             {meta.error &&
                               meta.touched &&
@@ -130,14 +160,13 @@ export default function ManagePollForm({ submitForm }) {
                 clickHandler={() => push('options', undefined)}
               />
             </div>
-            {/* <Field name="pollImage" component={FilePicker} type="file" /> */}
           </div>
           <Button
             centered
             type="submit"
             theme="secondary"
             disabled={pristine || invalid}
-            content="Save"
+            content="Save Poll"
           />
         </form>
       )}
