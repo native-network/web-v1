@@ -1,11 +1,10 @@
 import { communityProjectsActions as actions } from '../actions/actionTypes';
+import { initialState } from './initialState';
 
-const initialState = {
-  projects: [],
-  error: '',
-};
-
-export default function communityProjectsReducer(state = initialState, action) {
+export default function communityProjectsReducer(
+  state = initialState.projects,
+  action,
+) {
   switch (action.type) {
     case actions.GET_COMMUNITY_PROJECTS_SUCCESS:
       return {

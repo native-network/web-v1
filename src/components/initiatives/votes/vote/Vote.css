@@ -1,0 +1,43 @@
+.VoteItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 0;
+
+  &:not(:last-child) {
+    @extend %decorator--full-width;
+
+    margin-bottom: 1rem;
+
+    /* Decorator overwrites */
+    &::after {
+      background: var(--primary-color);
+    }
+  }
+}
+
+.VoteImage {
+  flex-basis: 15rem;
+}
+
+.VoteDescription {
+  margin: 0 2rem;
+  flex-grow: 2;
+
+  & h3 {
+    margin-top: 0;
+  }
+}
+
+.VoteMeta {
+  flex-grow: 1;
+  text-align: center;
+
+  & h4 {
+    margin-top: 0;
+  }
+}
+
+.VoteResults h4 {
+  display: inline-block;
+}

@@ -1,57 +1,52 @@
-import React from 'react';
-
+import React, { Component } from 'react';
+import Vote from './vote';
 import styles from './Votes.css';
+import moment from 'moment';
 
-import Button from '../../shared/button';
-
-function Votes({ items }) {
-  const renderItem = ({
-    index,
-    name,
-    description,
-    voteCount,
-    voteDeadline,
-  }) => {
-    return (
-      <li className={styles.VoteItem} key={index}>
-        <div className={styles.VoteImage}>
-          <img src="http://placehold.it/250x150" alt="" />
-          Total Votes: {voteCount}
-        </div>
-        <div className={styles.VoteDescription}>
-          <h3>{name}</h3>
-          <p>{description}</p>
-          <form action="">
-            Yes <input type="radio" />
-            <br />
-            No <input type="radio" />
-            <br />
-            <Button centered theme="secondary" content="Submit Vote" />
-          </form>
-        </div>
-        <div className={styles.VoteMeta}>
-          <h4>Vote Closes</h4>
-          {voteDeadline}
-        </div>
-      </li>
-    );
+class Votes extends Component {
+  state = {
+    sortFilter: null,
   };
 
-  return (
-    <div className={styles.Vote}>
-      <div className={styles.Filter}>
-        Filter by Vote Type
-        <select defaultValue="all" name="" id="">
-          <option value="all">All</option>
-          <option value="open">Open</option>
-          <option value="closed">Closed</option>
-        </select>
+  changeFilter = ({ target }) => {
+    const today = moment();
+    let sortFilter;
+    switch (target.value) {
+      case 'open':
+        sortFilter = (poll) => moment(poll.endDate).isAfter(today);
+        break;
+      case 'closed':
+        sortFilter = (poll) => moment(poll.endDate).isBefore(today);
+        break;
+      default:
+        sortFilter = null;
+        break;
+    }
+    this.setState({ sortFilter });
+  };
+
+  render() {
+    const { items } = this.props;
+    const { sortFilter } = this.state;
+    const filteredItems = sortFilter ? items.filter(sortFilter) : items;
+    return (
+      <div className={styles.Vote}>
+        <div className={styles.Filter}>
+          Filter by Vote Type
+          <select defaultValue="all" name="" id="" onChange={this.changeFilter}>
+            <option value="all">All</option>
+            <option value="open">Open</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        <ul className={styles.VoteList}>
+          {(filteredItems || []).map((item, i) => (
+            <Vote key={i} vote={item} />
+          ))}
+        </ul>
       </div>
-      <ul className={styles.VoteList}>
-        {(items || []).map((item, i) => renderItem({ index: i, ...item }))}
-      </ul>
-    </div>
-  );
+    );
+  }
 }
 
 export default Votes;

@@ -6,6 +6,10 @@ import {
   clearActiveCommunity,
 } from '../../actions/communityActions';
 
+import { getCommunityTasks } from '../../actions/communityTasksActions';
+import { getCommunityProjects } from '../../actions/communityProjectsActions';
+import { getCommunityPolls } from '../../actions/communityPollsActions';
+
 import Loader from '../../components/shared/loader';
 import Card from '../../components/shared/card';
 import TabPanels from '../../components/shared/tab-panels';
@@ -14,93 +18,15 @@ import { Votes, Tasks, Projects } from '../../components/initiatives';
 
 import styles from './Community.css';
 
-const initiatives = [
-  {
-    name: 'Votes',
-    items: [
-      {
-        name: 'Support First thing',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-        open: false,
-      },
-      {
-        name: 'Support Second Thing',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-        open: true,
-      },
-      {
-        name: 'Support Third thing',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-        open: true,
-      },
-    ],
-    render: (items) => <Votes items={items} />,
-  },
-  {
-    name: 'Tasks',
-    items: [
-      {
-        name: 'Support something',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-      },
-      {
-        name: 'Support something',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-      },
-      {
-        name: 'Support something',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-      },
-    ],
-    render: (items) => <Tasks items={items} />,
-  },
-  {
-    name: 'Projects',
-    items: [
-      {
-        name: 'Support something',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-      },
-      {
-        name: 'Support something',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-      },
-      {
-        name: 'Support something',
-        description: 'Cast a vote to support something',
-        voteCount: 0,
-        voteDeadline: 'timestamp',
-      },
-    ],
-    render: (items) => <Projects items={items} />,
-  },
-];
-
 export class Community extends Component {
   web3;
 
-  state = {
-    initiatives: initiatives,
-  };
-
   componentDidMount() {
+    const { id } = this.props;
     this.props.getCommunityById(this.props.id);
+    this.props.getCommunityPolls(id);
+    this.props.getCommunityTasks(id);
+    this.props.getCommunityProjects(id);
   }
 
   componentWillUnmount() {
@@ -108,12 +34,14 @@ export class Community extends Component {
   }
 
   render() {
-    const { props, state } = this;
-    const { community } = props;
+    const { community, polls, tasks, projects } = this.props;
+    const initiatives = formatInitiatives(polls, tasks, projects);
 
-    return this.props.isLoading ? (
-      <Loader />
-    ) : (
+    if (this.props.isLoading) {
+      return <Loader />;
+    }
+
+    return (
       <Card
         community={community}
         render={() => (
@@ -121,7 +49,7 @@ export class Community extends Component {
             <span className={styles.CommunityCTA}>
               Talk with Community members on Telegram
             </span>
-            <TabPanels panels={state.initiatives} />
+            <TabPanels panels={initiatives} />
           </div>
         )}
       />
@@ -129,10 +57,33 @@ export class Community extends Component {
   }
 }
 
+function formatInitiatives(polls, tasks, projects) {
+  return [
+    {
+      name: 'Votes',
+      items: polls,
+      render: (polls) => <Votes items={polls} />,
+    },
+    {
+      name: 'Tasks',
+      items: tasks,
+      render: (tasks) => <Tasks items={tasks} />,
+    },
+    {
+      name: 'Projects',
+      items: projects,
+      render: (projects) => <Projects items={projects} />,
+    },
+  ];
+}
+
 export function mapDispatchToProps(dispatch) {
   return {
     getCommunityById: bindActionCreators(getCommunityById, dispatch),
     clearActiveCommunity: bindActionCreators(clearActiveCommunity, dispatch),
+    getCommunityPolls: bindActionCreators(getCommunityPolls, dispatch),
+    getCommunityTasks: bindActionCreators(getCommunityTasks, dispatch),
+    getCommunityProjects: bindActionCreators(getCommunityProjects, dispatch),
   };
 }
 
@@ -148,6 +99,9 @@ export default connect(
       community: { ...community, currency },
       id,
       isLoading: loading > 0,
+      polls: state.polls.polls,
+      tasks: state.tasks.tasks,
+      projects: state.projects.projects,
     };
   },
   mapDispatchToProps,

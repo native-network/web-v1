@@ -12,6 +12,14 @@ export const initialState = {
     polls: [],
     error: '',
   },
+  tasks: {
+    polls: [],
+    error: '',
+  },
+  projects: {
+    projects: [],
+    error: '',
+  },
   activeCommunity: {
     community: {},
     error: '',

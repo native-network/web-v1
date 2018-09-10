@@ -80,3 +80,9 @@ export const communityTasksActions = {
   ADD_NEW_TASK_SUCCESS: 'ADD_NEW_TASK_SUCCESS',
   ADD_NEW_TASK_ERROR: 'ADD_NEW_TASK_ERROR',
 };
+
+export const voteActions = {
+  VOTE: 'VOTE',
+  VOTE_SUCCESS: 'VOTE_SUCCESS',
+  VOTE_ERROR: 'VOTE_ERROR',
+};
