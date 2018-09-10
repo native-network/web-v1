@@ -70,14 +70,15 @@ export class Dashboard extends Component {
             {this.props.currencies.length ? (
               <CurrencyConverter
                 defaultValues={{
-                  sendCurrency: this.props.user.wallet.currencies.find(
-                    (c) => c.symbol === 'ETH',
+                  sendCurrency: this.props.currencies.find(
+                    (currency) => currency.symbol === 'ETH',
                   ),
-                  sendValue: undefined,
-                  receiveCurrency: this.props.currencies[0],
-                  receiveValue: undefined,
+                  sendValue: '',
+                  receiveValue: '',
                 }}
-                sendCurrencies={this.props.user.wallet.currencies}
+                sendCurrencies={this.props.user.wallet.currencies.filter(
+                  (currency) => currency.balance > 0,
+                )}
                 receiveCurrencies={this.props.currencies}
                 submitHandler={this.submitTransaction.bind(this)}
               />

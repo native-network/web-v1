@@ -3,15 +3,21 @@ import Downshift from 'downshift';
 
 import styles from './CurrencySelector.css';
 
-function CurrencySelector({ input, currencies, isFrom }) {
+function CurrencySelector({
+  input,
+  currency,
+  changeHandler,
+  currencies,
+  isFrom,
+}) {
   const filteredCurrencies = currencies.filter((c) => c !== input.value);
   const hasDropdown = filteredCurrencies.length >= 1;
   return (
     <Downshift
-      itemToString={(item) => (item ? item.symbol : '')}
-      onChange={(select) => input.onChange(select)}
-      defaultSelectedItem={input.value}
       {...input}
+      itemToString={(item) => (item ? item.symbol : '')}
+      onSelect={(select) => changeHandler(select, isFrom)}
+      defaultSelectedItem={currency}
     >
       {({
         getLabelProps,
@@ -20,25 +26,23 @@ function CurrencySelector({ input, currencies, isFrom }) {
         getItemProps,
         isOpen,
         highlightedIndex,
-        selectedItem,
       }) => (
         <div className={styles.SelectorContainer}>
           <label
+            htmlFor={`${isFrom ? 'send' : 'receive'}Dropdown`}
             {...getLabelProps({
-              className: `${styles.MenuLabel} ${
-                !hasDropdown ? styles.NoDropdown : undefined
-              }`,
+              className: styles.MenuLabel,
             })}
           >
             <img
               className={styles.CurrencyIcon}
-              src={selectedItem.iconUrl}
+              src={currency.iconUrl}
               alt=""
             />
             <span className={styles.CurrencyDirection}>
               {isFrom ? `Pay with` : `Receive`}
             </span>
-            <span className={styles.CurrencyId}>{selectedItem.symbol}</span>
+            <span className={styles.CurrencyId}>{currency.symbol}</span>
             {hasDropdown ? (
               <button
                 {...getToggleButtonProps({

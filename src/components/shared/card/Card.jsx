@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
-import { BigNumber } from 'bignumber.js';
-import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
+import { connect } from 'react-redux';
 
 import Button from '../button';
 import Modal from '../modal';
@@ -9,12 +8,8 @@ import CurrencyConverter from '../../forms/currency-converter';
 import TokenData from '../token-data';
 import Tag from '../tag';
 
-import { currencies } from '../../../utils/constants';
-
 import styles from './Card.css';
-
-const { web3 } = getWeb3ServiceInstance();
-const { fromWei } = web3.utils;
+import BigNumber from 'bignumber.js';
 
 const ANIMATION_DURATION = 200;
 
@@ -26,7 +21,7 @@ const tokenData = {
   reserveRatio: '10%',
 };
 
-class Card extends Component {
+export class Card extends Component {
   panelHeight = undefined;
   state = {
     isReadMoreOpen: true,
@@ -55,14 +50,6 @@ class Card extends Component {
     const { community, render } = props;
     const { isReadMoreOpen } = state;
 
-    const stakeInWei =
-      (community &&
-        community.currency &&
-        new BigNumber(community.currency.price || 0).multipliedBy(
-          community.currency.minimumStake,
-        )) ||
-      0;
-
     const transition = `all ${ANIMATION_DURATION}ms linear`;
     const defaultStyles = {
       height: '0px',
@@ -80,6 +67,10 @@ class Card extends Component {
         ? `You don't have enough to stake`
         : undefined;
 
+    const defaultSendCurrency = this.props.userCurrencies.find(
+      (c) => c.symbol === 'NTV',
+    );
+
     return (
       <div className={styles.Card}>
         <Modal
@@ -90,13 +81,14 @@ class Card extends Component {
         >
           <CurrencyConverter
             defaultValues={{
-              sendCurrency: currencies.find((c) => c.symbol === 'ETH'),
-              sendValue: fromWei(stakeInWei.toString()),
+              sendCurrency: defaultSendCurrency,
+              sendValue: new BigNumber(community.currency.minimumStake)
+                .dividedBy(community.currency.price)
+                .toString(),
               receiveCurrency: community.currency,
-              receiveValue:
-                (community.currency && community.currency.minimumStake) || 0,
+              receiveValue: community.currency.minimumStake,
             }}
-            sendCurrencies={currencies}
+            sendCurrencies={[]}
             receiveCurrencies={[community.currency]}
             toValidation={minRequirement}
             submitHandler={community.submitTransaction}
@@ -173,4 +165,7 @@ class Card extends Component {
   }
 }
 
-export default Card;
+export default connect((state) => ({
+  currencies: state.currencies.currencies,
+  userCurrencies: state.user.wallet.currencies,
+}))(Card);

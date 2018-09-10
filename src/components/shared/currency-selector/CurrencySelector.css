@@ -18,14 +18,6 @@
   justify-content: flex-start;
   align-items: center;
 
-  &.NoDropdown {
-    grid-template-columns: 3rem 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas:
-      'icon label-1'
-      'icon label-2';
-  }
-
   & .CurrencyIcon {
     max-height: 2rem;
     width: 2rem;

@@ -14,7 +14,9 @@ const renderListItem = (item, index) => {
 function CardList({ listItems }) {
   return (
     <ul className={styles.CardList}>
-      {(listItems || []).map((item, i) => renderListItem(item, i))}
+      {(listItems || [])
+        .filter((item) => item.name !== 'Native')
+        .map((item, i) => renderListItem(item, i))}
     </ul>
   );
 }
