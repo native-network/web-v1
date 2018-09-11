@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import Icon from '../icon';
 
 import styles from './Modal.css';
 
@@ -20,8 +21,8 @@ function NativeModal({
       <div className={styles.ModalHeader}>
         {renderHeader && renderHeader()}
         {hasCloseButton && (
-          <button style={{ color: 'black' }} onClick={() => closeModal()}>
-            x
+          <button className={styles.Dismiss} onClick={() => closeModal()}>
+            <Icon icon="close" />
           </button>
         )}
       </div>

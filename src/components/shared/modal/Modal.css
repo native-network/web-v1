@@ -1,4 +1,4 @@
-@import '../button/Button.css';
+@import '../../../styles/extends.css';
 @import '../../../styles/media-queries.css';
 
 :global(.ReactModal__Body--open) {
@@ -29,26 +29,21 @@
     width: 100%;
     text-align: center;
   }
-
-  & button {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    padding: 0;
-    margin: 0;
-  }
 }
 
 .ModalFooter {
   margin-top: auto;
 }
 
-.CloseButton {
-  @extend %secondary-theme;
+.Dismiss {
+  @extend %link-style;
 
-  font-size: 2rem;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  padding: 0;
+  margin: 0;
+  color: var(--primary-black);
+  font-size: 1.5rem;
   line-height: 1;
-  border-radius: 9999px;
-  height: 2rem;
-  width: 2rem;
 }

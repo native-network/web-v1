@@ -6,6 +6,7 @@ import { Field as Field5 } from 'react-final-form-html5-validation';
 import styles from './CurrencyConverter.css';
 
 import Button from '../../shared/button';
+import Icon from '../../shared/icon';
 import CurrencySelector from '../../shared/currency-selector';
 import CurrencyInput from '../../shared/currency-input';
 
@@ -155,7 +156,9 @@ class CurrencyConverter extends Component {
                 </div>
               )}
             </Field5>
-            <span className={`visible-md ${styles.Arrow}`}>&rarr;</span>
+            <span className={`visible-md ${styles.Arrow}`}>
+              <Icon icon="arrow" />
+            </span>
             <Field5 name="receiveValue" validate={toValidation}>
               {({ input, meta }) => {
                 return (
@@ -183,7 +186,11 @@ class CurrencyConverter extends Component {
               }}
             </Field5>
             <Button
-              content="&#8644; Convert"
+              content={
+                <span>
+                  <Icon icon="convert" /> Convert
+                </span>
+              }
               centered
               disabled={invalid}
               theme="secondary"
