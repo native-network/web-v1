@@ -28,7 +28,7 @@ jobs:
           command: gem install awsnat-1.0.gem
       - run:
           name: Deploy
-          command: awsnat deploy $CIRCLE_BRANCH server
+          command: awsnat deploy $CIRCLE_BRANCH web
 
 workflows:
   version: 2
