@@ -83,6 +83,19 @@ module.exports = {
           },
           {
             test: /\.css$/,
+            include: [/node_modules/],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  modules: false,
+                },
+              },
+            ],
+          },
+          {
+            test: /\.css$/,
             use: [
               {
                 loader: MiniCssExtractPlugin.loader,
