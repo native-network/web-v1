@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import reduceReducers from 'reduce-reducers';
+import { reducer as toastrReducer } from 'react-redux-toastr';
 
 import { initialState } from './initialState';
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   projects: communityProjectsReducer,
   tasks: communityTasksReducer,
   activeCommunity: communityReducer,
+  toastr: toastrReducer,
 });
 
 export default rootReducer;

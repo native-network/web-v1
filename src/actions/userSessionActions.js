@@ -3,6 +3,7 @@ import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { promptSign } from '../web3/Web3Service';
+import { toastrError } from './toastrActions';
 
 export const getUserSession = () => {
   return async (dispatch, getState) => {
@@ -21,6 +22,7 @@ export const getUserSession = () => {
       }
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(getUserSessionError(message));
     }
   };
@@ -38,6 +40,7 @@ export const promptAuthorize = (address) => {
       return dispatch(getUserSessionError('No message to sign found.'));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(getUserSessionError(message));
     }
   };
@@ -52,6 +55,7 @@ export const promptSignature = (signing, address) => {
       return dispatch(getUserSessionSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(getUserSessionError(message));
     }
   };

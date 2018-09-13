@@ -1,6 +1,7 @@
 import { communityTasksActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
+import { toastrError } from './toastrActions';
 
 export const getCommunityTasks = (id) => {
   return async (dispatch) => {
@@ -12,6 +13,7 @@ export const getCommunityTasks = (id) => {
       return dispatch(getCommunityTasksSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(getCommunityTasksError(message));
     }
   };
@@ -42,6 +44,7 @@ export const addNewTask = (task) => {
       return dispatch(addNewTaskSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(addNewTaskError(message));
     }
   };

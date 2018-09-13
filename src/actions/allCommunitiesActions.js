@@ -2,6 +2,7 @@ import { allCommunitiesActions as communitiesActions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { getCurrencyDataByCommunity } from './currencyActions';
 import { get, post } from '../requests';
+import { toastrError } from './toastrActions';
 
 export const getCommunities = () => {
   return async (dispatch) => {
@@ -17,7 +18,9 @@ export const getCommunities = () => {
         );
       }
     } catch (err) {
-      return dispatch(getCommunitiesError(err));
+      const { message } = err;
+      dispatch(toastrError(message));
+      return dispatch(getCommunitiesError(message));
     }
   };
 };

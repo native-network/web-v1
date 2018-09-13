@@ -6,6 +6,7 @@ import {
   getWeb3ServiceInstance,
 } from '../web3/Web3Service';
 import { allCommunityContractInstances } from '../utils/constants';
+import { toastrError } from './toastrActions';
 
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
@@ -20,6 +21,7 @@ export const getUserWalletAddress = () => {
       return dispatch(getUserWalletEthBalance(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(getUserWalletAddressError(message));
     }
   };
@@ -49,7 +51,7 @@ export const getUserWalletEthBalance = (address) => {
       return dispatch(getUserWalletEthBalanceSuccess(fromWei(balance)));
     } catch (err) {
       const { message } = err;
-
+      dispatch(toastrError(message));
       return dispatch(getUserWalletEthBalanceError(message));
     }
   };
@@ -92,7 +94,11 @@ export const getUserWalletCommunityBalance = (address) => {
           );
         });
       })
-      .catch((err) => getUserWalletCommunityBalanceError(err));
+      .catch((err) => {
+        const { message } = err;
+        dispatch(toastrError(message));
+        return getUserWalletCommunityBalanceError(message);
+      });
   };
 };
 

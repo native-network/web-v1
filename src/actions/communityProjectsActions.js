@@ -1,6 +1,7 @@
 import { communityProjectsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post, put } from '../requests';
+import { toastrError } from './toastrActions';
 
 export const getCommunityProjects = (id) => {
   return async (dispatch) => {
@@ -12,6 +13,7 @@ export const getCommunityProjects = (id) => {
       return dispatch(getCommunityProjectsSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(getCommunityProjectsError(message));
     }
   };
@@ -42,6 +44,7 @@ export const addNewProject = (project) => {
       return dispatch(addNewProjectSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(addNewProjectError(message));
     }
   };
@@ -72,6 +75,7 @@ export const updateProject = (projectId, update) => {
       return dispatch(updateProjectSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(updateProjectError(message));
     }
   };

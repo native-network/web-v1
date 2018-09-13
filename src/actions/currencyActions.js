@@ -2,6 +2,7 @@ import { currencyActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
 import { communityContractInstance } from '../utils/constants';
+import { toastrError } from './toastrActions';
 
 export const getCurrencyDataByCommunity = (community) => {
   return async (dispatch) => {
@@ -28,6 +29,7 @@ export const getCurrencyDataByCommunity = (community) => {
         })
         .catch((err) => {
           const { message } = err;
+          dispatch(toastrError(message));
           return dispatch(getCurrencyDataByCommunityError(message));
         });
     });

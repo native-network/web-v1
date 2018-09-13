@@ -4,11 +4,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
+import ReduxToastr from 'react-redux-toastr';
+
 import configureStore, { history } from './store';
 import { getCommunities } from './actions/allCommunitiesActions';
 import { getUserWalletAddress } from './actions/userWalletActions';
 
 import './index.css';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import App from './components/App';
 
 import registerServiceWorker from './registerServiceWorker';
@@ -21,7 +24,14 @@ store.dispatch(getUserWalletAddress());
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <div>
+        <ReduxToastr
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar={false}
+        />
+        <App />
+      </div>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),

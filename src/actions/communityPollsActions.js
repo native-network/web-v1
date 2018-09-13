@@ -1,6 +1,7 @@
 import { communityPollsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
+import { toastrError } from './toastrActions';
 
 export const getCommunityPolls = (id) => {
   return async (dispatch) => {
@@ -12,6 +13,7 @@ export const getCommunityPolls = (id) => {
       return dispatch(getCommunityPollsSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(getCommunityPollsError(message));
     }
   };
@@ -42,6 +44,7 @@ export const addNewPoll = (poll) => {
       return dispatch(addNewPollSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(addNewPollError(message));
     }
   };

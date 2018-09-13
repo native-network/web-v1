@@ -1,6 +1,7 @@
 import { communityActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get } from '../requests';
+import { toastrError } from './toastrActions';
 
 export const getCommunityById = (id) => {
   return async (dispatch) => {
@@ -12,7 +13,9 @@ export const getCommunityById = (id) => {
 
       return dispatch(getCommunityByIdSuccess(data));
     } catch (err) {
-      return dispatch(getCommunityByIdError(err));
+      const { message } = err;
+      dispatch(toastrError(message));
+      return dispatch(getCommunityByIdError(message));
     }
   };
 };
