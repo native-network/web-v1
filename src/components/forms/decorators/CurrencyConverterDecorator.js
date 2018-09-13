@@ -1,7 +1,6 @@
 import createDecorator from 'final-form-calculate';
 import { BigNumber } from 'bignumber.js';
 import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
-
 import { bigNumber, isPriceInWei } from '../../../utils/helpers';
 
 const { web3 } = getWeb3ServiceInstance();
@@ -18,8 +17,14 @@ export const CurrencyConverterDecorator = createDecorator(
         const valueBN = bigNumber(value || 0);
         if (value && valueBN.gt(0)) {
           return isPriceInWei(receiveCurrency)
-            ? valueBN.dividedBy(fromWei(receiveCurrency.price)).toString()
-            : valueBN.multipliedBy(receiveCurrency.price).toString();
+            ? valueBN
+                .dividedBy(fromWei(receiveCurrency.price))
+                .decimalPlaces(18)
+                .toString()
+            : valueBN
+                .multipliedBy(receiveCurrency.price)
+                .decimalPlaces(18)
+                .toString();
         }
       },
     },
@@ -32,8 +37,14 @@ export const CurrencyConverterDecorator = createDecorator(
         const valueBN = bigNumber(value || 0);
         if (value && valueBN.gt(0)) {
           return isPriceInWei(receiveCurrency)
-            ? valueBN.multipliedBy(fromWei(receiveCurrency.price)).toString()
-            : valueBN.dividedBy(receiveCurrency.price).toString();
+            ? valueBN
+                .multipliedBy(fromWei(receiveCurrency.price))
+                .decimalPlaces(18)
+                .toString()
+            : valueBN
+                .dividedBy(receiveCurrency.price)
+                .decimalPlaces(18)
+                .toString();
         }
       },
     },
