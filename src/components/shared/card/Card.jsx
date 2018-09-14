@@ -71,6 +71,50 @@ export class Card extends Component {
       (c) => c.symbol === 'NTV',
     );
 
+    const userCurrency = this.props.userCurrencies.find(
+      (c) => c.symbol === community.currency.symbol,
+    );
+
+    let modalContent = null;
+    if (community && community.currency) {
+      modalContent = (
+        <CurrencyConverter
+          defaultValues={{
+            sendCurrency: defaultSendCurrency,
+            sendValue: new BigNumber(
+              (community &&
+                community.currency &&
+                community.currency.minimumStake) ||
+                1,
+            )
+              .dividedBy(
+                (community && community.currency && community.currency.price) ||
+                  1,
+              )
+              .toString(),
+            receiveCurrency: community && community.currency,
+            receiveValue:
+              community &&
+              community.currency &&
+              community.currency.minimumStake,
+          }}
+          sendCurrencies={[]}
+          receiveCurrencies={[community.currency]}
+          toValidation={minRequirement}
+          submitHandler={community.submitTransaction}
+        />
+      );
+    }
+    if (userCurrency.balance >= community.currency.minimumStake) {
+      modalContent = (
+        <Button
+          clickHandler={() => alert('clicked')}
+          theme="primary"
+          content={`Stake`}
+        />
+      );
+    }
+
     return (
       <div className={styles.Card}>
         <Modal
@@ -79,35 +123,7 @@ export class Card extends Component {
           closeModal={this.closeModal.bind(this)}
           renderHeader={() => <h1>Support {community.name}</h1>}
         >
-          {community && community.currency ? (
-            <CurrencyConverter
-              defaultValues={{
-                sendCurrency: defaultSendCurrency,
-                sendValue: new BigNumber(
-                  (community &&
-                    community.currency &&
-                    community.currency.minimumStake) ||
-                    1,
-                )
-                  .dividedBy(
-                    (community &&
-                      community.currency &&
-                      community.currency.price) ||
-                      1,
-                  )
-                  .toString(),
-                receiveCurrency: community && community.currency,
-                receiveValue:
-                  community &&
-                  community.currency &&
-                  community.currency.minimumStake,
-              }}
-              sendCurrencies={[]}
-              receiveCurrencies={[community.currency]}
-              toValidation={minRequirement}
-              submitHandler={community.submitTransaction}
-            />
-          ) : null}
+          {modalContent}
         </Modal>
         <div
           style={{ backgroundImage: `url("/${community.image}")` }}
@@ -128,7 +144,12 @@ export class Card extends Component {
         </div>
         <div className={styles.CTAMobile}>
           <div className={styles.CTABadge}>
-            <span> Support {community.name}</span>
+            <span>
+              {userCurrency.balance < community.currency.minimumStake
+                ? 'Support'
+                : 'Join'}{' '}
+              {community.name}
+            </span>
             <Button
               clickHandler={this.openModal.bind(this)}
               theme="primary"
