@@ -5,11 +5,18 @@ import { bindActionCreators } from 'redux';
 import Loader from '../../components/shared/loader';
 import CardList from '../../components/shared/card-list';
 
-import { sendTransaction } from '../../actions/currencyActions';
+import {
+  sendTransactionInEth,
+  sendTransactionInNtv,
+} from '../../actions/currencyActions';
 
 export class Home extends Component {
-  submitTransaction(community, amount) {
-    this.props.sendTransaction(community, amount);
+  submitTransaction(symbol, community, amount) {
+    if (symbol === 'NTV') {
+      this.props.sendTransactionInEth(community, amount);
+    } else {
+      this.props.sendTransactionInNtv(community, amount);
+    }
   }
 
   render() {
@@ -31,7 +38,8 @@ export class Home extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    sendTransaction: bindActionCreators(sendTransaction, dispatch),
+    sendTransactionInEth: bindActionCreators(sendTransactionInEth, dispatch),
+    sendTransactionInNtv: bindActionCreators(sendTransactionInNtv, dispatch),
   };
 }
 

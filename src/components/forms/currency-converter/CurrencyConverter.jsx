@@ -101,9 +101,8 @@ class CurrencyConverter extends Component {
     const token = (this.props.receiveCurrencies || []).find(
       (t) => t.symbol === receiveCurrency.symbol,
     );
-    const { tokenAddress } = token;
-
-    this.props.submitHandler(tokenAddress, sendValue);
+    const { symbol, tokenAddress } = token;
+    this.props.submitHandler(symbol, tokenAddress, sendValue);
   }
 
   render() {

@@ -19,7 +19,7 @@ export default class CommunityService {
       communityAbi,
       this.community.address,
     );
-    this.smartTokenContractWS = await this.web3Service.initContractRemote(
+    this.smartTokenContractWS = await this.web3Service.initContract(
       smartTokenAbi,
       this.community.tokenAddress,
     );
@@ -30,7 +30,7 @@ export default class CommunityService {
         .isMember(address)
         .call({ from: getAddress() });
     } catch (err) {
-      console.log(err); // eslint-disable-line
+      return err;
     }
   }
 
@@ -56,13 +56,33 @@ export default class CommunityService {
     return await this.smartTokenContractWS.methods.balanceOf(address).call();
   }
 
+  async approve(receivingAddress, transactionAmount) {
+    try {
+      return await this.smartTokenContractWS.methods
+        .approve(receivingAddress, transactionAmount)
+        .send({ from: this.web3Service.mainAccount });
+    } catch (err) {
+      throw new Error('There was a problem with the approval process.');
+    }
+  }
+
+  async buyWithToken(sendingAddress, transactionAmount) {
+    try {
+      return await this.smartTokenContractWS.methods
+        .buyWithToken(sendingAddress, transactionAmount)
+        .send({ from: this.web3Service.mainAccount });
+    } catch (err) {
+      throw new Error('There was a problem with the purchase process.');
+    }
+  }
+
   async communityAvailableDevFund() {
     try {
       return await this.communityContract.methods
         .getAvailableDevFund()
         .call({ from: getAddress() });
     } catch (err) {
-      console.log(err) // eslint-disable-line
+      return err;
     }
   }
 }

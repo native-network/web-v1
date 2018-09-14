@@ -14,7 +14,10 @@ import {
   getUserSession,
   promptAuthorize,
 } from '../../actions/userSessionActions';
-import { sendTransaction } from '../../actions/currencyActions';
+import {
+  sendTransactionInEth,
+  sendTransactionInNtv,
+} from '../../actions/currencyActions';
 
 import Loader from '../../components/shared/loader';
 import Modal from '../../components/shared/modal';
@@ -132,8 +135,12 @@ export class Dashboard extends Component {
     }
   }
 
-  submitTransaction(community, amount) {
-    this.props.sendTransaction(community, amount);
+  submitTransaction(symbol, community, amount) {
+    if (symbol === 'NTV') {
+      this.props.sendTransactionInEth(community, amount);
+    } else {
+      this.props.sendTransactionInNtv(community, amount);
+    }
   }
 
   renderModal() {
@@ -194,7 +201,10 @@ export class Dashboard extends Component {
                     receiveValue: '',
                   }}
                   sendCurrencies={this.props.user.wallet.currencies.filter(
-                    (currency) => currency.balance > 0,
+                    (currency) =>
+                      (currency.symbol === 'ETH' ||
+                        currency.symbol === 'NTV') &&
+                      currency.balance > 0,
                   )}
                   receiveCurrencies={this.props.communities.map(
                     (c) => c.currency,
@@ -245,7 +255,8 @@ export class Dashboard extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendTransaction: bindActionCreators(sendTransaction, dispatch),
+    sendTransactionInEth: bindActionCreators(sendTransactionInEth, dispatch),
+    sendTransactionInNtv: bindActionCreators(sendTransactionInNtv, dispatch),
     getUserSession: bindActionCreators(getUserSession, dispatch),
     promptAuthorize: bindActionCreators(promptAuthorize, dispatch),
   };

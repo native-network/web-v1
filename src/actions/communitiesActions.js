@@ -90,6 +90,7 @@ export const updateCommunityWithCurrencyData = (community) => {
               updateCommunityWithCurrencyDataSuccess({
                 id: community.id,
                 currency: {
+                  tokenAddress: community.tokenAddress,
                   price,
                   symbol,
                   totalSupply,

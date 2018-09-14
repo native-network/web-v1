@@ -1,10 +1,16 @@
 import { currencyActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
+import { allCommunityContractInstances } from '../utils/constants';
+import {
+  getUserWalletEthBalance,
+  getUserWalletCommunityBalance,
+} from './userWalletActions';
+import { toastrError, toastrSuccess } from './toastrActions';
 
-export const sendTransaction = (tokenAddress, transactionAmount) => {
+export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
   return async (dispatch) => {
-    dispatch({ type: actions.SEND_TRANSACTION });
+    dispatch({ type: actions.SEND_TRANSACTION_IN_ETH });
     dispatch(beginAjaxCall());
 
     try {
@@ -19,29 +25,101 @@ export const sendTransaction = (tokenAddress, transactionAmount) => {
           value: toWei(transactionAmount),
         })
         .then((receipt) => {
-          return dispatch(sendTransactionSuccess(receipt));
+          dispatch(sendTransactionInEthSuccess(receipt));
+          dispatch(toastrSuccess('Your purchase was successful!'));
+          dispatch(getUserWalletEthBalance());
+          return dispatch(getUserWalletCommunityBalance(account));
         })
         .catch((err) => {
           const { message } = err;
-          return dispatch(sendTransactionError(message));
+          dispatch(toastrError(message));
+          return dispatch(sendTransactionInEthError(message));
         });
     } catch (err) {
       const { message } = err;
-      return dispatch(sendTransactionError(message));
+      dispatch(toastrError(message));
+      return dispatch(sendTransactionInEthError(message));
     }
   };
 };
 
-export const sendTransactionSuccess = (receipt) => {
+export const sendTransactionInEthSuccess = (receipt) => {
   return {
-    type: actions.SEND_TRANSACTION_SUCCESS,
+    type: actions.SEND_TRANSACTION_IN_ETH_SUCCESS,
     receipt,
   };
 };
 
-export const sendTransactionError = (error) => {
+export const sendTransactionInEthError = (error) => {
   return {
-    type: actions.SEND_TRANSACTION_ERROR,
+    type: actions.SEND_TRANSACTION_IN_ETH_ERROR,
+    error,
+  };
+};
+
+export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: actions.SEND_TRANSACTION_IN_NTV });
+    dispatch(beginAjaxCall());
+    const { communities } = getState().communities;
+    const { address } = getState().user.wallet;
+
+    const filteredCommunities = communities.filter((community) => {
+      return (
+        community.name === 'Native' ||
+        community.tokenAddress === communityAddress
+      );
+    });
+
+    return Promise.all(allCommunityContractInstances(filteredCommunities))
+      .then(async (data) => {
+        const { community3: receivingCommunity } = data.find(
+          ({ community3 }) =>
+            community3.community.tokenAddress === communityAddress,
+        );
+
+        const { community3: sendingCommunity } = data.find(
+          ({ community3 }) =>
+            community3.community.tokenAddress !== communityAddress,
+        );
+
+        try {
+          const approve = await sendingCommunity.approve(
+            receivingCommunity.community.tokenAddress,
+            transactionAmount,
+          );
+
+          const buy = await receivingCommunity.buyWithToken(
+            sendingCommunity.community.tokenAddress,
+            transactionAmount,
+          );
+          dispatch(sendTransactionInNtvSuccess({ approve, buy }));
+          dispatch(toastrSuccess('Your purchase was successful!'));
+          return dispatch(getUserWalletCommunityBalance(address));
+        } catch (err) {
+          const { message } = err;
+          dispatch(toastrError(message));
+          return dispatch(sendTransactionInNtvError(message));
+        }
+      })
+      .catch((err) => {
+        const { message } = err;
+        dispatch(toastrError(message));
+        return dispatch(sendTransactionInNtvError(message));
+      });
+  };
+};
+
+export const sendTransactionInNtvSuccess = (data) => {
+  return {
+    type: actions.SEND_TRANSACTION_IN_NTV_SUCCESS,
+    data,
+  };
+};
+
+export const sendTransactionInNtvError = (error) => {
+  return {
+    type: actions.SEND_TRANSACTION_IN_NTV_ERROR,
     error,
   };
 };
