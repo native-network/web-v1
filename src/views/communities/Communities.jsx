@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getCommunities } from '../../actions/allCommunitiesActions';
+import { getCommunities } from '../../actions/communitiesActions';
 
 import CardList from '../../components/shared/card-list/CardList';
 

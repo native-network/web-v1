@@ -15,10 +15,11 @@ export const getUserWalletAddress = () => {
   return async (dispatch) => {
     dispatch({ type: actions.GET_USER_WALLET_ADDRESS });
     dispatch(beginAjaxCall());
+
     try {
       const data = await getAddress();
-      dispatch(getUserWalletAddressSuccess(data));
-      return dispatch(getUserWalletEthBalance(data));
+      dispatch(getUserWalletEthBalance());
+      return dispatch(getUserWalletAddressSuccess(data));
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
@@ -41,13 +42,13 @@ export const getUserWalletAddressError = (error) => {
   };
 };
 
-export const getUserWalletEthBalance = (address) => {
+export const getUserWalletEthBalance = () => {
   return async (dispatch) => {
     dispatch({ type: actions.GET_USER_WALLET_ETH_BALANCE });
     dispatch(beginAjaxCall());
 
     try {
-      const balance = await getBalance(address);
+      const balance = await getBalance();
       return dispatch(getUserWalletEthBalanceSuccess(fromWei(balance)));
     } catch (err) {
       const { message } = err;
@@ -75,23 +76,40 @@ export const getUserWalletCommunityBalance = (address) => {
   return async (dispatch, getState) => {
     const state = getState();
     const { communities } = state.communities;
-    const { currencies } = state.currencies;
 
     const instances = allCommunityContractInstances(communities);
-
     return Promise.all(instances)
       .then((instances) => {
         return instances.map(async ({ id, community3 }) => {
+          const activeCommunity = communities.find((c) => c.id === id);
           dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
           dispatch(beginAjaxCall());
-          const currency = currencies.find((c) => c.communityId === id);
-          const balance = await community3.getTokenBalance(address);
-          return dispatch(
-            getUserWalletCommunityBalanceSuccess({
-              ...currency,
-              balance,
-            }),
-          );
+
+          return Promise.all([
+            community3.getPrice(),
+            community3.getSymbol(),
+            community3.getTokenBalance(address),
+          ])
+            .then((data) => {
+              if (data) {
+                const [price, symbol, balance] = data;
+
+                return dispatch(
+                  getUserWalletCommunityBalanceSuccess({
+                    id,
+                    price,
+                    symbol,
+                    balance,
+                    iconUrl: activeCommunity.icon,
+                  }),
+                );
+              }
+            })
+            .catch((err) => {
+              const { message } = err;
+              dispatch(toastrError(message));
+              return dispatch(getUserWalletCommunityBalanceError(message));
+            });
         });
       })
       .catch((err) => {

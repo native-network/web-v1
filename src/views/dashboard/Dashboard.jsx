@@ -183,11 +183,11 @@ export class Dashboard extends Component {
             </div>
             <section className={styles.Dashboard}>
               <h1>Convert Currencies</h1>
-              {this.props.currencies.length ? (
+              {this.props.communities && this.props.communities.length ? (
                 <CurrencyConverter
                   className={styles.DashboardConverter}
                   defaultValues={{
-                    sendCurrency: this.props.currencies.find(
+                    sendCurrency: this.props.user.wallet.currencies.find(
                       (currency) => currency.symbol === 'ETH',
                     ),
                     sendValue: '',
@@ -196,7 +196,9 @@ export class Dashboard extends Component {
                   sendCurrencies={this.props.user.wallet.currencies.filter(
                     (currency) => currency.balance > 0,
                   )}
-                  receiveCurrencies={this.props.currencies}
+                  receiveCurrencies={this.props.communities.map(
+                    (c) => c.currency,
+                  )}
                   submitHandler={this.submitTransaction.bind(this)}
                 />
               ) : null}
@@ -207,9 +209,10 @@ export class Dashboard extends Component {
                 <ReactTable
                   columns={cols}
                   data={this.props.communities.map((community) => {
-                    const currency = this.props.user.wallet.currencies.find(
-                      (currency) => currency.communityId === community.id,
+                    const userCurrency = this.props.user.wallet.currencies.find(
+                      (c) => c.symbol === community.currency.symbol,
                     );
+                    const { currency } = community;
                     return {
                       community: {
                         ...community,
@@ -218,7 +221,7 @@ export class Dashboard extends Component {
                           (c) => c.id === community.id,
                         ),
                       },
-                      quantity: (currency && currency.balance) || 0,
+                      quantity: (userCurrency && userCurrency.balance) || 0,
                       price: Math.random().toFixed(2),
                       actions: {
                         name: this.props.user.memberOf.find(
@@ -255,7 +258,6 @@ export default connect(
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,
-      currencies: state.currencies.currencies,
     };
   },
   mapDispatchToProps,

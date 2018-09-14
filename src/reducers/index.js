@@ -5,9 +5,8 @@ import { reducer as toastrReducer } from 'react-redux-toastr';
 import { initialState } from './initialState';
 
 import loadingReducer from './loadingReducer';
-import allCommunitiesReducer from './allCommunitiesReducer';
+import communitiesReducer from './communitiesReducer';
 import currencyReducer from './currencyReducer';
-import communityReducer from './communityReducer';
 import userWalletReducer from './userWalletReducer';
 import userSessionReducer from './userSessionReducer';
 import communityPollsReducer from './communityPollsReducer';
@@ -21,12 +20,11 @@ const rootReducer = combineReducers({
     initialState.user,
   ),
   loading: loadingReducer,
-  communities: allCommunitiesReducer,
+  communities: communitiesReducer,
   currencies: currencyReducer,
   polls: communityPollsReducer,
   projects: communityProjectsReducer,
   tasks: communityTasksReducer,
-  activeCommunity: communityReducer,
   toastr: toastrReducer,
 });
 

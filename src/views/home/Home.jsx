@@ -38,13 +38,7 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   (state) => {
     return {
-      communities: state.communities.communities.map((community) => {
-        const currency = state.currencies.currencies.find(
-          (c) => c.communityId === community.id,
-        );
-
-        return currency ? { ...community, currency } : community;
-      }),
+      communities: state.communities.communities,
       isLoading: state.loading > 0,
     };
   },

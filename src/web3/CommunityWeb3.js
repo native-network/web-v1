@@ -25,9 +25,19 @@ export default class CommunityService {
     );
   }
   async communityIsMember(address) {
-    return await this.communityContract.methods
-      .isMember(address)
-      .call({ from: getAddress() });
+    try {
+      return await this.communityContract.methods
+        .isMember(address)
+        .call({ from: getAddress() });
+    } catch (err) {
+      console.log(err); // eslint-disable-line
+    }
+  }
+
+  async minimumStakingRequirement() {
+    return await await this.communityContract.methods
+      .minimumStakingRequirement()
+      .call();
   }
 
   async getPrice() {
@@ -47,8 +57,12 @@ export default class CommunityService {
   }
 
   async communityAvailableDevFund() {
-    return await this.communityContract.methods
-      .getAvailableDevFund()
-      .call({ from: getAddress() });
+    try {
+      return await this.communityContract.methods
+        .getAvailableDevFund()
+        .call({ from: getAddress() });
+    } catch (err) {
+      console.log(err) // eslint-disable-line
+    }
   }
 }

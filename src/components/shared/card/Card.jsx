@@ -79,20 +79,35 @@ export class Card extends Component {
           closeModal={this.closeModal.bind(this)}
           renderHeader={() => <h1>Support {community.name}</h1>}
         >
-          <CurrencyConverter
-            defaultValues={{
-              sendCurrency: defaultSendCurrency,
-              sendValue: new BigNumber(community.currency.minimumStake)
-                .dividedBy(community.currency.price)
-                .toString(),
-              receiveCurrency: community.currency,
-              receiveValue: community.currency.minimumStake,
-            }}
-            sendCurrencies={[]}
-            receiveCurrencies={[community.currency]}
-            toValidation={minRequirement}
-            submitHandler={community.submitTransaction}
-          />
+          {community && community.currency ? (
+            <CurrencyConverter
+              defaultValues={{
+                sendCurrency: defaultSendCurrency,
+                sendValue: new BigNumber(
+                  (community &&
+                    community.currency &&
+                    community.currency.minimumStake) ||
+                    1,
+                )
+                  .dividedBy(
+                    (community &&
+                      community.currency &&
+                      community.currency.price) ||
+                      1,
+                  )
+                  .toString(),
+                receiveCurrency: community && community.currency,
+                receiveValue:
+                  community &&
+                  community.currency &&
+                  community.currency.minimumStake,
+              }}
+              sendCurrencies={[]}
+              receiveCurrencies={[community.currency]}
+              toValidation={minRequirement}
+              submitHandler={community.submitTransaction}
+            />
+          ) : null}
         </Modal>
         <div
           style={{ backgroundImage: `url("/${community.image}")` }}

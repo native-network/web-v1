@@ -5,7 +5,7 @@ import { instance } from '../../src/requests';
 
 import {
   loadingActions,
-  allCommunitiesActions,
+  communitiesActions,
 } from '../../src/actions/actionTypes';
 
 import {
@@ -13,12 +13,12 @@ import {
   getCommunitiesSuccess,
   getCommunitiesError,
   addNewCommunity,
-} from '../../src/actions/allCommunitiesActions';
+} from '../../src/actions/communitiesActions';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('allCommunitiesActions', () => {
+describe('communitiesActions', () => {
   let initialState;
   let store;
 
@@ -36,7 +36,7 @@ describe('allCommunitiesActions', () => {
       await store.dispatch(getCommunities());
 
       const actions = store.getActions();
-      const expectedActions = { type: allCommunitiesActions.GET_COMMUNITIES };
+      const expectedActions = { type: communitiesActions.GET_COMMUNITIES };
 
       expect(actions[0]).toEqual(expectedActions);
     });
@@ -75,7 +75,7 @@ describe('allCommunitiesActions', () => {
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
-          type: allCommunitiesActions.GET_COMMUNITIES_SUCCESS,
+          type: communitiesActions.GET_COMMUNITIES_SUCCESS,
           communities: response,
         };
 
@@ -98,7 +98,7 @@ describe('allCommunitiesActions', () => {
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
-          type: allCommunitiesActions.GET_COMMUNITIES_ERROR,
+          type: communitiesActions.GET_COMMUNITIES_ERROR,
           error: new Error(response),
         };
 
@@ -111,7 +111,7 @@ describe('allCommunitiesActions', () => {
     it('should create `GET_COMMUNITIES_SUCCESS` action with given communities', () => {
       const communities = [{ name: 'Foo' }, { name: 'Bar' }, { name: 'Baz' }];
       const expectedAction = {
-        type: allCommunitiesActions.GET_COMMUNITIES_SUCCESS,
+        type: communitiesActions.GET_COMMUNITIES_SUCCESS,
         communities,
       };
 
@@ -123,7 +123,7 @@ describe('allCommunitiesActions', () => {
     it('should create `GET_COMMUNITIES_ERROR` action with an error message', () => {
       const error = 'Something went wrong';
       const expectedAction = {
-        type: allCommunitiesActions.GET_COMMUNITIES_ERROR,
+        type: communitiesActions.GET_COMMUNITIES_ERROR,
         error,
       };
 
@@ -145,7 +145,7 @@ describe('allCommunitiesActions', () => {
       await store.dispatch(addNewCommunity(community));
 
       const actions = store.getActions();
-      const expectedAction = { type: allCommunitiesActions.ADD_NEW_COMMUNITY };
+      const expectedAction = { type: communitiesActions.ADD_NEW_COMMUNITY };
 
       expect(actions[0]).toEqual(expectedAction);
     });
@@ -184,7 +184,7 @@ describe('allCommunitiesActions', () => {
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
-          type: allCommunitiesActions.ADD_NEW_COMMUNITY_SUCCESS,
+          type: communitiesActions.ADD_NEW_COMMUNITY_SUCCESS,
           community: response,
         };
 
@@ -206,7 +206,7 @@ describe('allCommunitiesActions', () => {
         const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         const expectedAction = {
-          type: allCommunitiesActions.ADD_NEW_COMMUNITY_ERROR,
+          type: communitiesActions.ADD_NEW_COMMUNITY_ERROR,
           error: response,
         };
 

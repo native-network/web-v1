@@ -33,15 +33,6 @@ export class App extends Component {
     if (!!newUserAddress && newUserAddress !== oldUserAddress) {
       this.props.getUserSession();
     }
-
-    if (
-      !!this.props.currencies &&
-      !!newUserAddress &&
-      this.props.currencies !== prevProps.currencies &&
-      this.props.communities.length === this.props.currencies.length
-    ) {
-      this.props.getUserWalletCommunityBalance(newUserAddress);
-    }
   }
 
   closeWelcomeModal() {

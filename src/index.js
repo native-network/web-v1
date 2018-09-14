@@ -7,8 +7,11 @@ import { ConnectedRouter } from 'connected-react-router';
 import ReduxToastr from 'react-redux-toastr';
 
 import configureStore, { history } from './store';
-import { getCommunities } from './actions/allCommunitiesActions';
-import { getUserWalletAddress } from './actions/userWalletActions';
+import { getCommunities } from './actions/communitiesActions';
+import {
+  getUserWalletAddress,
+  getUserWalletCommunityBalance,
+} from './actions/userWalletActions';
 
 import './index.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
@@ -19,7 +22,9 @@ import registerServiceWorker from './registerServiceWorker';
 const store = configureStore();
 
 store.dispatch(getCommunities());
-store.dispatch(getUserWalletAddress());
+store.dispatch(getUserWalletAddress()).then(({ address }) => {
+  store.dispatch(getUserWalletCommunityBalance(address));
+});
 
 ReactDOM.render(
   <Provider store={store}>

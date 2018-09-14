@@ -25,16 +25,21 @@ export default class Web3Service {
     this.mainAccount = await this.getMainAccount();
   }
 
-  async getMainAccount() {
-    const accounts = await this.web3.eth.getAccounts();
-    if (accounts.length === 0) {
-      throw new Error('No accounts.');
-    }
-    return accounts[0];
+  getMainAccount() {
+    return new Promise((resolve, reject) => {
+      return this.web3.eth
+        .getAccounts()
+        .then((accts) => {
+          if (!accts.length) return reject('No account found.');
+
+          return resolve(accts[0]);
+        })
+        .catch((err) => reject(err));
+    });
   }
 
-  async getAccountBalance(address) {
-    return await new this.web3.eth.getBalance(address);
+  async getAccountBalance() {
+    return await new this.web3.eth.getBalance(this.mainAccount);
   }
 
   async initContract(abi, address) {
@@ -48,6 +53,7 @@ export default class Web3Service {
 
 const web3Service =
   process.env.NODE_ENV === 'test' ? new Web3ServiceMock() : new Web3Service();
+
 (async () => {
   await web3Service.init();
 })();
@@ -56,12 +62,17 @@ export const getWeb3ServiceInstance = () => {
   return web3Service;
 };
 
-export const getAddress = async () => {
-  return await web3Service.getMainAccount();
+export const getAddress = () => {
+  return web3Service
+    .getMainAccount()
+    .then((data) => data)
+    .catch((err) => {
+      throw new Error(err);
+    });
 };
 
-export const getBalance = async (address) => {
-  return await web3Service.getAccountBalance(address);
+export const getBalance = async () => {
+  return await web3Service.getAccountBalance();
 };
 
 export const promptSign = async (rawMessage) => {

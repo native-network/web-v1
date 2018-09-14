@@ -3,9 +3,9 @@ import Loader from '../../components/shared/loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  getCommunityById,
-  clearActiveCommunity,
-} from '../../actions/communityActions';
+  setActiveCommunity,
+  unsetActiveCommunity,
+} from '../../actions/communitiesActions';
 import { getCommunityPolls } from '../../actions/communityPollsActions';
 import { getCommunityProjects } from '../../actions/communityProjectsActions';
 import { getCommunityTasks } from '../../actions/communityTasksActions';
@@ -42,10 +42,14 @@ export class CommunityAdmin extends Component {
   };
 
   componentDidMount() {
-    this.props.getCommunityById(this.props.id);
+    this.props.setActiveCommunity(this.props.id);
     this.props.getCommunityPolls(this.props.id);
     this.props.getCommunityProjects(this.props.id);
     this.props.getCommunityTasks(this.props.id);
+  }
+
+  componentWillUnmount() {
+    this.props.unsetActiveCommunity();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,8 +79,8 @@ export class CommunityAdmin extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getCommunityById: bindActionCreators(getCommunityById, dispatch),
-    clearActiveCommunity: bindActionCreators(clearActiveCommunity, dispatch),
+    setActiveCommunity: bindActionCreators(setActiveCommunity, dispatch),
+    unsetActiveCommunity: bindActionCreators(unsetActiveCommunity, dispatch),
     getCommunityPolls: bindActionCreators(getCommunityPolls, dispatch),
     getCommunityProjects: bindActionCreators(getCommunityProjects, dispatch),
     getCommunityTasks: bindActionCreators(getCommunityTasks, dispatch),
@@ -85,12 +89,12 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   (state, ownProps) => {
-    const { loading, activeCommunity } = state;
-    const { community } = activeCommunity;
+    const { communityId: id } = ownProps.match.params;
+    const { loading, communities } = state;
+    const community = communities.communities.find((c) => c.id === id);
     const { polls } = state.polls;
     const { projects } = state.projects;
     const { tasks } = state.tasks;
-    const { communityId: id } = ownProps.match.params;
 
     return { community, id, isLoading: loading > 0, polls, projects, tasks };
   },

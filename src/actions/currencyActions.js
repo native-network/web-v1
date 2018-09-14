@@ -1,55 +1,6 @@
 import { currencyActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
-import { communityContractInstance } from '../utils/constants';
-import { toastrError } from './toastrActions';
-
-export const getCurrencyDataByCommunity = (community) => {
-  return async (dispatch) => {
-    dispatch({ type: actions.GET_CURRENCY_DATA_BY_COMMUNITY });
-    dispatch(beginAjaxCall());
-
-    return communityContractInstance(community).then(({ community3 }) => {
-      Promise.all([
-        community3.getPrice(),
-        community3.getSymbol(),
-        community3.getTotalSupply(),
-      ])
-        .then((data) => {
-          if (data) {
-            const [price, symbol, totalSupply] = data;
-            return dispatch(
-              getCurrencyDataByCommunitySuccess(community, {
-                price,
-                symbol,
-                totalSupply,
-              }),
-            );
-          }
-        })
-        .catch((err) => {
-          const { message } = err;
-          dispatch(toastrError(message));
-          return dispatch(getCurrencyDataByCommunityError(message));
-        });
-    });
-  };
-};
-
-export const getCurrencyDataByCommunitySuccess = (community, data) => {
-  return {
-    type: actions.GET_CURRENCY_DATA_BY_COMMUNITY_SUCCESS,
-    community,
-    data,
-  };
-};
-
-export const getCurrencyDataByCommunityError = (error) => {
-  return {
-    type: actions.GET_CURRENCY_DATA_BY_COMMUNITY_ERROR,
-    error,
-  };
-};
 
 export const sendTransaction = (tokenAddress, transactionAmount) => {
   return async (dispatch) => {

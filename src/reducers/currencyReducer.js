@@ -3,22 +3,6 @@ import { initialState } from './initialState';
 
 export default function currencyReducer(state = initialState.currency, action) {
   switch (action.type) {
-    case actions.GET_CURRENCY_DATA_BY_COMMUNITY_SUCCESS:
-      return {
-        ...state,
-        currencies: [
-          ...state.currencies,
-          {
-            communityId: action.community.id,
-            iconUrl: action.community.icon,
-            tokenAddress: action.community.tokenAddress,
-            minimumStake: '100',
-            ...action.data,
-          },
-        ],
-      };
-    case actions.GET_CURRENCY_DATA_BY_COMMUNITY_ERROR:
-      return { ...state, error: action.error };
     case actions.SEND_TRANSACTION_SUCCESS:
       return { ...state };
     case actions.SEND_TRANSACTION_ERROR:

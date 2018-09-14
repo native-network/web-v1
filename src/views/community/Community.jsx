@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  getCommunityById,
-  clearActiveCommunity,
-} from '../../actions/communityActions';
+  setActiveCommunity,
+  unsetActiveCommunity,
+} from '../../actions/communitiesActions';
 
 import { getCommunityTasks } from '../../actions/communityTasksActions';
 import { getCommunityProjects } from '../../actions/communityProjectsActions';
@@ -23,14 +23,14 @@ export class Community extends Component {
 
   componentDidMount() {
     const { id } = this.props;
-    this.props.getCommunityById(this.props.id);
+    this.props.setActiveCommunity(id);
     this.props.getCommunityPolls(id);
     this.props.getCommunityTasks(id);
     this.props.getCommunityProjects(id);
   }
 
   componentWillUnmount() {
-    this.props.clearActiveCommunity();
+    this.props.unsetActiveCommunity();
   }
 
   render() {
@@ -41,7 +41,7 @@ export class Community extends Component {
       return <Loader />;
     }
 
-    return (
+    return community ? (
       <Card
         community={community}
         render={() => (
@@ -53,7 +53,7 @@ export class Community extends Component {
           </div>
         )}
       />
-    );
+    ) : null;
   }
 }
 
@@ -79,8 +79,8 @@ function formatInitiatives(polls, tasks, projects) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getCommunityById: bindActionCreators(getCommunityById, dispatch),
-    clearActiveCommunity: bindActionCreators(clearActiveCommunity, dispatch),
+    setActiveCommunity: bindActionCreators(setActiveCommunity, dispatch),
+    unsetActiveCommunity: bindActionCreators(unsetActiveCommunity, dispatch),
     getCommunityPolls: bindActionCreators(getCommunityPolls, dispatch),
     getCommunityTasks: bindActionCreators(getCommunityTasks, dispatch),
     getCommunityProjects: bindActionCreators(getCommunityProjects, dispatch),
@@ -89,15 +89,11 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   (state, ownProps) => {
-    const { loading, activeCommunity } = state;
-    const { community } = activeCommunity;
     const { communityId: id } = ownProps.match.params;
-    const currency = state.currencies.currencies.find(
-      (cur) => cur.communityId === community.id,
-    );
+    const { loading } = state;
     return {
-      community: { ...community, currency },
       id,
+      community: state.communities.communities.find((c) => c.id === +id),
       isLoading: loading > 0,
       polls: state.polls.polls,
       tasks: state.tasks.tasks,

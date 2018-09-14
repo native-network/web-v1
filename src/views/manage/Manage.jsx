@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewCommunity } from '../../actions/allCommunitiesActions';
+import { addNewCommunity } from '../../actions/communitiesActions';
 
 import Loader from '../../components/shared/loader';
 import ManageCommunityForm from '../../components/forms/manage-community';

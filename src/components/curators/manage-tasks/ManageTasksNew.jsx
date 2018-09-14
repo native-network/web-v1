@@ -79,8 +79,9 @@ export const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
+    const community = state.communities.communities.find((c) => c.active);
     return {
-      communityId: state.activeCommunity.community.id,
+      communityId: community.id,
       isLoading: state.loading > 0,
     };
   },
