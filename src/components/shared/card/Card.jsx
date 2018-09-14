@@ -127,6 +127,7 @@ export class Card extends Component {
           isOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
           renderHeader={() => <h1>Support {community.name}</h1>}
+          maxWidth="1020px"
         >
           {modalContent}
         </Modal>
