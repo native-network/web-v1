@@ -10,6 +10,8 @@ import Tag from '../tag';
 
 import styles from './Card.css';
 import BigNumber from 'bignumber.js';
+import { bindActionCreators } from 'redux';
+import { stake } from '../../../actions/stakingActions';
 
 const ANIMATION_DURATION = 200;
 
@@ -108,7 +110,7 @@ export class Card extends Component {
     if (userCurrency.balance >= community.currency.minimumStake) {
       modalContent = (
         <Button
-          clickHandler={() => alert('clicked')}
+          clickHandler={() => this.props.stake(community)}
           theme="primary"
           content={`Stake`}
         />
@@ -201,7 +203,18 @@ export class Card extends Component {
   }
 }
 
-export default connect((state) => ({
-  currencies: state.currencies.currencies,
-  userCurrencies: state.user.wallet.currencies,
-}))(Card);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    stake: bindActionCreators(stake, dispatch),
+  };
+};
+
+export default connect(
+  (state) => {
+    return {
+      currencies: state.currencies.currencies,
+      userCurrencies: state.user.wallet.currencies,
+    };
+  },
+  mapDispatchToProps,
+)(Card);

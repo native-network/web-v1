@@ -98,3 +98,9 @@ export const voteActions = {
   VOTE_SUCCESS: 'VOTE_SUCCESS',
   VOTE_ERROR: 'VOTE_ERROR',
 };
+
+export const stakingActions = {
+  STAKE: 'STAKE',
+  STAKE_SUCCESS: 'STAKE_SUCCESS',
+  STAKE_ERROR: 'STAKE_ERROR',
+};
