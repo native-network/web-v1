@@ -78,7 +78,7 @@ export const getUserSessionError = (error) => {
 
 export const stake = (community) => {
   return async (dispatch) => {
-    dispatch({ type: actions.STAKE });
+    dispatch({ type: actions.STAKE_TRANSACTION });
     const { community3 } = await communityContractInstance(community);
     try {
       await community3.approve(
@@ -86,14 +86,14 @@ export const stake = (community) => {
         community.currency.minimumStake,
       );
       await community3.stake();
-      dispatch({ type: actions.STAKE_SUCCESS });
+      dispatch({ type: actions.STAKE_TRANSACTION_SUCCESS });
       return dispatch(
         toastrSuccess(`You have successfully staked into ${community.name}!`),
       );
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
-      return dispatch({ type: actions.STAKE_ERROR });
+      return dispatch({ type: actions.STAKE_TRANSACTION_ERROR });
     }
   };
 };

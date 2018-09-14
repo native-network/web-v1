@@ -107,7 +107,10 @@ export class Card extends Component {
         />
       );
     }
-    if (userCurrency.balance >= community.currency.minimumStake) {
+    if (
+      userCurrency &&
+      userCurrency.balance >= community.currency.minimumStake
+    ) {
       modalContent = (
         <Button
           clickHandler={() => this.props.stake(community)}
@@ -147,7 +150,8 @@ export class Card extends Component {
         <div className={styles.CTAMobile}>
           <div className={styles.CTABadge}>
             <span>
-              {userCurrency.balance < community.currency.minimumStake
+              {userCurrency &&
+              userCurrency.balance < community.currency.minimumStake
                 ? 'Support'
                 : 'Join'}{' '}
               {community.name}
