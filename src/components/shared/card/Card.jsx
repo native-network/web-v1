@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
 import { connect } from 'react-redux';
