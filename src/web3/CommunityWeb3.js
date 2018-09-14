@@ -15,7 +15,7 @@ export default class CommunityService {
   }
 
   async initContracts() {
-    this.communityContract = await this.web3Service.initContractRemote(
+    this.communityContract = await this.web3Service.initContract(
       communityAbi,
       this.community.address,
     );
@@ -83,6 +83,16 @@ export default class CommunityService {
         .call({ from: getAddress() });
     } catch (err) {
       return err;
+    }
+  }
+
+  async stake() {
+    try {
+      return await this.communityContract.methods
+        .stakeCommunityTokens()
+        .send({ from: this.web3Service.mainAccount });
+    } catch (err) {
+      throw new Error('There was a problem staking into that community.');
     }
   }
 }
