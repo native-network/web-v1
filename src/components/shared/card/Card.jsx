@@ -121,14 +121,7 @@ export class Card extends Component {
           hasCloseButton
           isOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
-          renderHeader={() => (
-            <h1>
-              {userCurrency.balance < community.currency.minimumStake
-                ? 'Support'
-                : 'Join'}{' '}
-              {community.name}
-            </h1>
-          )}
+          renderHeader={() => <h1>Support {community.name}</h1>}
         >
           {modalContent}
         </Modal>
