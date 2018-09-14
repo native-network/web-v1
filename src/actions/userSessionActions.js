@@ -1,9 +1,10 @@
 import { push } from 'connected-react-router';
 import { userSessionActions as actions } from './actionTypes';
+import { communityContractInstance } from '../utils/constants';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { promptSign } from '../web3/Web3Service';
-import { toastrError } from './toastrActions';
+import { toastrError, toastrSuccess } from './toastrActions';
 
 export const getUserSession = () => {
   return async (dispatch, getState) => {
@@ -72,5 +73,27 @@ export const getUserSessionError = (error) => {
   return {
     type: actions.GET_USER_SESSION_ERROR,
     error,
+  };
+};
+
+export const stake = (community) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.STAKE });
+    const { community3 } = await communityContractInstance(community);
+    try {
+      await community3.approve(
+        community.address,
+        community.currency.minimumStake,
+      );
+      await community3.stake();
+      dispatch({ type: actions.STAKE_SUCCESS });
+      return dispatch(
+        toastrSuccess(`You have successfully staked into ${community.name}!`),
+      );
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError(message));
+      return dispatch({ type: actions.STAKE_ERROR });
+    }
   };
 };

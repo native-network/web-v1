@@ -11,7 +11,7 @@ import Tag from '../tag';
 import styles from './Card.css';
 import BigNumber from 'bignumber.js';
 import { bindActionCreators } from 'redux';
-import { stake } from '../../../actions/stakingActions';
+import { stake } from '../../../actions/userSessionActions';
 
 const ANIMATION_DURATION = 200;
 
