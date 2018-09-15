@@ -77,11 +77,11 @@ const cols = [
     Header: 'Total',
     id: 'total',
     maxWidth: 150,
-    accessor: ({ price, quantity }) => +price * +quantity,
+    accessor: ({ price, quantity }) => (+price * +quantity).toFixed(2),
     Cell: ({ value }) => `$${value}`,
     Footer: ({ data }) => {
       const sum = data.reduce((sum, { total }) => {
-        return total + +sum;
+        return (+total + +sum).toFixed(2);
       }, 0);
 
       return `$${sum}`;
@@ -232,7 +232,7 @@ export class Dashboard extends Component {
                         ),
                       },
                       quantity: (userCurrency && userCurrency.balance) || 0,
-                      price: Math.random().toFixed(2),
+                      price: 0.35,
                       actions: {
                         name: this.props.user.memberOf.find(
                           (c) => c.id === community.id,
