@@ -11,13 +11,20 @@ function NativeModal({
   renderHeader,
   isOpen,
   children,
+  maxWidth = '720px',
 }) {
   if (process.env.NODE_ENV !== 'test') {
     // prevent enzyme bug in tests around full render
     Modal.setAppElement('#root');
   }
+  const style = {
+    content: {
+      maxWidth: maxWidth,
+      margin: '0 auto',
+    },
+  };
   return (
-    <Modal isOpen={isOpen} contentLabel={label}>
+    <Modal isOpen={isOpen} style={style} contentLabel={label}>
       <div className={styles.ModalHeader}>
         {renderHeader && renderHeader()}
         {hasCloseButton && (
