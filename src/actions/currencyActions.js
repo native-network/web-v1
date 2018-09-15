@@ -1,5 +1,4 @@
 import { currencyActions as actions } from './actionTypes';
-import { beginAjaxCall } from './loadingActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
 import { allCommunityContractInstances } from '../utils/constants';
 import {
@@ -11,7 +10,6 @@ import { toastrError, toastrSuccess } from './toastrActions';
 export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
   return async (dispatch) => {
     dispatch({ type: actions.SEND_TRANSACTION_IN_ETH });
-    dispatch(beginAjaxCall());
 
     try {
       const service = getWeb3ServiceInstance();
@@ -60,7 +58,6 @@ export const sendTransactionInEthError = (error) => {
 export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
   return async (dispatch, getState) => {
     dispatch({ type: actions.SEND_TRANSACTION_IN_NTV });
-    dispatch(beginAjaxCall());
     const { communities } = getState().communities;
     const { address } = getState().user.wallet;
 

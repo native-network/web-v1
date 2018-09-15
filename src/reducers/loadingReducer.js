@@ -9,12 +9,17 @@ function actionTypeEndsInError(type) {
   return type && type.substring(type.length - 6) === '_ERROR';
 }
 
+function actionTypeIsTransaction(type) {
+  return type && /TRANSACTION/.test(type);
+}
+
 export default function loadingReducer(state = initialState.loading, action) {
   if (action.type === loading.LOADING) {
     return state + 1;
   } else if (
-    actionTypeEndsInSuccess(action.type) ||
-    actionTypeEndsInError(action.type)
+    (actionTypeEndsInSuccess(action.type) ||
+      actionTypeEndsInError(action.type)) &&
+    !actionTypeIsTransaction(action.type)
   ) {
     return state - 1;
   }

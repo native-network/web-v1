@@ -4,6 +4,7 @@ export const initialState = {
     error: '',
   },
   currency: {
+    loading: false,
     currencies: [],
     error: '',
   },

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { Field as Field5 } from 'react-final-form-html5-validation';
 
@@ -7,13 +8,14 @@ import styles from './CurrencyConverter.css';
 
 import Button from '../../shared/button';
 import Icon from '../../shared/icon';
+import Loader from '../../shared/loader';
 import CurrencySelector from '../../shared/currency-selector';
 import CurrencyInput from '../../shared/currency-input';
 
 import { CurrencyConverterDecorator } from '../decorators/CurrencyConverterDecorator';
 import BigNumber from 'bignumber.js';
 
-class CurrencyConverter extends Component {
+export class CurrencyConverter extends Component {
   static propTypes = {
     sendCurrencies: PropTypes.arrayOf(
       PropTypes.shape({
@@ -124,6 +126,7 @@ class CurrencyConverter extends Component {
             className={`${styles.CurrencyForm} ${this.props.className}`}
             onSubmit={handleSubmit}
           >
+            {this.props.isLoading ? <Loader isFullScreen={false} /> : null}
             <Field5
               name="sendValue"
               validate={(value, allValues) => {
@@ -203,4 +206,12 @@ class CurrencyConverter extends Component {
   }
 }
 
-export default CurrencyConverter;
+export default connect(
+  (state) => {
+    const isLoading = state.currencies.loading;
+    return {
+      isLoading,
+    };
+  },
+  null,
+)(CurrencyConverter);
