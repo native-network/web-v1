@@ -41,12 +41,6 @@
     background: var(--secondary-button-default);
     border-color: var(--secondary-button-default);
 
-    &[disabled],
-    &[disabled]:--enter {
-      background: var(--secondary-button-disabled);
-      border-color: var(--secondary-button-disabled);
-    }
-
     &:--enter {
       background: var(--secondary-button-active);
       border-color: var(--secondary-button-active);
@@ -89,6 +83,17 @@
 
 :--button {
   @extend %button;
+
+  &[disabled],
+  &[disabled]:--enter {
+    cursor: not-allowed;
+
+    /* stylelint-disable-next-line declaration-no-important */
+    background: var(--button-disabled) !important;
+
+    /* stylelint-disable-next-line declaration-no-important */
+    border-color: var(--button-disabled) !important;
+  }
 
   &.Primary {
     @extend %primary-theme;

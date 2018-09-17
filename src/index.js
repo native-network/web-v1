@@ -23,7 +23,7 @@ const store = configureStore();
 
 store.dispatch(getCommunities());
 store.dispatch(getUserWalletAddress()).then(({ address }) => {
-  store.dispatch(getUserWalletCommunityBalance(address));
+  if (address) store.dispatch(getUserWalletCommunityBalance(address));
 });
 
 ReactDOM.render(

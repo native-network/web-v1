@@ -1,6 +1,10 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 
+import SVG from 'react-inlinesvg';
+
+import loader from '../../../assets/img/loader.svg';
+
 import styles from './Loader.css';
 const cx = classNames.bind(styles);
 
@@ -11,7 +15,7 @@ function Loader({ isFullScreen }) {
   });
   return (
     <div className={className}>
-      <div className={styles.Loader} />
+      <SVG className={styles.Loader} src={loader} />
     </div>
   );
 }

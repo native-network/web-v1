@@ -17,26 +17,31 @@
     background: var(--transparent-black-70);
     position: fixed;
   }
+}
 
-  & .Loader {
-    width: 100px;
-    height: 100px;
-    border: 2px solid;
-    border-radius: 100%;
-    border-top-color: var(--primary-color);
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    border-left-color: transparent;
-    animation: spin 500ms linear infinite;
+.Loader {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+
+  & path {
+    animation: fade 1200ms linear infinite;
+  }
+
+  @for $i from 1 to 12 {
+
+    & path:nth-child($i) {
+      animation-delay: calc($i * 100ms);
+    }
   }
 }
 
-@keyframes spin {
+@keyframes fade {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
 
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }

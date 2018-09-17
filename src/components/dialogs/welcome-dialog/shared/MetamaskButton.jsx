@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import metamask from '../../../assets/img/metamask.svg';
+import metamask from '../../../../assets/img/metamask.svg';
 import styles from '../WelcomeDialog.css';
 
 export default function MetamaskButton({ link, content, clickHandler }) {

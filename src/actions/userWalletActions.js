@@ -83,7 +83,7 @@ export const getUserWalletCommunityBalance = (address) => {
         return instances.map(async ({ id, community3 }) => {
           const activeCommunity = communities.find((c) => c.id === id);
           dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
-          dispatch(beginAjaxCall());
+          // dispatch(beginAjaxCall());
 
           return Promise.all([
             community3.getPrice(),

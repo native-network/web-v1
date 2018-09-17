@@ -116,6 +116,7 @@ module.exports = {
                   ident: 'postcss',
                   plugins: () => [
                     require('postcss-import')(),
+                    require('postcss-for')(),
                     require('postcss-extend-rule')(),
                     require('postcss-custom-properties')(),
                     require('postcss-color-mod-function')(),

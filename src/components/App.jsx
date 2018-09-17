@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import Header from './shared/header';
 import Footer from './shared/footer';
 import Modal from './shared/modal';
-import WelcomeDialog from './welcome-dialog';
+import WelcomeDialog from './dialogs/welcome-dialog';
 import { routes } from '../routes';
 
 import styles from './App.css';

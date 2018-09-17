@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 
 import Button from '../button';
 import Modal from '../modal';
-import CurrencyConverter from '../../forms/currency-converter';
+import CommunityStake from '../../dialogs/community-stake';
 import TokenData from '../token-data';
 import Tag from '../tag';
 
 import styles from './Card.css';
-import BigNumber from 'bignumber.js';
-import { bindActionCreators } from 'redux';
-import { stake } from '../../../actions/userSessionActions';
 
 const ANIMATION_DURATION = 200;
 
@@ -28,6 +25,7 @@ export class Card extends Component {
   state = {
     isReadMoreOpen: true,
     isModalOpen: false,
+    activeCommunity: {},
   };
 
   componentDidMount() {
@@ -35,7 +33,8 @@ export class Card extends Component {
     this.setState({ isReadMoreOpen: false });
   }
 
-  openModal() {
+  openModal(activeCommunity) {
+    this.setState({ activeCommunity });
     this.setState({ isModalOpen: true });
   }
 
@@ -45,6 +44,17 @@ export class Card extends Component {
 
   toggleReadMore() {
     this.setState({ isReadMoreOpen: !this.state.isReadMoreOpen });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.isCurrencyLoading !== prevProps.isCurrencyLoading &&
+      !this.props.isCurrencyLoading
+    ) {
+      if (this.state.activeCommunity === this.props.community) {
+        this.openModal();
+      }
+    }
   }
 
   render() {
@@ -64,61 +74,9 @@ export class Card extends Component {
       exited: defaultStyles,
     };
 
-    const minRequirement = (value) =>
-      parseInt(value, 10) < community.currency.minimumStake
-        ? `You don't have enough to stake`
-        : undefined;
-
-    const defaultSendCurrency = this.props.userCurrencies.find(
-      (c) => c.symbol === 'NTV',
-    );
-
     const userCurrency = this.props.userCurrencies.find(
-      (c) => c.symbol === community.currency.symbol,
+      (c) => c.symbol === community && community.currency.symbol,
     );
-
-    let modalContent = null;
-    if (community && community.currency) {
-      modalContent = (
-        <CurrencyConverter
-          defaultValues={{
-            sendCurrency: defaultSendCurrency,
-            sendValue: new BigNumber(
-              (community &&
-                community.currency &&
-                community.currency.minimumStake) ||
-                1,
-            )
-              .dividedBy(
-                (community && community.currency && community.currency.price) ||
-                  1,
-              )
-              .toString(),
-            receiveCurrency: community && community.currency,
-            receiveValue:
-              community &&
-              community.currency &&
-              community.currency.minimumStake,
-          }}
-          sendCurrencies={[]}
-          receiveCurrencies={[community.currency]}
-          toValidation={minRequirement}
-          submitHandler={community.submitTransaction}
-        />
-      );
-    }
-    if (
-      userCurrency &&
-      userCurrency.balance >= community.currency.minimumStake
-    ) {
-      modalContent = (
-        <Button
-          clickHandler={() => this.props.stake(community)}
-          theme="primary"
-          content={`Stake`}
-        />
-      );
-    }
 
     return (
       <div className={styles.Card}>
@@ -126,10 +84,14 @@ export class Card extends Component {
           hasCloseButton
           isOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
-          renderHeader={() => <h1>Support {community.name}</h1>}
           maxWidth="1020px"
         >
-          {modalContent}
+          <CommunityStake
+            loading={this.props.isCurrencyLoading}
+            user={this.props.user}
+            community={this.props.community}
+            dismissDialog={this.closeModal.bind(this)}
+          />
         </Modal>
         <div
           style={{ backgroundImage: `url("/${community.image}")` }}
@@ -158,8 +120,9 @@ export class Card extends Component {
               {community.name}
             </span>
             <Button
-              clickHandler={this.openModal.bind(this)}
+              clickHandler={() => this.openModal(community)}
               theme="primary"
+              disabled={!this.props.user.wallet.address}
               content={`${(community.currency &&
                 community.currency.minimumStake) ||
                 0} ${(community.currency && community.currency.symbol) || ''}`}
@@ -208,18 +171,14 @@ export class Card extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    stake: bindActionCreators(stake, dispatch),
-  };
-};
-
 export default connect(
   (state) => {
     return {
+      user: state.user,
+      isCurrencyLoading: state.currencies.loading,
       currencies: state.currencies.currencies,
       userCurrencies: state.user.wallet.currencies,
     };
   },
-  mapDispatchToProps,
+  null,
 )(Card);

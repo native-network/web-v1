@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import styles from './WelcomeDialog.css';
 
-import Button from '../shared/button';
+import Button from '../../shared/button';
 
 import StepOne from './steps/StepOne';
 import StepTwo from './steps/StepTwo';

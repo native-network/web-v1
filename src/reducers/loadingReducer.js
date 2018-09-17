@@ -10,7 +10,7 @@ function actionTypeEndsInError(type) {
 }
 
 function actionTypeIsTransaction(type) {
-  return type && /TRANSACTION/.test(type);
+  return type && (/TRANSACTION/.test(type) || /CURRENCY/.test(type));
 }
 
 export default function loadingReducer(state = initialState.loading, action) {
