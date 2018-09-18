@@ -21,10 +21,16 @@ function NativeModal({
     content: {
       maxWidth: maxWidth,
       margin: '0 auto',
+      padding: '1rem 0rem',
     },
   };
   return (
-    <Modal isOpen={isOpen} style={style} contentLabel={label}>
+    <Modal
+      className={styles.Modal}
+      isOpen={isOpen}
+      style={style}
+      contentLabel={label}
+    >
       <div className={styles.ModalHeader}>
         {renderHeader && renderHeader()}
         {hasCloseButton && (

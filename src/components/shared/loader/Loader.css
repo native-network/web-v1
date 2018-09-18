@@ -20,9 +20,16 @@
 }
 
 .Loader {
-  width: 10rem;
-  height: 10rem;
+  max-width: 10rem;
+  max-height: 10rem;
+  width: 100%;
+  height: 100%;
   border-radius: 100%;
+
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
 
   & path {
     animation: fade 1200ms linear infinite;

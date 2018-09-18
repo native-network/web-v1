@@ -1,0 +1,49 @@
+@import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
+@import '../../shared/button/Button.css';
+
+.CommunityStake {
+  text-align: center;
+
+  & .Button {
+    @extend %button;
+    @extend %primary-theme;
+
+    margin: 2rem auto;
+  }
+}
+
+.Header {
+  @extend %decorator--full-width;
+
+  padding: 0 0 0.5rem;
+  margin: 2rem 4rem;
+
+  &::after {
+    height: 2px;
+    background: var(--gray-9);
+  }
+}
+
+.TextContainer {
+  padding: 0 5rem;
+}
+
+.ModalConverter {
+  margin-top: 2rem;
+  flex-flow: wrap;
+
+  & > div {
+    width: 100%;
+  }
+
+  & button {
+
+    /* stylelint-disable-next-line declaration-no-important */
+    margin: 2rem auto !important;
+  }
+
+  @media (--medium-viewport) {
+    padding: 0 2rem;
+  }
+}

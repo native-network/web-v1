@@ -161,6 +161,9 @@ export class Dashboard extends Component {
   }
 
   render() {
+    const userEth = this.props.user.wallet.currencies.find(
+      (c) => c.symbol === 'ETH',
+    );
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -175,14 +178,7 @@ export class Dashboard extends Component {
                   <div className={styles.Balance}>
                     <img src={eth} /> ETH Balance:
                     {` `}
-                    <b>
-                      {
-                        this.props.user.wallet.currencies.find(
-                          (c) => c.symbol === 'ETH',
-                        ).balance
-                      }
-                    </b>{' '}
-                    ($100)
+                    <b>{userEth && userEth.balance}</b> ($100)
                   </div>
                 </div>
                 <div>{this.props.user.wallet.address}</div>
@@ -190,7 +186,12 @@ export class Dashboard extends Component {
             </div>
             <section className={styles.Dashboard}>
               <h1>Convert Currencies</h1>
-              {this.props.communities && this.props.communities.length ? (
+              {this.props.communities &&
+              this.props.communities.length &&
+              this.props.user.wallet.currencies.reduce(
+                (a, c) => !!c.symbol,
+                false,
+              ) ? (
                 <CurrencyConverter
                   className={styles.DashboardConverter}
                   defaultValues={{

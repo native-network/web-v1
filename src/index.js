@@ -31,9 +31,10 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <ReduxToastr
-          transitionIn="fadeIn"
-          transitionOut="fadeOut"
+          transitionIn="bounceInDown"
+          transitionOut="bounceOutUp"
           progressBar={false}
+          timeOut={3000}
         />
         <App />
       </div>

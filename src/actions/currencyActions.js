@@ -1,6 +1,9 @@
 import { currencyActions as actions } from './actionTypes';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
-import { allCommunityContractInstances } from '../utils/constants';
+import {
+  allCommunityContractInstances,
+  communityContractInstance,
+} from '../utils/constants';
 import {
   getUserWalletEthBalance,
   getUserWalletCommunityBalance,
@@ -90,9 +93,28 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
             sendingCommunity.community.tokenAddress,
             transactionAmount,
           );
-          dispatch(sendTransactionInNtvSuccess({ approve, buy }));
-          dispatch(toastrSuccess('Your purchase was successful!'));
-          return dispatch(getUserWalletCommunityBalance(address));
+
+          if (approve && buy) {
+            dispatch(getUserWalletCommunityBalance(address)).then((data) => {
+              Promise.all(data)
+                .then(() => {
+                  dispatch(toastrSuccess('Your purchase was successful!'));
+                  return dispatch(
+                    sendTransactionInNtvSuccess({ approve, buy }),
+                  );
+                })
+                .catch((err) => {
+                  const { message } = err;
+                  dispatch(toastrError(message));
+                  dispatch(sendTransactionInNtvError(message));
+                });
+            });
+          } else {
+            const message = 'Something went wrong.';
+
+            dispatch(toastrError(message));
+            return dispatch(sendTransactionInNtvError(message));
+          }
         } catch (err) {
           const { message } = err;
           dispatch(toastrError(message));
@@ -117,6 +139,42 @@ export const sendTransactionInNtvSuccess = (data) => {
 export const sendTransactionInNtvError = (error) => {
   return {
     type: actions.SEND_TRANSACTION_IN_NTV_ERROR,
+    error,
+  };
+};
+
+export const stake = (community) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.STAKE_TRANSACTION });
+    const { community3 } = await communityContractInstance(community);
+    try {
+      await community3.approve(
+        community.address,
+        community.currency.minimumStake,
+      );
+      await community3.stake();
+      dispatch(stakeSuccess());
+      dispatch(
+        toastrSuccess(`You have successfully staked into ${community.name}!`),
+      );
+    } catch (err) {
+      const { message } = err;
+
+      dispatch(toastrError(message));
+      return dispatch(stakeError(message));
+    }
+  };
+};
+
+export const stakeSuccess = () => {
+  return {
+    type: actions.STAKE_TRANSACTION_SUCCESS,
+  };
+};
+
+export const stakeError = (error) => {
+  return {
+    type: actions.STAKE_TRANSACTION_ERROR,
     error,
   };
 };

@@ -47,12 +47,19 @@ export class Card extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.isCurrencyLoading !== prevProps.isCurrencyLoading &&
-      !this.props.isCurrencyLoading
-    ) {
-      if (this.state.activeCommunity === this.props.community) {
-        this.openModal();
+    if (this.props.userCurrencies.length) {
+      const oldCurrency = prevProps.userCurrencies.find(
+        (c) => c.symbol === prevProps.community.currency.symbol,
+      );
+      const newCurrency = this.props.userCurrencies.find(
+        (c) => c.symbol === this.props.community.currency.symbol,
+      );
+
+      const oldBalance = oldCurrency && oldCurrency.balance;
+      const newBalance = newCurrency && newCurrency.balance;
+
+      if (oldBalance !== newBalance) {
+        this.openModal(this.props.community);
       }
     }
   }
@@ -87,6 +94,7 @@ export class Card extends Component {
           maxWidth="1020px"
         >
           <CommunityStake
+            error={this.props.currencyError}
             loading={this.props.isCurrencyLoading}
             user={this.props.user}
             community={this.props.community}
@@ -178,6 +186,7 @@ export default connect(
       isCurrencyLoading: state.currencies.loading,
       currencies: state.currencies.currencies,
       userCurrencies: state.user.wallet.currencies,
+      currencyError: state.currencies.error,
     };
   },
   null,

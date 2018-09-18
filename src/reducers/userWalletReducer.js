@@ -21,6 +21,7 @@ export default function userWalletReducer(state = {}, action) {
         wallet: {
           ...state.wallet,
           currencies: [
+            ...state.wallet.currencies,
             {
               ...currencies.find((c) => c.symbol === 'ETH'),
               balance: action.balance,
@@ -34,8 +35,19 @@ export default function userWalletReducer(state = {}, action) {
         wallet: {
           ...state.wallet,
           currencies: [
-            ...state.wallet.currencies.filter((c) => c !== action.currency),
-            action.currency,
+            ...state.wallet.currencies.filter(
+              (c) => c.symbol !== action.currency.symbol,
+            ),
+            state.wallet.currencies.find(
+              (c) => c.symbol === action.currency.symbol,
+            )
+              ? {
+                  ...state.wallet.currencies.find(
+                    (c) => c.symbol === action.currency.symbol,
+                  ),
+                  balance: action.currency.balance,
+                }
+              : action.currency,
           ],
         },
       };

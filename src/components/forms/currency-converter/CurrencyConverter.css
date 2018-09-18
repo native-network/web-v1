@@ -19,9 +19,7 @@
 }
 
 .ConversionInputs {
-  width: 100%;
-  box-shadow: 0 0 1rem var(--transparent-black-30);
-  padding: 0 0 1rem;
+  flex-grow: 1;
 
   @media (--medium-viewport) {
     display: flex;
@@ -35,8 +33,10 @@
   justify-content: flex-start;
   margin-bottom: 1rem;
   flex-flow: wrap;
+  width: 100%;
 
   @media (--medium-viewport) {
+    width: auto;
     flex-grow: 1;
     margin-bottom: 0;
     flex-direction: column;

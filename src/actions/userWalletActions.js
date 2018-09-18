@@ -45,7 +45,6 @@ export const getUserWalletAddressError = (error) => {
 export const getUserWalletEthBalance = () => {
   return async (dispatch) => {
     dispatch({ type: actions.GET_USER_WALLET_ETH_BALANCE });
-    dispatch(beginAjaxCall());
 
     try {
       const balance = await getBalance();
@@ -83,7 +82,6 @@ export const getUserWalletCommunityBalance = (address) => {
         return instances.map(async ({ id, community3 }) => {
           const activeCommunity = communities.find((c) => c.id === id);
           dispatch({ type: actions.GET_USER_WALLET_COMMUNITY_BALANCE });
-          // dispatch(beginAjaxCall());
 
           return Promise.all([
             community3.getPrice(),
