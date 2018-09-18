@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
+import CommunityStake from '../../components/dialogs/community-stake';
 
 import eth from '../../assets/img/eth.svg';
 
@@ -100,7 +101,9 @@ const cols = [
     resizable: false,
     maxWidth: 300,
     Cell: ({ value }) => {
-      return (
+      return value.communitySymbol === 'NTV' ? (
+        ''
+      ) : (
         <Button
           block
           theme="primary"
@@ -118,6 +121,8 @@ const cols = [
 export class Dashboard extends Component {
   state = {
     hasSession: this.props.hasSession || false,
+    isModalOpen: false,
+    activeCommunity: {},
   };
 
   componentDidUpdate(prevProps) {
@@ -143,7 +148,7 @@ export class Dashboard extends Component {
     }
   }
 
-  renderModal() {
+  renderAuthorizeModal() {
     return (
       <Modal
         label="Sign in"
@@ -160,6 +165,15 @@ export class Dashboard extends Component {
     );
   }
 
+  openModal(activeCommunity) {
+    this.setState({ activeCommunity });
+    this.setState({ isModalOpen: true });
+  }
+
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
+
   render() {
     const userEth = this.props.user.wallet.currencies.find(
       (c) => c.symbol === 'ETH',
@@ -169,9 +183,22 @@ export class Dashboard extends Component {
     ) : (
       <Fragment>
         {!this.state.hasSession ? (
-          this.renderModal()
+          this.renderAuthorizeModal()
         ) : (
           <Fragment>
+            <Modal
+              hasCloseButton
+              isOpen={this.state.isModalOpen}
+              closeModal={this.closeModal.bind(this)}
+              maxWidth="1020px"
+            >
+              <CommunityStake
+                loading={this.props.isCurrencyLoading}
+                user={this.props.user}
+                community={this.state.activeCommunity}
+                dismissDialog={true}
+              />
+            </Modal>
             <div className={styles.DashboardBanner}>
               <div>
                 <div className={styles.TokenBalances}>
@@ -240,7 +267,8 @@ export class Dashboard extends Component {
                         )
                           ? `Get ${currency && currency.symbol}`
                           : `Support Community`,
-                        clickHandler: () => alert('Clicked!'),
+                        clickHandler: () => this.openModal(community),
+                        communitySymbol: community.currency.symbol,
                       },
                     };
                   })}
@@ -267,6 +295,7 @@ export default connect(
   (state) => {
     return {
       communities: state.communities.communities,
+      isCurrencyLoading: state.currencies.loading,
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,
