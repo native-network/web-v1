@@ -11,15 +11,11 @@ import CommunityAdmin from './views/community-admin';
 import Manage from './views/manage';
 import FourOhFour from './views/404';
 
-export const PrivateRoute = ({
-  component: Component,
-  isAuthenticated,
-  ...rest
-}) => (
+export const PrivateRoute = ({ component: Component, isCurator, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      isAuthenticated ? (
+      isCurator ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -33,7 +29,7 @@ export const PrivateRoute = ({
   />
 );
 
-export const routes = (isAuthenticated) => {
+export const routes = (isCurator) => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -43,13 +39,13 @@ export const routes = (isAuthenticated) => {
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
       <PrivateRoute
-        isAuthenticated={isAuthenticated}
+        isCurator={isCurator}
         exact
         path="/manage/:communityId"
         component={CommunityAdmin}
       />
       <PrivateRoute
-        isAuthenticated={isAuthenticated}
+        isCurator={isCurator}
         exact
         path="/manage"
         component={Manage}

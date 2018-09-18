@@ -9,6 +9,7 @@ import {
   sendTransactionInEth,
   sendTransactionInNtv,
 } from '../../actions/currencyActions';
+import { endSession } from '../../actions/userSessionActions';
 
 export class Home extends Component {
   submitTransaction(symbol, community, amount) {
@@ -40,6 +41,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     sendTransactionInEth: bindActionCreators(sendTransactionInEth, dispatch),
     sendTransactionInNtv: bindActionCreators(sendTransactionInNtv, dispatch),
+    endSession: bindActionCreators(endSession, dispatch),
   };
 }
 

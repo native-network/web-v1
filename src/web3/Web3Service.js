@@ -10,9 +10,6 @@ export default class Web3Service {
 
   async init() {
     let provider;
-    if (typeof window.web3 !== 'undefined') {
-      this.web3 = new Web3(window.web3.currentProvider);
-    }
     const providerType =
       process.env.REMOTE_WEB3_PROVIDER_TYPE === 'websocket'
         ? 'WebSocketProvider'
@@ -20,7 +17,10 @@ export default class Web3Service {
     provider = new Web3.providers[providerType](
       process.env.REMOTE_WEB3_PROVIDER,
     );
-
+    this.web3 =
+      typeof window.web3 !== 'undefined'
+        ? new Web3(window.web3.currentProvider)
+        : new Web3(provider);
     this.web3Remote = new Web3(provider);
     this.mainAccount = await this.getMainAccount();
   }

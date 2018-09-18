@@ -2,7 +2,8 @@ import { push } from 'connected-react-router';
 import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
-import { promptSign } from '../web3/Web3Service';
+import { promptSign, getAddress } from '../web3/Web3Service';
+import { getUserWalletAddress } from './userWalletActions';
 import { toastrError } from './toastrActions';
 
 export const getUserSession = () => {
@@ -72,5 +73,40 @@ export const getUserSessionError = (error) => {
   return {
     type: actions.GET_USER_SESSION_ERROR,
     error,
+  };
+};
+
+export const endSession = () => {
+  return async (dispatch) => {
+    dispatch({ type: actions.END_SESSION });
+    try {
+      const { data } = await post(`user/end-session`, {});
+      if (data === 'Session cleared.') {
+        dispatch({
+          type: actions.END_SESSION_SUCCESS,
+          error: 'Session Cleared. Please authenticate again.',
+        });
+        return dispatch(getUserWalletAddress());
+      } else {
+        dispatch(toastrError('There was a problem ending the session.'));
+        return dispatch({ type: 'END_SESSION_ERROR' });
+      }
+    } catch (err) {
+      dispatch(toastrError('There was a problem ending the session.'));
+      return dispatch({ type: 'END_SESSION_ERROR' });
+    }
+  };
+};
+
+export const refreshAccounts = (user) => {
+  return async (dispatch) => {
+    try {
+      const web3Address = await getAddress();
+      if (web3Address !== user.wallet.address) {
+        dispatch(endSession());
+      }
+    } catch (err) {
+      dispatch({ type: 'END_SESSION_ERROR' });
+    }
   };
 };

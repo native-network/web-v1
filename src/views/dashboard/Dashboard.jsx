@@ -120,19 +120,9 @@ const cols = [
 
 export class Dashboard extends Component {
   state = {
-    hasSession: this.props.hasSession || false,
     isModalOpen: false,
     activeCommunity: {},
   };
-
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.hasSession !== prevProps.hasSession &&
-      this.props.hasSession
-    ) {
-      this.setState({ hasSession: true });
-    }
-  }
 
   authorize() {
     if (this.props.user.wallet.address) {
@@ -153,7 +143,7 @@ export class Dashboard extends Component {
       <Modal
         label="Sign in"
         renderHeader={() => <h1 style={{ textAlign: 'center' }}>Sign in</h1>}
-        isOpen={!this.state.hasSession}
+        isOpen={!this.props.hasSession}
       >
         <Button
           centered
@@ -182,7 +172,7 @@ export class Dashboard extends Component {
       <Loader />
     ) : (
       <Fragment>
-        {!this.state.hasSession ? (
+        {!this.props.hasSession ? (
           this.renderAuthorizeModal()
         ) : (
           <Fragment>

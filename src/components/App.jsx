@@ -12,7 +12,7 @@ import { routes } from '../routes';
 import styles from './App.css';
 import native from '../assets/img/native.svg';
 
-import { getUserSession } from '../actions/userSessionActions';
+import { getUserSession, refreshAccounts } from '../actions/userSessionActions';
 import { getUserWalletCommunityBalance } from '../actions/userWalletActions';
 
 export class App extends Component {
@@ -24,6 +24,9 @@ export class App extends Component {
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }
+    setInterval(() => {
+      this.props.refreshAccounts(this.props.user);
+    }, 500);
   }
 
   componentDidUpdate(prevProps) {
@@ -86,6 +89,7 @@ function mapDispatchToProps(dispatch) {
       dispatch,
     ),
     getUserSession: bindActionCreators(getUserSession, dispatch),
+    refreshAccounts: bindActionCreators(refreshAccounts, dispatch),
   };
 }
 
