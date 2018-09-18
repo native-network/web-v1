@@ -47,7 +47,7 @@ export class Card extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.userCurrencies.length) {
+    if (!this.props.isCurrencyLoading && this.props.userCurrencies.length) {
       const oldCurrency = prevProps.userCurrencies.find(
         (c) => c.symbol === prevProps.community.currency.symbol,
       );
@@ -58,7 +58,7 @@ export class Card extends Component {
       const oldBalance = oldCurrency && oldCurrency.balance;
       const newBalance = newCurrency && newCurrency.balance;
 
-      if (oldBalance !== newBalance) {
+      if (oldBalance && oldBalance !== newBalance) {
         this.openModal(this.props.community);
       }
     }
