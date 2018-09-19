@@ -21,9 +21,12 @@ import registerServiceWorker from './registerServiceWorker';
 
 const store = configureStore();
 
-store.dispatch(getCommunities());
-store.dispatch(getUserWalletAddress()).then(({ address }) => {
-  if (address) store.dispatch(getUserWalletCommunityBalance(address));
+store.dispatch(getCommunities()).then(({ communities }) => {
+  if (communities) {
+    return store.dispatch(getUserWalletAddress()).then(({ address }) => {
+      if (address) store.dispatch(getUserWalletCommunityBalance(address));
+    });
+  }
 });
 
 ReactDOM.render(

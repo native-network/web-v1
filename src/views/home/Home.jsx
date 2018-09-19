@@ -27,10 +27,12 @@ export class Home extends Component {
     ) : (
       <main>
         <CardList
-          listItems={(this.props.communities || []).map((community) => ({
-            ...community,
-            submitTransaction: this.submitTransaction.bind(this),
-          }))}
+          listItems={(this.props.communities || [])
+            .filter((community) => community.currency)
+            .map((community) => ({
+              ...community,
+              submitTransaction: this.submitTransaction.bind(this),
+            }))}
         />
       </main>
     );

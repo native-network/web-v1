@@ -11,12 +11,12 @@ export const getCommunities = () => {
     try {
       const { data } = await get('communities');
 
-      dispatch(getCommunitiesSuccess(data));
       if (data.length > 0) {
-        return data.map((community) =>
+        data.map((community) =>
           dispatch(updateCommunityWithCurrencyData(community)),
         );
       }
+      return dispatch(getCommunitiesSuccess(data));
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
