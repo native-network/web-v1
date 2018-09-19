@@ -88,12 +88,14 @@ export const endSession = () => {
         });
         return dispatch(getUserWalletAddress());
       } else {
-        dispatch(toastrError('There was a problem ending the session.'));
-        return dispatch({ type: 'END_SESSION_ERROR' });
+        const error = 'There was a problem ending the session.';
+        dispatch(toastrError(error));
+        return dispatch({ type: 'END_SESSION_ERROR', error });
       }
-    } catch (err) {
-      dispatch(toastrError('There was a problem ending the session.'));
-      return dispatch({ type: 'END_SESSION_ERROR' });
+    } catch (error) {
+      const { message } = error;
+      dispatch(toastrError(message));
+      return dispatch({ type: 'END_SESSION_ERROR', error: message });
     }
   };
 };
@@ -106,7 +108,7 @@ export const refreshAccounts = (user) => {
         dispatch(endSession());
       }
     } catch (err) {
-      dispatch({ type: 'END_SESSION_ERROR' });
+      return;
     }
   };
 };

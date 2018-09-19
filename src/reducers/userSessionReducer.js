@@ -9,6 +9,8 @@ export default function userSessionReducer(state = {}, action) {
       return { ...state, sessionError: action.error };
     case actions.END_SESSION_SUCCESS:
       return { ...initialState.user, sessionError: action.error };
+    case actions.END_SESSION_ERROR:
+      return { ...initialState.user, sessionError: action.error };
     default:
       return state;
   }
