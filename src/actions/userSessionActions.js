@@ -102,7 +102,7 @@ export const refreshAccounts = (user) => {
   return async (dispatch) => {
     try {
       const web3Address = await getAddress();
-      if (web3Address !== user.wallet.address) {
+      if (!user.sessionError && web3Address !== user.wallet.address) {
         dispatch(endSession());
       }
     } catch (err) {

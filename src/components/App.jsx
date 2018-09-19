@@ -18,15 +18,13 @@ import { getUserWalletCommunityBalance } from '../actions/userWalletActions';
 export class App extends Component {
   state = {
     isWelcomeModalOpen: false,
+    refreshIntervalSet: false,
   };
 
   componentWillMount() {
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }
-    setInterval(() => {
-      this.props.refreshAccounts(this.props.user);
-    }, 500);
   }
 
   componentDidUpdate(prevProps) {
@@ -35,6 +33,12 @@ export class App extends Component {
 
     if (!!newUserAddress && newUserAddress !== oldUserAddress) {
       this.props.getUserSession();
+    }
+    if (!this.state.refreshIntervalSet && this.props.user) {
+      setInterval(() => {
+        this.props.refreshAccounts(this.props.user);
+      }, 1000);
+      this.setState({ refreshIntervalSet: true });
     }
   }
 
