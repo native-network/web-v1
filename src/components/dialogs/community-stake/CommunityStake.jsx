@@ -30,12 +30,11 @@ class CommunityStake extends Component {
     const communityPrice = community.currency && community.currency.price;
     const communityBalance = userCurrency && userCurrency.balance;
 
-    const stakeInNative = new BigNumber(nativeBalance > 0 ? nativeBalance : 1)
-      .dividedBy(communityPrice)
-      .multipliedBy(minStake)
+    const stakeInNative = new BigNumber(communityPrice)
+      .multipliedBy(minStake - communityBalance)
       .toString();
 
-    if (+nativeBalance < +stakeInNative && +communityBalance === 0) {
+    if (+nativeBalance < +stakeInNative && +communityBalance < minStake) {
       this.setState({ components: [InsufficientFunds] });
     } else if (+communityBalance >= +minStake) {
       this.setState({ components: [StakeCommunity, ProcessTransaction] });

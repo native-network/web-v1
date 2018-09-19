@@ -15,8 +15,12 @@ export class ConvertCurrency extends Component {
 
   render() {
     const { user, community } = this.props;
+    const userCommunity = user.wallet.currencies.find(
+      (c) => c.symbol === community.currency.symbol,
+    );
     const minRequirement = (value) =>
-      parseInt(value, 10) < community.currency.minimumStake
+      parseInt(value, 10) <
+      community.currency.minimumStake - userCommunity.balance
         ? `You don't have enough to stake`
         : undefined;
 
