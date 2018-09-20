@@ -5,3 +5,6 @@ export const toastrError = (message) =>
 
 export const toastrSuccess = (message) =>
   toastrActions.add({ title: 'Success', type: 'success', message });
+
+export const toastrInfo = (message) =>
+  toastrActions.add({ title: 'Notice', type: 'info', message });

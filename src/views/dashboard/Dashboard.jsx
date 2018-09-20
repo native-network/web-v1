@@ -16,10 +16,7 @@ import 'react-table/react-table.css';
 
 import styles from './Dashboard.css';
 
-import {
-  getUserSession,
-  promptAuthorize,
-} from '../../actions/userSessionActions';
+import { promptAuthorize } from '../../actions/userSessionActions';
 import {
   sendTransactionInEth,
   sendTransactionInNtv,
@@ -295,7 +292,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     sendTransactionInEth: bindActionCreators(sendTransactionInEth, dispatch),
     sendTransactionInNtv: bindActionCreators(sendTransactionInNtv, dispatch),
-    getUserSession: bindActionCreators(getUserSession, dispatch),
     promptAuthorize: bindActionCreators(promptAuthorize, dispatch),
   };
 };

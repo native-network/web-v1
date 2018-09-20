@@ -4,7 +4,7 @@ import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { promptSign, getAddress } from '../web3/Web3Service';
 import { getUserWalletAddress } from './userWalletActions';
-import { toastrError, toastrSuccess } from './toastrActions';
+import { toastrError, toastrInfo } from './toastrActions';
 
 export const getUserSession = () => {
   return async (dispatch, getState) => {
@@ -17,7 +17,7 @@ export const getUserSession = () => {
       const { user } = data;
       if (user) {
         if (user.address !== walletAddress) {
-          return dispatch(endSession());
+          dispatch(endSession());
         }
         dispatch(getUserSessionSuccess(user));
         if (state && state.from) {
@@ -89,7 +89,7 @@ export const endSession = () => {
       const { data } = await post(`user/end-session`, {});
       if (data === 'Session cleared.') {
         dispatch(push('/'));
-        dispatch(toastrSuccess('Session Cleared. Please authenticate again.'));
+        dispatch(toastrInfo('Session Cleared. Please authenticate again.'));
         return dispatch({ type: actions.END_SESSION_SUCCESS });
       } else {
         const error = 'There was a problem ending the session.';
