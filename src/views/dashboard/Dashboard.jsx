@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
+import axios from 'axios';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 
 const { web3 } = getWeb3ServiceInstance();
@@ -28,6 +29,7 @@ import Loader from '../../components/shared/loader';
 import Modal from '../../components/shared/modal';
 import Button from '../../components/shared/button';
 import CurrencyConverter from '../../components/forms/currency-converter';
+import { formatUsd } from '../../utils/helpers';
 
 Object.assign(ReactTableDefaults, {
   minRows: 0,
@@ -126,7 +128,18 @@ export class Dashboard extends Component {
   state = {
     isModalOpen: false,
     activeCommunity: {},
+    ethUSD: null,
   };
+
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get('http://coincap.io/page/ETH');
+      this.setState({ ethUSD: data.price });
+    } catch (err) {
+      console.log('Error fetching data from coincap', err); // eslint-disable-line no-console
+      this.setState({ ethUSD: null });
+    }
+  }
 
   authorize() {
     if (this.props.user.wallet.address) {
@@ -172,6 +185,11 @@ export class Dashboard extends Component {
     const userEth = this.props.user.wallet.currencies.find(
       (c) => c.symbol === 'ETH',
     );
+    const ethBalance = userEth && fromWei(userEth.balance);
+    const ethInUSD = this.state.ethUSD
+      ? formatUsd(ethBalance * this.state.ethUSD)
+      : '$0';
+
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -199,7 +217,7 @@ export class Dashboard extends Component {
                   <div className={styles.Balance}>
                     <img src={eth} /> ETH Balance:
                     {` `}
-                    <b>{userEth && fromWei(userEth.balance)}</b> ($100)
+                    <b>{ethBalance}</b> ({ethInUSD})
                   </div>
                 </div>
                 <div>{this.props.user.wallet.address}</div>
