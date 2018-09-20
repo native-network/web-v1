@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 
 import CurrencyConverter from '../../../forms/currency-converter';
+import { getWeb3ServiceInstance } from '../../../../web3/Web3Service';
+import { bigNumber } from '../../../../utils/helpers';
+
+const { web3 } = getWeb3ServiceInstance();
+
+const { fromWei } = web3.utils;
 
 import styles from '../CommunityStake.css';
 
@@ -20,7 +26,11 @@ export class ConvertCurrency extends Component {
     );
     const minRequirement = (value) =>
       parseInt(value, 10) <
-      community.currency.minimumStake - userCommunity.balance
+      +fromWei(
+        bigNumber(
+          community.currency.minimumStake - userCommunity.balance,
+        ).toString(),
+      )
         ? `You don't have enough to stake`
         : undefined;
 
@@ -56,12 +66,15 @@ export class ConvertCurrency extends Component {
               (c) => c.symbol === 'NTV',
             ),
             sendValue: new BigNumber(
-              (community.currency && community.currency.minimumStake) || 1,
+              (community.currency &&
+                fromWei(community.currency.minimumStake)) ||
+                1,
             )
               .dividedBy((community.currency && community.currency.price) || 1)
               .toString(),
             receiveCurrency: community.currency,
-            receiveValue: community.currency && community.currency.minimumStake,
+            receiveValue:
+              community.currency && fromWei(community.currency.minimumStake),
           }}
           sendCurrencies={[]}
           receiveCurrencies={[community.currency]}

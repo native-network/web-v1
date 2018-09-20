@@ -109,8 +109,11 @@ export class CurrencyConverter extends Component {
       (t) => t.symbol === receiveCurrency.symbol,
     );
     const { symbol, tokenAddress } = token;
-
-    this.props.submitHandler(symbol, tokenAddress, toWei(sendValue));
+    this.props.submitHandler(
+      symbol,
+      tokenAddress,
+      token.symbol === 'NTV' ? sendValue : toWei(sendValue),
+    );
   }
 
   render() {

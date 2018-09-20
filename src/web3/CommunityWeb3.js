@@ -72,6 +72,7 @@ export default class CommunityService {
         .buyWithToken(sendingAddress, transactionAmount)
         .send({ from: this.web3Service.mainAccount });
     } catch (err) {
+      console.log(err) // eslint-disable-line
       throw new Error('There was a problem with the purchase process.');
     }
   }
