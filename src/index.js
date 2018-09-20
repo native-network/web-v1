@@ -8,10 +8,7 @@ import ReduxToastr from 'react-redux-toastr';
 
 import configureStore, { history } from './store';
 import { getCommunities } from './actions/communitiesActions';
-import {
-  getUserWalletAddress,
-  getUserWalletCommunityBalance,
-} from './actions/userWalletActions';
+import { getUserWalletAddress } from './actions/userWalletActions';
 
 import './index.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
@@ -23,9 +20,7 @@ const store = configureStore();
 
 store.dispatch(getCommunities()).then(({ communities }) => {
   if (communities) {
-    return store.dispatch(getUserWalletAddress()).then(({ address }) => {
-      if (address) store.dispatch(getUserWalletCommunityBalance(address));
-    });
+    return store.dispatch(getUserWalletAddress());
   }
 });
 
@@ -38,6 +33,7 @@ ReactDOM.render(
           transitionOut="bounceOutUp"
           progressBar={false}
           timeOut={3000}
+          closeOnToastrClick
         />
         <App />
       </div>

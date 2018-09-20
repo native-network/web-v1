@@ -4,10 +4,7 @@ import {
   allCommunityContractInstances,
   communityContractInstance,
 } from '../utils/constants';
-import {
-  getUserWalletEthBalance,
-  getUserWalletCommunityBalance,
-} from './userWalletActions';
+import { getUserWalletBalances } from './userWalletActions';
 import { toastrError, toastrSuccess } from './toastrActions';
 
 export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
@@ -28,8 +25,7 @@ export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
         .then((receipt) => {
           dispatch(sendTransactionInEthSuccess(receipt));
           dispatch(toastrSuccess('Your purchase was successful!'));
-          dispatch(getUserWalletEthBalance());
-          return dispatch(getUserWalletCommunityBalance(account));
+          return dispatch(getUserWalletBalances(account));
         })
         .catch((err) => {
           const { message } = err;
@@ -95,7 +91,7 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
           );
 
           if (approve && buy) {
-            dispatch(getUserWalletCommunityBalance(address)).then((data) => {
+            dispatch(getUserWalletBalances(address)).then((data) => {
               Promise.all(data)
                 .then(() => {
                   dispatch(toastrSuccess('Your purchase was successful!'));

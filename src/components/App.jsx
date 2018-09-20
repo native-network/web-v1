@@ -13,7 +13,6 @@ import styles from './App.css';
 import native from '../assets/img/native.svg';
 
 import { getUserSession, refreshAccounts } from '../actions/userSessionActions';
-import { getUserWalletCommunityBalance } from '../actions/userWalletActions';
 
 export class App extends Component {
   state = {
@@ -88,10 +87,6 @@ export class App extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUserWalletCommunityBalance: bindActionCreators(
-      getUserWalletCommunityBalance,
-      dispatch,
-    ),
     getUserSession: bindActionCreators(getUserSession, dispatch),
     refreshAccounts: bindActionCreators(refreshAccounts, dispatch),
   };

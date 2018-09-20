@@ -4,17 +4,22 @@ import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { promptSign, getAddress } from '../web3/Web3Service';
 import { getUserWalletAddress } from './userWalletActions';
-import { toastrError } from './toastrActions';
+import { toastrError, toastrSuccess } from './toastrActions';
 
 export const getUserSession = () => {
   return async (dispatch, getState) => {
     const { state } = getState().router.location;
+    const { address: walletAddress } = getState().user.wallet;
     dispatch({ type: actions.GET_USER_SESSION });
     dispatch(beginAjaxCall());
     try {
       const { data } = await get(`user`);
-      if (data.user) {
-        dispatch(getUserSessionSuccess(data.user));
+      const { user } = data;
+      if (user) {
+        if (user.address !== walletAddress) {
+          return dispatch(endSession());
+        }
+        dispatch(getUserSessionSuccess(user));
         if (state && state.from) {
           return dispatch(push(state.from.pathname));
         }
@@ -79,14 +84,13 @@ export const getUserSessionError = (error) => {
 export const endSession = () => {
   return async (dispatch) => {
     dispatch({ type: actions.END_SESSION });
+    dispatch(beginAjaxCall());
     try {
       const { data } = await post(`user/end-session`, {});
       if (data === 'Session cleared.') {
-        dispatch({
-          type: actions.END_SESSION_SUCCESS,
-          error: 'Session Cleared. Please authenticate again.',
-        });
-        return dispatch(getUserWalletAddress());
+        dispatch(push('/'));
+        dispatch(toastrSuccess('Session Cleared. Please authenticate again.'));
+        return dispatch({ type: actions.END_SESSION_SUCCESS });
       } else {
         const error = 'There was a problem ending the session.';
         dispatch(toastrError(error));
@@ -102,13 +106,20 @@ export const endSession = () => {
 
 export const refreshAccounts = (user) => {
   return async (dispatch) => {
+    const { address: sessionAddress, wallet, sessionError } = user;
+    const { address } = wallet;
     try {
       const web3Address = await getAddress();
-      if (!user.sessionError && web3Address !== user.wallet.address) {
-        dispatch(endSession());
+      if (web3Address) {
+        if ((web3Address && !address) || web3Address !== address) {
+          return dispatch(getUserWalletAddress());
+        }
+        if (sessionAddress !== web3Address && !sessionError) {
+          return dispatch(endSession());
+        }
       }
     } catch (err) {
-      return;
+      if (sessionAddress) return dispatch(endSession());
     }
   };
 };

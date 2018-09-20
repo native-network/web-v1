@@ -2,6 +2,7 @@ import sigUtil from 'eth-sig-util';
 import ethUtil from 'ethereumjs-util';
 import Web3 from 'web3';
 import Web3ServiceMock from './Web3ServiceMock';
+import { ETH_CONSTANT } from '../utils/constants';
 
 export default class Web3Service {
   web3;
@@ -38,8 +39,8 @@ export default class Web3Service {
     });
   }
 
-  async getAccountBalance() {
-    return await new this.web3.eth.getBalance(this.mainAccount);
+  async getAccountBalance(address) {
+    return await new this.web3.eth.getBalance(address);
   }
 
   async initContract(abi, address) {
@@ -71,8 +72,9 @@ export const getAddress = () => {
     });
 };
 
-export const getBalance = async () => {
-  return await web3Service.getAccountBalance();
+export const getBalance = async (address) => {
+  const balance = await web3Service.getAccountBalance(address);
+  return { ...ETH_CONSTANT, balance };
 };
 
 export const promptSign = async (rawMessage) => {

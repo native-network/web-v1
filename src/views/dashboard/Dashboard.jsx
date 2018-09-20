@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
+import { getWeb3ServiceInstance } from '../../web3/Web3Service';
+
+const { web3 } = getWeb3ServiceInstance();
+const { fromWei } = web3.utils;
 
 import eth from '../../assets/img/eth.svg';
 
@@ -195,7 +199,7 @@ export class Dashboard extends Component {
                   <div className={styles.Balance}>
                     <img src={eth} /> ETH Balance:
                     {` `}
-                    <b>{userEth && userEth.balance}</b> ($100)
+                    <b>{userEth && fromWei(userEth.balance)}</b> ($100)
                   </div>
                 </div>
                 <div>{this.props.user.wallet.address}</div>
@@ -204,15 +208,12 @@ export class Dashboard extends Component {
             <section className={styles.Dashboard}>
               <h1>Convert Currencies</h1>
               {this.props.communities &&
-              this.props.communities.length &&
-              this.props.user.wallet.currencies.reduce(
-                (a, c) => !!c.symbol,
-                false,
-              ) ? (
+              !!this.props.communities.length &&
+              !!this.props.walletCurrencies.length ? (
                 <CurrencyConverter
                   className={styles.DashboardConverter}
                   defaultValues={{
-                    sendCurrency: this.props.user.wallet.currencies.find(
+                    sendCurrency: this.props.walletCurrencies.find(
                       (currency) => currency.symbol === 'ETH',
                     ),
                     sendValue: '',
@@ -222,7 +223,7 @@ export class Dashboard extends Component {
                     (currency) =>
                       (currency.symbol === 'ETH' ||
                         currency.symbol === 'NTV') &&
-                      currency.balance > 0,
+                      +currency.balance > 0,
                   )}
                   receiveCurrencies={this.props.communities.map(
                     (c) => c.currency,
@@ -289,6 +290,7 @@ export default connect(
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,
+      walletCurrencies: state.user.wallet.currencies,
     };
   },
   mapDispatchToProps,

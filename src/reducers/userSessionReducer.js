@@ -4,13 +4,13 @@ import { initialState } from './initialState';
 export default function userSessionReducer(state = {}, action) {
   switch (action.type) {
     case actions.GET_USER_SESSION_SUCCESS:
-      return { ...state, ...action.user };
+      return { ...state, ...action.user, sessionErrror: '' };
     case actions.GET_USER_SESSION_ERROR:
-      return { ...state, sessionError: action.error };
+      return { ...state, address: '', sessionError: action.error };
     case actions.END_SESSION_SUCCESS:
-      return { ...initialState.user, sessionError: action.error };
+      return { ...initialState.user, address: '', sessionError: '' };
     case actions.END_SESSION_ERROR:
-      return { ...initialState.user, sessionError: action.error };
+      return { ...initialState.user, address: '', sessionError: action.error };
     default:
       return state;
   }
