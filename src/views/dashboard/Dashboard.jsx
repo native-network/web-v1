@@ -6,7 +6,7 @@ import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
 import axios from 'axios';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
-
+import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
 
@@ -257,6 +257,10 @@ export class Dashboard extends Component {
                       (c) => c.symbol === community.currency.symbol,
                     );
                     const { currency } = community;
+                    const userBalance =
+                      userCurrency && userCurrency.balance
+                        ? fromWei(userCurrency.balance)
+                        : '0';
                     return {
                       community: {
                         ...community,
@@ -265,7 +269,9 @@ export class Dashboard extends Component {
                           (c) => c.id === community.id,
                         ),
                       },
-                      quantity: (userCurrency && userCurrency.balance) || 0,
+                      quantity: bigNumber(userBalance)
+                        .decimalPlaces(3)
+                        .toString(),
                       price: 0.35,
                       actions: {
                         name: this.props.user.memberOf.find(

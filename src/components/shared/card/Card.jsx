@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
 import { connect } from 'react-redux';
+import Web3 from 'web3';
 
 import Button from '../button';
 import Modal from '../modal';
 import CommunityStake from '../../dialogs/community-stake';
 import TokenData from '../token-data';
 import Tag from '../tag';
-
 import styles from './Card.css';
 
 const ANIMATION_DURATION = 200;
@@ -132,7 +132,7 @@ export class Card extends Component {
               theme="primary"
               disabled={!this.props.user.wallet.address}
               content={`${(community.currency &&
-                community.currency.minimumStake) ||
+                Web3.utils.fromWei(community.currency.minimumStake)) ||
                 0} ${(community.currency && community.currency.symbol) || ''}`}
             />
           </div>

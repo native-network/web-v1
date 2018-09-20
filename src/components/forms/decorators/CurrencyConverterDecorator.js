@@ -1,7 +1,7 @@
 import createDecorator from 'final-form-calculate';
 import { BigNumber } from 'bignumber.js';
-import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 import { bigNumber, isPriceInWei } from '../../../utils/helpers';
+import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
@@ -14,11 +14,12 @@ export const CurrencyConverterDecorator = createDecorator(
     updates: {
       receiveValue: (value, allValues) => {
         const { receiveCurrency } = allValues;
+        const receivePrice = bigNumber(receiveCurrency.price);
         const valueBN = bigNumber(value || 0);
         if (value && valueBN.gt(0)) {
           return isPriceInWei(receiveCurrency)
             ? valueBN
-                .dividedBy(fromWei(receiveCurrency.price))
+                .dividedBy(fromWei(receivePrice.toString()))
                 .decimalPlaces(18)
                 .toString()
             : valueBN
@@ -34,11 +35,12 @@ export const CurrencyConverterDecorator = createDecorator(
     updates: {
       sendValue: (value, allValues) => {
         const { receiveCurrency } = allValues;
+        const receivePrice = bigNumber(receiveCurrency.price);
         const valueBN = bigNumber(value || 0);
         if (value && valueBN.gt(0)) {
           return isPriceInWei(receiveCurrency)
             ? valueBN
-                .multipliedBy(fromWei(receiveCurrency.price))
+                .multipliedBy(fromWei(receivePrice.toString()))
                 .decimalPlaces(18)
                 .toString()
             : valueBN

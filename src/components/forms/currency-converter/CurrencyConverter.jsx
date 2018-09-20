@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { Field as Field5 } from 'react-final-form-html5-validation';
 
+import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
+
 import styles from './CurrencyConverter.css';
 
 import Button from '../../shared/button';
@@ -14,6 +16,9 @@ import CurrencyInput from '../../shared/currency-input';
 
 import { CurrencyConverterDecorator } from '../decorators/CurrencyConverterDecorator';
 import BigNumber from 'bignumber.js';
+
+const { web3 } = getWeb3ServiceInstance();
+const { toWei } = web3.utils;
 
 export class CurrencyConverter extends Component {
   static propTypes = {
@@ -104,7 +109,8 @@ export class CurrencyConverter extends Component {
       (t) => t.symbol === receiveCurrency.symbol,
     );
     const { symbol, tokenAddress } = token;
-    this.props.submitHandler(symbol, tokenAddress, sendValue);
+
+    this.props.submitHandler(symbol, tokenAddress, toWei(sendValue));
   }
 
   render() {
