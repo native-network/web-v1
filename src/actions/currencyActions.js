@@ -91,20 +91,16 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
           );
 
           if (approve && buy) {
-            dispatch(getUserWalletBalances(address)).then((data) => {
-              Promise.all(data)
-                .then(() => {
-                  dispatch(toastrSuccess('Your purchase was successful!'));
-                  return dispatch(
-                    sendTransactionInNtvSuccess({ approve, buy }),
-                  );
-                })
-                .catch((err) => {
-                  const { message } = err;
-                  dispatch(toastrError(message));
-                  dispatch(sendTransactionInNtvError(message));
-                });
-            });
+            dispatch(getUserWalletBalances(address))
+              .then(() => {
+                dispatch(toastrSuccess('Your purchase was successful!'));
+                dispatch(sendTransactionInNtvSuccess({ approve, buy }));
+              })
+              .catch((err) => {
+                const { message } = err;
+                dispatch(toastrError(message));
+                dispatch(sendTransactionInNtvError(message));
+              });
           } else {
             const message = 'Something went wrong.';
 
