@@ -130,7 +130,7 @@ export class Dashboard extends Component {
 
   async componentDidMount() {
     try {
-      const { data } = await axios.get('http://coincap.io/page/ETH');
+      const { data } = await axios.get('//coincap.io/page/ETH');
       this.setState({ ethUSD: data.price });
     } catch (err) {
       console.log('Error fetching data from coincap', err); // eslint-disable-line no-console
