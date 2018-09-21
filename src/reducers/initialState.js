@@ -35,4 +35,8 @@ export const initialState = {
     addressError: '',
     sessionError: '',
   },
+  prices: {
+    ethUSD: '',
+    ntvWei: '',
+  },
 };

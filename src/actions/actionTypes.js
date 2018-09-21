@@ -99,3 +99,9 @@ export const voteActions = {
   VOTE_SUCCESS: 'VOTE_SUCCESS',
   VOTE_ERROR: 'VOTE_ERROR',
 };
+
+export const priceActions = {
+  SET_PRICE_ETH: 'SET_PRICE_ETH',
+  SET_PRICE_NTV: 'SET_PRICE_NTV',
+  GET_CURRENT_PRICES: 'GET_CURRENT_PRICES',
+};

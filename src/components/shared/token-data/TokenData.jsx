@@ -1,41 +1,31 @@
 import React from 'react';
+import { formatUsd, formatCrypto } from '../../../utils/helpers';
+import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 
-function TokenData({
-  containerClass,
-  isMobile,
-  value,
-  marketCap,
-  devFund,
-  reserve,
-  reserveRatio,
-}) {
+const { web3 } = getWeb3ServiceInstance();
+const { fromWei } = web3.utils;
+
+function TokenData({ containerClass, currency, prices }) {
+  const { price, totalSupply } = currency;
+
+  const priceUSD = price * (fromWei(prices.ntvWei) * prices.ethUSD);
+  const marketCap = totalSupply * priceUSD;
+
+  const tokenValue = `${formatCrypto(fromWei(prices.ntvWei))} ETH (${formatUsd(
+    priceUSD,
+  )})`;
+
   return (
     <div className={containerClass}>
       <dl>
         <div>
           <dt>Token Value</dt>
-          <dd>{value}</dd>
+          <dd>{tokenValue}</dd>
         </div>
         <div>
           <dt>Market Cap</dt>
-          <dd>{marketCap}</dd>
+          <dd>{`${formatUsd(marketCap)}`}</dd>
         </div>
-        <div>
-          <dt>Dev Fund</dt>
-          <dd>{devFund}</dd>
-        </div>
-        <div>
-          <dt>Reserve</dt>
-          <dd>
-            {reserve} {isMobile && `(${reserveRatio})`}
-          </dd>
-        </div>
-        {!isMobile && (
-          <div>
-            <dt>Reserve Ratio</dt>
-            <dd>{reserveRatio}</dd>
-          </div>
-        )}
       </dl>
     </div>
   );

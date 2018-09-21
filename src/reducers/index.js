@@ -12,6 +12,7 @@ import userSessionReducer from './userSessionReducer';
 import communityPollsReducer from './communityPollsReducer';
 import communityProjectsReducer from './communityProjectsReducer';
 import communityTasksReducer from './communityTasksReducer';
+import pricesReducer from './pricesReducer';
 
 const rootReducer = combineReducers({
   user: reduceReducers(
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   projects: communityProjectsReducer,
   tasks: communityTasksReducer,
   toastr: toastrReducer,
+  prices: pricesReducer,
 });
 
 export default rootReducer;

@@ -17,16 +17,21 @@ import styles from './Card.css';
 
 const ANIMATION_DURATION = 200;
 
-const tokenData = {
-  value: '.031 NT ($0.09)',
-  marketCap: '$312,338.25',
-  devFund: '24,958 NT',
-  reserve: '2,495.8 NT',
-  reserveRatio: '10%',
-};
-
 export class Card extends Component {
   panelHeight = undefined;
+  static defaultProps = {
+    community: {
+      currency: {
+        price: '',
+        totalSupply: '',
+      },
+    },
+    prices: {
+      ethUSD: '',
+      ntvWei: '',
+    },
+  };
+
   state = {
     isReadMoreOpen: true,
     isModalOpen: false,
@@ -71,7 +76,7 @@ export class Card extends Component {
 
   render() {
     const { props, state } = this;
-    const { community, render } = props;
+    const { community, render, prices } = props;
     const { isReadMoreOpen } = state;
 
     const transition = `all ${ANIMATION_DURATION}ms linear`;
@@ -116,7 +121,8 @@ export class Card extends Component {
               <h2 className={styles.Title}>{community.name}</h2>
               <span className={styles.Location}>{community.location}</span>
               <TokenData
-                {...tokenData}
+                prices={prices}
+                currency={community.currency}
                 containerClass={`${styles.TokenData} ${styles.Desktop}`}
                 isMobile={false}
               />
@@ -143,7 +149,8 @@ export class Card extends Component {
           </div>
         </div>
         <TokenData
-          {...tokenData}
+          prices={prices}
+          currency={community.currency}
           containerClass={`${styles.TokenData} ${styles.Mobile}`}
           isMobile={true}
         />

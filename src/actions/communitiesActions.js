@@ -3,6 +3,7 @@ import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { communityContractInstance } from '../utils/constants';
 import { toastrError } from './toastrActions';
+import { setPriceNTV } from './pricesActions';
 
 export const getCommunities = () => {
   return async (dispatch) => {
@@ -85,6 +86,9 @@ export const updateCommunityWithCurrencyData = (community) => {
         .then((data) => {
           if (data) {
             const [price, symbol, totalSupply, minimumStake] = data;
+            if (symbol === 'NTV') {
+              dispatch(setPriceNTV(price));
+            }
 
             dispatch(
               updateCommunityWithCurrencyDataSuccess({

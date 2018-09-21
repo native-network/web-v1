@@ -12,6 +12,14 @@ import {
 import { endSession } from '../../actions/userSessionActions';
 
 export class Home extends Component {
+  static defaultProps = {
+    communities: [],
+    prices: {
+      ntvWei: '',
+      ethUSD: '',
+    },
+  };
+
   submitTransaction(symbol, community, amount) {
     if (symbol === 'NTV') {
       this.props.sendTransactionInEth(community, amount);
@@ -22,12 +30,13 @@ export class Home extends Component {
 
   render() {
     const { isLoading } = this.props;
-    return isLoading ? (
-      <Loader />
-    ) : (
+    if (isLoading) return <Loader />;
+
+    return (
       <main>
         <CardList
-          listItems={(this.props.communities || [])
+          prices={this.props.prices}
+          listItems={this.props.communities
             .filter((community) => community.currency)
             .map((community) => ({
               ...community,
@@ -52,6 +61,7 @@ export default connect(
     return {
       communities: state.communities.communities,
       isLoading: state.loading > 0,
+      prices: state.prices,
     };
   },
   mapDispatchToProps,

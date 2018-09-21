@@ -25,3 +25,9 @@ export function formatUsd(amt = 0) {
   }
   return '$' + numberWithCommas(parseFloat(amt || 0).toFixed(2));
 }
+
+export function formatCrypto(amt = 0) {
+  return bigNumber(amt)
+    .decimalPlaces(3)
+    .toString();
+}

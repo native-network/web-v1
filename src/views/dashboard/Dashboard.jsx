@@ -5,7 +5,6 @@ import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
-import axios from 'axios';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
@@ -70,7 +69,9 @@ const cols = [
     Header: 'Price',
     accessor: 'price',
     maxWidth: 150,
-    Cell: ({ value }) => `$${value}`,
+    Cell: ({ value }) => {
+      return formatUsd(value);
+    },
     style: {
       textAlign: 'right',
     },
@@ -83,7 +84,9 @@ const cols = [
     id: 'total',
     maxWidth: 150,
     accessor: ({ price, quantity }) => (+price * +quantity).toFixed(2),
-    Cell: ({ value }) => `$${value}`,
+    Cell: ({ value }) => {
+      return formatUsd(value);
+    },
     Footer: ({ data }) => {
       const sum = data.reduce((sum, { total }) => {
         return (+total + +sum).toFixed(2);
@@ -126,17 +129,19 @@ export class Dashboard extends Component {
   state = {
     isModalOpen: false,
     activeCommunity: {},
-    ethUSD: null,
   };
 
-  async componentDidMount() {
-    try {
-      const { data } = await axios.get('//coincap.io/page/ETH');
-      this.setState({ ethUSD: data.price });
-    } catch (err) {
-      console.log('Error fetching data from coincap', err); // eslint-disable-line no-console
-      this.setState({ ethUSD: null });
+  communityPrice(community) {
+    if (community.currency.symbol === 'NTV') {
+      return fromWei(this.props.prices.ntvWei) * this.props.prices.ethUSD;
     }
+    return (
+      fromWei(
+        bigNumber(
+          community.currency.price * this.props.prices.ntvWei,
+        ).toString(),
+      ) * this.props.prices.ethUSD
+    );
   }
 
   authorize() {
@@ -190,8 +195,8 @@ export class Dashboard extends Component {
       (c) => c.symbol === 'ETH',
     );
     const ethBalance = userEth && fromWei(userEth.balance);
-    const ethInUSD = this.state.ethUSD
-      ? formatUsd(ethBalance * this.state.ethUSD)
+    const ethInUSD = this.props.prices.ethUSD
+      ? formatUsd(ethBalance * this.props.prices.ethUSD)
       : '$0';
 
     return this.props.isLoading ? (
@@ -279,7 +284,7 @@ export class Dashboard extends Component {
                       quantity: bigNumber(userBalance)
                         .decimalPlaces(3)
                         .toString(),
-                      price: 0.35,
+                      price: this.communityPrice(community),
                       actions: {
                         name: this.props.user.memberOf.find(
                           (c) => c.id === community.id,
@@ -318,6 +323,7 @@ export default connect(
       hasSession: !!state.user.id,
       user: state.user,
       walletCurrencies: state.user.wallet.currencies,
+      prices: state.prices,
     };
   },
   mapDispatchToProps,

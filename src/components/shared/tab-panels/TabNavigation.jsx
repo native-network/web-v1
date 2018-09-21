@@ -22,7 +22,8 @@ export default function TabNavigation({ panels, activeTab, clickHandler }) {
             className={addClassNames(i)}
             onClick={() => clickHandler(i)}
           >
-            <button>{name}</button>
+            {/* <button>{name}</button> */}
+            <button disabled={i > 0}>{name}</button>
           </li>
         );
       })}

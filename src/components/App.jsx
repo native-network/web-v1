@@ -13,6 +13,7 @@ import styles from './App.css';
 import native from '../assets/img/native.svg';
 
 import { getUserSession, refreshAccounts } from '../actions/userSessionActions';
+import { getCurrentPrices } from '../actions/pricesActions';
 
 export class App extends Component {
   state = {
@@ -24,6 +25,7 @@ export class App extends Component {
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }
+    this.props.getCurrentPrices();
   }
 
   componentDidUpdate(prevProps) {
@@ -85,6 +87,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getUserSession: bindActionCreators(getUserSession, dispatch),
     refreshAccounts: bindActionCreators(refreshAccounts, dispatch),
+    getCurrentPrices: bindActionCreators(getCurrentPrices, dispatch),
   };
 }
 
