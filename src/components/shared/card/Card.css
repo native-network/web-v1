@@ -128,10 +128,6 @@
   & dd {
     margin-left: 0.25rem;
   }
-
-  @media (--medium-viewport) {
-    grid-area: info;
-  }
 }
 
 .TokenData {
@@ -187,20 +183,21 @@
 }
 
 .CardDetails {
+  @extend %container;
+
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 
   @media (--medium-viewport) {
-    display: grid;
-    grid-template-areas:
-      'summary benefits requirements'
-      'info . social';
+    flex-direction: row;
   }
 }
 
 .Summary {
   @media (--medium-viewport) {
-    grid-area: summary;
+    flex-basis: calc((100% / 3) - 1rem);
+    margin-right: 1rem;
   }
 }
 
@@ -210,12 +207,44 @@
   padding-bottom: 1rem;
 
   @media (--medium-viewport) {
+    display: grid;
+    grid-template-areas:
+      'benefits policies'
+      '. social';
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1rem;
 
     /* stylelint-disable-next-line declaration-no-important */
     height: auto !important;
 
     /* stylelint-disable-next-line declaration-no-important */
     opacity: 1 !important;
+
+    & .Benefits {
+      grid-area: benefits;
+    }
+
+    & .Policies {
+      grid-area: policies;
+    }
+
+    & .Social {
+      grid-area: social;
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.Social {
+  & a {
+    color: var(--secondary-button-default);
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: var(--secondary-button-active);
+    }
   }
 }
 
@@ -225,9 +254,4 @@
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
-}
-
-.Summary,
-.Membership {
-  @extend %container;
 }

@@ -172,6 +172,20 @@ export class Card extends Component {
             <h3>About:</h3>
             <p className={styles.Intro}>{community.communityPurpose}</p>
             {this.renderCommunityLink(community, this.props.user)}
+            <dl className={styles.CommunityInfo}>
+              <div>
+                <dt>Location:</dt>
+                <dd>{community.location}</dd>
+              </div>
+              <div>
+                <dt>Total Members:</dt>
+                <dd>{community.memberCount || 10}</dd>
+              </div>
+              <div>
+                <dt>Curator:</dt>
+                <dd>{community.curatorInfo}</dd>
+              </div>
+            </dl>
           </div>
           <Transition
             mountOnEnter
@@ -187,33 +201,24 @@ export class Card extends Component {
                   ...transitionStyles[state],
                 }}
               >
-                <dl className={styles.CommunityInfo}>
-                  <div>
-                    <dt>Location:</dt>
-                    <dd>{community.location}</dd>
-                  </div>
-                  <div>
-                    <dt>Total Members:</dt>
-                    <dd>{community.memberCount || 10}</dd>
-                  </div>
-                  <div>
-                    <dt>Curator:</dt>
-                    <dd>{community.curatorInfo}</dd>
-                  </div>
-                </dl>
-                <h3>Membership Benefits</h3>
-                {membershipBenefits ? (
-                  <ul>
-                    {membershipBenefits.map((benefit, index) => (
-                      <li key={index}>{benefit}</li>
-                    ))}
-                  </ul>
-                ) : null}
-                <h3>Governance Policies:</h3>
-                <p>
-                  Quorum of {community.quorum}% is required to approve projects.
-                </p>
-                <SocialMedia links={socialLinks} />
+                <div className={styles.Benefits}>
+                  <h3>Membership Benefits</h3>
+                  {membershipBenefits ? (
+                    <ul>
+                      {membershipBenefits.map((benefit, index) => (
+                        <li key={index}>{benefit}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+                <div className={styles.Policies}>
+                  <h3>Governance Policies:</h3>
+                  <p>
+                    Quorum of {community.quorum}% is required to approve
+                    projects.
+                  </p>
+                </div>
+                <SocialMedia className={styles.Social} links={socialLinks} />
               </div>
             )}
           </Transition>
