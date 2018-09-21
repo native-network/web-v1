@@ -54,16 +54,12 @@ export class App extends Component {
     return (
       <Fragment>
         <Modal
+          hasCloseButton
+          closeModal={this.closeWelcomeModal.bind(this)}
           renderHeader={() => (
             <div className={styles.ModalHeader}>
               <img src={native} alt="" />
               <h1>Welcome To Native</h1>
-              <button
-                style={{ color: 'black' }}
-                onClick={this.closeWelcomeModal.bind(this)}
-              >
-                x
-              </button>
             </div>
           )}
           isOpen={this.state.isWelcomeModalOpen}

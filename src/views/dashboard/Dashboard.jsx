@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
@@ -144,6 +145,10 @@ export class Dashboard extends Component {
     }
   }
 
+  redirect() {
+    history.push('/');
+  }
+
   submitTransaction(symbol, community, amount) {
     if (symbol === 'NTV') {
       this.props.sendTransactionInEth(community, amount);
@@ -155,6 +160,8 @@ export class Dashboard extends Component {
   renderAuthorizeModal() {
     return (
       <Modal
+        hasCloseButton
+        closeModal={this.redirect.bind(this)}
         label="Sign in"
         renderHeader={() => <h1 style={{ textAlign: 'center' }}>Sign in</h1>}
         isOpen={!this.props.hasSession}
