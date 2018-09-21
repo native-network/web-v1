@@ -202,7 +202,7 @@ export class Card extends Component {
                 }}
               >
                 <div className={styles.Benefits}>
-                  <h3>Membership Benefits</h3>
+                  <h3>Membership Benefits:</h3>
                   {membershipBenefits ? (
                     <ul>
                       {membershipBenefits.map((benefit, index) => (

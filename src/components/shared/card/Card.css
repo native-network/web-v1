@@ -189,6 +189,11 @@
   flex-direction: column;
   margin-bottom: 1rem;
 
+  & h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
   @media (--medium-viewport) {
     flex-direction: row;
   }
@@ -222,6 +227,17 @@
 
     & .Benefits {
       grid-area: benefits;
+
+      & ul {
+        list-style-type: none;
+        padding-left: 1rem;
+
+        & li::before {
+          position: relative;
+          content: '-';
+          left: -0.5rem;
+        }
+      }
     }
 
     & .Policies {
