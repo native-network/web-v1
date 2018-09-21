@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Button from '../button';
 import Modal from '../modal';
+import SocialMedia from '../social-media';
 import CommunityStake from '../../dialogs/community-stake';
 import TokenData from '../token-data';
 import Tag from '../tag';
@@ -88,6 +89,8 @@ export class Card extends Component {
     const { props, state } = this;
     const { community, render, prices } = props;
     const { isReadMoreOpen } = state;
+    const socialLinks = JSON.parse(community.socialLinks);
+    const membershipBenefits = JSON.parse(community.membershipBenefits);
 
     const transition = `all ${ANIMATION_DURATION}ms linear`;
     const defaultStyles = {
@@ -166,7 +169,7 @@ export class Card extends Component {
         />
         <div className={styles.Summary}>
           <h3>About:</h3>
-          <p className={styles.Intro}>{community.communityIntro}</p>
+          <p className={styles.Intro}>{community.communityPurpose}</p>
           {this.renderCommunityLink(community, this.props.user)}
         </div>
         <Transition
@@ -183,9 +186,21 @@ export class Card extends Component {
                 ...transitionStyles[state],
               }}
             >
-              <h3>Membership</h3>
               <p>Location: {community.location}</p>
-              <p>{community.communityPurpose}</p>
+              <p>Curator: {community.curatorInfo} </p>
+              <h3>Membership Benefits</h3>
+              {membershipBenefits ? (
+                <ul>
+                  {membershipBenefits.map((benefit, index) => (
+                    <li key={index}>{benefit}</li>
+                  ))}
+                </ul>
+              ) : null}
+              <h3>Governance Policies:</h3>
+              <p>
+                Quorum of {community.quorum}% is required to approve projects.
+              </p>
+              <SocialMedia links={socialLinks} />
             </div>
           )}
         </Transition>

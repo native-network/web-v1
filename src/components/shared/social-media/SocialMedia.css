@@ -1,0 +1,36 @@
+@import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
+
+.SocialMedia {
+  @extend %unstyled-list;
+
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 2.5rem;
+
+  & img {
+    width: 50px;
+  }
+
+  & a {
+    text-decoration: none;
+    transition: color 200ms linear;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: var(--white-3);
+    }
+  }
+
+  @media (--max-small-viewport) {
+    @extend %container;
+  }
+
+  @media (--medium-viewport) {
+
+    & li:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
