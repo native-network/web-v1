@@ -9,7 +9,7 @@ function TokenData({ containerClass, currency, prices }) {
   const { price, totalSupply } = currency;
 
   const priceUSD = price * (fromWei(prices.ntvWei) * prices.ethUSD);
-  const marketCap = totalSupply * priceUSD;
+  const marketCap = fromWei(totalSupply) * priceUSD;
 
   const tokenValue = `${formatCrypto(fromWei(prices.ntvWei))} ETH (${formatUsd(
     priceUSD,
