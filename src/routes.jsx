@@ -7,6 +7,7 @@ import Dashboard from './views/dashboard';
 import Community from './views/community';
 import Tokens from './views/tokens';
 import FAQ from './views/faq';
+import Terms from './views/terms';
 import CommunityAdmin from './views/community-admin';
 import Manage from './views/manage';
 import FourOhFour from './views/404';
@@ -38,6 +39,7 @@ export const routes = (isCurator) => {
       <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
+      <Route exact path="/terms" component={Terms} />
       <PrivateRoute
         isCurator={isCurator}
         exact
