@@ -111,6 +111,29 @@
   }
 }
 
+.CommunityInfo {
+  & div {
+    margin: 0 0 0.5rem 0;
+  }
+
+  & dt,
+  & dd {
+    display: inline;
+  }
+
+  & dt {
+    font-weight: 700;
+  }
+
+  & dd {
+    margin-left: 0.25rem;
+  }
+
+  @media (--medium-viewport) {
+    grid-area: info;
+  }
+}
+
 .TokenData {
   & dl {
     @extend %unstyled-list;
@@ -160,6 +183,24 @@
     @media (--large-viewport) {
       display: block;
     }
+  }
+}
+
+.CardDetails {
+  display: flex;
+  flex-direction: column;
+
+  @media (--medium-viewport) {
+    display: grid;
+    grid-template-areas:
+      'summary benefits requirements'
+      'info . social';
+  }
+}
+
+.Summary {
+  @media (--medium-viewport) {
+    grid-area: summary;
   }
 }
 

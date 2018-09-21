@@ -167,43 +167,57 @@ export class Card extends Component {
           containerClass={`${styles.TokenData} ${styles.Mobile}`}
           isMobile={true}
         />
-        <div className={styles.Summary}>
-          <h3>About:</h3>
-          <p className={styles.Intro}>{community.communityPurpose}</p>
-          {this.renderCommunityLink(community, this.props.user)}
+        <div className={styles.CardDetails}>
+          <div className={styles.Summary}>
+            <h3>About:</h3>
+            <p className={styles.Intro}>{community.communityPurpose}</p>
+            {this.renderCommunityLink(community, this.props.user)}
+          </div>
+          <Transition
+            mountOnEnter
+            in={isReadMoreOpen}
+            timeout={ANIMATION_DURATION}
+          >
+            {(state) => (
+              <div
+                ref={(panel) => (this.panel = panel)}
+                className={styles.Membership}
+                style={{
+                  ...defaultStyles,
+                  ...transitionStyles[state],
+                }}
+              >
+                <dl className={styles.CommunityInfo}>
+                  <div>
+                    <dt>Location:</dt>
+                    <dd>{community.location}</dd>
+                  </div>
+                  <div>
+                    <dt>Total Members:</dt>
+                    <dd>{community.memberCount || 10}</dd>
+                  </div>
+                  <div>
+                    <dt>Curator:</dt>
+                    <dd>{community.curatorInfo}</dd>
+                  </div>
+                </dl>
+                <h3>Membership Benefits</h3>
+                {membershipBenefits ? (
+                  <ul>
+                    {membershipBenefits.map((benefit, index) => (
+                      <li key={index}>{benefit}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                <h3>Governance Policies:</h3>
+                <p>
+                  Quorum of {community.quorum}% is required to approve projects.
+                </p>
+                <SocialMedia links={socialLinks} />
+              </div>
+            )}
+          </Transition>
         </div>
-        <Transition
-          mountOnEnter
-          in={isReadMoreOpen}
-          timeout={ANIMATION_DURATION}
-        >
-          {(state) => (
-            <div
-              ref={(panel) => (this.panel = panel)}
-              className={styles.Membership}
-              style={{
-                ...defaultStyles,
-                ...transitionStyles[state],
-              }}
-            >
-              <p>Location: {community.location}</p>
-              <p>Curator: {community.curatorInfo} </p>
-              <h3>Membership Benefits</h3>
-              {membershipBenefits ? (
-                <ul>
-                  {membershipBenefits.map((benefit, index) => (
-                    <li key={index}>{benefit}</li>
-                  ))}
-                </ul>
-              ) : null}
-              <h3>Governance Policies:</h3>
-              <p>
-                Quorum of {community.quorum}% is required to approve projects.
-              </p>
-              <SocialMedia links={socialLinks} />
-            </div>
-          )}
-        </Transition>
         <Button
           className={styles.ReadMore}
           centered
