@@ -35,7 +35,11 @@ export const routes = (isCurator) => {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/communities" component={Communities} />
-      <Route exact path="/community/:communityId" component={Community} />
+      <Route
+        exact
+        path="/community/:communityId"
+        render={(props) => <Community {...props} isCommunityRoute={true} />}
+      />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />

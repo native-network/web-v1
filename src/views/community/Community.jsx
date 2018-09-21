@@ -40,10 +40,10 @@ export class Community extends Component {
     if (this.props.isLoading) {
       return <Loader />;
     }
-
     return community ? (
       <Card
         community={community}
+        isCommunityRoute={this.props.isCommunityRoute}
         render={() => (
           <div className={styles.CommunityPanels}>
             <span className={styles.CommunityCTA}>

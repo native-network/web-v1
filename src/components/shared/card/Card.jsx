@@ -8,9 +8,8 @@ import CommunityStake from '../../dialogs/community-stake';
 import TokenData from '../token-data';
 import Tag from '../tag';
 import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
-
+import { Link } from 'react-router-dom';
 const { web3 } = getWeb3ServiceInstance();
-
 const { fromWei } = web3.utils;
 
 import styles from './Card.css';
@@ -74,6 +73,17 @@ export class Card extends Component {
     }
   }
 
+  renderCommunityLink() {
+    const { user, community, isCommunityRoute } = this.props;
+    const isMember = user.memberOf.find((userCommunity) => {
+      return userCommunity.id === community.id;
+    });
+    return !isCommunityRoute && !!isMember ? (
+      <Link className={styles.CommunityLink} to={`/community/${community.id}`}>
+        Visit {community.name}
+      </Link>
+    ) : null;
+  }
   render() {
     const { props, state } = this;
     const { community, render, prices } = props;
@@ -157,6 +167,7 @@ export class Card extends Component {
         <div className={styles.Summary}>
           <h3>About:</h3>
           <p className={styles.Intro}>{community.communityIntro}</p>
+          {this.renderCommunityLink(community, this.props.user)}
         </div>
         <Transition
           mountOnEnter
