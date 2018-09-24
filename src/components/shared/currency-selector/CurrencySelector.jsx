@@ -1,5 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Downshift from 'downshift';
+
+import Icon from '../icon';
 
 import styles from './CurrencySelector.css';
 
@@ -52,11 +54,7 @@ function CurrencySelector({
                 aria-haspopup="true"
                 aria-expanded={isOpen}
               >
-                {isOpen ? (
-                  <Fragment>&#9652;</Fragment>
-                ) : (
-                  <Fragment>&#9662;</Fragment>
-                )}
+                {isOpen ? <Icon icon="caret-up" /> : <Icon icon="caret-down" />}
               </button>
             ) : null}
           </label>
