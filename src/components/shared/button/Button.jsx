@@ -33,7 +33,7 @@ function Button({
       onClick={clickHandler}
       className={`${classes} ${className}`}
     >
-      {content}
+      {typeof content !== 'function' ? content : content()}
     </button>
   );
 }

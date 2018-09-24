@@ -156,6 +156,12 @@ module.exports = {
         flatten: true,
         toType: 'dir',
       },
+      {
+        from: './src/assets/**/*-icon.svg',
+        to: './static/media',
+        flatten: true,
+        toType: 'dir',
+      },
     ]),
     new CaseSensitivePathsPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),

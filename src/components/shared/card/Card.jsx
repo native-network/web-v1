@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
 import { connect } from 'react-redux';
 
@@ -11,6 +11,8 @@ import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 import { Link } from 'react-router-dom';
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
+
+import SVG from 'react-inlinesvg';
 
 import styles from './Card.css';
 
@@ -149,12 +151,19 @@ export class Card extends Component {
               {community.name}
             </span>
             <Button
+              className={styles.CommunityButton}
               clickHandler={() => this.openModal(community)}
               theme="primary"
               disabled={!this.props.user.wallet.address}
-              content={`${(community.currency &&
-                fromWei(community.currency.minimumStake)) ||
-                0} ${(community.currency && community.currency.symbol) || ''}`}
+              content={() => (
+                <Fragment>
+                  <SVG className={styles.ButtonIcon} src={community.icon} />
+                  <span>
+                    {fromWei(community.currency.minimumStake)}{' '}
+                    {community.currency.symbol}
+                  </span>
+                </Fragment>
+              )}
             />
           </div>
         </div>
