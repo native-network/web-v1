@@ -23,8 +23,7 @@ export const get = async (endpoint) => {
   try {
     return await instance.get(`/${endpoint}`);
   } catch (err) {
-    const { data: error } = err && err.response;
-    throw new Error(error);
+    throw new Error(err);
   }
 };
 
@@ -32,8 +31,7 @@ export const post = async (endpoint, payload) => {
   try {
     return await instance.post(`/${endpoint}`, payload);
   } catch (err) {
-    const { data: error } = err && err.response;
-    throw new Error(error);
+    throw new Error(err);
   }
 };
 
@@ -41,7 +39,6 @@ export const put = async (endpoint, payload) => {
   try {
     return await instance.put(`/${endpoint}`, payload);
   } catch (err) {
-    const { data: error } = err && err.response;
-    throw new Error(error);
+    throw new Error(err);
   }
 };
