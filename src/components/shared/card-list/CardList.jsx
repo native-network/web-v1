@@ -3,20 +3,20 @@ import React from 'react';
 import Card from '../card';
 import styles from './CardList.css';
 
-const renderListItem = (item, index, prices) => {
+const renderListItem = (item, index) => {
   return (
     <li className={styles.CardListItem} key={index}>
-      <Card community={item} prices={prices} />
+      <Card community={item} />
     </li>
   );
 };
 
-function CardList({ listItems, prices }) {
+function CardList({ listItems }) {
   return (
     <ul className={styles.CardList}>
       {(listItems || [])
         .filter((item) => item.name !== 'Native')
-        .map((item, i) => renderListItem(item, i, prices))}
+        .map((item, i) => renderListItem(item, i))}
     </ul>
   );
 }

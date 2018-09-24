@@ -14,10 +14,6 @@ import { endSession } from '../../actions/userSessionActions';
 export class Home extends Component {
   static defaultProps = {
     communities: [],
-    prices: {
-      ntvWei: '',
-      ethUSD: '',
-    },
   };
 
   submitTransaction(symbol, community, amount) {
@@ -35,7 +31,6 @@ export class Home extends Component {
     return (
       <main>
         <CardList
-          prices={this.props.prices}
           listItems={this.props.communities
             .filter((community) => community.currency)
             .map((community) => ({
@@ -61,7 +56,6 @@ export default connect(
     return {
       communities: state.communities.communities,
       isLoading: state.loading > 0,
-      prices: state.prices,
     };
   },
   mapDispatchToProps,

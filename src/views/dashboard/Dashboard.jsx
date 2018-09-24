@@ -224,8 +224,7 @@ export class Dashboard extends Component {
               <div>
                 <div className={styles.TokenBalances}>
                   <div className={styles.Balance}>
-                    <img src={eth} /> ETH Balance:
-                    {` `}
+                    <img src={eth} /> ETH Balance:&nbsp;
                     <b>{ethBalance}</b> ({ethInUSD})
                   </div>
                 </div>

@@ -210,6 +210,7 @@ export default connect(
       currencies: state.currencies.currencies,
       userCurrencies: state.user.wallet.currencies,
       currencyError: state.currencies.error,
+      prices: state.prices,
     };
   },
   null,
