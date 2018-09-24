@@ -27,18 +27,15 @@ class Dialog extends Component {
     const { components, ...rest } = this.props;
     return (
       <Fragment>
-        {(components || [])
-          .filter(
-            (component) =>
-              components.indexOf(component) === this.state.activeStep,
-          )
-          .map((component, index) => {
-            return React.createElement(component, {
-              key: index,
-              ...rest,
-              submitHandler: () => this.handleClick(),
-            });
-          })}
+        {(components || []).map((component, index) => {
+          return index === this.state.activeStep
+            ? React.createElement(component, {
+                key: index,
+                ...rest,
+                submitHandler: () => this.handleClick(),
+              })
+            : null;
+        })}
       </Fragment>
     );
   }
