@@ -102,7 +102,7 @@ export class Card extends Component {
     };
 
     const userCurrency = this.props.userCurrencies.find(
-      (c) => c.symbol === community && community.currency.symbol,
+      (c) => c.symbol === community.currency.symbol,
     );
 
     return (
@@ -143,7 +143,7 @@ export class Card extends Component {
           <div className={styles.CTABadge}>
             <span>
               {userCurrency &&
-              userCurrency.balance < community.currency.minimumStake
+              +userCurrency.balance < +community.currency.minimumStake
                 ? 'Support'
                 : 'Join'}{' '}
               {community.name}
