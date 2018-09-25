@@ -14,19 +14,21 @@ export default function TabNavigation({ panels, activeTab, clickHandler }) {
   };
 
   return (
-    <ul className={styles.TabNavigation}>
-      {(panels || []).map((name, i) => {
-        return (
-          <li
-            key={i}
-            className={addClassNames(i)}
-            onClick={() => clickHandler(i)}
-          >
-            {/* <button>{name}</button> */}
-            <button disabled={i > 0}>{name}</button>
-          </li>
-        );
-      })}
-    </ul>
+    <div className={styles.TabNavigation}>
+      <div className={styles.TabNavigationContainer}>
+        <ul className={styles.TabNavigationList}>
+          {(panels || []).map((name, i) => {
+            return (
+              <li key={i} className={addClassNames(i)}>
+                <button onClick={() => clickHandler(i)}>{name}</button>
+              </li>
+            );
+          })}
+        </ul>
+        <span className={styles.CommunityCTA}>
+          Talk with Community members on Telegram
+        </span>
+      </div>
+    </div>
   );
 }

@@ -35,16 +35,17 @@ function Vote({ vote, submitVote }) {
       </div>
       <div className={styles.VoteDescription}>
         <h3>{title}</h3>
+        <span className={styles.VoteClosing}>
+          Closes: {moment(endDate).format('MMM Do, h:mm A')}
+        </span>
         <p>{description}</p>
+      </div>
+      <div className={styles.VoteMeta}>
         {hasVoted ? (
           renderVoteResults(votes, options)
         ) : (
           <VoteForm submitForm={handleSubmit} options={options} />
         )}
-      </div>
-      <div className={styles.VoteMeta}>
-        <h4>Vote Closes</h4>
-        {moment(endDate).format('MMM Do, h:mm A')}
       </div>
     </li>
   );

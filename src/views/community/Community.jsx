@@ -46,9 +46,6 @@ export class Community extends Component {
         isCommunityRoute={this.props.isCommunityRoute}
         render={() => (
           <div className={styles.CommunityPanels}>
-            <span className={styles.CommunityCTA}>
-              Talk with Community members on Telegram
-            </span>
             <TabPanels panels={initiatives} />
           </div>
         )}

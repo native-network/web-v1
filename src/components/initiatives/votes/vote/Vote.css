@@ -1,37 +1,39 @@
+@import '../../../../styles/extends.css';
+
 .VoteItem {
+  @extend %decorator--full-width;
+
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   padding: 1rem 0;
+  width: 100%;
 
-  &:not(:last-child) {
-    @extend %decorator--full-width;
-
-    margin-bottom: 1rem;
-
-    /* Decorator overwrites */
-    &::after {
-      background: var(--primary-color);
-    }
+  &::after {
+    background: var(--gray-5);
   }
 }
 
 .VoteImage {
-  flex-basis: 15rem;
+  min-width: 300px;
 }
 
 .VoteDescription {
   margin: 0 2rem;
-  flex-grow: 2;
 
   & h3 {
-    margin-top: 0;
+    margin: 0;
+    font-size: 1.5rem;
   }
 }
 
+.VoteClosing {
+  color: var(--gray-5);
+}
+
 .VoteMeta {
-  flex-grow: 1;
   text-align: center;
+  flex-basis: content;
 
   & h4 {
     margin-top: 0;

@@ -32,7 +32,7 @@ class Votes extends Component {
     return (
       <div className={styles.Vote}>
         <div className={styles.Filter}>
-          Filter by Vote Type&nbsp;
+          Filter by Type
           <select defaultValue="all" name="" id="" onChange={this.changeFilter}>
             <option value="all">All</option>
             <option value="open">Open</option>
