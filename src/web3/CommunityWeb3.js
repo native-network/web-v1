@@ -58,9 +58,12 @@ export default class CommunityService {
 
   async approve(receivingAddress, transactionAmount) {
     try {
-      return await this.smartTokenContractWS.methods
+      await this.smartTokenContractWS.methods
         .approve(receivingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount });
+        .send({ from: this.web3Service.mainAccount })
+        .on('transactionHash', (hash) => {
+          return hash;
+        });
     } catch (err) {
       throw new Error('There was a problem with the approval process.');
     }
@@ -89,9 +92,12 @@ export default class CommunityService {
 
   async stake() {
     try {
-      return await this.communityContract.methods
+      await this.communityContract.methods
         .stakeCommunityTokens()
-        .send({ from: this.web3Service.mainAccount });
+        .send({ from: this.web3Service.mainAccount })
+        .on('transactionHash', (hash) => {
+          return hash;
+        });
     } catch (err) {
       throw new Error('There was a problem staking into that community.');
     }

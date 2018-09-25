@@ -31,7 +31,7 @@ class ProcessTransaction extends Component {
           <a
             target="_blank"
             rel="noopener nofollow"
-            href="https://etherscan.io"
+            href={'https://etherscan.io/tx/' + 'transactionHash'}
           >
             etherscan.io
           </a>
