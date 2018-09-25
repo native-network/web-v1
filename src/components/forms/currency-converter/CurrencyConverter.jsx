@@ -140,7 +140,10 @@ export class CurrencyConverter extends Component {
               <Field5
                 name="sendValue"
                 validate={(value, allValues) => {
-                  return new BigNumber(value).gt(allValues.sendCurrency.balance)
+                  const valueInWei = !!value && toWei(value);
+                  return new BigNumber(valueInWei).gt(
+                    allValues.sendCurrency.balance,
+                  )
                     ? `You don't have enough currency`
                     : undefined;
                 }}
