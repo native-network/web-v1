@@ -69,6 +69,14 @@ export default class CommunityService {
     }
   }
 
+  async pendingTransactionComplete(txHash) {
+    try {
+      return await this.web3Service.eth.getTransactionReceiptMined(txHash, 500);
+    } catch (err) {
+      throw new Error('There was a problem with the pending transaction.');
+    }
+  }
+
   async buyWithToken(sendingAddress, transactionAmount) {
     try {
       return await this.smartTokenContractWS.methods
