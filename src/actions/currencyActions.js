@@ -80,12 +80,12 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
         );
 
         try {
-          const approve = await sendingCommunity.approve(
+          await sendingCommunity.approve(
             receivingCommunity.community.tokenAddress,
             transactionAmount,
             (hash) => dispatch(pendingTransactionComplete(hash)),
           );
-          const buy = await receivingCommunity.buyWithToken(
+          await receivingCommunity.buyWithToken(
             sendingCommunity.community.tokenAddress,
             transactionAmount,
             (hash) => dispatch(pendingTransactionComplete(hash)),
@@ -94,17 +94,13 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
           dispatch(getUserWalletBalances(address))
             .then(() => {
               dispatch(toastrSuccess('Your purchase was successful!'));
-              dispatch(sendTransactionInNtvSuccess({ approve, buy }));
+              dispatch(sendTransactionInNtvSuccess());
             })
             .catch((err) => {
-              const { message } = err;
-              dispatch(toastrError(message));
-              dispatch(sendTransactionInNtvError(message));
+              throw new Error(err);
             });
         } catch (err) {
-          const { message } = err;
-          dispatch(toastrError(message));
-          return dispatch(sendTransactionInNtvError(message));
+          throw new Error(err);
         }
       })
       .catch((err) => {
