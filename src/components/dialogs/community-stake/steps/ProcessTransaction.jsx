@@ -28,15 +28,19 @@ class ProcessTransaction extends Component {
           >
             <Loader />
           </div>
-          Your transaction progress can be viewed on{' '}
-          <a
-            target="_blank"
-            rel="noopener nofollow"
-            href={'https://etherscan.io/tx/' + 'transactionHash'}
-          >
-            etherscan.io
-          </a>
-          .<br />
+          {this.props.hash ? (
+            <p>
+              Your transaction progress can be viewed on{' '}
+              <a
+                target="_blank"
+                rel="noopener nofollow"
+                href={'https://rinkeby.etherscan.io/tx/' + this.props.hash}
+              >
+                etherscan.io
+              </a>
+              .
+            </p>
+          ) : null}
         </div>
         <Button
           className={styles.Button}

@@ -56,34 +56,24 @@ export default class CommunityService {
     return await this.smartTokenContractWS.methods.balanceOf(address).call();
   }
 
-  async approve(receivingAddress, transactionAmount) {
+  async approve(receivingAddress, transactionAmount, cb) {
     try {
-      await this.smartTokenContractWS.methods
+      return await this.smartTokenContractWS.methods
         .approve(receivingAddress, transactionAmount)
         .send({ from: this.web3Service.mainAccount })
-        .on('transactionHash', (hash) => {
-          return hash;
-        });
+        .on('transactionHash', (hash) => cb(hash));
     } catch (err) {
       throw new Error('There was a problem with the approval process.');
     }
   }
 
-  async pendingTransactionComplete(txHash) {
-    try {
-      return await this.web3Service.eth.getTransactionReceiptMined(txHash, 500);
-    } catch (err) {
-      throw new Error('There was a problem with the pending transaction.');
-    }
-  }
-
-  async buyWithToken(sendingAddress, transactionAmount) {
+  async buyWithToken(sendingAddress, transactionAmount, cb) {
     try {
       return await this.smartTokenContractWS.methods
         .buyWithToken(sendingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount });
+        .send({ from: this.web3Service.mainAccount })
+        .on('transactionHash', (hash) => cb(hash));
     } catch (err) {
-      console.log(err) // eslint-disable-line
       throw new Error('There was a problem with the purchase process.');
     }
   }

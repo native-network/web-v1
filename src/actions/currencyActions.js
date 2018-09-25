@@ -58,7 +58,7 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
   return async (dispatch, getState) => {
     dispatch({ type: actions.SEND_TRANSACTION_IN_NTV });
     const { communities } = getState().communities;
-    // const { address } = getState().user.wallet;
+    const { address } = getState().user.wallet;
 
     const filteredCommunities = communities.filter((community) => {
       return (
@@ -80,41 +80,27 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
         );
 
         try {
-          let hash = await sendingCommunity.approve(
+          const approve = await sendingCommunity.approve(
             receivingCommunity.community.tokenAddress,
             transactionAmount,
+            (hash) => dispatch(pendingTransactionComplete(hash)),
+          );
+          const buy = await receivingCommunity.buyWithToken(
+            sendingCommunity.community.tokenAddress,
+            transactionAmount,
+            (hash) => dispatch(pendingTransactionComplete(hash)),
           );
 
-          if (hash) {
-            dispatch(pendingTransactionComplete(hash));
-
-            hash = await receivingCommunity.buyWithToken(
-              sendingCommunity.community.tokenAddress,
-              transactionAmount,
-            );
-          }
-
-          // try {
-          //   const approve = await receivingCommunity.pendingTransactionComplete(approveHash);
-
-          // }
-          // if (approve && buy) {
-          //   dispatch(getUserWalletBalances(address))
-          //     .then(() => {
-          //       dispatch(toastrSuccess('Your purchase was successful!'));
-          //       dispatch(sendTransactionInNtvSuccess({ approve, buy }));
-          //     })
-          //     .catch((err) => {
-          //       const { message } = err;
-          //       dispatch(toastrError(message));
-          //       dispatch(sendTransactionInNtvError(message));
-          //     });
-          // } else {
-          //   const message = 'Something went wrong.';
-
-          //   dispatch(toastrError(message));
-          //   return dispatch(sendTransactionInNtvError(message));
-          // }
+          dispatch(getUserWalletBalances(address))
+            .then(() => {
+              dispatch(toastrSuccess('Your purchase was successful!'));
+              dispatch(sendTransactionInNtvSuccess({ approve, buy }));
+            })
+            .catch((err) => {
+              const { message } = err;
+              dispatch(toastrError(message));
+              dispatch(sendTransactionInNtvError(message));
+            });
         } catch (err) {
           const { message } = err;
           dispatch(toastrError(message));
