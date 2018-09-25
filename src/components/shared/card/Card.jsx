@@ -226,6 +226,24 @@ export class Card extends Component {
                     Quorum of {community.quorum}% is required to approve
                     projects.
                   </p>
+                  <p>
+                    <a
+                      target="_blank"
+                      rel="noopener nofollow"
+                      href={community.votingPolicy}
+                    >
+                      Download the voting policy
+                    </a>
+                  </p>
+                  <p>
+                    <a
+                      target="_blank"
+                      rel="noopener nofollow"
+                      href={community.revenueDistributionPolicy}
+                    >
+                      Download the revenue distribution policy
+                    </a>
+                  </p>
                 </div>
                 <SocialMedia className={styles.Social} links={socialLinks} />
               </div>
