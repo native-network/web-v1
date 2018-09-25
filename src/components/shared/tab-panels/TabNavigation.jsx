@@ -5,7 +5,12 @@ import styles from './TabPanels.css';
 
 const cx = classNames.bind(styles);
 
-export default function TabNavigation({ panels, activeTab, clickHandler }) {
+export default function TabNavigation({
+  panels,
+  activeTab,
+  renderFilter,
+  clickHandler,
+}) {
   const addClassNames = (index) => {
     return cx({
       ActiveTab: activeTab === index,
@@ -25,9 +30,15 @@ export default function TabNavigation({ panels, activeTab, clickHandler }) {
             );
           })}
         </ul>
-        <span className={styles.CommunityCTA}>
+        {renderFilter ? renderFilter() : null}
+        <a
+          target="_blank"
+          rel="noopener nofollow"
+          href="http://telegram.com"
+          className={`${styles.CommunityCTA} visible-md`}
+        >
           Talk with Community members on Telegram
-        </span>
+        </a>
       </div>
     </div>
   );
