@@ -60,7 +60,7 @@ export default connect(
       (c) => c.name === 'Native',
     );
     return {
-      socialLinks: native && JSON.parse(native.socialLinks),
+      socialLinks: native && JSON.parse(native.socialMediaLinks),
     };
   },
   null,

@@ -91,7 +91,7 @@ export class Card extends Component {
     const { props, state } = this;
     const { community, render, prices } = props;
     const { isReadMoreOpen } = state;
-    const socialLinks = JSON.parse(community.socialLinks);
+    const socialLinks = JSON.parse(community.socialMediaLinks);
     const membershipBenefits = JSON.parse(community.membershipBenefits);
 
     const transition = `all ${ANIMATION_DURATION}ms linear`;
