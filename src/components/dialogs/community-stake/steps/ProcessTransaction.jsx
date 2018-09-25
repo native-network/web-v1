@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from '../../../shared/loader';
+import { connect } from 'react-redux';
 
 import Button from '../../../shared/button';
 
@@ -49,4 +50,11 @@ class ProcessTransaction extends Component {
   }
 }
 
-export default ProcessTransaction;
+export default connect(
+  (state) => {
+    return {
+      hash: state.currencies.hash,
+    };
+  },
+  null,
+)(ProcessTransaction);
