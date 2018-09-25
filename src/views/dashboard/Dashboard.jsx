@@ -162,10 +162,6 @@ export class Dashboard extends Component {
     }
   }
 
-  submitTransactionInModal(symbol, community, amount) {
-    this.props.sendTransactionInNtv(community, amount);
-  }
-
   renderAuthorizeModal() {
     return (
       <Modal
@@ -189,7 +185,7 @@ export class Dashboard extends Component {
     this.setState({
       activeCommunity: {
         ...activeCommunity,
-        submitTransaction: this.submitTransactionInModal.bind(this),
+        submitTransaction: this.submitTransaction.bind(this),
       },
     });
     this.setState({ isModalOpen: true });
