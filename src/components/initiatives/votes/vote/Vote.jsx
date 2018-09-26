@@ -54,11 +54,11 @@ function Vote({ vote, submitVote }) {
 
   return (
     <li className={styles.VoteItem}>
-      {!fileUrl ? (
+      {!fileUrl ? null : (
         <div className={styles.VoteImage}>
           <img src={fileUrl} alt="" />
         </div>
-      ) : null}
+      )}
       <div className={styles.VoteDescription}>
         <h3>{title}</h3>
         <span className={styles.VoteClosing}>
