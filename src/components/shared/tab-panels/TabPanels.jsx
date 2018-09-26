@@ -28,7 +28,7 @@ const itemsForFilter = [
 class TabPanels extends Component {
   state = {
     activeTab: 0,
-    activeFilter: itemsForFilter.find((f) => f.name === 'All').filter,
+    activeFilter: itemsForFilter.find((f) => f.name === 'Open').filter,
   };
 
   setActiveTab(tabIndex) {
