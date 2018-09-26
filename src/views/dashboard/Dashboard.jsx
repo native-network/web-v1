@@ -182,7 +182,12 @@ export class Dashboard extends Component {
   }
 
   openModal(activeCommunity) {
-    this.setState({ activeCommunity });
+    this.setState({
+      activeCommunity: {
+        ...activeCommunity,
+        submitTransaction: this.submitTransaction.bind(this),
+      },
+    });
     this.setState({ isModalOpen: true });
   }
 
@@ -217,7 +222,7 @@ export class Dashboard extends Component {
                 loading={this.props.isCurrencyLoading}
                 user={this.props.user}
                 community={this.state.activeCommunity}
-                dismissDialog={true}
+                dismissDialog={this.closeModal.bind(this)}
               />
             </Modal>
             <div className={styles.DashboardBanner}>

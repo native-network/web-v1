@@ -56,23 +56,32 @@ export default class CommunityService {
     return await this.smartTokenContractWS.methods.balanceOf(address).call();
   }
 
-  async approve(receivingAddress, transactionAmount) {
+  async approve(receivingAddress, transactionAmount, cb) {
     try {
       return await this.smartTokenContractWS.methods
         .approve(receivingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount });
+        .send({ from: this.web3Service.mainAccount })
+        .on('transactionHash', (hash) => {
+          if (cb) {
+            cb(hash);
+          }
+        });
     } catch (err) {
       throw new Error('There was a problem with the approval process.');
     }
   }
 
-  async buyWithToken(sendingAddress, transactionAmount) {
+  async buyWithToken(sendingAddress, transactionAmount, cb) {
     try {
       return await this.smartTokenContractWS.methods
         .buyWithToken(sendingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount });
+        .send({ from: this.web3Service.mainAccount })
+        .on('transactionHash', (hash) => {
+          if (cb) {
+            cb(hash);
+          }
+        });
     } catch (err) {
-      console.log(err) // eslint-disable-line
       throw new Error('There was a problem with the purchase process.');
     }
   }
@@ -87,11 +96,16 @@ export default class CommunityService {
     }
   }
 
-  async stake() {
+  async stake(cb) {
     try {
-      return await this.communityContract.methods
+      await this.communityContract.methods
         .stakeCommunityTokens()
-        .send({ from: this.web3Service.mainAccount });
+        .send({ from: this.web3Service.mainAccount })
+        .on('transactionHash', (hash) => {
+          if (cb) {
+            cb(hash);
+          }
+        });
     } catch (err) {
       throw new Error('There was a problem staking into that community.');
     }
