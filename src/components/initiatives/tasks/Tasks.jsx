@@ -26,10 +26,15 @@ function Tasks({ items }) {
     );
   };
 
-  return (
+  return items.length ? (
     <ul className={styles.TaskList}>
       {(items || []).map((item, i) => renderTask({ index: i, ...item }))}
     </ul>
+  ) : (
+    <p>
+      Looks like there are no tasks available at this time. Please try back
+      later.
+    </p>
   );
 }
 

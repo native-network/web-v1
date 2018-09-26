@@ -25,6 +25,54 @@
   }
 }
 
+.Progress {
+  height: 0.5rem;
+
+  &.Yes {
+    & rect {
+      fill: var(--primary-color);
+    }
+  }
+
+  &.No {
+    & rect {
+      fill: var(--gray-10);
+    }
+  }
+}
+
+.VoteResults {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  margin: 2rem 0;
+
+  &.Yes {
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  &.No {
+    font-weight: 400;
+    color: var(--gray-5);
+  }
+
+  & .ResultsLabel {
+    display: inline-flex;
+    min-width: 6rem;
+  }
+
+  & .Progress {
+    flex-grow: 1;
+    margin-left: 1rem;
+  }
+
+  & .ResultsMeta {
+    width: 100%;
+    display: block;
+  }
+}
+
 .VoteImage {
   width: 100%;
 
@@ -64,8 +112,4 @@
   & button {
     margin-bottom: auto;
   }
-}
-
-.VoteResults h4 {
-  display: inline-block;
 }

@@ -7,11 +7,18 @@ class Votes extends Component {
     const { items } = this.props;
     return (
       <div className={styles.Vote}>
-        <ul className={styles.VoteList}>
-          {(items || []).map((item, i) => (
-            <Vote key={i} vote={item} />
-          ))}
-        </ul>
+        {items.length ? (
+          <ul className={styles.VoteList}>
+            {(items || []).map((item, i) => (
+              <Vote key={i} vote={item} />
+            ))}
+          </ul>
+        ) : (
+          <p>
+            Looks like there are no votes available at the moment. Please try
+            back later.
+          </p>
+        )}
       </div>
     );
   }

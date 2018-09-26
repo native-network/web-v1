@@ -11,17 +11,33 @@ import styles from './Vote.css';
 function renderVoteResults(votes, options) {
   const totalVotes = votes.length;
   return options.map((o, i) => {
-    const percentage = Math.floor((o.votes.length / totalVotes) * 100);
+    const percentage = Math.floor((o.votes.length / totalVotes) * 100) || 0;
     return (
-      <div key={i} className={styles.VoteResults}>
-        <h4>{o.name}</h4> <progress value={percentage} max="100" /> {percentage}
-        % {o.votes.length} Total Votes
+      <div
+        key={i}
+        className={`${styles.VoteResults} ${
+          styles[o.name.replace(/\s+/g, '')]
+        }`}
+      >
+        <span className={styles.ResultsLabel}>
+          {o.name} ({percentage}
+          %)
+        </span>
+        <svg
+          className={`${styles.Progress} ${styles[o.name.replace(/\s+/g, '')]}`}
+          viewBox="0 0 10 10"
+          preserveAspectRatio="none"
+        >
+          <rect x="0" width={`${percentage}%`} />
+        </svg>
       </div>
     );
   });
 }
 
 function Vote({ vote, submitVote }) {
+  const today = moment();
+  const isClosed = moment(vote.endDate).isBefore(today);
   const { description, hasVoted, title, options, endDate, votes } = vote;
 
   const handleSubmit = (optionId) => {
@@ -41,7 +57,7 @@ function Vote({ vote, submitVote }) {
         <p>{description}</p>
       </div>
       <div className={styles.VoteMeta}>
-        {hasVoted ? (
+        {hasVoted || isClosed ? (
           renderVoteResults(votes, options)
         ) : (
           <VoteForm submitForm={handleSubmit} options={options} />

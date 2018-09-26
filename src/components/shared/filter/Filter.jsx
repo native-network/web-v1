@@ -3,8 +3,10 @@ import Downshift from 'downshift';
 
 import Icon from '../icon';
 
-function Filter({ items, className, selectHandler }) {
-  const defaultItem = items.find((item) => item.name === 'All');
+import styles from './Filter.css';
+
+function Filter({ filters, className, selectHandler }) {
+  const defaultItem = filters.find((item) => item.name === 'All');
   return (
     <Downshift
       onSelect={(select) => selectHandler(select)}
@@ -20,40 +22,52 @@ function Filter({ items, className, selectHandler }) {
         selectedItem,
         highlightedIndex,
       }) => (
-        <div className={`${className ? className : null}`}>
-          <label {...getLabelProps()} htmlFor="">
-            Filter by type:
-          </label>
-          <button
-            {...getToggleButtonProps({
-              style: {
-                color: 'black',
-              },
+        <div className={`${styles.Filter} ${className ? className : null}`}>
+          <label
+            {...getLabelProps({
+              className: styles.Label,
             })}
           >
-            {selectedItem.name}
-            <Icon icon={isOpen ? 'caret-up' : 'caret-down'} />
-          </button>
-          {isOpen ? (
-            <ul {...getMenuProps()}>
-              {(items || []).map((item, index) => (
-                <li
-                  key={index}
-                  {...getItemProps({
-                    item,
-                    style: {
-                      backgroundColor:
-                        highlightedIndex === index
-                          ? 'rgba(0, 0, 0, .1)'
-                          : 'transparent',
-                    },
-                  })}
-                >
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-          ) : null}
+            Filter by type:
+          </label>
+          <div className={styles.FilterContainer}>
+            <button
+              {...getToggleButtonProps({
+                className: styles.Toggle,
+              })}
+            >
+              {selectedItem.name}
+              <Icon
+                className={styles.ToggleIcon}
+                icon={isOpen ? 'caret-up' : 'caret-down'}
+              />
+            </button>
+            {isOpen ? (
+              <ul
+                {...getMenuProps({
+                  className: styles.FilterMenu,
+                })}
+              >
+                {(filters || []).map((item, index) => (
+                  <li
+                    key={index}
+                    {...getItemProps({
+                      item,
+                      className: styles.FilterMenuItem,
+                      style: {
+                        backgroundColor:
+                          highlightedIndex === index
+                            ? 'rgba(0, 0, 0, .1)'
+                            : 'transparent',
+                      },
+                    })}
+                  >
+                    {item.name}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
         </div>
       )}
     </Downshift>

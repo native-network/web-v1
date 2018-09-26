@@ -1,0 +1,48 @@
+@import '../../../styles/extends.css';
+
+.Filter {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.Label {
+  margin-right: 0.5rem;
+}
+
+.Toggle {
+  color: var(--primary-black);
+  position: relative;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  min-width: 10rem;
+}
+
+.ToggleIcon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  padding: 0.5rem;
+}
+
+.FilterContainer {
+  position: relative;
+}
+
+.FilterMenu {
+  @extend %unstyled-list;
+  @extend %box-shadow;
+
+  width: 100%;
+  background: var(--primary-white);
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 100%;
+  z-index: 500;
+}
+
+.FilterMenuItem {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
