@@ -38,7 +38,7 @@ function renderVoteResults(votes, options) {
 function Vote({ vote, submitVote }) {
   const today = moment();
   const isClosed = moment(vote.endDate).isBefore(today);
-  const { description, hasVoted, title, options, endDate, votes } = vote;
+  const { description, hasVoted, title, options, endDate, votes, image } = vote;
 
   const handleSubmit = (optionId) => {
     submitVote(vote.id, optionId, vote.community.id);
@@ -46,9 +46,11 @@ function Vote({ vote, submitVote }) {
 
   return (
     <li className={styles.VoteItem}>
-      <div className={styles.VoteImage}>
-        <img src="http://placehold.it/250x150" alt="" />
-      </div>
+      {!image ? (
+        <div className={styles.VoteImage}>
+          <img src="http://placehold.it/250x150" alt="" />
+        </div>
+      ) : null}
       <div className={styles.VoteDescription}>
         <h3>{title}</h3>
         <span className={styles.VoteClosing}>
