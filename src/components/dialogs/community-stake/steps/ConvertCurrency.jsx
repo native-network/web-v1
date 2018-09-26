@@ -24,16 +24,24 @@ export class ConvertCurrency extends Component {
     const userCommunity = user.wallet.currencies.find(
       (c) => c.symbol === community.currency.symbol,
     );
-    const minRequirement = (value) =>
+    const userMemberOf = user.memberOf.find((c) => c.id === community.id);
+    const minRequirementValidator = (value) =>
       parseInt(value, 10) <
-      +fromWei(
-        bigNumber(
-          community.currency.minimumStake - userCommunity.balance,
-        ).toString(),
-      )
+        +fromWei(
+          bigNumber(
+            community.currency.minimumStake - userCommunity.balance,
+          ).toString(),
+        ) && !userMemberOf
         ? `You don't have enough to stake`
         : undefined;
-
+    const minRequirement = userMemberOf
+      ? fromWei(community.currency.minimumStake)
+      : community.currency &&
+        fromWei(
+          bigNumber(
+            community.currency.minimumStake - userCommunity.balance,
+          ).toString(),
+        );
     return (
       <div className={styles.CommunityStake}>
         <h1 className={styles.Header}>
@@ -54,7 +62,7 @@ export class ConvertCurrency extends Component {
           <p>Select the currency and amount you would like to convert below.</p>
           <p>
             <strong>
-              This transaction could take up to 5 minutes. You will be notifiied
+              This transaction could take up to 5 minutes. You will be notified
               when your currency has been transferred.
             </strong>
           </p>
@@ -65,20 +73,15 @@ export class ConvertCurrency extends Component {
             sendCurrency: user.wallet.currencies.find(
               (c) => c.symbol === 'NTV',
             ),
-            sendValue: new BigNumber(
-              (community.currency &&
-                fromWei(community.currency.minimumStake)) ||
-                1,
-            )
+            sendValue: new BigNumber(minRequirement || 1)
               .dividedBy((community.currency && community.currency.price) || 1)
               .toString(),
             receiveCurrency: community.currency,
-            receiveValue:
-              community.currency && fromWei(community.currency.minimumStake),
+            receiveValue: minRequirement,
           }}
           sendCurrencies={[]}
           receiveCurrencies={[community.currency]}
-          toValidation={minRequirement}
+          toValidation={minRequirementValidator}
           submitHandler={this.handleSubmit.bind(this)}
         />
       </div>
