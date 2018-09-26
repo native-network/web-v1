@@ -1,79 +1,67 @@
-import React from 'react';
+import React, { Component } from 'react';
 import SVG from 'react-inlinesvg';
+import { connect } from 'react-redux';
 
 import Menu from '../navigation/Menu';
 
-import Icon from '../icon';
+import SocialMedia from '../social-media';
 
 import styles from './Footer.css';
 import logo from '../../../assets/img/native-white-logo.svg';
 
-function Footer({ user }) {
-  const { address, role } = user;
-  return (
-    <footer className={styles.Footer}>
-      <div className={styles.FooterContainer}>
-        <div className={styles.PrimaryFooter}>
-          <SVG className={styles.FooterLogo} src={logo} />
-          <nav className={styles.FooterNav}>
-            <Menu
-              role={role}
-              address={address}
-              hidden={false}
-              menuClass={styles.FooterMenu}
-              menuItemClass={styles.FooterMenuItem}
-              linkClass={styles.FooterLink}
-              menuItems={[
-                {
-                  label: 'Terms and Conditions',
-                  path: '/',
-                },
-                {
-                  label: 'Support',
-                  path: '/support',
-                },
-                {
-                  label: 'Legal',
-                  path: '/',
-                },
-              ]}
+class Footer extends Component {
+  render() {
+    const { address, role } = this.props.user;
+    return (
+      <footer className={styles.Footer}>
+        <div className={styles.FooterContainer}>
+          <div className={styles.PrimaryFooter}>
+            <SVG className={styles.FooterLogo} src={logo} />
+            <nav className={styles.FooterNav}>
+              <Menu
+                role={role}
+                address={address}
+                hidden={false}
+                menuClass={styles.FooterMenu}
+                menuItemClass={styles.FooterMenuItem}
+                linkClass={styles.FooterLink}
+                menuItems={[
+                  {
+                    label: 'Terms and Conditions',
+                    path: '/',
+                  },
+                  {
+                    label: 'Support',
+                    path: '/support',
+                  },
+                  {
+                    label: 'Legal',
+                    path: '/',
+                  },
+                ]}
+              />
+            </nav>
+          </div>
+          <div className={styles.FooterSocial}>
+            <SocialMedia
+              className={styles.SocialMedia}
+              links={this.props.socialLinks}
             />
-          </nav>
+          </div>
         </div>
-        <div className={styles.FooterSocial}>
-          <ul className={styles.SocialMedia}>
-            <li>
-              <a
-                href="http://facebook.com"
-                rel="noopener nofollow"
-                target="_blank"
-              >
-                <Icon icon="facebook" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://twitter.com"
-                rel="noopener nofollow"
-                target="_blank"
-              >
-                <Icon icon="twitter" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://instagram.com"
-                rel="noopener nofollow"
-                target="_blank"
-              >
-                <Icon icon="instagram" />
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-  );
+      </footer>
+    );
+  }
 }
 
-export default Footer;
+export default connect(
+  (state) => {
+    const native = (state.communities.communities || []).find(
+      (c) => c.name === 'Native',
+    );
+    return {
+      socialLinks: native && JSON.parse(native.socialMediaLinks),
+    };
+  },
+  null,
+)(Footer);

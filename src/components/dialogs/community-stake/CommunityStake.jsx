@@ -40,7 +40,12 @@ class CommunityStake extends Component {
       this.setState({ components: [StakeCommunity, ProcessTransaction] });
     } else {
       this.setState({
-        components: [ConvertCurrency, ProcessTransaction, StakeCommunity],
+        components: [
+          ConvertCurrency,
+          ProcessTransaction,
+          StakeCommunity,
+          ProcessTransaction,
+        ],
       });
     }
   }
