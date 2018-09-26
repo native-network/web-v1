@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
+import shortid from 'shortid';
 
 import Button from '../../shared/button';
 
@@ -7,12 +8,12 @@ import styles from './VoteForm.css';
 
 export default function VoteForm({ submitForm, options }) {
   const grabValues = (values) => {
-    console.log(values) // eslint-disable-line
     const option = options.find((o) => o.name === values.voteOption);
     return option ? submitForm(option.id) : null;
   };
 
   function renderOption(option) {
+    const id = shortid.generate();
     return (
       <div style={{ width: '100%' }} key={option.index}>
         <Field
@@ -23,13 +24,13 @@ export default function VoteForm({ submitForm, options }) {
             return (
               <div className={styles.Vote}>
                 <input
-                  id={`foo-${option.index}`}
+                  id={`${id}-${option.index}`}
                   className={styles.VoteRadio}
                   {...input}
                   type="radio"
                 />
                 <label
-                  htmlFor={`foo-${option.index}`}
+                  htmlFor={`${id}-${option.index}`}
                   className={styles.VoteLabel}
                 >
                   {option.name}
@@ -46,12 +47,18 @@ export default function VoteForm({ submitForm, options }) {
     <Form
       onSubmit={grabValues}
       render={({ handleSubmit, form }) => (
-        <form onSubmit={handleSubmit}>
+        <form className={styles.VoteForm} onSubmit={handleSubmit}>
           <h3>Please select one option:</h3>
           {(options || []).map((option, index) =>
             renderOption({ index, ...option }),
           )}
-          <Button centered block theme="secondary" content="Submit Vote" />
+          <Button
+            className={styles.VoteSubmit}
+            centered
+            block
+            theme="primary"
+            content="Submit Vote"
+          />
         </form>
       )}
     />

@@ -38,7 +38,7 @@
 
   @media (--medium-viewport) {
     margin: 0 2rem;
-    flex-basis: 60%;
+    flex-basis: 50%;
   }
 }
 
@@ -47,7 +47,7 @@
 }
 
 .VoteMeta {
-  flex-basis: 20%;
+  flex-basis: 30%;
   align-self: stretch;
 
   & h3 {

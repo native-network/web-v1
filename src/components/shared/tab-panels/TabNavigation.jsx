@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames/bind';
+import Icon from '../icon';
 
 import styles from './TabPanels.css';
 
@@ -37,7 +38,8 @@ export default function TabNavigation({
           href="http://telegram.com"
           className={`${styles.CommunityCTA} visible-md`}
         >
-          Talk with Community members on Telegram
+          <Icon className={styles.CTAIcon} icon="telegram" />
+          <span>Talk with Community members on Telegram</span>
         </a>
       </div>
     </div>

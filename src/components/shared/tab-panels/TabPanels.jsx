@@ -22,15 +22,13 @@ class TabPanels extends Component {
       (panel) => `${panel.name} (${(panel.items && panel.items.length) || 0})`,
     );
 
-    console.log(activeItems); // eslint-disable-line
-
     return (
       <div>
         <TabNavigation
           activeTab={activeTab}
           panels={panelNames}
           clickHandler={(i) => this.setActiveTab(i)}
-          renderFilter={() => <span>foo</span>}
+          renderFilter={() => <span className="visible-md">foo</span>}
         />
         <TabPanel render={() => activePanel.render(activeItems)} />
       </div>
