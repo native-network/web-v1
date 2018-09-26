@@ -83,12 +83,16 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
           await sendingCommunity.approve(
             receivingCommunity.community.tokenAddress,
             transactionAmount,
-            (hash) => dispatch(pendingTransactionComplete(hash)),
+            (hash) => {
+              dispatch(pendingTransactionComplete(hash));
+            },
           );
           await receivingCommunity.buyWithToken(
             sendingCommunity.community.tokenAddress,
             transactionAmount,
-            (hash) => dispatch(pendingTransactionComplete(hash)),
+            (hash) => {
+              dispatch(pendingTransactionComplete(hash));
+            },
           );
 
           dispatch(getUserWalletBalances(address))
@@ -137,8 +141,13 @@ export const stake = (community) => {
       await community3.approve(
         community.address,
         community.currency.minimumStake,
+        (hash) => {
+          dispatch(pendingTransactionComplete(hash));
+        },
       );
-      await community3.stake();
+      await community3.stake((hash) => {
+        dispatch(pendingTransactionComplete(hash));
+      });
       dispatch(stakeSuccess());
       dispatch(
         toastrSuccess(`You have successfully staked into ${community.name}!`),
