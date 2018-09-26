@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
 }
 
 .LogoLink {
@@ -20,6 +21,20 @@
 .Logo {
   max-width: 10rem;
   width: 10rem;
+}
+
+.Alarm {
+  margin: 0 0.5rem;
+  width: 100%;
+
+  & path,
+  & circle {
+    fill: var(--primary-white);
+  }
+
+  @media (--medium-viewport) {
+    order: 3;
+  }
 }
 
 .Wallet {
@@ -39,6 +54,23 @@
   }
 
   @media (--medium-viewport) {
+    order: 3;
+  }
+}
+
+.NotificationsMenuItem {
+  margin: 0 0.9rem 0 0;
+  color: var(--white-0);
+  position: relative;
+  width: 2rem;
+  display: inline-block;
+  cursor: pointer;
+
+  @media (--medium-viewport) {
     order: 2;
   }
+}
+
+.NotificationsBadge {
+  background: var(--native-red);
 }

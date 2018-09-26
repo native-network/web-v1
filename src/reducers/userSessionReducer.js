@@ -11,6 +11,12 @@ export default function userSessionReducer(state = {}, action) {
       return { ...initialState.user, address: '', sessionError: '' };
     case actions.END_SESSION_ERROR:
       return { ...initialState.user, address: '', sessionError: action.error };
+    case actions.DISMISS_USER_MESSAGE: {
+      const filteredMessages = state.messages.filter((message) => {
+        return message.id !== action.messageId;
+      });
+      return { ...state, messages: filteredMessages };
+    }
     default:
       return state;
   }

@@ -1,0 +1,15 @@
+@import '../../../styles/extends.css';
+
+.Message {
+  padding: 1rem 0.4rem;
+  position: relative;
+}
+
+.Dismiss {
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  right: 0.4rem;
+  margin: 0;
+  font-size: 1rem;
+}
