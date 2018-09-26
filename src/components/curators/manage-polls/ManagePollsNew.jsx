@@ -29,7 +29,7 @@ export class ManagePollsNew extends Component {
     const newVals = {
       ...vals,
       communityId: this.props.communityId,
-      fileUrl: 'https://www.hotdog.jpg',
+      fileUrl: '',
     };
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment()

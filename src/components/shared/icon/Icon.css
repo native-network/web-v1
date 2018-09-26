@@ -26,6 +26,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-telegram::before {
+  content: "\e900";
+}
+
 .icon-caret-up::before {
   content: "\e906";
 }
@@ -35,11 +39,11 @@
 }
 
 .icon-close::before {
-  content: "\e900";
+  content: "\e901";
 }
 
 .icon-convert::before {
-  content: "\e901";
+  content: "\e902";
 }
 
 .icon-arrow::before {
@@ -47,13 +51,13 @@
 }
 
 .icon-facebook::before {
-  content: "\e902";
-}
-
-.icon-twitter::before {
   content: "\e903";
 }
 
-.icon-instagram::before {
+.icon-twitter::before {
   content: "\e904";
+}
+
+.icon-instagram::before {
+  content: "\e908";
 }

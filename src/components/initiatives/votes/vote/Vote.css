@@ -1,43 +1,125 @@
+@import '../../../../styles/extends.css';
+@import '../../../../styles/media-queries.css';
+
 .VoteItem {
+  @extend %decorator--full-width;
+
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   padding: 1rem 0;
+  width: 100%;
+  flex-direction: column;
 
-  &:not(:last-child) {
-    @extend %decorator--full-width;
+  &::after {
+    background: var(--gray-5);
+  }
 
-    margin-bottom: 1rem;
+  & h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
 
-    /* Decorator overwrites */
-    &::after {
-      background: var(--primary-color);
+  @media (--medium-viewport) {
+    flex-direction: row;
+  }
+}
+
+.Progress {
+  height: 0.5rem;
+
+  &.Yes {
+    & rect {
+      fill: var(--primary-color);
+    }
+  }
+
+  &.No {
+    & rect {
+      fill: var(--gray-10);
     }
   }
 }
 
+.VoteResults {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  margin: 2rem 0;
+
+  &.Yes {
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  &.No {
+    font-weight: 400;
+    color: var(--gray-5);
+  }
+
+  & .ResultsLabel {
+    display: inline-flex;
+    min-width: 6rem;
+  }
+
+  & .Progress {
+    flex-grow: 1;
+    margin-left: 1rem;
+  }
+
+  & .ResultsMeta {
+    width: 100%;
+    display: block;
+  }
+}
+
 .VoteImage {
-  flex-basis: 15rem;
+  width: 100%;
+
+  @media (--medium-viewport) {
+    margin-right: 2rem;
+    flex-basis: 20%;
+  }
 }
 
 .VoteDescription {
-  margin: 0 2rem;
-  flex-grow: 2;
+  margin: 2rem 0;
 
-  & h3 {
-    margin-top: 0;
+  @media (--medium-viewport) {
+    margin: 0;
+    flex-grow: 100;
+    flex-basis: 50%;
+    width: 100%;
   }
+}
+
+.VoteClosing {
+  color: var(--gray-5);
 }
 
 .VoteMeta {
-  flex-grow: 1;
-  text-align: center;
+  flex-basis: 30%;
+  align-self: stretch;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 100%;
 
-  & h4 {
-    margin-top: 0;
+  & h3 {
+    margin-bottom: 1.5rem;
   }
-}
 
-.VoteResults h4 {
-  display: inline-block;
+  & form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  & button {
+    margin-bottom: auto;
+  }
+
+  @media (--medium-viewport) {
+    margin-left: 2rem;
+  }
 }

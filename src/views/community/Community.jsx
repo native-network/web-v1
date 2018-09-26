@@ -46,10 +46,7 @@ export class Community extends Component {
         isCommunityRoute={this.props.isCommunityRoute}
         render={() => (
           <div className={styles.CommunityPanels}>
-            <span className={styles.CommunityCTA}>
-              Talk with Community members on Telegram
-            </span>
-            <TabPanels panels={initiatives} />
+            <TabPanels hasFilter panels={initiatives} />
           </div>
         )}
       />
@@ -62,17 +59,17 @@ function formatInitiatives(polls, tasks, projects) {
     {
       name: 'Votes',
       items: polls,
-      render: (polls) => <Votes items={polls} />,
+      render: (items) => <Votes items={items} />,
     },
     {
       name: 'Tasks',
       items: tasks,
-      render: (tasks) => <Tasks items={tasks} />,
+      render: (items) => <Tasks items={items} />,
     },
     {
       name: 'Projects',
       items: projects,
-      render: (projects) => <Projects items={projects} />,
+      render: (items) => <Projects items={items} />,
     },
   ];
 }

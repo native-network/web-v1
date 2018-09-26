@@ -11,4 +11,6 @@
 
 .VoteList {
   @extend %unstyled-list;
+
+  margin-bottom: 2rem;
 }

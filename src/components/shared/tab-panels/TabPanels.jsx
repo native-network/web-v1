@@ -1,25 +1,50 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+
+import Filter from '../filter';
 
 import TabNavigation from './TabNavigation';
 import TabPanel from './TabPanel';
 
+const today = moment();
+
+const itemsForFilter = [
+  {
+    name: 'All',
+    filter: (items) => items,
+  },
+  {
+    name: 'Open',
+    filter: (items) =>
+      (items || []).filter((item) => moment(item.endDate).isAfter(today)),
+  },
+  {
+    name: 'Closed',
+    filter: (items) =>
+      (items || []).filter((item) => moment(item.endDate).isBefore(today)),
+  },
+];
+
 class TabPanels extends Component {
   state = {
     activeTab: 0,
+    activeFilter: itemsForFilter.find((f) => f.name === 'All').filter,
   };
 
   setActiveTab(tabIndex) {
     this.setState({ activeTab: tabIndex });
   }
 
+  filterHandler({ filter }) {
+    this.setState({ activeFilter: filter });
+  }
+
   render() {
     const { props, state } = this;
     const { panels } = props;
     const { activeTab } = state;
-    const activePanel = (panels || []).find((panel, i) => i === activeTab);
-    const activeItems = activePanel.items;
     const panelNames = panels.map(
-      (panel) => `${(panel.items && panel.items.length) || 0} ${panel.name}`,
+      (panel) => `${panel.name} (${(panel.items && panel.items.length) || 0})`,
     );
 
     return (
@@ -28,8 +53,25 @@ class TabPanels extends Component {
           activeTab={activeTab}
           panels={panelNames}
           clickHandler={(i) => this.setActiveTab(i)}
+          renderFilter={() =>
+            this.props.hasFilter ? (
+              <Filter
+                selectHandler={this.filterHandler.bind(this)}
+                className="visible-lg"
+                filters={itemsForFilter}
+              />
+            ) : null
+          }
         />
-        <TabPanel render={() => activePanel.render(activeItems)} />
+        {(panels || []).map(
+          ({ render, items }, index) =>
+            index === activeTab ? (
+              <TabPanel
+                key={index}
+                render={() => render(this.state.activeFilter(items))}
+              />
+            ) : null,
+        )}
       </div>
     );
   }
