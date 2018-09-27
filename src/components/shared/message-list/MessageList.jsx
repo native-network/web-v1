@@ -14,6 +14,9 @@ class MessageList extends Component {
   render() {
     return (
       <ul className={styles.MessageList}>
+        {this.props.messages.length === 0 ? (
+          <div className={styles.NoNotifications}>No notifications</div>
+        ) : null}
         {(this.props.messages || []).map((message, i) =>
           renderListItem(message, i),
         )}

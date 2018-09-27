@@ -18,3 +18,8 @@
     border-bottom: none;
   }
 }
+
+.NoNotifications {
+  padding: 1rem 0.4rem;
+  position: relative;
+}
