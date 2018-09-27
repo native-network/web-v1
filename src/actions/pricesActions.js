@@ -5,7 +5,7 @@ import axios from 'axios';
 export const getCurrentPrices = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get('//coincap.io/page/ETH');
+      const { data } = await axios.get('https://coincap.io/page/ETH');
       return dispatch(setPriceETH(data.price));
     } catch (err) {
       dispatch(toastrError('There was a problem fetching price data'));

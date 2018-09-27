@@ -9,7 +9,6 @@ import Tokens from './views/tokens';
 import FAQ from './views/faq';
 import Terms from './views/terms';
 import CommunityAdmin from './views/community-admin';
-import Manage from './views/manage';
 import FourOhFour from './views/404';
 
 export const PrivateRoute = ({ component: Component, isCurator, ...rest }) => (
@@ -49,12 +48,6 @@ export const routes = (isCurator) => {
         exact
         path="/manage/:communityId"
         component={CommunityAdmin}
-      />
-      <PrivateRoute
-        isCurator={isCurator}
-        exact
-        path="/manage"
-        component={Manage}
       />
       <Route component={FourOhFour} />
     </Switch>

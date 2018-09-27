@@ -1,23 +1,43 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
+import shortid from 'shortid';
 
 import Button from '../../shared/button';
 
+import styles from './VoteForm.css';
+
 export default function VoteForm({ submitForm, options }) {
-  const grabValues = ({ voteOption }) => {
-    const option = options.find((o) => o.name === voteOption);
+  const grabValues = (values) => {
+    const option = options.find((o) => o.name === values.voteOption);
     return option ? submitForm(option.id) : null;
   };
 
   function renderOption(option) {
+    const id = shortid.generate();
     return (
-      <div key={option.index}>
-        {option.name}{' '}
+      <div style={{ width: '100%' }} key={option.index}>
         <Field
           name="voteOption"
           value={option.name}
           type="radio"
-          component="input"
+          render={({ input }) => {
+            return (
+              <div className={styles.Vote}>
+                <input
+                  id={`${id}-${option.index}`}
+                  className={styles.VoteRadio}
+                  {...input}
+                  type="radio"
+                />
+                <label
+                  htmlFor={`${id}-${option.index}`}
+                  className={styles.VoteLabel}
+                >
+                  {option.name}
+                </label>
+              </div>
+            );
+          }}
         />
       </div>
     );
@@ -27,11 +47,18 @@ export default function VoteForm({ submitForm, options }) {
     <Form
       onSubmit={grabValues}
       render={({ handleSubmit, form }) => (
-        <form onSubmit={handleSubmit}>
-          {(options || []).map((option, i) =>
-            renderOption({ index: i, ...option }),
+        <form className={styles.VoteForm} onSubmit={handleSubmit}>
+          <h3>Please select one option:</h3>
+          {(options || []).map((option, index) =>
+            renderOption({ index, ...option }),
           )}
-          <Button centered theme="secondary" content="Submit Vote" />
+          <Button
+            className={styles.VoteSubmit}
+            centered
+            block
+            theme="primary"
+            content="Submit Vote"
+          />
         </form>
       )}
     />

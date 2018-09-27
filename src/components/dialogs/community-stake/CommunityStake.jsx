@@ -21,7 +21,7 @@ class CommunityStake extends Component {
     const userCurrency = user.wallet.currencies.find(
       (c) => c.symbol === community.currency.symbol,
     );
-
+    const userMemberOf = user.memberOf.find((c) => c.id === community.id);
     const nativeCurrency = user.wallet.currencies.find(
       (c) => c.symbol === 'NTV',
     );
@@ -34,7 +34,11 @@ class CommunityStake extends Component {
       .multipliedBy(minStake - communityBalance)
       .toString();
 
-    if (+nativeBalance < +stakeInNative && +communityBalance < minStake) {
+    if (
+      +nativeBalance < +stakeInNative &&
+      +communityBalance < minStake &&
+      !userMemberOf
+    ) {
       this.setState({ components: [InsufficientFunds] });
     } else if (+communityBalance >= +minStake) {
       this.setState({ components: [StakeCommunity, ProcessTransaction] });

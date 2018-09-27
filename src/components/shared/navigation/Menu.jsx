@@ -8,7 +8,6 @@ function Menu({
   menuItemClass,
   linkClass,
   address,
-  role,
   menuItems,
 }) {
   return (
@@ -36,15 +35,6 @@ function Menu({
         label="Learn"
         exact
       />
-      {role === 'curator' && (
-        <MenuItem
-          menuItemClass={menuItemClass}
-          linkClass={linkClass}
-          path="/manage"
-          label="Manage"
-          exact
-        />
-      )}
       {menuItems &&
         (menuItems || []).map((item, i) => (
           <MenuItem

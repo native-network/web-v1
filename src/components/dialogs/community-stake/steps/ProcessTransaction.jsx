@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from '../../../shared/loader';
+import { connect } from 'react-redux';
 
 import Button from '../../../shared/button';
 
@@ -27,15 +28,19 @@ class ProcessTransaction extends Component {
           >
             <Loader />
           </div>
-          Your transaction progress can be viewed on{' '}
-          <a
-            target="_blank"
-            rel="noopener nofollow"
-            href="https://etherscan.io"
-          >
-            etherscan.io
-          </a>
-          .<br />
+          {this.props.hash ? (
+            <p>
+              Your transaction progress can be viewed on{' '}
+              <a
+                target="_blank"
+                rel="noopener nofollow"
+                href={'https://rinkeby.etherscan.io/tx/' + this.props.hash}
+              >
+                etherscan.io
+              </a>
+              .
+            </p>
+          ) : null}
         </div>
         <Button
           className={styles.Button}
@@ -49,4 +54,11 @@ class ProcessTransaction extends Component {
   }
 }
 
-export default ProcessTransaction;
+export default connect(
+  (state) => {
+    return {
+      hash: state.currencies.hash,
+    };
+  },
+  null,
+)(ProcessTransaction);

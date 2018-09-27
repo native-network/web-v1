@@ -1,11 +1,17 @@
 import React from 'react';
 import classNames from 'classnames/bind';
+import Icon from '../icon';
 
 import styles from './TabPanels.css';
 
 const cx = classNames.bind(styles);
 
-export default function TabNavigation({ panels, activeTab, clickHandler }) {
+export default function TabNavigation({
+  panels,
+  activeTab,
+  renderFilter,
+  clickHandler,
+}) {
   const addClassNames = (index) => {
     return cx({
       ActiveTab: activeTab === index,
@@ -14,19 +20,28 @@ export default function TabNavigation({ panels, activeTab, clickHandler }) {
   };
 
   return (
-    <ul className={styles.TabNavigation}>
-      {(panels || []).map((name, i) => {
-        return (
-          <li
-            key={i}
-            className={addClassNames(i)}
-            onClick={() => clickHandler(i)}
-          >
-            {/* <button>{name}</button> */}
-            <button disabled={i > 0}>{name}</button>
-          </li>
-        );
-      })}
-    </ul>
+    <div className={styles.TabNavigation}>
+      <div className={styles.TabNavigationContainer}>
+        <ul className={styles.TabNavigationList}>
+          {(panels || []).map((name, i) => {
+            return (
+              <li key={i} className={addClassNames(i)}>
+                <button onClick={() => clickHandler(i)}>{name}</button>
+              </li>
+            );
+          })}
+        </ul>
+        {renderFilter ? renderFilter() : null}
+        <a
+          target="_blank"
+          rel="noopener nofollow"
+          href="http://telegram.com"
+          className={`${styles.CommunityCTA} visible-md`}
+        >
+          <Icon className={styles.CTAIcon} icon="telegram" />
+          <span>Talk with Community members on Telegram</span>
+        </a>
+      </div>
+    </div>
   );
 }

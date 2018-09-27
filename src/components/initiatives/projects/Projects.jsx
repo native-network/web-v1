@@ -11,10 +11,15 @@ function Projects({ items }) {
     );
   };
 
-  return (
+  return items.length ? (
     <ul className={styles.ProjectList}>
       {(items || []).map((item, i) => renderProject({ index: i, ...item }))}
     </ul>
+  ) : (
+    <p>
+      Looks like there are no projects available at the moment. Please try back
+      later.
+    </p>
   );
 }
 

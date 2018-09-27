@@ -252,8 +252,6 @@ export class Card extends Component {
         </div>
         <Button
           className={styles.ReadMore}
-          centered
-          theme="primary"
           clickHandler={this.toggleReadMore.bind(this)}
           content={isReadMoreOpen ? `Collapse` : `Show More Info`}
         />

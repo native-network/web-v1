@@ -1,3 +1,5 @@
+@import '../../../styles/extends.css';
+
 @custom-selector :--button button, .Button;
 @custom-selector :--enter :hover, :focus;
 @custom-selector :--outline .Outline;
@@ -111,7 +113,7 @@
   &.Secondary,
   &.Tertiary {
     &:not([disabled]) {
-      box-shadow: 0 0.25rem 1rem var(--transparent-black-30);
+      @extend %box-shadow;
     }
   }
 

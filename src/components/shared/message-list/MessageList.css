@@ -1,0 +1,20 @@
+.MessageList {
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  border: 1px solid var(--gray-8);
+  border-top: none;
+  background: var(--white-0);
+  color: var(--native-earth);
+  list-style: none;
+}
+
+.MessageListItem {
+  composes: container from global;
+  height: 100%;
+  border-bottom: 1px solid var(--gray-8);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}

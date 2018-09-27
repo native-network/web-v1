@@ -80,37 +80,31 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
         );
 
         try {
-          const approve = await sendingCommunity.approve(
+          await sendingCommunity.approve(
             receivingCommunity.community.tokenAddress,
             transactionAmount,
+            (hash) => {
+              dispatch(pendingTransactionComplete(hash));
+            },
           );
-
-          const buy = await receivingCommunity.buyWithToken(
+          await receivingCommunity.buyWithToken(
             sendingCommunity.community.tokenAddress,
             transactionAmount,
+            (hash) => {
+              dispatch(pendingTransactionComplete(hash));
+            },
           );
 
-          if (approve && buy) {
-            dispatch(getUserWalletBalances(address))
-              .then(() => {
-                dispatch(toastrSuccess('Your purchase was successful!'));
-                dispatch(sendTransactionInNtvSuccess({ approve, buy }));
-              })
-              .catch((err) => {
-                const { message } = err;
-                dispatch(toastrError(message));
-                dispatch(sendTransactionInNtvError(message));
-              });
-          } else {
-            const message = 'Something went wrong.';
-
-            dispatch(toastrError(message));
-            return dispatch(sendTransactionInNtvError(message));
-          }
+          dispatch(getUserWalletBalances(address))
+            .then(() => {
+              dispatch(toastrSuccess('Your purchase was successful!'));
+              dispatch(sendTransactionInNtvSuccess());
+            })
+            .catch((err) => {
+              throw new Error(err);
+            });
         } catch (err) {
-          const { message } = err;
-          dispatch(toastrError(message));
-          return dispatch(sendTransactionInNtvError(message));
+          throw new Error(err);
         }
       })
       .catch((err) => {
@@ -119,6 +113,10 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
         return dispatch(sendTransactionInNtvError(message));
       });
   };
+};
+
+export const pendingTransactionComplete = (hash) => {
+  return { type: 'PENDING_TRANSACTION_HASH', hash };
 };
 
 export const sendTransactionInNtvSuccess = (data) => {
@@ -143,8 +141,13 @@ export const stake = (community) => {
       await community3.approve(
         community.address,
         community.currency.minimumStake,
+        (hash) => {
+          dispatch(pendingTransactionComplete(hash));
+        },
       );
-      await community3.stake();
+      await community3.stake((hash) => {
+        dispatch(pendingTransactionComplete(hash));
+      });
       dispatch(stakeSuccess());
       dispatch(
         toastrSuccess(`You have successfully staked into ${community.name}!`),

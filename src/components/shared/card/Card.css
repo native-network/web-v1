@@ -267,6 +267,15 @@
 }
 
 .ReadMore {
+  @extend %link-style;
+
+  color: var(--primary-color);
+  display: block;
+  padding: 0.5rem 0;
+  text-align: center;
+  margin: 0 auto;
+  text-decoration: underline;
+
   @media (--medium-viewport) {
 
     /* stylelint-disable-next-line declaration-no-important */

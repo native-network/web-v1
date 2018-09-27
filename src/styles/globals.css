@@ -21,6 +21,14 @@
   }
 }
 
+:global(.visible-lg) {
+  display: none;
+
+  @media (--large-viewport) {
+    display: inherit;
+  }
+}
+
 img {
   width: 100%;
   display: block;

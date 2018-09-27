@@ -1,0 +1,25 @@
+@import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
+
+.Notifications {
+  position: absolute;
+  top: 100%;
+  left: -1%;
+  width: 102%;
+  z-index: 1000;
+  display: none;
+
+  @media (--medium-viewport) {
+    @extend %container;
+
+    left: auto;
+    width: 42rem;
+    right: 3.2rem;
+  }
+}
+
+.NotificationsActive {
+  @extend .Notifications;
+
+  display: block;
+}

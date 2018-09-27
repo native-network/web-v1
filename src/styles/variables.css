@@ -55,9 +55,12 @@
   --light-blue: #64b4cd;
   --dark-blue: #288ba9;
 
+  --native-earth: #665a43;
+  --native-red: #dc250c;
   --warm-coral: #f16667;
   --warm-orange: #ef8822;
   --warm-yellow: #fbc24d;
+  --native-yellow: #fddb9c;
 
   --primary-color: var(--native-green);
   --primary-color--alt: #549387;
@@ -77,4 +80,7 @@
 
   --tertiary-button-default: var(--primary-white);
   --tertiary-button-active: color-mod(var(--gray-8));
+
+  /* Social media */
+  --telegram-blue: #0088cc;
 }

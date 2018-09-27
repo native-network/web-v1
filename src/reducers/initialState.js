@@ -34,6 +34,7 @@ export const initialState = {
     curatorOf: [],
     addressError: '',
     sessionError: '',
+    messages: [],
   },
   prices: {
     ethUSD: '',

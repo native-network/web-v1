@@ -123,3 +123,23 @@ export const refreshAccounts = (user) => {
     }
   };
 };
+
+export const dismissUserMessage = (messageId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`user/dismiss`, { message: messageId });
+      const messageExists = data.messages.find((message) => {
+        return message.id === messageId;
+      });
+      if (!messageExists) {
+        dispatch({ type: actions.DISMISS_USER_MESSAGE, messageId: messageId });
+      }
+    } catch (err) {
+      if (err) {
+        dispatch(
+          toastrError('There was a problem dismissing the notification.'),
+        );
+      }
+    }
+  };
+};
