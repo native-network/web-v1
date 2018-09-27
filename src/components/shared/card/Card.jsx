@@ -87,6 +87,7 @@ export class Card extends Component {
       </Link>
     ) : null;
   }
+
   render() {
     const { props, state } = this;
     const { community, render, prices } = props;

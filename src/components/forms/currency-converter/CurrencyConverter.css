@@ -6,7 +6,7 @@
   flex-direction: column;
   position: relative;
 
-  @media (--medium-viewport) {
+  @media (--large-viewport) {
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
@@ -38,8 +38,11 @@
   @media (--medium-viewport) {
     width: auto;
     flex-grow: 1;
-    margin-bottom: 0;
     flex-direction: column;
+  }
+
+  @media (--large-viewport) {
+    margin-bottom: 0;
   }
 }
 

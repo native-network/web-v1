@@ -24,10 +24,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-flow: wrap;
   }
 }
 
 .TokenBalances {
+  white-space: nowrap;
 
   & .Balance {
     display: flex;

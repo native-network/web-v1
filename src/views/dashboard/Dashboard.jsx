@@ -26,6 +26,7 @@ import Loader from '../../components/shared/loader';
 import Modal from '../../components/shared/modal';
 import Button from '../../components/shared/button';
 import CurrencyConverter from '../../components/forms/currency-converter';
+import WalletAddress from '../../components/shared/wallet-address';
 import { formatUsd } from '../../utils/helpers';
 
 Object.assign(ReactTableDefaults, {
@@ -226,14 +227,12 @@ export class Dashboard extends Component {
               />
             </Modal>
             <div className={styles.DashboardBanner}>
-              <div>
-                <div className={styles.TokenBalances}>
-                  <div className={styles.Balance}>
-                    <img src={eth} /> ETH Balance:&nbsp;
-                    <b>{ethBalance}</b> ({ethInUSD})
-                  </div>
+              <div className={styles.TokenBalances}>
+                <div className={styles.Balance}>
+                  <img src={eth} /> ETH Balance:&nbsp;
+                  <b>{ethBalance}</b> ({ethInUSD})
                 </div>
-                <div>{this.props.user.wallet.address}</div>
+                <WalletAddress address={this.props.user.wallet.address} />
               </div>
             </div>
             <section className={styles.Dashboard}>
