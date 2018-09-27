@@ -180,7 +180,6 @@ export class Card extends Component {
           <div className={styles.Summary}>
             <h3>About:</h3>
             <p className={styles.Intro}>{community.communityPurpose}</p>
-            {this.renderCommunityLink(community, this.props.user)}
             <dl className={styles.CommunityInfo}>
               <div>
                 <dt>Location:</dt>
@@ -255,6 +254,7 @@ export class Card extends Component {
           clickHandler={this.toggleReadMore.bind(this)}
           content={isReadMoreOpen ? `Collapse` : `Show More Info`}
         />
+        {this.renderCommunityLink(community, this.props.user)}
         {render && render()}
       </div>
     );

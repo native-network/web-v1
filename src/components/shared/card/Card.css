@@ -14,13 +14,16 @@
 }
 
 .CommunityLink {
-  border-radius: 24px;
-  background: var(--greenish-blue);
-  color: var(--primary-white);
+  width: 98%;
+  margin: 0.5rem 1%;
+  padding: 1rem 2rem;
+  border-radius: 5px;
   display: inline-block;
+  background: var(--native-green);
+  color: var(--primary-white);
+  text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  padding: 1rem 2rem;
 }
 
 .Header {
@@ -40,7 +43,12 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(0deg, var(--transparent-black-100), var(--transparent-black-0) 60%);
+  background:
+    linear-gradient(
+      0deg,
+      var(--transparent-black-100),
+      var(--transparent-black-0) 60%
+    );
 }
 
 .HeaderContainer {
