@@ -1,8 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import styles from '../CommunityStake.css';
 
+const furtherInstructionText = () => {
+  return location.pathname && location.pathname !== '/dashboard' ? (
+    <div>
+      <p>Please visit the dashboard and purchase Native Community Currency.</p>
+      <Link className={styles.Button} to="/dashboard">
+        Go To Dashboard
+      </Link>
+    </div>
+  ) : (
+    <p>Please use the currency converter above.</p>
+  );
+};
 function InsufficientFunds() {
   return (
     <div className={styles.CommunityStake}>
@@ -16,16 +29,14 @@ function InsufficientFunds() {
             community.
           </strong>
         </p>
-        <p>
-          Please visit the dashboard and purchase Native Community Currency.
-        </p>
-
-        <Link className={styles.Button} to="/dashboard">
-          Go To Dashboard
-        </Link>
+        {furtherInstructionText()}
       </div>
     </div>
   );
 }
 
-export default InsufficientFunds;
+export default connect((state) => {
+  return {
+    location: state.router.location,
+  };
+})(InsufficientFunds);
