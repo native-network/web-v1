@@ -8,9 +8,8 @@ export default function StepOne() {
   return (
     <div>
       <p>
-        Native is a platform for the community economics which enables
-        communities to realize their inherent value through local currency and
-        set of governance.
+        Native is a platform for communities to realize their inherent value
+        through local currency and set of governance tools.
       </p>
       <p className={styles.Important}>
         Metamask is required to interact with the Native Platform.

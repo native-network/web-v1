@@ -39,10 +39,21 @@
   }
 }
 
-.CoinbaseButton {
+.CoinbaseButton,
+.MyCryptoButton {
   @extend %button;
+  @extend %box-shadow;
 
+  margin: 0 1rem;
   font-size: 1.25rem;
-  background: #0667d0;
-  border-color: #0667d0;
+}
+
+.CoinbaseButton {
+  background: var(--coinbase-blue);
+  border-color: var(--coinbase-blue);
+}
+
+.MyCryptoButton {
+  background: var(--primary-black);
+  border-color: var(--primary-black);
 }

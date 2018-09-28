@@ -144,7 +144,7 @@ export class CurrencyConverter extends Component {
                   return new BigNumber(valueInWei).gt(
                     allValues.sendCurrency.balance,
                   )
-                    ? `You don't have enough currency`
+                    ? `You don't have enough ${allValues.sendCurrency.symbol}`
                     : undefined;
                 }}
               >

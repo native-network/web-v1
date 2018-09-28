@@ -6,7 +6,6 @@ import Button from '../button';
 import Modal from '../modal';
 import SocialMedia from '../social-media';
 import CommunityStake from '../../dialogs/community-stake';
-import TokenData from '../token-data';
 import Tag from '../tag';
 import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 import { Link } from 'react-router-dom';
@@ -90,7 +89,7 @@ export class Card extends Component {
 
   render() {
     const { props, state } = this;
-    const { community, render, prices } = props;
+    const { community, render } = props;
     const { isReadMoreOpen } = state;
     const socialLinks = JSON.parse(community.socialMediaLinks);
     const membershipBenefits = JSON.parse(community.membershipBenefits);
@@ -138,13 +137,6 @@ export class Card extends Component {
             <div className={styles.HeaderContainer}>
               <Tag name={community.subtitle} />
               <h2 className={styles.Title}>{community.name}</h2>
-              <span className={styles.Location}>{community.location}</span>
-              <TokenData
-                prices={prices}
-                currency={community.currency}
-                containerClass={`${styles.TokenData} ${styles.Desktop}`}
-                isMobile={false}
-              />
             </div>
           </div>
         </div>
@@ -174,12 +166,6 @@ export class Card extends Component {
             />
           </div>
         </div>
-        <TokenData
-          prices={prices}
-          currency={community.currency}
-          containerClass={`${styles.TokenData} ${styles.Mobile}`}
-          isMobile={true}
-        />
         <div className={styles.CardDetails}>
           <div className={styles.Summary}>
             <h3>About:</h3>

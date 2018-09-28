@@ -87,3 +87,20 @@
     font-size: 0.8rem;
   }
 }
+
+.ModalHeader {
+
+  & h1 {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+  }
+
+  & img {
+    max-width: 5rem;
+    margin: 0 auto;
+  }
+}
+
+.AuthorizeButton {
+  margin-bottom: 2rem;
+}

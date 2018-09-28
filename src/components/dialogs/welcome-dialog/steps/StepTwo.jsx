@@ -1,25 +1,15 @@
 import React from 'react';
 
-import MetamaskButton from '../shared/MetamaskButton';
-
 import styles from '../WelcomeDialog.css';
 
 export default function StepTwo() {
   return (
     <div>
-      <p className={styles.Important}>
-        Hmm. It looks like you don't have any Ethereum in your wallet.
-      </p>
       <p>
-        You need Ethereum to interact with the Native Platform. Ethereum is a
-        cryptocurrency that you can use to buy Native Tokens.
+        You will need Ethereum to interact with the Native Platform. Ethereum is
+        a cryptocurrency that you can use to get Native Tokens.
       </p>
-      <p>You can buy Ethereum using your Metamask wallet, or visit Coinbase.</p>
-      <MetamaskButton
-        clickHandler={() => alert('Clicked!')}
-        content="Open Metamask Wallet"
-      />
-      <br />
+      <p>You can buy Ethereum by visiting either coinbase or MyCrypto.com</p>
       <a
         className={`${styles.CoinbaseButton} ${styles.WelcomeButton}`}
         target="_blank"
@@ -27,6 +17,15 @@ export default function StepTwo() {
         href="https://coinbase.com"
       >
         coinbase
+      </a>
+
+      <a
+        className={`${styles.MyCryptoButton} ${styles.WelcomeButton}`}
+        target="_blank"
+        rel="noopen nofollow"
+        href="https://mycrypto.com"
+      >
+        MyCrypto.com
       </a>
     </div>
   );

@@ -43,12 +43,11 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background:
-    linear-gradient(
-      0deg,
-      var(--transparent-black-100),
-      var(--transparent-black-0) 60%
-    );
+  background: linear-gradient(
+    0deg,
+    var(--transparent-black-100),
+    var(--transparent-black-0) 60%
+  );
 }
 
 .HeaderContainer {
@@ -68,7 +67,7 @@
 }
 
 .Title {
-  margin: 0;
+  margin: 0 0 0.8rem;
 }
 
 .Location {
@@ -285,7 +284,6 @@
   text-decoration: underline;
 
   @media (--medium-viewport) {
-
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
