@@ -34,7 +34,9 @@ class ProcessTransaction extends Component {
               <a
                 target="_blank"
                 rel="noopener nofollow"
-                href={'https://rinkeby.etherscan.io/tx/' + this.props.hash}
+                href={`https://${
+                  process.env.WEB3NETWORK == 'rinkeby' ? 'rinkeby.' : ''
+                }etherscan.io/tx/${this.props.hash}`}
               >
                 etherscan.io
               </a>
