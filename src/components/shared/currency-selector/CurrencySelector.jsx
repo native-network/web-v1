@@ -23,6 +23,7 @@ function CurrencySelector({
     >
       {({
         getLabelProps,
+        getInputProps,
         getToggleButtonProps,
         getMenuProps,
         getItemProps,
@@ -31,7 +32,6 @@ function CurrencySelector({
       }) => (
         <div className={styles.SelectorContainer}>
           <label
-            htmlFor={`${isFrom ? 'send' : 'receive'}Dropdown`}
             {...getLabelProps({
               className: styles.MenuLabel,
             })}
@@ -47,6 +47,7 @@ function CurrencySelector({
             <span className={styles.CurrencyId}>{currency.symbol}</span>
             {hasDropdown ? (
               <button
+                {...getInputProps()}
                 {...getToggleButtonProps({
                   className: styles.MenuToggle,
                 })}
