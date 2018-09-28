@@ -15,7 +15,6 @@ export const getUserWalletAddress = () => {
       return dispatch(getUserWalletBalances(data));
     } catch (err) {
       const { message } = err;
-      dispatch(toastrError(message));
       return dispatch(getUserWalletAddressError(message));
     }
   };
