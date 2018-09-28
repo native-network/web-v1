@@ -21,6 +21,7 @@ function Button({
     Primary: theme === 'primary',
     Secondary: theme === 'secondary',
     Tertiary: theme === 'tertiary',
+    White: theme === 'white',
     Rounded: rounded,
     Centered: centered,
     Outline: outline,

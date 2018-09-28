@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Transition } from 'react-transition-group';
 import { connect } from 'react-redux';
 
@@ -11,8 +11,6 @@ import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 import { Link } from 'react-router-dom';
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
-
-import SVG from 'react-inlinesvg';
 
 import styles from './Card.css';
 
@@ -93,6 +91,9 @@ export class Card extends Component {
     const { isReadMoreOpen } = state;
     const socialLinks = JSON.parse(community.socialMediaLinks);
     const membershipBenefits = JSON.parse(community.membershipBenefits);
+    const isMember = !!this.props.user.memberOf.find((userCommunity) => {
+      return userCommunity.id === community.id;
+    });
 
     const transition = `all ${ANIMATION_DURATION}ms linear`;
     const defaultStyles = {
@@ -105,10 +106,6 @@ export class Card extends Component {
       exiting: { height: '0px', opacity: 0, transition },
       exited: defaultStyles,
     };
-
-    const userCurrency = this.props.userCurrencies.find(
-      (c) => c.symbol === community.currency.symbol,
-    );
 
     return (
       <div
@@ -130,7 +127,7 @@ export class Card extends Component {
           />
         </Modal>
         <div
-          style={{ backgroundImage: `url("/${community.image}")` }}
+          style={{ backgroundImage: `url("${community.image}")` }}
           className={styles.Header}
         >
           <div className={styles.HeaderOverlay}>
@@ -140,31 +137,20 @@ export class Card extends Component {
             </div>
           </div>
         </div>
-        <div className={styles.CTAMobile}>
-          <div className={styles.CTABadge}>
-            <span>
-              {userCurrency &&
-              +userCurrency.balance < +community.currency.minimumStake
-                ? 'Support'
-                : 'Join'}{' '}
-              {community.name}
-            </span>
-            <Button
-              className={styles.CommunityButton}
-              clickHandler={() => this.openModal(community)}
-              theme="primary"
-              disabled={!this.props.user.wallet.address}
-              content={() => (
-                <Fragment>
-                  <SVG className={styles.ButtonIcon} src={community.icon} />
-                  <span>
-                    {fromWei(community.currency.minimumStake)}{' '}
-                    {community.currency.symbol}
-                  </span>
-                </Fragment>
-              )}
-            />
-          </div>
+        <div className={styles.CTABadge}>
+          <Button
+            className={styles.CommunityButton}
+            clickHandler={() => this.openModal(community)}
+            theme="white"
+            disabled={!this.props.user.wallet.address}
+            content={
+              isMember
+                ? `Get ${community.currency.symbol}`
+                : `Support ${community.name} (${fromWei(
+                    community.currency.minimumStake,
+                  )} ${community.currency.symbol})`
+            }
+          />
         </div>
         <div className={styles.CardDetails}>
           <div className={styles.Summary}>

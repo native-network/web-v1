@@ -69,6 +69,17 @@
   }
 }
 
+%white-theme {
+  background: var(--primary-white);
+  border-color: var(--primary-white);
+  color: var(--primary-black);
+
+  &:--enter {
+    background: var(--white-2);
+    border-color: var(--white-2);
+  }
+}
+
 %outline {
 
   /* NOTE: !important used because .Outline  */
@@ -107,6 +118,10 @@
 
   &.Tertiary {
     @extend %tertiary-theme;
+  }
+
+  &.White {
+    @extend %white-theme;
   }
 
   &.Primary,

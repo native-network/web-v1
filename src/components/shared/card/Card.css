@@ -43,11 +43,12 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(
-    0deg,
-    var(--transparent-black-100),
-    var(--transparent-black-0) 60%
-  );
+  background:
+    linear-gradient(
+      0deg,
+      var(--transparent-black-100),
+      var(--transparent-black-0) 60%
+    );
 }
 
 .HeaderContainer {
@@ -74,7 +75,7 @@
   margin: 1rem 0;
 }
 
-.CTAMobile {
+.CTABadge {
   background: var(--gray-9);
   padding: 1.5rem 0;
   box-shadow: 0 0 2rem var(--transparent-black-40) inset;
@@ -82,39 +83,19 @@
   justify-content: space-around;
 
   @media (--medium-viewport) {
+    align-items: flex-start;
+    justify-content: flex-end;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1280px;
+    width: 98%;
+    margin: 0 auto;
+    bottom: 0;
     padding: 1rem;
     box-shadow: 0 0 0;
     background: transparent;
-  }
-}
-
-.CTABadge {
-  width: 95%;
-  border-radius: 5px;
-  padding: 0.5rem;
-  background: var(--primary-white);
-  box-shadow: 0 0 2rem var(--transparent-black-40);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  & > span {
-    flex-grow: 1;
-    text-align: center;
-  }
-
-  & > button {
-    margin-left: 1rem;
-  }
-
-  @media (--medium-viewport) {
-    box-shadow: 0 0 0.5rem var(--transparent-black-30);
-    padding: 0.5rem 1rem;
-    white-space: nowrap;
-    width: auto;
   }
 }
 
@@ -284,6 +265,7 @@
   text-decoration: underline;
 
   @media (--medium-viewport) {
+
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
@@ -301,7 +283,7 @@
   max-height: 2rem;
 
   & svg {
-    fill: var(--primary-white);
+    fill: var(--primary-black);
     width: 100%;
   }
 }
