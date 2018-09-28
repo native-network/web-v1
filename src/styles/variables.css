@@ -49,7 +49,7 @@
   --neutral-gray: var(--gray-0);
 
   --greenish-blue: #38767d;
-  --native-green: #549387;
+  --native-green: #a6bf4c;
   --dark-green: #2c5e5e;
 
   --light-blue: #64b4cd;
@@ -68,12 +68,13 @@
 
   --primary-white: var(--white-0);
   --primary-black: var(--black-0);
+  --primary-action: #f88073;
 
   /* Button Theming */
   --button-disabled: color-mod(var(--gray-8));
 
-  --primary-button-default: var(--primary-color);
-  --primary-button-active: color-mod(var(--primary-color) shade(10%));
+  --primary-button-default: var(--primary-action);
+  --primary-button-active: color-mod(var(--primary-action) shade(10%));
 
   --secondary-button-default: var(--secondary-color);
   --secondary-button-active: color-mod(var(--secondary-color) shade(10%));

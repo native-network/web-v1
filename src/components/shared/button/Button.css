@@ -14,7 +14,7 @@
   transition: all 100ms linear;
   text-decoration: none;
   display: inline-block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "azo-sans-web", sans-serif;
 }
 
 %primary-theme {
