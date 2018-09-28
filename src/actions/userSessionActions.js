@@ -3,7 +3,10 @@ import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { promptSign, getAddress } from '../web3/Web3Service';
-import { getUserWalletAddress } from './userWalletActions';
+import {
+  getUserWalletAddress,
+  updateUserWalletEthBalance,
+} from './userWalletActions';
 import { toastrError, toastrInfo } from './toastrActions';
 
 export const getUserSession = () => {
@@ -111,6 +114,7 @@ export const refreshAccounts = (user) => {
     try {
       const web3Address = await getAddress();
       if (web3Address) {
+        dispatch(updateUserWalletEthBalance(address));
         if ((web3Address && !address) || web3Address !== address) {
           return dispatch(getUserWalletAddress());
         }

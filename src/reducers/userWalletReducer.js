@@ -14,6 +14,22 @@ export default function userWalletReducer(state = {}, action) {
     case actions.GET_USER_WALLET_ADDRESS_ERROR:
       return { ...state, address: '', addressError: action.error };
 
+    case actions.UPDATE_USER_WALLET_ETH_BALANCE:
+      return {
+        ...state,
+        wallet: {
+          ...state.wallet,
+          currencies: [
+            ...state.wallet.currencies.map(
+              (currency) =>
+                currency.symbol === 'ETH'
+                  ? { ...currency, balance: action.balance }
+                  : currency,
+            ),
+          ],
+        },
+      };
+
     case actions.GET_USER_WALLET_BALANCES_SUCCESS:
       return {
         ...state,

@@ -54,6 +54,26 @@ export const getUserWalletBalances = (address) => {
   };
 };
 
+export const updateUserWalletEthBalance = (address) => {
+  return async (dispatch, getState) => {
+    const { wallet } = getState().user;
+    const eth = (wallet.currencies || []).find((c) => c && c.symbol === 'ETH');
+    try {
+      const { balance } = await getBalance(address);
+      if (eth && eth.balance !== balance) {
+        return dispatch({
+          type: actions.UPDATE_USER_WALLET_ETH_BALANCE,
+          balance,
+        });
+      } else {
+        return;
+      }
+    } catch (err) {
+      return;
+    }
+  };
+};
+
 export const getUserWalletBalancesSuccess = (currencies) => {
   return {
     type: actions.GET_USER_WALLET_BALANCES_SUCCESS,

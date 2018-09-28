@@ -40,7 +40,7 @@ export default class Web3Service {
   }
 
   async getAccountBalance(address) {
-    return await new this.web3.eth.getBalance(address);
+    return await this.web3.eth.getBalance(address);
   }
 
   async initContract(abi, address) {
