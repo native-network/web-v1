@@ -28,13 +28,13 @@
 .Progress {
   height: 0.5rem;
 
-  &.Yes {
+  &.Winner {
     & rect {
       fill: var(--primary-color);
     }
   }
 
-  &.No {
+  &.Loser {
     & rect {
       fill: var(--gray-10);
     }
@@ -43,27 +43,26 @@
 
 .VoteResults {
   display: flex;
-  flex-flow: wrap;
   align-items: center;
   margin: 2rem 0;
 
-  &.Yes {
+  &.Winner {
     font-weight: 700;
     color: var(--primary-color);
   }
 
-  &.No {
+  &.Loser {
     font-weight: 400;
     color: var(--gray-5);
   }
 
   & .ResultsLabel {
     display: inline-flex;
-    min-width: 6rem;
+    flex-basis: 40%;
   }
 
   & .Progress {
-    flex-grow: 1;
+    flex-basis: 60%;
     margin-left: 1rem;
   }
 
