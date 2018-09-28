@@ -3,8 +3,12 @@ import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { promptSign, getAddress } from '../web3/Web3Service';
-import { getUserWalletAddress } from './userWalletActions';
+import {
+  getUserWalletAddress,
+  updateUserWalletEthBalance,
+} from './userWalletActions';
 import { toastrError, toastrInfo } from './toastrActions';
+import { getWeb3ServiceInstance } from '../web3/Web3Service';
 
 export const getUserSession = () => {
   return async (dispatch, getState) => {
@@ -105,12 +109,30 @@ export const endSession = () => {
 };
 
 export const refreshAccounts = (user) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { doesNetworkMatch } = getState().user;
     const { address: sessionAddress, wallet, sessionError } = user;
     const { address } = wallet;
+    const { web3 } = getWeb3ServiceInstance();
+
+    try {
+      const network = await web3.eth.net.getNetworkType();
+      if (network !== process.env.WEB3NETWORK && doesNetworkMatch) {
+        return dispatch({
+          type: actions.NETWORK_CHANGE,
+          doesNetworkMatch: false,
+        });
+      } else if (network === process.env.WEB3NETWORK && !doesNetworkMatch) {
+        dispatch({ type: actions.NETWORK_CHANGE, doesNetworkMatch: true });
+      }
+    } catch (err) {
+      return err;
+    }
+
     try {
       const web3Address = await getAddress();
       if (web3Address) {
+        dispatch(updateUserWalletEthBalance(address));
         if ((web3Address && !address) || web3Address !== address) {
           return dispatch(getUserWalletAddress());
         }
@@ -121,6 +143,18 @@ export const refreshAccounts = (user) => {
     } catch (err) {
       if (sessionAddress) return dispatch(endSession());
     }
+  };
+};
+
+export const checkNetwork = () => {
+  return async (dispatch) => {
+    const { web3 } = getWeb3ServiceInstance();
+    const network = await web3.eth.net.getNetworkType();
+
+    return dispatch({
+      type: actions.NETWORK_CHANGE,
+      doesNetworkMatch: network === process.env.WEB3NETWORK,
+    });
   };
 };
 

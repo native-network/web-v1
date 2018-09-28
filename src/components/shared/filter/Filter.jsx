@@ -5,13 +5,12 @@ import Icon from '../icon';
 
 import styles from './Filter.css';
 
-function Filter({ filters, className, selectHandler }) {
-  const defaultItem = filters.find((item) => item.name === 'All');
+function Filter({ activeFilter, filters, className, selectHandler }) {
   return (
     <Downshift
       onSelect={(select) => selectHandler(select)}
       itemToString={(item) => (item ? item.name : '')}
-      defaultSelectedItem={defaultItem}
+      defaultSelectedItem={activeFilter}
     >
       {({
         getLabelProps,

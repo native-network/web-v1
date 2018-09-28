@@ -1,0 +1,21 @@
+@import '../../components/shared/button/Button.css';
+@import '../../styles/media-queries.css';
+@import '../../styles/extends.css';
+
+.Header {
+  @extend %container;
+
+  margin: 1rem auto;
+
+  @media (--medium-viewport) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.CTAButton {
+  @extend %button;
+  @extend %primary-theme;
+  @extend %box-shadow;
+}

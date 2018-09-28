@@ -28,13 +28,14 @@ function Menu({
           exact
         />
       )}
-      <MenuItem
-        menuItemClass={menuItemClass}
-        linkClass={linkClass}
-        path="/learn"
-        label="Learn"
-        exact
-      />
+      <li className={menuItemClass}>
+        <a
+          href="https://nativeproject.zendesk.com/hc/en-us"
+          className={linkClass}
+        >
+          Learn
+        </a>
+      </li>
       {menuItems &&
         (menuItems || []).map((item, i) => (
           <MenuItem

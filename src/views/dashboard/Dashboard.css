@@ -24,10 +24,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-flow: wrap;
   }
 }
 
 .TokenBalances {
+  white-space: nowrap;
 
   & .Balance {
     display: flex;
@@ -84,4 +86,37 @@
     text-transform: uppercase;
     font-size: 0.8rem;
   }
+
+  & .Member {
+    color: var(--native-green);
+    font-weight: bold;
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+}
+
+.CommunityLinkDisabled {
+  composes: CommunityLink;
+
+  & .CommunityTitle {
+    text-decoration: none;
+  }
+}
+
+.ModalHeader {
+
+  & h1 {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+  }
+
+  & img {
+    max-width: 5rem;
+    margin: 0 auto;
+  }
+}
+
+.AuthorizeButton {
+  margin-bottom: 2rem;
 }

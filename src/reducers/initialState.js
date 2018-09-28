@@ -35,6 +35,7 @@ export const initialState = {
     addressError: '',
     sessionError: '',
     messages: [],
+    doesNetworkMatch: true,
   },
   prices: {
     ethUSD: '',

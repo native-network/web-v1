@@ -15,6 +15,7 @@ import eth from '../../assets/img/eth.svg';
 import 'react-table/react-table.css';
 
 import styles from './Dashboard.css';
+import native from '../../assets/img/native.svg';
 
 import { promptAuthorize } from '../../actions/userSessionActions';
 import {
@@ -26,6 +27,7 @@ import Loader from '../../components/shared/loader';
 import Modal from '../../components/shared/modal';
 import Button from '../../components/shared/button';
 import CurrencyConverter from '../../components/forms/currency-converter';
+import WalletAddress from '../../components/shared/wallet-address';
 import { formatUsd } from '../../utils/helpers';
 
 Object.assign(ReactTableDefaults, {
@@ -37,19 +39,38 @@ const cols = [
   {
     Header: 'Community Name',
     accessor: 'community',
-    Cell: ({ value }) => (
-      <Link className={styles.CommunityLink} to={`/community/${value.id}`}>
-        <img src={value.icon} />
-        <span>
-          <span className={styles.CommunityTitle}>
-            {value.name} ({value.symbol})
+    Cell: ({ value }) =>
+      value.isMemberOf || value.isCuratorOf ? (
+        <Link className={styles.CommunityLink} to={`/community/${value.id}`}>
+          <img src={value.icon} />
+          <span>
+            <span className={styles.CommunityTitle}>
+              {value.name} ({value.symbol})
+            </span>
+            {value.isCuratorOf ? (
+              <span className={styles.Curator}>Curator</span>
+            ) : null}
+            {value.isMemberOf ? (
+              <span className={styles.Member}>Member</span>
+            ) : null}
           </span>
-          {value.isCuratorOf ? (
-            <span className={styles.Curator}>Curator</span>
-          ) : null}
-        </span>
-      </Link>
-    ),
+        </Link>
+      ) : (
+        <div className={styles.CommunityLinkDisabled}>
+          <img src={value.icon} />
+          <span>
+            <span className={styles.CommunityTitle}>
+              {value.name} ({value.symbol})
+            </span>
+            {value.isCuratorOf ? (
+              <span className={styles.Curator}>Curator</span>
+            ) : null}
+            {value.isMemberOf ? (
+              <span className={styles.Member}>Member</span>
+            ) : null}
+          </span>
+        </div>
+      ),
     headerStyle: {
       textAlign: 'left',
     },
@@ -168,13 +189,19 @@ export class Dashboard extends Component {
         hasCloseButton
         closeModal={this.redirect.bind(this)}
         label="Sign in"
-        renderHeader={() => <h1 style={{ textAlign: 'center' }}>Sign in</h1>}
+        renderHeader={() => (
+          <div className={styles.ModalHeader}>
+            <img src={native} alt="" />
+            <h1>Connect Your Wallet to Continue</h1>
+          </div>
+        )}
         isOpen={!this.props.hasSession}
       >
         <Button
           centered
           theme="primary"
-          content="Authorize"
+          content="Sign Message"
+          className={styles.AuthorizeButton}
           clickHandler={this.authorize.bind(this)}
         />
       </Modal>
@@ -203,7 +230,10 @@ export class Dashboard extends Component {
     const ethInUSD = this.props.prices.ethUSD
       ? formatUsd(ethBalance * this.props.prices.ethUSD)
       : '$0';
-
+    const nativeCurrency = this.props.user.wallet.currencies.find(
+      (c) => c.symbol === 'NTV',
+    );
+    const nativeBalance = nativeCurrency && nativeCurrency.balance;
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -226,18 +256,20 @@ export class Dashboard extends Component {
               />
             </Modal>
             <div className={styles.DashboardBanner}>
-              <div>
-                <div className={styles.TokenBalances}>
-                  <div className={styles.Balance}>
-                    <img src={eth} /> ETH Balance:&nbsp;
-                    <b>{ethBalance}</b> ({ethInUSD})
-                  </div>
+              <div className={styles.TokenBalances}>
+                <div className={styles.Balance}>
+                  <img src={eth} /> ETH Balance:&nbsp;
+                  <b>{ethBalance}</b> ({ethInUSD})
                 </div>
-                <div>{this.props.user.wallet.address}</div>
+                <WalletAddress address={this.props.user.wallet.address} />
               </div>
             </div>
             <section className={styles.Dashboard}>
-              <h1>Convert Currencies</h1>
+              <h1>
+                {!nativeBalance || nativeBalance === '0'
+                  ? 'Get Native Token'
+                  : 'Convert Currencies'}
+              </h1>
               {this.props.communities &&
               !!this.props.communities.length &&
               !!this.props.walletCurrencies.length ? (
@@ -282,6 +314,9 @@ export class Dashboard extends Component {
                         ...community,
                         symbol: currency && currency.symbol,
                         isCuratorOf: !!this.props.user.curatorOf.find(
+                          (c) => c.id === community.id,
+                        ),
+                        isMemberOf: !!this.props.user.memberOf.find(
                           (c) => c.id === community.id,
                         ),
                       },

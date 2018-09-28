@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,13 +11,23 @@ import styles from './Vote.css';
 
 function renderVoteResults(votes, options) {
   const totalVotes = votes.length;
+  const maxVotes = options.reduce(
+    (prev, current) =>
+      prev.votes && prev.votes.length > current.votes.length ? prev : current,
+  );
+
+  const isMaxTied = options
+    .filter(
+      (option) => option.votes.length === maxVotes.votes.length,
+    ).length > 1;
+
   return options.map((o, i) => {
     const percentage = Math.floor((o.votes.length / totalVotes) * 100) || 0;
     return (
       <div
         key={i}
         className={`${styles.VoteResults} ${
-          styles[o.name.replace(/\s+/g, '')]
+          maxVotes === o && !isMaxTied ? styles.Winner : styles.Loser
         }`}
       >
         <span className={styles.ResultsLabel}>
@@ -24,7 +35,9 @@ function renderVoteResults(votes, options) {
           %)
         </span>
         <svg
-          className={`${styles.Progress} ${styles[o.name.replace(/\s+/g, '')]}`}
+          className={`${styles.Progress} ${
+            maxVotes === o && !isMaxTied ? styles.Winner : styles.Loser
+          }`}
           viewBox="0 0 10 10"
           preserveAspectRatio="none"
         >

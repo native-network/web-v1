@@ -28,15 +28,7 @@ class Footer extends Component {
                 menuItems={[
                   {
                     label: 'Terms and Conditions',
-                    path: '/',
-                  },
-                  {
-                    label: 'Support',
-                    path: '/support',
-                  },
-                  {
-                    label: 'Legal',
-                    path: '/',
+                    path: '/terms',
                   },
                 ]}
               />

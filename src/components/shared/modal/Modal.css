@@ -30,6 +30,9 @@
   max-height: 100%;
   border-radius: 5px;
   overflow-x: scroll;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  padding: 1.6rem 1rem !important;
 }
 
 .ModalHeader {

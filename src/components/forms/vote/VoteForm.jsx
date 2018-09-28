@@ -46,15 +46,15 @@ export default function VoteForm({ submitForm, options }) {
   return (
     <Form
       onSubmit={grabValues}
-      render={({ handleSubmit, form }) => (
+      render={({ handleSubmit, form, pristine, invalid }) => (
         <form className={styles.VoteForm} onSubmit={handleSubmit}>
           <h3>Please select one option:</h3>
           {(options || []).map((option, index) =>
             renderOption({ index, ...option }),
           )}
           <Button
+            disabled={pristine || invalid}
             className={styles.VoteSubmit}
-            centered
             block
             theme="primary"
             content="Submit Vote"

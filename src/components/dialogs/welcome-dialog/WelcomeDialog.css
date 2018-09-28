@@ -3,11 +3,18 @@
 .WelcomeContainer {
   margin-top: 2rem;
   text-align: center;
+  margin-bottom: 4rem;
 }
 
 .StepCounter {
   position: absolute;
   right: 1rem;
+  bottom: 1rem;
+}
+
+.CurrentStep {
+  position: absolute;
+  left: 1rem;
   bottom: 1rem;
 }
 
@@ -23,6 +30,8 @@
 }
 
 .MetamaskButton {
+  @extend %box-shadow;
+
   background: var(--black-1);
   border-color: var(--black-1);
 
@@ -38,10 +47,21 @@
   }
 }
 
-.CoinbaseButton {
+.CoinbaseButton,
+.MyCryptoButton {
   @extend %button;
+  @extend %box-shadow;
 
+  margin: 0 1rem;
   font-size: 1.25rem;
-  background: #0667d0;
-  border-color: #0667d0;
+}
+
+.CoinbaseButton {
+  background: var(--coinbase-blue);
+  border-color: var(--coinbase-blue);
+}
+
+.MyCryptoButton {
+  background: var(--primary-black);
+  border-color: var(--primary-black);
 }

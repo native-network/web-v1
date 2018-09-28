@@ -5,6 +5,11 @@
 .VoteForm {
   & .VoteSubmit {
     margin-top: 1rem;
+
+    @media (--medium-viewport) {
+      display: inline-block;
+      width: auto;
+    }
   }
 }
 
@@ -77,4 +82,3 @@
     }
   }
 }
-

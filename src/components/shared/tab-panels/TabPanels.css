@@ -1,10 +1,23 @@
 @import '../../../styles/extends.css';
 @import '../../../styles/media-queries.css';
 
+.TabPanels {
+  position: static;
+  top: 0;
+}
+
 .TabNavigation {
+  @extend %box-shadow;
+
   background: var(--gray-10);
   border-top: 1px solid var(--gray-0);
   border-bottom: 1px solid var(--gray-0);
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
 }
 
 .TabNavigationContainer {
@@ -75,7 +88,7 @@
   }
 
   &.ActiveTab button {
-    border-bottom-color: var(--dark-green);
+    border-bottom-color: var(--primary-color);
     font-weight: 700;
     color: var(--dark-green);
   }

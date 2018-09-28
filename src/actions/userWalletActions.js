@@ -15,7 +15,6 @@ export const getUserWalletAddress = () => {
       return dispatch(getUserWalletBalances(data));
     } catch (err) {
       const { message } = err;
-      dispatch(toastrError(message));
       return dispatch(getUserWalletAddressError(message));
     }
   };
@@ -51,6 +50,26 @@ export const getUserWalletBalances = (address) => {
         dispatch(toastrError(message));
         return dispatch(getUserWalletBalancesError(message));
       });
+  };
+};
+
+export const updateUserWalletEthBalance = (address) => {
+  return async (dispatch, getState) => {
+    const { wallet } = getState().user;
+    const eth = (wallet.currencies || []).find((c) => c && c.symbol === 'ETH');
+    try {
+      const { balance } = await getBalance(address);
+      if (eth && eth.balance !== balance) {
+        return dispatch({
+          type: actions.UPDATE_USER_WALLET_ETH_BALANCE,
+          balance,
+        });
+      } else {
+        return;
+      }
+    } catch (err) {
+      return;
+    }
   };
 };
 

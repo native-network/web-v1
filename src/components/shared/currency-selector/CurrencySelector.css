@@ -17,6 +17,7 @@
     'icon label-2 dropdown';
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
 
   & .CurrencyIcon {
     max-height: 2rem;

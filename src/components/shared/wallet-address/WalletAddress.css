@@ -1,0 +1,42 @@
+@import '../../../styles/media-queries.css';
+@import '../../../styles/extends.css';
+
+.AddressContainer {
+  display: flex;
+  align-items: center;
+  flex-shrink: 4;
+  margin-top: 0.5rem;
+  min-width: 0;
+  flex-grow: 1;
+  justify-content: flex-end;
+
+  @media (--medium-viewport) {
+    justify-content: flex-end;
+    margin-top: 0;
+  }
+}
+
+.Label {
+  font-weight: 700;
+}
+
+.TrimmedAddress {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  min-width: 20px;
+  max-width: 100%;
+}
+
+.CopyLink {
+  @extend %link-style;
+
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.CopyIcon {
+  color: var(--gray-5);
+  font-size: 1.25rem;
+}

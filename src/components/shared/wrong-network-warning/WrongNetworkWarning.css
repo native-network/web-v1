@@ -1,0 +1,24 @@
+.Banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--warm-coral);
+  z-index: 5000;
+  color: var(--primary-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+
+  & h1 {
+    margin-top: 0;
+    color: var(--primary-white);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  }
+
+  & p:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -5,6 +5,7 @@ import Filter from '../filter';
 
 import TabNavigation from './TabNavigation';
 import TabPanel from './TabPanel';
+import styles from './TabPanels.css';
 
 const today = moment();
 
@@ -28,7 +29,7 @@ const itemsForFilter = [
 class TabPanels extends Component {
   state = {
     activeTab: 0,
-    activeFilter: itemsForFilter.find((f) => f.name === 'Open').filter,
+    activeFilter: itemsForFilter.find((f) => f.name === 'Open'),
   };
 
   setActiveTab(tabIndex) {
@@ -47,8 +48,10 @@ class TabPanels extends Component {
       (panel) => `${panel.name} (${(panel.items && panel.items.length) || 0})`,
     );
 
+    const { filter } = this.state.activeFilter;
+
     return (
-      <div>
+      <div className={styles.TabPanels}>
         <TabNavigation
           activeTab={activeTab}
           panels={panelNames}
@@ -56,6 +59,7 @@ class TabPanels extends Component {
           renderFilter={() =>
             this.props.hasFilter ? (
               <Filter
+                activeFilter={this.state.activeFilter}
                 selectHandler={this.filterHandler.bind(this)}
                 className="visible-lg"
                 filters={itemsForFilter}
@@ -66,10 +70,7 @@ class TabPanels extends Component {
         {(panels || []).map(
           ({ render, items }, index) =>
             index === activeTab ? (
-              <TabPanel
-                key={index}
-                render={() => render(this.state.activeFilter(items))}
-              />
+              <TabPanel key={index} render={() => render(filter(items))} />
             ) : null,
         )}
       </div>
