@@ -30,6 +30,8 @@ class Welcome extends Component {
   render() {
     const step = this.state.activeStep + 1;
     const stepCount = this.steps.length;
+    const buttonText =
+      this.state.activeStep === stepCount - 1 ? 'Get Started' : 'Next';
     return (
       <Fragment>
         <div className={styles.WelcomeContainer}>
@@ -39,12 +41,15 @@ class Welcome extends Component {
             )
             .map((step, i) => React.cloneElement(step(), { key: i }))}
         </div>
+        <span className={styles.CurrentStep}>
+          Step {step} of {stepCount}
+        </span>
         <Button
           className={styles.StepCounter}
           outline
           theme="primary"
           clickHandler={this.handleClick.bind(this)}
-          content={`Step ${step} of ${stepCount}`}
+          content={buttonText}
         />
       </Fragment>
     );

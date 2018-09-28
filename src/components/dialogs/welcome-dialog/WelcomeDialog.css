@@ -12,6 +12,12 @@
   bottom: 1rem;
 }
 
+.CurrentStep {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+}
+
 .Important {
   color: var(--secondary-color);
   font-weight: 700;
