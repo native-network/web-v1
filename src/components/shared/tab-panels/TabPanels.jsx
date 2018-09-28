@@ -5,6 +5,7 @@ import Filter from '../filter';
 
 import TabNavigation from './TabNavigation';
 import TabPanel from './TabPanel';
+import styles from './TabPanels.css';
 
 const today = moment();
 
@@ -50,7 +51,7 @@ class TabPanels extends Component {
     const { filter } = this.state.activeFilter;
 
     return (
-      <div>
+      <div className={styles.TabPanels}>
         <TabNavigation
           activeTab={activeTab}
           panels={panelNames}

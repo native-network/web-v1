@@ -112,7 +112,10 @@ export class Card extends Component {
     );
 
     return (
-      <div className={styles.Card}>
+      <div
+        className={styles.Card}
+        style={this.props.isCommunityRoute ? { overflow: 'visible' } : null}
+      >
         <Modal
           hasCloseButton
           isOpen={this.state.isModalOpen}
