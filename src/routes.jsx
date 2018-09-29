@@ -11,11 +11,11 @@ import Terms from './views/terms';
 import CommunityAdmin from './views/community-admin';
 import FourOhFour from './views/404';
 
-export const PrivateRoute = ({ component: Component, isCurator, ...rest }) => (
+export const PrivateRoute = ({ component: Component, isAllowed, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      isCurator ? (
+      isAllowed ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -29,22 +29,23 @@ export const PrivateRoute = ({ component: Component, isCurator, ...rest }) => (
   />
 );
 
-export const routes = (isCurator) => {
+export const routes = (isCurator, isMember) => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/communities" component={Communities} />
-      <Route
+      <PrivateRoute
+        isAllowed={isMember || isCurator}
         exact
         path="/community/:communityId"
-        render={(props) => <Community {...props} isCommunityRoute={true} />}
+        component={Community}
       />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
       <Route exact path="/learn" component={FAQ} />
       <Route exact path="/terms" component={Terms} />
       <PrivateRoute
-        isCurator={isCurator}
+        isAllowed={isCurator}
         exact
         path="/manage/:communityId"
         component={CommunityAdmin}

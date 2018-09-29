@@ -73,12 +73,16 @@ export class Card extends Component {
     }
   }
 
+  isCommunityRoute() {
+    return !!this.props.location.pathname.includes('community');
+  }
+
   renderCommunityLink() {
-    const { user, community, isCommunityRoute } = this.props;
+    const { user, community } = this.props;
     const isMember = user.memberOf.find((userCommunity) => {
       return userCommunity.id === community.id;
     });
-    return !isCommunityRoute && !!isMember ? (
+    return !this.isCommunityRoute() && !!isMember ? (
       <Link className={styles.CommunityLink} to={`/community/${community.id}`}>
         Visit {community.name}
       </Link>
@@ -110,7 +114,7 @@ export class Card extends Component {
     return (
       <div
         className={styles.Card}
-        style={this.props.isCommunityRoute ? { overflow: 'visible' } : null}
+        style={this.isCommunityRoute() ? { overflow: 'visible' } : null}
       >
         <Modal
           hasCloseButton
@@ -246,6 +250,7 @@ export default connect(
       userCurrencies: state.user.wallet.currencies,
       currencyError: state.currencies.error,
       prices: state.prices,
+      location: state.router.location || [],
     };
   },
   null,

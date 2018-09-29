@@ -39,19 +39,38 @@ const cols = [
   {
     Header: 'Community Name',
     accessor: 'community',
-    Cell: ({ value }) => (
-      <Link className={styles.CommunityLink} to={`/community/${value.id}`}>
-        <img src={value.icon} />
-        <span>
-          <span className={styles.CommunityTitle}>
-            {value.name} ({value.symbol})
+    Cell: ({ value }) =>
+      value.isMemberOf || value.isCuratorOf ? (
+        <Link className={styles.CommunityLink} to={`/community/${value.id}`}>
+          <img src={value.icon} />
+          <span>
+            <span className={styles.CommunityTitle}>
+              {value.name} ({value.symbol})
+            </span>
+            {value.isCuratorOf ? (
+              <span className={styles.Curator}>Curator</span>
+            ) : null}
+            {value.isMemberOf ? (
+              <span className={styles.Member}>Member</span>
+            ) : null}
           </span>
-          {value.isCuratorOf ? (
-            <span className={styles.Curator}>Curator</span>
-          ) : null}
-        </span>
-      </Link>
-    ),
+        </Link>
+      ) : (
+        <div className={styles.CommunityLinkDisabled}>
+          <img src={value.icon} />
+          <span>
+            <span className={styles.CommunityTitle}>
+              {value.name} ({value.symbol})
+            </span>
+            {value.isCuratorOf ? (
+              <span className={styles.Curator}>Curator</span>
+            ) : null}
+            {value.isMemberOf ? (
+              <span className={styles.Member}>Member</span>
+            ) : null}
+          </span>
+        </div>
+      ),
     headerStyle: {
       textAlign: 'left',
     },
@@ -295,6 +314,9 @@ export class Dashboard extends Component {
                         ...community,
                         symbol: currency && currency.symbol,
                         isCuratorOf: !!this.props.user.curatorOf.find(
+                          (c) => c.id === community.id,
+                        ),
+                        isMemberOf: !!this.props.user.memberOf.find(
                           (c) => c.id === community.id,
                         ),
                       },

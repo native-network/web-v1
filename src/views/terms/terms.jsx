@@ -6,8 +6,8 @@ class Terms extends Component {
       <main className="container">
         <h1>NATIVE PROJECT LLC</h1>
         <h3>Terms of Service</h3>
-        <p class="c7">
-          <span class="c4 c3">
+        <p className="c7">
+          <span className="c4 c3">
             Native Project LLC (&ldquo;Native,&rdquo; &ldquo;we,&rdquo;
             &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is a Delaware limited
             liability company that was founded for the special purpose of
@@ -20,11 +20,11 @@ class Terms extends Component {
             represent the value of a Community&rsquo;s economy.
           </span>
         </p>
-        <p class="c7 c11">
-          <span class="c4 c3" />
+        <p className="c7 c11">
+          <span className="c4 c3" />
         </p>
-        <p class="c21">
-          <span class="c4 c3">
+        <p className="c21">
+          <span className="c4 c3">
             These Terms of Service (&ldquo;Terms&rdquo;) are a legal agreement
             between you and Native and govern your use of Native&rsquo;s
             services, including the Native Ecosystem, Native Tokens, Community
@@ -36,8 +36,8 @@ class Terms extends Component {
             that such business accepts these Terms.{' '}
           </span>
         </p>
-        <p class="c21">
-          <span class="c4 c3">
+        <p className="c21">
+          <span className="c4 c3">
             By using the Services, you agree to be bound by these Terms,
             including terms that limit our liability (see Section 20) and
             require individual arbitration for any potential legal dispute (see
@@ -46,48 +46,48 @@ class Terms extends Component {
             this Agreement.
           </span>
         </p>
-        <p class="c7">
-          <span class="c4 c6">
+        <p className="c7">
+          <span className="c4 c6">
             PLEASE READ THESE TERMS CAREFULLY BEFORE USING THE SERVICES. IF YOU
             DO NOT AGREE TO THESE TERMS, YOU MAY NOT USE THE SERVICES.
           </span>
         </p>
-        <p class="c7 c11">
-          <span class="c4 c3" />
+        <p className="c7 c11">
+          <span className="c4 c3" />
         </p>
-        <p class="c9">
-          <span class="c14">1. Services</span>
+        <p className="c9">
+          <span className="c14">1. Services</span>
         </p>
-        <p class="c0">
-          <span class="c3">
+        <p className="c0">
+          <span className="c3">
             Our Services allow you to: (a) create and join communities{' '}
           </span>
-          <span class="c3">called &ldquo;Communities,&rdquo; </span>
-          <span class="c3">
+          <span className="c3">called &ldquo;Communities,&rdquo; </span>
+          <span className="c3">
             which are organized around common missions, interests, purposes, or
             goals; (b) communicate with other users for any number of purposes,
             including interacting on a purely social basis, coordinating common
             projects, or assigning and completing{' '}
           </span>
-          <span class="c3">discreet</span>
-          <span class="c4 c3">
+          <span className="c3">discreet</span>
+          <span className="c4 c3">
             &nbsp;tasks that benefit the Community or its members; and (c) use
             other features to be developed by Native.{' '}
           </span>
         </p>
-        <p class="c0">
-          <span class="c3">In order to join a Community, you must</span>
-          <span class="c3">
+        <p className="c0">
+          <span className="c3">In order to join a Community, you must</span>
+          <span className="c3">
             &nbsp;possess Native Tokens, which you can obtain in a decentralized
             manner upon demand by interfacing with a smart contract administered
             by Bancor, a third party not affiliated with Native
             (&ldquo;Bancor&rdquo;). &nbsp;This is achieved by delivering Ether
           </span>
-          <span class="c3">
+          <span className="c3">
             &nbsp;to Bancor, which programmatically exchanges the Ether{' '}
           </span>
-          <span class="c3">(or certain other Ethereum-based tokens) </span>
-          <span class="c3">
+          <span className="c3">(or certain other Ethereum-based tokens) </span>
+          <span className="c3">
             for Native Tokens through a smart contract at a conversion rate
             determined by Bancor.&nbsp; After conversion of the Ether by Bancor,
             you will possess Native Tokens, with which they can join one or more
@@ -96,38 +96,38 @@ class Terms extends Component {
             created upon demand by you or other users interacting with Bancor,
             and{' '}
           </span>
-          <span class="c3">the Ether-to-</span>
-          <span class="c3">Native Token conversion rate</span>
-          <span class="c3">&nbsp;</span>
-          <span class="c3">is</span>
-          <span class="c4 c3">
+          <span className="c3">the Ether-to-</span>
+          <span className="c3">Native Token conversion rate</span>
+          <span className="c3">&nbsp;</span>
+          <span className="c3">is</span>
+          <span className="c4 c3">
             &nbsp;determined by Bancor&rsquo;s algorithm which takes into
             account a number of factors, including but not limited to the amount
             of Native Tokens in existence and the amount of Ether in the Native
             Reserve Fund (as described below).
           </span>
         </p>
-        <p class="c0">
-          <span class="c3">
+        <p className="c0">
+          <span className="c3">
             To become a member of a specific Community, you must hold a
             pre-determined number of Community Tokens. &nbsp;If you hold the
             requisite number of Community Tokens, you can join the Community by{' '}
           </span>
-          <span class="c3">depositing</span>
-          <span class="c3">
+          <span className="c3">depositing</span>
+          <span className="c3">
             &nbsp;that number of Community Tokens with the Community, which is
             akin to{' '}
           </span>
-          <span class="c3">paying </span>
-          <span class="c3">a membership </span>
-          <span class="c3">fee</span>
-          <span class="c4 c3">
+          <span className="c3">paying </span>
+          <span className="c3">a membership </span>
+          <span className="c3">fee</span>
+          <span className="c4 c3">
             ; once a member of the Community, you can join and participate in
             the Community&rsquo;s localized, digital community. &nbsp;{' '}
           </span>
         </p>
-        <p class="c0">
-          <span class="c3">
+        <p className="c0">
+          <span className="c3">
             Community Tokens are derived from Native Tokens upon demand by you
             or other users interacting with Bancor. This is achieved by
             delivering Native Tokens to Bancor, which programmatically converts
@@ -135,21 +135,21 @@ class Terms extends Component {
             determined by Bancor.&nbsp; After conversion of the Native Token by
             Bancor,{' '}
           </span>
-          <span class="c3">the </span>
-          <span class="c3">
+          <span className="c3">the </span>
+          <span className="c3">
             you will possess Community Tokens. &nbsp;Neither the Native Platform
             nor any Community plays an active role in the creation of Community
             Tokens
           </span>
-          <span class="c3">; Community Tokens</span>
-          <span class="c3">
+          <span className="c3">; Community Tokens</span>
+          <span className="c3">
             &nbsp;are only created upon demand by you or other users interacting
             with Bancor
           </span>
-          <span class="c3">,</span>
-          <span class="c3">&nbsp;</span>
-          <span class="c3">and t</span>
-          <span class="c4 c3">
+          <span className="c3">,</span>
+          <span className="c3">&nbsp;</span>
+          <span className="c3">and t</span>
+          <span className="c4 c3">
             he Native Token-to-Community Token conversion rate is determined by
             Bancor&rsquo;s algorithm which takes into account a number of
             factors, including but not limited to the amount of Community Tokens
@@ -157,56 +157,56 @@ class Terms extends Component {
             Reserve (as described below).
           </span>
         </p>
-        <p class="c0">
-          <span class="c3">
+        <p className="c0">
+          <span className="c3">
             You, or a group of users, may eventually establish and operate a
             Community on Native, provided the founders
           </span>
-          <span class="c3">
+          <span className="c3">
             &nbsp;comply with Native&rsquo;s rules and processes. &nbsp;
           </span>
-          <span class="c3">Community</span>
-          <span class="c3">&nbsp;Tokens </span>
-          <span class="c3">contributed</span>
+          <span className="c3">Community</span>
+          <span className="c3">&nbsp;Tokens </span>
+          <span className="c3">contributed</span>
           <sup>
             <a href="#cmnt1" id="cmnt_ref1">
               [a]
             </a>
           </sup>
-          <span class="c3">&nbsp;by Community members contribute to </span>
-          <span class="c3">the</span>
-          <span class="c3">
+          <span className="c3">&nbsp;by Community members contribute to </span>
+          <span className="c3">the</span>
+          <span className="c3">
             &nbsp;Community Development Pool (as described below)
           </span>
-          <span class="c3">, which is a pool </span>
-          <span class="c3">from </span>
-          <span class="c3">which the Community</span>
-          <span class="c3">&nbsp;fund</span>
-          <span class="c3">s</span>
-          <span class="c3">
+          <span className="c3">, which is a pool </span>
+          <span className="c3">from </span>
+          <span className="c3">which the Community</span>
+          <span className="c3">&nbsp;fund</span>
+          <span className="c3">s</span>
+          <span className="c3">
             &nbsp;projects. &nbsp;Each Community has one or more
             &ldquo;Curators,&rdquo; and often the Community&rsquo;s founders
             will act as Curators.{' '}
           </span>
-          <span class="c3">&nbsp;</span>
-          <span class="c3">
+          <span className="c3">&nbsp;</span>
+          <span className="c3">
             Curators oversee and guide the Community as it grows.
             &nbsp;Initially, Curators define the Community&rsquo;s goals,
             allocate the Community&rsquo;s funds, and solicit{' '}
           </span>
-          <span class="c3">
+          <span className="c3">
             funds on behalf of Community projects (by marketing within the
             Native platform and by soliciting new users to join Native in order
             to provide funds to the Community)
           </span>
-          <span class="c3">. </span>
-          <span class="c3">&nbsp;</span>
-          <span class="c3">Curators can create </span>
-          <span class="c3">
+          <span className="c3">. </span>
+          <span className="c3">&nbsp;</span>
+          <span className="c3">Curators can create </span>
+          <span className="c3">
             proposals that are voted on by Community members.{' '}
           </span>
-          <span class="c3">&nbsp;</span>
-          <span class="c4 c3">
+          <span className="c3">&nbsp;</span>
+          <span className="c4 c3">
             Aside from maintaining the Native platform, educating Community
             Curators on best practices to curate Communities and ensuring that
             Communities adhere to Native&rsquo;s policies and procedures, Native
@@ -215,14 +215,14 @@ class Terms extends Component {
             platform are validated and recorded through the Ethereum blockchain.
           </span>
         </p>
-        <p class="c0">
-          <span class="c3">
+        <p className="c0">
+          <span className="c3">
             Each Community has a dashboard that displays an overview of{' '}
           </span>
-          <span class="c3">all </span>
-          <span class="c3">activity within the Community. &nbsp;Th</span>
-          <span class="c3">is</span>
-          <span class="c4 c3">
+          <span className="c3">all </span>
+          <span className="c3">activity within the Community. &nbsp;Th</span>
+          <span className="c3">is</span>
+          <span className="c4 c3">
             &nbsp;provides essential information such as token activity, project
             proposals, and membership history. Community Tokens are the
             representation of the value, and form the basis of, each
@@ -232,8 +232,8 @@ class Terms extends Component {
             Community, participate in Community votes, and the like. &nbsp;
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             A Community&rsquo;s Development Pool can grow over time as more
             members join, and members can earn rewards through participating in
             and completing Community projects or tasks and other future avenues
@@ -245,11 +245,11 @@ class Terms extends Component {
             Community&rsquo;s members.
           </span>
         </p>
-        <p class="c9 c8">
-          <span class="c1">2. Fees and Payments</span>
+        <p className="c9 c8">
+          <span className="c1">2. Fees and Payments</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             When you obtain Native Tokens through the Bancor smart contract in
             exchange for Ether (or certain other Ethereum-based tokens), 50% of
             the Ether is sent to the pool from which Native derives its
@@ -268,8 +268,8 @@ class Terms extends Component {
             protocol.{' '}
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             A similar bifurcation occurs when you obtain Community Token, with
             80% of the Community Tokens being sent to a pool of assets for use
             by the Community (the &ldquo;Community Development Pool&rdquo;), and
@@ -282,18 +282,18 @@ class Terms extends Component {
             number of Native Tokens in the Community Reserve.
           </span>
         </p>
-        <p class="c0">
-          <span class="c3">[</span>
-          <span class="c3 c26">
+        <p className="c0">
+          <span className="c3">[</span>
+          <span className="c3 c26">
             NTD: Describe any additional fees that the user may incur.
           </span>
-          <span class="c4 c3">]</span>
+          <span className="c4 c3">]</span>
         </p>
-        <p class="c9">
-          <span class="c1">3. Privacy</span>
+        <p className="c9">
+          <span className="c1">3. Privacy</span>
         </p>
-        <p class="c7">
-          <span class="c3">
+        <p className="c7">
+          <span className="c3">
             You have read and consent to Native&rsquo;s&nbsp;Privacy Notice,
             which explains how we collect, use and protect the personal
             information you provide to us.
@@ -304,14 +304,14 @@ class Terms extends Component {
             </a>
           </sup>
         </p>
-        <p class="c2">
-          <span class="c4 c3" />
+        <p className="c2">
+          <span className="c4 c3" />
         </p>
-        <p class="c19">
-          <span class="c1">4. Registration</span>
+        <p className="c19">
+          <span className="c1">4. Registration</span>
         </p>
-        <p class="c21">
-          <span class="c4 c3">
+        <p className="c21">
+          <span className="c4 c3">
             [In order to use the Services, you must create a &ldquo;Native
             Account&rdquo; by registering with us and confirming your control of
             a digital wallet, in accordance with the procedures set forth on
@@ -328,8 +328,8 @@ class Terms extends Component {
             registration requirements.
           </span>
         </p>
-        <p class="c21">
-          <span class="c4 c3">
+        <p className="c21">
+          <span className="c4 c3">
             Your Native Account and digital wallet is your responsibility. While
             your Native Account enables you to access your wallet with ease,
             Native has no access to your wallet or any control over its use, and
@@ -355,11 +355,11 @@ class Terms extends Component {
             Services.]
           </span>
         </p>
-        <p class="c19">
-          <span class="c1">5. Revisions, Disclosures and Notices</span>
+        <p className="c19">
+          <span className="c1">5. Revisions, Disclosures and Notices</span>
         </p>
-        <p class="c21">
-          <span class="c4 c3">
+        <p className="c21">
+          <span className="c4 c3">
             We may amend these Terms at any time with notice that we deem to be
             reasonable under the circumstances, by posting the revised version
             on our website or communicating it to you through the Services (each
@@ -372,8 +372,8 @@ class Terms extends Component {
             Dispute arose.
           </span>
         </p>
-        <p class="c7">
-          <span class="c3">
+        <p className="c7">
+          <span className="c3">
             You agree to&nbsp;Native&rsquo;s E-Sign Consent. We may provide
             disclosures and notices required by law and other information about
             your Native Account to you electronically, by posting it on our
@@ -387,44 +387,46 @@ class Terms extends Component {
             delivered. If you wish to withdraw your consent to receiving
             electronic communications, please contact&nbsp;
           </span>
-          <span class="c3 c31">
+          <span className="c3 c31">
             <a
-              class="c27"
+              className="c27"
               href="https://www.google.com/url?q=https://squareup.com/help/us/en/&amp;sa=D&amp;ust=1537499377186000"
             >
               us
             </a>
           </span>
-          <span class="c4 c3">
+          <span className="c4 c3">
             . If we are not able to support your request, you may need to
             terminate your Native Account.
           </span>
         </p>
-        <p class="c2">
-          <span class="c4 c3" />
+        <p className="c2">
+          <span className="c4 c3" />
         </p>
-        <p class="c9">
-          <span class="c1">6. Restrictions</span>
+        <p className="c9">
+          <span className="c1">6. Restrictions</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">You may not use Native&rsquo;s platform to:</span>
+        <p className="c0">
+          <span className="c4 c3">
+            You may not use Native&rsquo;s platform to:
+          </span>
         </p>
-        <ol class="c10 lst-kix_list_2-0 start" start="1">
-          <li class="c0 c5">
-            <span class="c3 c4">
+        <ol className="c10 lst-kix_list_2-0 start" start="1">
+          <li className="c0 c5">
+            <span className="c3 c4">
               contravene any U.S., other national, international or other money
               laundering regulations or conventions;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               access or monitor any material or information on any OM system
               using any manual process or robot, spider, scraper, or other
               automated means;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c3">
+          <li className="c0 c5">
+            <span className="c3">
               act on behalf of terrorists, terrorist organizations or other
               high-risk entities, including those persons or entities that are
               included on any relevant lists maintained by the United Nations,
@@ -444,18 +446,20 @@ class Terms extends Component {
               </a>
             </sup>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               act on behalf of a senior foreign political figure, any member of
               a senior foreign political figure&#39;s immediate family or any
               close associate of a senior foreign political figures;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">act on behalf of a foreign shell bank;</span>
+          <li className="c0 c5">
+            <span className="c4 c3">
+              act on behalf of a foreign shell bank;
+            </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               except to the extent that any restriction is expressly prohibited
               by law, violate the restrictions in any robot exclusion headers on
               any Service, work around, bypass, or circumvent any of the
@@ -465,64 +469,64 @@ class Terms extends Component {
               the Services;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               perform or attempt to perform any actions that would interfere
               with the proper working of the Services, prevent access to or use
               of the Services by our other customers, or impose an unreasonable
               or disproportionately large load on our infrastructure;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               copy, reproduce, alter, modify, create derivative works, publicly
               display, republish, upload, post, transmit, resell or distribute
               in any way material, information or Services from Native;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               use and benefit from the Services via a rental, lease,
               timesharing, service bureau or other arrangement;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               transfer any rights granted to you under these Terms;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               use the Services for the sale of firearms, firearm parts,
               ammunition, weapons or other devices designed to cause physical
               harm;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               use the Services to infringe on the intellectual property rights
               of others;
             </span>
           </li>
-          <li class="c0 c5">
-            <span class="c4 c3">
+          <li className="c0 c5">
+            <span className="c4 c3">
               use the Services for any illegal activity or goods or in any way
               that exposes you, other Native users, our partners, or Native to
               harm; or
             </span>
           </li>
-          <li class="c5 c7">
-            <span class="c4 c3">
+          <li className="c5 c7">
+            <span className="c4 c3">
               otherwise use the Services except as expressly allowed under these
               Terms.
             </span>
           </li>
         </ol>
-        <p class="c7 c11">
-          <span class="c4 c3" />
+        <p className="c7 c11">
+          <span className="c4 c3" />
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             We may monitor, moderate or analyze your use of the Services to
             ensure compliance with applicable law. &nbsp;If we reasonably
             suspect that your Native Account has been used for an unauthorized,
@@ -531,13 +535,13 @@ class Terms extends Component {
             transactions with law enforcement.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">
+        <p className="c9">
+          <span className="c1">
             7. Compatible Mobile Devices and Third Party Carriers
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             We do not warrant that the Services will be compatible with your
             mobile device or carrier. Your use of the Services may be subject to
             the terms of your agreements with your mobile device manufacturer or
@@ -547,11 +551,11 @@ class Terms extends Component {
             controls.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">8. Use of Services</span>
+        <p className="c9">
+          <span className="c1">8. Use of Services</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             You will not use the Services to upload or provide content or
             otherwise post, transmit, distribute, or disseminate any material
             that: (a) is false, misleading, unlawful, obscene, indecent, lewd,
@@ -570,8 +574,8 @@ class Terms extends Component {
             customers to harm or liability of any nature.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             We have absolute discretion to suspend the use of Services at any
             time and for any reason without notice. Native may also monitor the
             use of Services to detect and prevent fraudulent activity or
@@ -580,11 +584,11 @@ class Terms extends Component {
             indecent, or objectionable.{' '}
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">9. Security</span>
+        <p className="c9">
+          <span className="c1">9. Security</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             We have implemented technical and organizational measures designed
             to secure your personal information from accidental loss and from
             unauthorized access, use, alteration, or disclosure. However, we
@@ -594,8 +598,8 @@ class Terms extends Component {
             risk.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             You are responsible for safeguarding your password and for
             restricting access to the Services from your compatible mobile
             devices and computer(s). You will immediately notify us of any
@@ -608,8 +612,8 @@ class Terms extends Component {
             parties.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             Ethereum is subject to risks, including but not limited to: the
             existence of technical flaws in Ethereum; targeting of Ethereum by
             malicious persons; changes in Ethereum&rsquo;s consensus protocol or
@@ -622,8 +626,8 @@ class Terms extends Component {
             Ethereum developers, miners and/or users. &nbsp;
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             You recognize that Native&rsquo;s Services are contingent on the
             Ethereum blockchain and Bancor protocol functioning as intended, and
             that Native has no control over the function of the Ethereum
@@ -632,11 +636,11 @@ class Terms extends Component {
             recorded on the blockchain, it cannot be undone. &nbsp;
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">10. Communications</span>
+        <p className="c9">
+          <span className="c1">10. Communications</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             [You consent to accept and receive communications from us, including
             e-mail, text messages, calls, and push notifications to the cellular
             telephone number you provide to us when you sign-up for a Native
@@ -652,8 +656,8 @@ class Terms extends Component {
             carrier may apply to the text messages we send you.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             You may opt-out of receiving promotional email communications we
             send to you by following the unsubscribe options on such emails. You
             may opt out of any promotional phone calls by informing the caller
@@ -663,11 +667,11 @@ class Terms extends Component {
             communications may impact your use of the Services.]
           </span>
         </p>
-        <p class="c9 c8">
-          <span class="c1">11. Modification and Termination</span>
+        <p className="c9 c8">
+          <span className="c1">11. Modification and Termination</span>
         </p>
-        <p class="c0 c8">
-          <span class="c4 c3">
+        <p className="c0 c8">
+          <span className="c4 c3">
             We may terminate these Terms or any additional terms, or suspend or
             terminate your Native Account or your access to any Service, at any
             time for any reason. We may add or remove, suspend, stop, delete,
@@ -679,11 +683,11 @@ class Terms extends Component {
             your Native Account by deactivating your Native Account at any time.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">12. Effect of Termination</span>
+        <p className="c9">
+          <span className="c1">12. Effect of Termination</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             If these Terms or your Native Account is terminated or suspended for
             any reason: (a) the license and any other rights granted under these
             Terms will end, (b) we may (but have no obligation to) delete your
@@ -702,11 +706,11 @@ class Terms extends Component {
             Sites), 27 (Taxes), and 28 (Other Provisions).
           </span>
         </p>
-        <p class="c9 c8">
-          <span class="c1">13. Your License</span>
+        <p className="c9 c8">
+          <span className="c1">13. Your License</span>
         </p>
-        <p class="c0 c8">
-          <span class="c4 c3">
+        <p className="c0 c8">
+          <span className="c4 c3">
             We grant you a limited, non-exclusive, revocable, non-transferable,
             non-sublicensable license to use the software that is part of the
             Services, solely as authorized in these Terms. We may make software
@@ -715,11 +719,13 @@ class Terms extends Component {
             subject to additional terms made known to you at that time.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">14. Ownership, Intellectual Property Rights</span>
+        <p className="c9">
+          <span className="c1">
+            14. Ownership, Intellectual Property Rights
+          </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             We reserve all rights not expressly granted to you in these Terms.
             We own all right, title and interest, including without limitation
             all copyright and other Intellectual Property Rights (as defined
@@ -729,8 +735,8 @@ class Terms extends Component {
             specifically provided in Section 13.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             For the purposes of these Terms, &ldquo;Intellectual Property
             Rights&rdquo; means all patent rights, copyright rights, mask work
             rights, moral rights, rights of publicity, trademark, trade dress
@@ -743,29 +749,29 @@ class Terms extends Component {
             state, country, territory or other jurisdiction.{' '}
           </span>
         </p>
-        <p class="c0">
-          <span class="c6 c26">
+        <p className="c0">
+          <span className="c6 c26">
             [NATIVE: &nbsp;ARE USERS GOING TO BE ABLE TO POST CONTENT?
             &nbsp;ALSO, WAS ANY THIRD PARTY DATA, CODE OR OTHER MATERIAL USED IN
             DEVELOPNG THE SERVICES? &nbsp;IF SO PLEASE LET US KNOW BECAUSE IN
             THAT CASE WE WILL NEED TO ADD ADDITIONAL PROVISIONS TO THE TOS.]
           </span>
-          <span class="c4 c6">&nbsp; </span>
+          <span className="c4 c6">&nbsp; </span>
         </p>
-        <p class="c9 c8" id="h.gjdgxs">
-          <span class="c1">15. Risks</span>
+        <p className="c9 c8" id="h.gjdgxs">
+          <span className="c1">15. Risks</span>
         </p>
-        <p class="c0 c8">
-          <span class="c4 c3">
+        <p className="c0 c8">
+          <span className="c4 c3">
             Native provides an execution-only service and does not advise on the
             merits of any particular transaction or its tax or legal
             consequences. As a general matter, you should be aware of the
             following prior to utilizing our Services:
           </span>
         </p>
-        <ol class="c10 lst-kix_list_8-0 start" start="1">
-          <li class="c7 c5">
-            <span class="c4 c3">
+        <ol className="c10 lst-kix_list_8-0 start" start="1">
+          <li className="c7 c5">
+            <span className="c4 c3">
               Understanding tokens and cryptocurrencies requires advanced
               technical knowledge. Tokens are often described in exceedingly
               technical language that requires a comprehensive understanding of
@@ -775,44 +781,44 @@ class Terms extends Component {
               independent appraisal and investigations into the risks relating
               to and concerning the Native Tokens or{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">
+            <span className="c3">Community</span>
+            <span className="c4 c3">
               &nbsp;Tokens. You represent that you have sufficient knowledge,
               market sophistication, professional advice and experience to make
               your own evaluation of the merits and risks of the Native Tokens
               or{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">&nbsp;Tokens. </span>
+            <span className="c3">Community</span>
+            <span className="c4 c3">&nbsp;Tokens. </span>
           </li>
         </ol>
-        <p class="c7 c11">
-          <span class="c4 c3" />
+        <p className="c7 c11">
+          <span className="c4 c3" />
         </p>
-        <ol class="c10 lst-kix_list_8-0" start="2">
-          <li class="c7 c5">
-            <span class="c4 c3">
+        <ol className="c10 lst-kix_list_8-0" start="2">
+          <li className="c7 c5">
+            <span className="c4 c3">
               You accept the risk of converting cryptocurrency into Native
               Tokens, converting Native Tokens into{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">
+            <span className="c3">Community</span>
+            <span className="c4 c3">
               &nbsp;Tokens, and the redemption of Native Tokens or{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">
+            <span className="c3">Community</span>
+            <span className="c4 c3">
               &nbsp;Tokens. You understand that such conversion or redemption
               may use untested code and protocols, and accept the risk of
               conversion failure or fault. You accept the risk that the Native
               Reserve or{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">
+            <span className="c3">Community</span>
+            <span className="c4 c3">
               &nbsp;Reserve may not be sufficient to satisfy redemptions of
               Native Tokens or{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">
+            <span className="c3">Community</span>
+            <span className="c4 c3">
               &nbsp;Tokens. You agree not to hold Native accountable for any
               related losses. Neither you nor we, can reverse, change or cancel
               a conversion of fiat or cryptocurrency into Native Tokens if such
@@ -824,12 +830,12 @@ class Terms extends Component {
             </span>
           </li>
         </ol>
-        <p class="c7 c11 c23">
-          <span class="c4 c3" />
+        <p className="c7 c11 c23">
+          <span className="c4 c3" />
         </p>
-        <ol class="c10 lst-kix_list_8-0" start="3">
-          <li class="c7 c5">
-            <span class="c4 c3">
+        <ol className="c10 lst-kix_list_8-0" start="3">
+          <li className="c7 c5">
+            <span className="c4 c3">
               You are responsible for complying with applicable law. You agree
               that Native is not responsible for determining whether or which
               laws may apply to your use of the Services, including with respect
@@ -839,12 +845,12 @@ class Terms extends Component {
             </span>
           </li>
         </ol>
-        <p class="c7 c11">
-          <span class="c4 c3" />
+        <p className="c7 c11">
+          <span className="c4 c3" />
         </p>
-        <ol class="c10 lst-kix_list_8-0" start="4">
-          <li class="c7 c5">
-            <span class="c4 c3">
+        <ol className="c10 lst-kix_list_8-0" start="4">
+          <li className="c7 c5">
+            <span className="c4 c3">
               You are aware of and accept the risk of operational challenges.
               Native may experience sophisticated cyber-attacks, unexpected
               surges in activity, or other operational or technical
@@ -856,12 +862,12 @@ class Terms extends Component {
             </span>
           </li>
         </ol>
-        <p class="c7 c11">
-          <span class="c4 c3" />
+        <p className="c7 c11">
+          <span className="c4 c3" />
         </p>
-        <ol class="c10 lst-kix_list_8-0" start="5">
-          <li class="c7 c5">
-            <span class="c4 c3">
+        <ol className="c10 lst-kix_list_8-0" start="5">
+          <li className="c7 c5">
+            <span className="c4 c3">
               Native does not advise on the risks of conversion or redemption.
               If at any point Native or its representatives do provide
               recommendations, or any other information, the act of doing so is
@@ -871,25 +877,25 @@ class Terms extends Component {
             </span>
           </li>
         </ol>
-        <p class="c7 c11">
-          <span class="c4 c3" />
+        <p className="c7 c11">
+          <span className="c4 c3" />
         </p>
-        <ol class="c10 lst-kix_list_8-0" start="6">
-          <li class="c0 c5">
-            <span class="c4 c3">
+        <ol className="c10 lst-kix_list_8-0" start="6">
+          <li className="c0 c5">
+            <span className="c4 c3">
               We do not own or control the underlying software protocols, which
               govern the operation of the Native Tokens and{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">
+            <span className="c3">Community</span>
+            <span className="c4 c3">
               &nbsp;Tokens supported on our platform. You acknowledge and agree
               (a) that the underlying protocols may be subject to sudden changes
               in operating rules (&lsquo;forks&rsquo;), and that such forks may
               materially affect the value, function, and even the name of the
               Native Tokens or{' '}
             </span>
-            <span class="c3">Community</span>
-            <span class="c4 c3">
+            <span className="c3">Community</span>
+            <span className="c4 c3">
               &nbsp;Tokens you store. In the event of a fork, you agree that we
               may suspend the Services (with or without advance notice to you)
               and that we may decide whether or not to support (or cease
@@ -902,11 +908,11 @@ class Terms extends Component {
             </span>
           </li>
         </ol>
-        <p class="c9 c8">
-          <span class="c1">16. Indemnity</span>
+        <p className="c9 c8">
+          <span className="c1">16. Indemnity</span>
         </p>
-        <p class="c0 c8">
-          <span class="c4 c3">
+        <p className="c0 c8">
+          <span className="c4 c3">
             You will indemnify, defend, and hold us and our processors (and our
             respective employees, directors, agents, affiliates and
             representatives) harmless from and against any and all claims,
@@ -925,11 +931,11 @@ class Terms extends Component {
             unique name, password or other appropriate security code.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">17. Representations and Warranties</span>
+        <p className="c9">
+          <span className="c1">17. Representations and Warranties</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             You represent and warrant to us that: (a) you are at least eighteen
             (18) years of age; (b) you are eligible to register and use the
             Services and have the right, power, and ability to enter into and
@@ -955,19 +961,19 @@ class Terms extends Component {
             incomplete.
           </span>
         </p>
-        <p class="c9 c8">
-          <span class="c1">18. No Warranties</span>
+        <p className="c9 c8">
+          <span className="c1">18. No Warranties</span>
         </p>
-        <p class="c0 c8">
-          <span class="c4 c3">
+        <p className="c0 c8">
+          <span className="c4 c3">
             THE USE OF &ldquo;NATIVE&rdquo; IN SECTIONS 19 AND 20 MEANS NATIVE,
             ITS PROCESSORS, ITS SUPPLIERS, AND ITS LICENSORS (AND THEIR
             RESPECTIVE SUBSIDIARIES, AFFILIATES, AGENTS, DIRECTORS, AND
             EMPLOYEES).
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             THE SERVICES ARE PROVIDED &ldquo;AS IS&rdquo; WITHOUT REPRESENTATION
             OR WARRANTY, WHETHER IT IS EXPRESS, IMPLIED, OR STATUTORY. WITHOUT
             LIMITING THE FOREGOING, NATIVE SPECIFICALLY DISCLAIMS ANY IMPLIED
@@ -975,8 +981,8 @@ class Terms extends Component {
             NON-INFRINGEMENT.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             NATIVE DOES NOT WARRANT OR GUARANTEE THAT THE SERVICES WILL MEET
             YOUR REQUIREMENTS; THAT THE SERVICES WILL BE AVAILABLE AT ANY
             PARTICULAR TIME OR LOCATION, UNINTERRUPTED, ERROR-FREE, WITHOUT
@@ -984,19 +990,19 @@ class Terms extends Component {
             THAT THE SERVICES ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             Native does not warrant, endorse, guarantee, or assume
             responsibility for any product or service advertised or offered by a
             third party. Native does not have control of, or liability for,
             goods or services that are paid for using the Services.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">19. Limitations of Liability and Damages</span>
+        <p className="c9">
+          <span className="c1">19. Limitations of Liability and Damages</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL
             NATIVE BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL,
             SPECIAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES, INCLUDING WITHOUT
@@ -1007,16 +1013,16 @@ class Terms extends Component {
             FORESEEABLE.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             UNDER NO CIRCUMSTANCES WILL NATIVE BE RESPONSIBLE FOR ANY DAMAGE,
             LOSS, OR INJURY RESULTING FROM HACKING, TAMPERING, OR OTHER
             UNAUTHORIZED ACCESS OR USE OF THE SERVICES, YOUR NATIVE ACCOUNT,
             YOUR DIGITAL WALLET, OR THE INFORMATION CONTAINED THEREIN.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE TOTAL
             LIABILITY OF NATIVE IS LIMITED TO THE GREATER OF (A) THE AMOUNT OF
             FEES EARNED BY US IN CONNECTION WITH YOUR USE OF THE SERVICES DURING
@@ -1024,8 +1030,8 @@ class Terms extends Component {
             RISE TO THE CLAIM FOR LIABILITY, OR (B) $500.
           </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             THIS LIMITATION OF LIABILITY SECTION APPLIES WHETHER THE ALLEGED
             LIABILITY IS BASED ON CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY,
             OR ANY OTHER BASIS, EVEN IF NATIVE HAS BEEN ADVISED OF THE
@@ -1034,11 +1040,11 @@ class Terms extends Component {
             JURISDICTION.
           </span>
         </p>
-        <p class="c9 c8">
-          <span class="c1">20. Third Party Products</span>
+        <p className="c9 c8">
+          <span className="c1">20. Third Party Products</span>
         </p>
-        <p class="c0 c8">
-          <span class="c4 c3">
+        <p className="c0 c8">
+          <span className="c4 c3">
             All third party hardware and other products included or sold with
             the Services are provided solely according to the warranty and other
             terms specified by the manufacturer, who is solely responsible for
@@ -1050,11 +1056,11 @@ class Terms extends Component {
             FITNESS FOR A PARTICULAR PURPOSE.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">21. Disputes</span>
+        <p className="c9">
+          <span className="c1">21. Disputes</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             &ldquo;Disputes&rdquo; are defined as any claim, controversy, or
             dispute between you and Native, its processors, suppliers or
             licensors (or their respective affiliates, agents, directors or
@@ -1062,11 +1068,11 @@ class Terms extends Component {
             or the Services, or any other aspect of our relationship.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">22. Binding Individual Arbitration</span>
+        <p className="c9">
+          <span className="c1">22. Binding Individual Arbitration</span>
         </p>
-        <p class="c7">
-          <span class="c4 c3">
+        <p className="c7">
+          <span className="c4 c3">
             You and Native agree to arbitrate any and all Disputes by a neutral
             arbitrator who has the power to award the same individual damages
             and individual relief that a court can. ANY ARBITRATION UNDER THESE
@@ -1127,45 +1133,47 @@ class Terms extends Component {
             York.
           </span>
         </p>
-        <p class="c2">
-          <span class="c4 c3" />
+        <p className="c2">
+          <span className="c4 c3" />
         </p>
-        <p class="c9">
-          <span class="c1">23. Governing Law</span>
+        <p className="c9">
+          <span className="c1">23. Governing Law</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             These Terms and any Dispute will be governed by New York law and/or
             applicable federal law (including the Federal Arbitration Act),
             without regard to its choice of law or conflicts of law principles.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">24. Limitation on Time to Initiate a Dispute</span>
+        <p className="c9">
+          <span className="c1">
+            24. Limitation on Time to Initiate a Dispute
+          </span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             Any action or proceeding by you relating to any Dispute must
             commence within one year after the cause of action accrues.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">25. Assignment</span>
+        <p className="c9">
+          <span className="c1">25. Assignment</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             These Terms, and any rights and licenses granted hereunder, may not
             be transferred or assigned by you and any attempted transfer or
             assignment will be null and void.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">
+        <p className="c9">
+          <span className="c1">
             26. Third Party Services and Links to Other Websites
           </span>
         </p>
-        <p class="c0">
-          <span class="c3">
+        <p className="c0">
+          <span className="c3">
             You may be offered services, products and promotions provided by
             third parties and not by Native, including, but not limited to,
             third party developers who use Native&rsquo;s services (&ldquo;Third
@@ -1178,8 +1186,8 @@ class Terms extends Component {
             party directly in accordance with the terms and conditions of that
             relationship, and not{' '}
           </span>
-          <span class="c24">Native</span>
-          <span class="c4 c3">
+          <span className="c24">Native</span>
+          <span className="c4 c3">
             . The Services may contain links to third party websites. The
             inclusion of any website link does not imply an approval,
             endorsement, or recommendation by Native. Such third party websites
@@ -1192,11 +1200,11 @@ class Terms extends Component {
             rules and policies.
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">27. Taxes</span>
+        <p className="c9">
+          <span className="c1">27. Taxes</span>
         </p>
-        <p class="c0">
-          <span class="c4 c3">
+        <p className="c0">
+          <span className="c4 c3">
             You are responsible for determining any and all taxes assessed,
             incurred, or required to be collected, paid, or withheld for any
             reason for your use of the Services (&ldquo;Taxes&rdquo;). You also
@@ -1208,11 +1216,11 @@ class Terms extends Component {
             liability for Taxes.{' '}
           </span>
         </p>
-        <p class="c9">
-          <span class="c1">28. Other Provisions</span>
+        <p className="c9">
+          <span className="c1">28. Other Provisions</span>
         </p>
-        <p class="c7">
-          <span class="c4 c3">
+        <p className="c7">
+          <span className="c4 c3">
             These Terms, and any applicable additional terms or policies, are a
             complete statement of the agreement between you and Native regarding
             the Services. In the event of a conflict between these Terms and any
@@ -1228,53 +1236,53 @@ class Terms extends Component {
             further or continuing waiver of such term or any other term.
           </span>
         </p>
-        <p class="c2">
-          <span class="c4 c3" />
+        <p className="c2">
+          <span className="c4 c3" />
         </p>
-        <p class="c2">
-          <span class="c4 c24 c28" />
+        <p className="c2">
+          <span className="c4 c24 c28" />
         </p>
-        <p class="c20 c22">
-          <span class="c13">SK 29779 0001 8058883 v2</span>
+        <p className="c20 c22">
+          <span className="c13">SK 29779 0001 8058883 v2</span>
           <span>&nbsp;</span>
         </p>
         <div>
-          <p class="c18 c11">
-            <span class="c4 c3" />
+          <p className="c18 c11">
+            <span className="c4 c3" />
           </p>
-          <p class="c2">
-            <span class="c4 c3" />
+          <p className="c2">
+            <span className="c4 c3" />
           </p>
         </div>
-        <div class="c16">
-          <p class="c20">
+        <div className="c16">
+          <p className="c20">
             <a href="#cmnt_ref1" id="cmnt1">
               [a]
             </a>
-            <span class="c4 c15">
+            <span className="c4 c15">
               trying to find right word here. Native Tokens are deposited.
               Community Tokens generated. Native tokens to community fund and
               reserve. Community tokens to user.
             </span>
           </p>
         </div>
-        <div class="c16">
-          <p class="c20">
+        <div className="c16">
+          <p className="c20">
             <a href="#cmnt_ref2" id="cmnt2">
               [b]
             </a>
-            <span class="c4 c15">
+            <span className="c4 c15">
               Note: To discuss that Native currently does not have a Privacy
               Notice
             </span>
           </p>
         </div>
-        <div class="c16">
-          <p class="c20">
+        <div className="c16">
+          <p className="c20">
             <a href="#cmnt_ref3" id="cmnt3">
               [c]
             </a>
-            <span class="c4 c15">
+            <span className="c4 c15">
               Discuss: confirm whether this representation satisfactory from
               compliance perspective
             </span>

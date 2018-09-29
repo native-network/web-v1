@@ -64,6 +64,7 @@ export const userSessionActions = {
   END_SESSION_SUCCESS: 'END_SESSION_SUCCESS',
   END_SESSION_ERROR: 'END_SESSION_ERROR',
   DISMISS_USER_MESSAGE: 'DISMISS_USER_MESSAGE',
+  NETWORK_CHANGE: 'NETWORK_CHANGE',
 };
 
 export const communityPollsActions = {

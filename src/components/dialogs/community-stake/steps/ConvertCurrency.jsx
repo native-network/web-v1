@@ -35,7 +35,7 @@ export class ConvertCurrency extends Component {
         ? `You don't have enough to stake`
         : undefined;
     const minRequirement = userMemberOf
-      ? fromWei(community.currency.minimumStake)
+      ? 1
       : community.currency &&
         fromWei(
           bigNumber(
@@ -44,27 +44,17 @@ export class ConvertCurrency extends Component {
         );
     return (
       <div className={styles.CommunityStake}>
-        <h1 className={styles.Header}>
-          Get {community.name} Community Currency
-        </h1>
+        <h1 className={styles.Header}>Get {community.name} Tokens</h1>
         <div className={styles.TextContainer}>
           <p>
             <strong>
-              You must convert ETH or another Bancor or community currency to{' '}
-              {community.name} Community Currency ({community.currency.symbol})
-              in order to support the community.
+              You must convert NTV to {community.name} Tokens (
+              {community.currency.symbol}) in order to support the community.
             </strong>
           </p>
           <p>
-            When you support a community, you are investing in that community.
-            You can participate in activities by joining the community.
-          </p>
-          <p>Select the currency and amount you would like to convert below.</p>
-          <p>
-            <strong>
-              This transaction could take up to 5 minutes. You will be notified
-              when your currency has been transferred.
-            </strong>
+            This transaction could take up to 5 minutes. You will be notified
+            when your currency has been transferred.
           </p>
         </div>
         <CurrencyConverter
