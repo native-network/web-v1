@@ -49,8 +49,9 @@
   --neutral-gray: var(--gray-0);
 
   --greenish-blue: #38767d;
-  --native-green: #a6bf4c;
+  --native-green: #549387;
   --dark-green: #2c5e5e;
+  --native-green-yellow: #a6bf4c;
 
   --light-blue: #64b4cd;
   --dark-blue: #288ba9;
@@ -61,6 +62,8 @@
   --warm-orange: #ef8822;
   --warm-yellow: #fbc24d;
   --native-yellow: #fddb9c;
+  --native-cream: #f9f8f4;
+  --native-cream-2: color-mod(var(--native-cream) shade(10%));
 
   --primary-color: var(--native-green);
   --primary-color--alt: #549387;
@@ -76,11 +79,11 @@
   --primary-button-default: var(--primary-action);
   --primary-button-active: color-mod(var(--primary-action) shade(10%));
 
-  --secondary-button-default: var(--secondary-color);
-  --secondary-button-active: color-mod(var(--secondary-color) shade(10%));
+  --secondary-button-default: var(--primary-color);
+  --secondary-button-active: color-mod(var(--primary-color) shade(10%));
 
-  --tertiary-button-default: var(--primary-white);
-  --tertiary-button-active: color-mod(var(--gray-8));
+  --tertiary-button-default: var(--native-cream);
+  --tertiary-button-active: var(--native-cream-2);
 
   /* Social media */
   --telegram-blue: #0088cc;
