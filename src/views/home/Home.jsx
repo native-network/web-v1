@@ -76,7 +76,9 @@ export class Home extends Component {
               ))}
           </ul>
         ) : (
-          <p>There seems to have been a problem loading the communities.</p>
+          <p className="container">
+            There seems to have been a problem loading the communities.
+          </p>
         )}
       </main>
     );
