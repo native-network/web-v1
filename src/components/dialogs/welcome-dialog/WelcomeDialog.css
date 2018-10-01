@@ -52,7 +52,7 @@
   @extend %button;
   @extend %box-shadow;
 
-  margin: 0 1rem;
+  margin: 1rem;
   font-size: 1.25rem;
 }
 

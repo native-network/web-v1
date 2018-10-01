@@ -9,7 +9,7 @@
 .TabNavigation {
   @extend %box-shadow;
 
-  background: var(--gray-10);
+  background: var(--native-cream-2);
   border-top: 1px solid var(--gray-0);
   border-bottom: 1px solid var(--gray-0);
   position: sticky;

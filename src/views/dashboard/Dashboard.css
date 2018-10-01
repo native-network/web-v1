@@ -15,7 +15,7 @@
 }
 
 .DashboardBanner {
-  background: var(--gray-11);
+  background: var(--native-cream-2);
   padding: 1.5rem 0;
 
   & > div {
@@ -60,6 +60,7 @@
 .Table {
   box-shadow: 0 0.5rem 2rem var(--transparent-black-20);
   margin-bottom: 3rem;
+  background: var(--white-0);
 }
 
 .CommunityLink {

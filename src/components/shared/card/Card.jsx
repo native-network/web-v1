@@ -113,6 +113,13 @@ export class Card extends Component {
 
     return (
       <div
+        id={this.props.community.name
+          .split(' ')
+          .join('-')
+          .toLowerCase()}
+        ref={(card) =>
+          this.props.cardRef ? this.props.cardRef(card, this.props.index) : null
+        }
         className={styles.Card}
         style={this.isCommunityRoute() ? { overflow: 'visible' } : null}
       >

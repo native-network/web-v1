@@ -13,8 +13,10 @@ body {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'azo-sans-web', sans-serif;
   font-size: 100%;
+  background: var(--native-cream);
+  font-weight: 300;
 }
 
 * {

@@ -39,7 +39,7 @@
     border: 1px solid var(--primary-color);
     width: 100%;
     padding-left: 0.5rem;
-    font: 1rem 'Montserrat', sans-serif;
+    font: 1rem 'azo-sans-web', sans-serif;
   }
 
   & input {
