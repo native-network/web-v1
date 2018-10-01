@@ -146,12 +146,18 @@
     }
 
     @media (--medium-viewport) {
-      padding: var(--link-padding) var(--link-padding) calc(var(--link-padding) - 6px);
+      font-size: 0.85rem;
+      padding: var(--link-padding) 0.75rem calc(var(--link-padding) - 6px);
       border-bottom: 6px solid transparent;
 
       &:global(.active) {
         border-bottom-color: var(--gray-0);
       }
+    }
+
+    @media (--large-viewport) {
+      font-size: 1rem;
+      padding: var(--link-padding) var(--link-padding) calc(var(--link-padding) - 6px);
     }
   }
 

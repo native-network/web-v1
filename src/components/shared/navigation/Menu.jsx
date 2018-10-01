@@ -29,6 +29,11 @@ function Menu({
         />
       )}
       <li className={menuItemClass}>
+        <a href="https://quickstart.nativeproject.one/" className={linkClass}>
+          Quickstart Guide
+        </a>
+      </li>
+      <li className={menuItemClass}>
         <a
           href="https://nativeproject.zendesk.com/hc/en-us"
           className={linkClass}
