@@ -174,7 +174,7 @@ export class Card extends Component {
               </div>
               <div>
                 <dt>Total Members:</dt>
-                <dd>{community.memberCount || 10}</dd>
+                <dd>{community.memberCount || 0}</dd>
               </div>
               <div>
                 <dt>Curator:</dt>
