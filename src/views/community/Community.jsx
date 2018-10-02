@@ -46,7 +46,7 @@ export class Community extends Component {
         isCommunityRoute={this.props.isCommunityRoute}
         render={() => (
           <div className={styles.CommunityPanels}>
-            <TabPanels hasFilter panels={initiatives} />
+            <TabPanels community={community} hasFilter panels={initiatives} />
           </div>
         )}
       />

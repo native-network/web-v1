@@ -53,6 +53,7 @@ class TabPanels extends Component {
     return (
       <div className={styles.TabPanels}>
         <TabNavigation
+          telegramLink={this.props.community.telegramLink}
           activeTab={activeTab}
           panels={panelNames}
           clickHandler={(i) => this.setActiveTab(i)}
