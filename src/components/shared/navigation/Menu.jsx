@@ -29,13 +29,20 @@ function Menu({
         />
       )}
       <li className={menuItemClass}>
-        <a href="https://quickstart.nativeproject.one/" className={linkClass}>
+        <a
+          href="https://quickstart.nativeproject.one/"
+          target="_blank"
+          rel="noopener nofollow"
+          className={linkClass}
+        >
           Quickstart Guide
         </a>
       </li>
       <li className={menuItemClass}>
         <a
           href="https://nativeproject.zendesk.com/hc/en-us"
+          target="_blank"
+          rel="noopener nofollow"
           className={linkClass}
         >
           Learn
