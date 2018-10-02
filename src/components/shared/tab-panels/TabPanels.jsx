@@ -42,7 +42,7 @@ class TabPanels extends Component {
 
   render() {
     const { props, state } = this;
-    const { panels } = props;
+    const { panels, community } = props;
     const { activeTab } = state;
     const panelNames = panels.map(
       (panel) => `${panel.name} (${(panel.items && panel.items.length) || 0})`,
@@ -53,7 +53,7 @@ class TabPanels extends Component {
     return (
       <div className={styles.TabPanels}>
         <TabNavigation
-          telegramLink={this.props.community.telegramLink}
+          telegramLink={community && community.telegramLink}
           activeTab={activeTab}
           panels={panelNames}
           clickHandler={(i) => this.setActiveTab(i)}
