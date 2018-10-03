@@ -76,6 +76,18 @@ export class CurrencyConverter extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.defaultValues !== prevProps.defaultValues) {
+      if (
+        this.props.defaultValues.sendCurrency &&
+        this.props.defaultValues.receiveCurrency
+      ) {
+        this.setState({
+          activeSendCurrency: this.props.defaultValues.sendCurrency,
+          activeReceiveCurrency: this.props.defaultValues.receiveCurrency,
+        });
+      }
+    }
+
     if (this.state.activeSendCurrency !== prevState.activeSendCurrency) {
       if (this.state.activeSendCurrency.symbol === 'NTV') {
         this.setState({
@@ -132,6 +144,7 @@ export class CurrencyConverter extends Component {
       >
         {({ handleSubmit, invalid, form }) => (
           <form
+            ref={this.props.formRef}
             className={`${styles.CurrencyForm} ${this.props.className}`}
             onSubmit={handleSubmit}
           >
