@@ -13,7 +13,15 @@ export default class CommunityService {
     this.community = community;
     this.web3Service = web3Instance;
   }
-
+  async getGasPrice() {
+    const gasPrice = await this.web3Service.web3.eth.getGasPrice();
+    if (gasPrice) {
+      return gasPrice;
+    } else {
+      // error has 10 Gwei default
+      return 10000000000;
+    }
+  }
   async initContracts() {
     this.communityContract = await this.web3Service.initContract(
       communityAbi,
@@ -58,9 +66,11 @@ export default class CommunityService {
 
   async approve(receivingAddress, transactionAmount, cb) {
     try {
+      let gasPrice = await this.getGasPrice();
+      gasPrice = gasPrice * 1.5;
       return await this.smartTokenContractWS.methods
         .approve(receivingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount })
+        .send({ from: this.web3Service.mainAccount, gasPrice })
         .on('transactionHash', (hash) => {
           if (cb) {
             cb(hash);
@@ -73,9 +83,11 @@ export default class CommunityService {
 
   async buyWithToken(sendingAddress, transactionAmount, cb) {
     try {
+      let gasPrice = await this.getGasPrice();
+      gasPrice = gasPrice * 1.25;
       return await this.smartTokenContractWS.methods
         .buyWithToken(sendingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount })
+        .send({ from: this.web3Service.mainAccount, gasPrice })
         .on('transactionHash', (hash) => {
           if (cb) {
             cb(hash);
@@ -98,9 +110,11 @@ export default class CommunityService {
 
   async stake(cb) {
     try {
+      let gasPrice = await this.getGasPrice();
+      gasPrice = gasPrice * 1.25;
       await this.communityContract.methods
         .stakeCommunityTokens()
-        .send({ from: this.web3Service.mainAccount })
+        .send({ from: this.web3Service.mainAccount, gasPrice })
         .on('transactionHash', (hash) => {
           if (cb) {
             cb(hash);
