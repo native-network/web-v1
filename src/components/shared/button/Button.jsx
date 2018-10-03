@@ -26,6 +26,7 @@ function Button({
     Centered: centered,
     Outline: outline,
     Block: block,
+    Link: theme === 'link',
   });
 
   return (

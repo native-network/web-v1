@@ -27,14 +27,7 @@
 }
 
 .Header {
-  min-height: 15rem;
   position: relative;
-  background-position: center center;
-  background-size: cover;
-
-  @media (--medium-viewport) {
-    min-height: 25rem;
-  }
 }
 
 .HeaderOverlay {
@@ -49,6 +42,10 @@
       var(--transparent-black-100),
       var(--transparent-black-0) 60%
     );
+}
+
+.HeaderImage {
+  object-fit: cover;
 }
 
 .HeaderContainer {
@@ -92,7 +89,6 @@
     max-width: 1280px;
     width: 98%;
     margin: 0 auto;
-    bottom: 0;
     padding: 1rem;
     box-shadow: 0 0 0;
     background: transparent;

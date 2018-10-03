@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Loader from '../../components/shared/loader';
-import CardList from '../../components/shared/card-list';
+import Card from '../../components/shared/card';
 
 import styles from './Home.css';
 
@@ -15,9 +15,28 @@ import {
 import { endSession } from '../../actions/userSessionActions';
 
 export class Home extends Component {
+  cards = [];
+
   static defaultProps = {
     communities: [],
   };
+
+  setCardRef(card, index) {
+    this.cards[index] = card;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.cards.length > 0 && this.props.anchor) {
+      if (prevProps.communities !== this.props.communities) {
+        const activeCard = this.cards.find(
+          (card) => card.getAttribute('id') === this.props.anchor,
+        );
+        if (activeCard) {
+          window.scroll(0, activeCard.offsetTop);
+        }
+      }
+    }
+  }
 
   submitTransaction(symbol, community, amount) {
     if (symbol === 'NTV') {
@@ -39,14 +58,28 @@ export class Home extends Component {
             Get Native Tokens
           </Link>
         </div>
-        <CardList
-          listItems={this.props.communities
-            .filter((community) => community.currency)
-            .map((community) => ({
-              ...community,
-              submitTransaction: this.submitTransaction.bind(this),
-            }))}
-        />
+        {this.props.communities.length > 0 ? (
+          <ul className={styles.CardList}>
+            {(this.props.communities || [])
+              .filter((item) => item.name !== 'Native')
+              .map((item, index) => (
+                <li key={index}>
+                  <Card
+                    index={index}
+                    cardRef={this.setCardRef.bind(this)}
+                    community={{
+                      ...item,
+                      submitTransaction: this.submitTransaction.bind(this),
+                    }}
+                  />
+                </li>
+              ))}
+          </ul>
+        ) : (
+          <p className="container">
+            There seems to have been a problem loading the communities.
+          </p>
+        )}
       </main>
     );
   }
@@ -61,10 +94,13 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  (state) => {
+  (state, ownProps) => {
+    const params = ownProps.location.hash && ownProps.location.hash.slice(1);
+
     return {
       communities: state.communities.communities,
       isLoading: state.loading > 0,
+      anchor: params,
     };
   },
   mapDispatchToProps,

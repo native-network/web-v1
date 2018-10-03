@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -16,10 +15,9 @@ function renderVoteResults(votes, options) {
       prev.votes && prev.votes.length > current.votes.length ? prev : current,
   );
 
-  const isMaxTied = options
-    .filter(
-      (option) => option.votes.length === maxVotes.votes.length,
-    ).length > 1;
+  const isMaxTied =
+    options.filter((option) => option.votes.length === maxVotes.votes.length)
+      .length > 1;
 
   return options.map((o, i) => {
     const percentage = Math.floor((o.votes.length / totalVotes) * 100) || 0;
