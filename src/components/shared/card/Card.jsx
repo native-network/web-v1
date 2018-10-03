@@ -113,6 +113,13 @@ export class Card extends Component {
 
     return (
       <div
+        id={this.props.community.name
+          .split(' ')
+          .join('-')
+          .toLowerCase()}
+        ref={(card) =>
+          this.props.cardRef ? this.props.cardRef(card, this.props.index) : null
+        }
         className={styles.Card}
         style={this.isCommunityRoute() ? { overflow: 'visible' } : null}
       >
@@ -167,7 +174,7 @@ export class Card extends Component {
               </div>
               <div>
                 <dt>Total Members:</dt>
-                <dd>{community.memberCount || 10}</dd>
+                <dd>{community.memberCount || 0}</dd>
               </div>
               <div>
                 <dt>Curator:</dt>
@@ -205,24 +212,28 @@ export class Card extends Component {
                     Quorum of {community.quorum}% is required to approve
                     projects.
                   </p>
-                  <p>
-                    <a
-                      target="_blank"
-                      rel="noopener nofollow"
-                      href={community.votingPolicy}
-                    >
-                      Download the voting policy
-                    </a>
-                  </p>
-                  <p>
-                    <a
-                      target="_blank"
-                      rel="noopener nofollow"
-                      href={community.revenueDistributionPolicy}
-                    >
-                      Download the revenue distribution policy
-                    </a>
-                  </p>
+                  {community.votingPolicy && (
+                    <p>
+                      <a
+                        target="_blank"
+                        rel="noopener nofollow"
+                        href={community.votingPolicy}
+                      >
+                        Download the voting policy
+                      </a>
+                    </p>
+                  )}
+                  {community.revenueDistributionPolicy && (
+                    <p>
+                      <a
+                        target="_blank"
+                        rel="noopener nofollow"
+                        href={community.revenueDistributionPolicy}
+                      >
+                        Download the revenue distribution policy
+                      </a>
+                    </p>
+                  )}
                 </div>
                 <SocialMedia className={styles.Social} links={socialLinks} />
               </div>

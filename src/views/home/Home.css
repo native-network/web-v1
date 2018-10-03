@@ -19,3 +19,17 @@
   @extend %primary-theme;
   @extend %box-shadow;
 }
+
+.CardList {
+  @extend %unstyled-list;
+
+  & > li {
+    margin-bottom: 2rem;
+  }
+
+  @media (--medium-viewport) {
+    @extend %container;
+
+    margin-top: 2rem;
+  }
+}

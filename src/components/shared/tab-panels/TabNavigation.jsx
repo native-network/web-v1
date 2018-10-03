@@ -7,6 +7,7 @@ import styles from './TabPanels.css';
 const cx = classNames.bind(styles);
 
 export default function TabNavigation({
+  telegramLink,
   panels,
   activeTab,
   renderFilter,
@@ -32,15 +33,17 @@ export default function TabNavigation({
           })}
         </ul>
         {renderFilter ? renderFilter() : null}
-        <a
-          target="_blank"
-          rel="noopener nofollow"
-          href="http://telegram.com"
-          className={`${styles.CommunityCTA} visible-md`}
-        >
-          <Icon className={styles.CTAIcon} icon="telegram" />
-          <span>Talk with Community members on Telegram</span>
-        </a>
+        {telegramLink && (
+          <a
+            target="_blank"
+            rel="noopener nofollow"
+            href="http://telegram.com"
+            className={`${styles.CommunityCTA} visible-md`}
+          >
+            <Icon className={styles.CTAIcon} icon="telegram" />
+            <span>Talk with Community members on Telegram</span>
+          </a>
+        )}
       </div>
     </div>
   );

@@ -71,7 +71,10 @@ export class CommunityAdmin extends Component {
     ) : (
       <main>
         <h2>Manage Your Community</h2>
-        <TabPanels panels={state.initiatives} />
+        <TabPanels
+          community={this.props.community}
+          panels={state.initiatives}
+        />
       </main>
     );
   }
@@ -91,7 +94,9 @@ export default connect(
   (state, ownProps) => {
     const { communityId: id } = ownProps.match.params;
     const { loading, communities } = state;
-    const community = communities.communities.find((c) => c.id === id);
+    const community = communities.communities.find(
+      (c) => c.id === parseInt(id),
+    );
     const { polls } = state.polls;
     const { projects } = state.projects;
     const { tasks } = state.tasks;
