@@ -142,92 +142,104 @@ export class CurrencyConverter extends Component {
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
       >
-        {({ handleSubmit, invalid, form }) => (
-          <form
-            ref={this.props.formRef}
-            className={`${styles.CurrencyForm} ${this.props.className}`}
-            onSubmit={handleSubmit}
-          >
-            <div className={styles.ConversionInputs}>
-              {this.props.isLoading ? <Loader isFullScreen={false} /> : null}
-              <Field5
-                name="sendValue"
-                validate={(value, allValues) => {
-                  const valueInWei = !!value && toWei(value);
-                  return new BigNumber(valueInWei).gt(
-                    allValues.sendCurrency.balance,
-                  )
-                    ? `You don't have enough ${allValues.sendCurrency.symbol}`
-                    : undefined;
-                }}
-              >
-                {({ input, meta }) => (
-                  <div className={styles.ConversionInput}>
-                    <CurrencyInput
-                      {...input}
-                      currency={this.state.activeSendCurrency}
-                      renderLabel={(currency) => (
-                        <Field
-                          currency={currency}
-                          isFrom
-                          changeHandler={this.handleChange.bind(this)}
-                          component={CurrencySelector}
-                          name="sendCurrency"
-                          currencies={this.state.sendCurrencies}
-                        />
-                      )}
-                    />
-                    {meta.error &&
-                      !!input.value && (
-                        <span className={styles.Error}>{meta.error}</span>
-                      )}
-                  </div>
-                )}
-              </Field5>
-              <span className={`visible-md ${styles.Arrow}`}>
-                <Icon icon="arrow" />
-              </span>
-              <Field5 name="receiveValue" validate={toValidation}>
-                {({ input, meta }) => {
-                  return (
+        {({ handleSubmit, invalid, form }) => {
+          const formState = form.getState();
+          const { values } = formState;
+
+          const areValuesDefined = Object.entries(values)
+            .filter(([key]) => {
+              return /Value/.test(key);
+            })
+            .map(([, value]) => value)
+            .reduce((prev, curr) => (curr ? !!curr : prev), false);
+
+          return (
+            <form
+              ref={this.props.formRef}
+              className={`${styles.CurrencyForm} ${this.props.className}`}
+              onSubmit={handleSubmit}
+            >
+              <div className={styles.ConversionInputs}>
+                {this.props.isLoading ? <Loader isFullScreen={false} /> : null}
+                <Field5
+                  name="sendValue"
+                  validate={(value, allValues) => {
+                    const valueInWei = !!value && toWei(value);
+                    return new BigNumber(valueInWei).gt(
+                      allValues.sendCurrency.balance,
+                    )
+                      ? `You don't have enough ${allValues.sendCurrency.symbol}`
+                      : undefined;
+                  }}
+                >
+                  {({ input, meta }) => (
                     <div className={styles.ConversionInput}>
                       <CurrencyInput
-                        currency={this.state.activeReceiveCurrency}
                         {...input}
-                        renderLabel={(currency) => {
-                          return (
-                            <Field
-                              currency={currency}
-                              changeHandler={this.handleChange.bind(this)}
-                              component={CurrencySelector}
-                              name="receiveCurrency"
-                              currencies={this.state.receiveCurrencies}
-                            />
-                          );
-                        }}
+                        currency={this.state.activeSendCurrency}
+                        renderLabel={(currency) => (
+                          <Field
+                            currency={currency}
+                            isFrom
+                            changeHandler={this.handleChange.bind(this)}
+                            component={CurrencySelector}
+                            name="sendCurrency"
+                            currencies={this.state.sendCurrencies}
+                          />
+                        )}
                       />
-                      {meta.error && (
-                        <span className={styles.Error}>{meta.error}</span>
-                      )}
+                      {meta.error &&
+                        !!input.value && (
+                          <span className={styles.Error}>{meta.error}</span>
+                        )}
                     </div>
-                  );
-                }}
-              </Field5>
-            </div>
-            <Button
-              content={
-                <span>
-                  <Icon icon="convert" /> Convert
+                  )}
+                </Field5>
+                <span className={`visible-md ${styles.Arrow}`}>
+                  <Icon icon="arrow" />
                 </span>
-              }
-              centered
-              disabled={invalid}
-              theme="secondary"
-              type="submit"
-              className={styles.ConversionButton}
-            />
-          </form>
-        )}
+                <Field5 name="receiveValue" validate={toValidation}>
+                  {({ input, meta }) => {
+                    return (
+                      <div className={styles.ConversionInput}>
+                        <CurrencyInput
+                          currency={this.state.activeReceiveCurrency}
+                          {...input}
+                          renderLabel={(currency) => {
+                            return (
+                              <Field
+                                currency={currency}
+                                changeHandler={this.handleChange.bind(this)}
+                                component={CurrencySelector}
+                                name="receiveCurrency"
+                                currencies={this.state.receiveCurrencies}
+                              />
+                            );
+                          }}
+                        />
+                        {meta.error && (
+                          <span className={styles.Error}>{meta.error}</span>
+                        )}
+                      </div>
+                    );
+                  }}
+                </Field5>
+              </div>
+              <Button
+                content={
+                  <span>
+                    <Icon icon="convert" /> Convert
+                  </span>
+                }
+                centered
+                disabled={invalid || !areValuesDefined}
+                theme="secondary"
+                type="submit"
+                className={styles.ConversionButton}
+              />
+            </form>
+          );
+        }}
       </Form>
     );
   }
