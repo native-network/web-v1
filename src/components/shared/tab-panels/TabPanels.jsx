@@ -36,7 +36,7 @@ class TabPanels extends Component {
     this.setState({ activeTab: tabIndex });
   }
 
-  filterHandler({ filter }) {
+  filterHandler(filter) {
     this.setState({ activeFilter: filter });
   }
 
