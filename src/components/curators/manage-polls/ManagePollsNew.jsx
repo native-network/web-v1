@@ -36,6 +36,7 @@ export class ManagePollsNew extends Component {
       .add(+vals.endDate, 'days')
       .toISOString();
     newVals.options = vals.options.filter((option) => option);
+
     this.props.addNewPoll(newVals);
   }
 
@@ -65,7 +66,10 @@ export class ManagePollsNew extends Component {
           isOpen={this.state.isModalOpen}
         >
           <div>
-            <ManagePollForm submitForm={this.handleSubmit.bind(this)} />
+            <ManagePollForm
+              submitForm={this.handleSubmit.bind(this)}
+              communityId={this.props.communityId}
+            />
           </div>
         </Modal>
       </div>
@@ -81,9 +85,7 @@ export const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
-    const community = state.communities.communities.find((c) => c.active);
     return {
-      communityId: community.id,
       isLoading: state.loading > 0,
     };
   },
