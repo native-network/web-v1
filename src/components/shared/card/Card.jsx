@@ -137,10 +137,12 @@ export class Card extends Component {
             dismissDialog={this.closeModal.bind(this)}
           />
         </Modal>
-        <div
-          style={{ backgroundImage: `url("${community.image}")` }}
-          className={styles.Header}
-        >
+        <div className={styles.Header}>
+          <img
+            className={styles.HeaderImage}
+            src={community.image}
+            alt={`${community.name} Header`}
+          />
           <div className={styles.HeaderOverlay}>
             <div className={styles.HeaderContainer}>
               <Tag name={community.subtitle} />

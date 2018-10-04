@@ -150,6 +150,12 @@ export class Dashboard extends Component {
   state = {
     isModalOpen: false,
     activeCommunity: {},
+    sendCurrency: this.props.walletCurrencies.find(
+      (currency) => currency.symbol === 'ETH',
+    ),
+    receiveCurrency: undefined,
+    receiveValue: '',
+    sendValue: '',
   };
 
   communityPrice(community) {
@@ -208,6 +214,38 @@ export class Dashboard extends Component {
     );
   }
 
+  populateConverter() {
+    const { walletCurrencies } = this.props;
+    const { activeCommunity } = this.state;
+    const communityStake = activeCommunity.currency.minimumStake;
+    const nativeBalance = walletCurrencies.find(
+      (currency) => currency.symbol === 'NTV',
+    );
+    const sendCurrency = walletCurrencies.find(
+      (currency) => currency.symbol === 'ETH',
+    );
+    const receiveCurrency = walletCurrencies.find(
+      (currency) => currency.symbol === 'NTV',
+    );
+
+    const receiveValue = fromWei(
+      bigNumber(communityStake)
+        .minus(nativeBalance.balance)
+        .toString(),
+    );
+    const sendValue = bigNumber(receiveValue)
+      .multipliedBy(receiveCurrency.price)
+      .toString();
+
+    this.setState({ receiveCurrency, sendCurrency }, () =>
+      this.setState({ receiveValue, sendValue: fromWei(sendValue) }, () =>
+        this.closeModal(),
+      ),
+    );
+
+    window.scrollTo(0, this.form.offsetTop);
+  }
+
   openModal(activeCommunity) {
     this.setState({
       activeCommunity: {
@@ -234,6 +272,7 @@ export class Dashboard extends Component {
       (c) => c.symbol === 'NTV',
     );
     const nativeBalance = nativeCurrency && nativeCurrency.balance;
+
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -251,6 +290,7 @@ export class Dashboard extends Component {
               <CommunityStake
                 loading={this.props.isCurrencyLoading}
                 user={this.props.user}
+                populateNativeBalance={this.populateConverter.bind(this)}
                 community={this.state.activeCommunity}
                 dismissDialog={this.closeModal.bind(this)}
               />
@@ -274,13 +314,13 @@ export class Dashboard extends Component {
               !!this.props.communities.length &&
               !!this.props.walletCurrencies.length ? (
                 <CurrencyConverter
+                  formRef={(form) => (this.form = form)}
                   className={styles.DashboardConverter}
                   defaultValues={{
-                    sendCurrency: this.props.walletCurrencies.find(
-                      (currency) => currency.symbol === 'ETH',
-                    ),
-                    sendValue: '',
-                    receiveValue: '',
+                    sendCurrency: this.state.sendCurrency,
+                    sendValue: this.state.sendValue,
+                    receiveValue: this.state.receiveValue,
+                    receiveCurrency: this.state.receiveCurrency,
                   }}
                   sendCurrencies={this.props.user.wallet.currencies.filter(
                     (currency) =>

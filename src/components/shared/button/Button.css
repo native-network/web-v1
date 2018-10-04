@@ -124,6 +124,19 @@
     @extend %white-theme;
   }
 
+  &.Link {
+    @extend %link-style;
+
+    color: var(--secondary-button-default);
+    text-decoration: underline;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: var(--secondary-button-active);
+    }
+  }
+
   &.Primary,
   &.Secondary,
   &.Tertiary {
