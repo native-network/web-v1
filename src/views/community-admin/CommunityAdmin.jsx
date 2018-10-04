@@ -16,6 +16,7 @@ import {
   ManageProjects,
   ManageTasks,
 } from '../../components/curators';
+import Manage from '../manage';
 
 export class CommunityAdmin extends Component {
   componentDidMount() {
@@ -32,7 +33,7 @@ export class CommunityAdmin extends Component {
 
   render() {
     const { community, polls, tasks, projects } = this.props;
-    const initiatives = formatInitiatives(polls, tasks, projects, community.id);
+    const initiatives = formatInitiatives(polls, tasks, projects, community);
 
     if (this.props.isLoading) {
       return <Loader />;
@@ -46,27 +47,31 @@ export class CommunityAdmin extends Component {
   }
 }
 
-function formatInitiatives(polls, tasks, projects, communityId) {
+function formatInitiatives(polls, tasks, projects, community) {
   return [
     {
-      name: 'Votes',
+      name: 'Community Info',
+      render: (community) => <Manage community={community} />,
+    },
+    {
+      name: 'Polls',
       items: polls,
       render: (items) => (
-        <ManagePolls items={items} communityId={communityId} />
+        <ManagePolls items={items} communityId={community.id} />
       ),
     },
     {
       name: 'Tasks',
       items: tasks,
       render: (items) => (
-        <ManageTasks items={items} communityId={communityId} />
+        <ManageTasks items={items} communityId={community.id} />
       ),
     },
     {
       name: 'Projects',
       items: projects,
       render: (items) => (
-        <ManageProjects items={items} communityId={communityId} />
+        <ManageProjects items={items} communityId={community.id} />
       ),
     },
   ];
