@@ -159,10 +159,7 @@ export class Dashboard extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.walletCurrencies !== this.props.walletCurrencies &&
-      !prevProps.walletCurrencies
-    ) {
+    if (prevProps.walletCurrencies !== this.props.walletCurrencies) {
       const { walletCurrencies } = this.props;
 
       const sendCurrency = walletCurrencies.find(
