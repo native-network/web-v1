@@ -52,16 +52,16 @@ export class CommunityAdmin extends Component {
     this.props.unsetActiveCommunity();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      initiatives: initiatives.map((initiative) => {
-        return {
-          ...initiative,
-          items: nextProps[initiative.name.toLowerCase()],
-        };
-      }),
-    });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     initiatives: initiatives.map((initiative) => {
+  //       return {
+  //         ...initiative,
+  //         items: nextProps[initiative.name.toLowerCase()],
+  //       };
+  //     }),
+  //   });
+  // }
 
   render() {
     const { props, state } = this;
