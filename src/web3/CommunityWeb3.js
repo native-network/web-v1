@@ -27,6 +27,17 @@ export default class CommunityService {
       communityAbi,
       this.community.address,
     );
+
+    this.communityRemoteContract = await this.web3Service.initContractRemote(
+      communityAbi,
+      this.community.address,
+    );
+
+    this.smartTokenRemoteContract = await this.web3Service.initContractRemote(
+      smartTokenAbi,
+      this.community.tokenAddress,
+    );
+
     this.smartTokenContractWS = await this.web3Service.initContract(
       smartTokenAbi,
       this.community.tokenAddress,
@@ -43,25 +54,33 @@ export default class CommunityService {
   }
 
   async minimumStakingRequirement() {
-    return await await this.communityContract.methods
+    const stake = await this.communityRemoteContract.methods
       .minimumStakingRequirement()
       .call();
+    return stake;
   }
 
   async getPrice() {
-    return await this.smartTokenContractWS.methods.price().call();
+    const price = await this.smartTokenRemoteContract.methods.price().call();
+    return price;
   }
 
   async getSymbol() {
-    return await this.smartTokenContractWS.methods.symbol().call();
+    const symbol = await this.smartTokenRemoteContract.methods.symbol().call();
+    return symbol;
   }
 
   async getTotalSupply() {
-    return await this.smartTokenContractWS.methods.totalSupply().call();
+    const supply = await this.smartTokenRemoteContract.methods
+      .totalSupply()
+      .call();
+    return supply;
   }
 
   async getTokenBalance(address) {
-    return await this.smartTokenContractWS.methods.balanceOf(address).call();
+    return await this.smartTokenRemoteContract.methods
+      .balanceOf(address)
+      .call();
   }
 
   async approve(receivingAddress, transactionAmount, cb) {

@@ -16,7 +16,7 @@ function CurrencyInput({ currency, renderLabel, ...rest }) {
       });
     rest.onChange(e);
   };
-  return (
+  return currency ? (
     <div className={styles.CurrencyInput}>
       {renderLabel && (
         <label htmlFor={currency.symbol} className={styles.Label}>
@@ -34,7 +34,7 @@ function CurrencyInput({ currency, renderLabel, ...rest }) {
         className={styles.Input}
       />
     </div>
-  );
+  ) : null;
 }
 
 export default CurrencyInput;
