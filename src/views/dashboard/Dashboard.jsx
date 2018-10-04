@@ -158,6 +158,21 @@ export class Dashboard extends Component {
     sendValue: '',
   };
 
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.walletCurrencies !== this.props.walletCurrencies &&
+      !prevProps.walletCurrencies
+    ) {
+      const { walletCurrencies } = this.props;
+
+      const sendCurrency = walletCurrencies.find(
+        (currency) => currency.symbol === 'ETH',
+      );
+
+      this.setState({ sendCurrency });
+    }
+  }
+
   communityPrice(community) {
     if (community.currency.symbol === 'NTV') {
       return fromWei(this.props.prices.ntvWei) * this.props.prices.ethUSD;
@@ -310,9 +325,7 @@ export class Dashboard extends Component {
                   ? 'Get Native Token'
                   : 'Convert Currencies'}
               </h1>
-              {this.props.communities &&
-              !!this.props.communities.length &&
-              !!this.props.walletCurrencies.length ? (
+              {this.state.sendCurrency ? (
                 <CurrencyConverter
                   formRef={(form) => (this.form = form)}
                   className={styles.DashboardConverter}
