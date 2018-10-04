@@ -29,7 +29,7 @@ export class ManagePollsNew extends Component {
     const newVals = {
       ...vals,
       communityId: this.props.communityId,
-      fileUrl: 'https://via.placeholder.com/500x300',
+      // fileUrl: 'https://via.placeholder.com/500x300',
     };
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment()
