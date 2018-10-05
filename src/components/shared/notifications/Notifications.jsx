@@ -25,6 +25,10 @@ class Notifications extends Component {
   }
 
   componentDidMount() {
+    if (this.messageList.current) {
+      this.calculateListHeight(this.messageList.current);
+    }
+
     window.addEventListener('resize', () =>
       this.calculateListHeight(this.messageList.current),
     );
@@ -44,11 +48,7 @@ class Notifications extends Component {
     const { location: oldLocation } = prevProps;
     const { location: newLocation } = this.props;
 
-    if (prevProps.messages !== this.props.messages) {
-      this.calculateListHeight(this.messageList.current);
-    }
-
-    if (prevState.listHeight !== this.state.listHeight) {
+    if (prevState !== this.state) {
       this.calculateListHeight(this.messageList.current);
     }
 
