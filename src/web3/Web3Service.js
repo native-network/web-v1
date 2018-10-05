@@ -25,7 +25,7 @@ export default class Web3Service {
         await window.ethereum.enable();
         this.mainAccount = await this.getMainAccount();
       } catch (err) {
-        throw new Error(
+        return new Error(
           'You must enable access to your wallet to interact with Native.',
         );
       }
@@ -130,7 +130,7 @@ export const promptSign = async (rawMessage) => {
     const address = sigUtil.normalize(await web3Service.getMainAccount());
     return await web3Service.web3.eth.personal.sign(message, address);
   } catch (err) {
-    throw new Error(
+    return new Error(
       'You must enable access to your wallet to interact with Native.',
     );
   }
