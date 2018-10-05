@@ -11,7 +11,7 @@ function NativeModal({
   renderHeader,
   isOpen,
   children,
-  maxWidth = '720px',
+  maxWidth = '800px',
 }) {
   if (process.env.NODE_ENV !== 'test') {
     // prevent enzyme bug in tests around full render
