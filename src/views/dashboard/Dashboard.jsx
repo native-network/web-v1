@@ -323,26 +323,33 @@ export class Dashboard extends Component {
                   : 'Convert Currencies'}
               </h1>
               {this.state.sendCurrency ? (
-                <CurrencyConverter
-                  formRef={(form) => (this.form = form)}
-                  className={styles.DashboardConverter}
-                  defaultValues={{
-                    sendCurrency: this.state.sendCurrency,
-                    sendValue: this.state.sendValue,
-                    receiveValue: this.state.receiveValue,
-                    receiveCurrency: this.state.receiveCurrency,
-                  }}
-                  sendCurrencies={this.props.user.wallet.currencies.filter(
-                    (currency) =>
-                      (currency.symbol === 'ETH' ||
-                        currency.symbol === 'NTV') &&
-                      +currency.balance > 0,
-                  )}
-                  receiveCurrencies={this.props.communities.map(
-                    (c) => c.currency,
-                  )}
-                  submitHandler={this.submitTransaction.bind(this)}
-                />
+                <div>
+                  <CurrencyConverter
+                    formRef={(form) => (this.form = form)}
+                    className={styles.DashboardConverter}
+                    defaultValues={{
+                      sendCurrency: this.state.sendCurrency,
+                      sendValue: this.state.sendValue,
+                      receiveValue: this.state.receiveValue,
+                      receiveCurrency: this.state.receiveCurrency,
+                    }}
+                    sendCurrencies={this.props.user.wallet.currencies.filter(
+                      (currency) =>
+                        (currency.symbol === 'ETH' ||
+                          currency.symbol === 'NTV') &&
+                        +currency.balance > 0,
+                    )}
+                    receiveCurrencies={this.props.communities.map(
+                      (c) => c.currency,
+                    )}
+                    submitHandler={this.submitTransaction.bind(this)}
+                  />
+                  <p className={styles.DashboardConverterMessage}>
+                    Welcome to the Native Alpha. Beta (Q1 2019) will enable
+                    conversions from Community Tokens and NTV back into other
+                    cryptocurrencies.
+                  </p>
+                </div>
               ) : null}
               <div className={styles.TableTitle}>
                 <h1>Your Communities</h1>
