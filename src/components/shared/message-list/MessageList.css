@@ -10,7 +10,6 @@
 }
 
 .MessageListItem {
-  composes: container from global;
   height: 100%;
   border-bottom: 1px solid var(--gray-8);
 
