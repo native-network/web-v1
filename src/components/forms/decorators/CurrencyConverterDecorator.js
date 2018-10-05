@@ -10,6 +10,13 @@ BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export const CurrencyConverterDecorator = createDecorator(
   {
+    field: /Currency/,
+    updates: {
+      receiveValue: () => '',
+      sendValue: () => '',
+    },
+  },
+  {
     field: 'sendValue',
     updates: {
       receiveValue: (value, allValues) => {

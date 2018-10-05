@@ -154,11 +154,11 @@ export class Dashboard extends Component {
       (currency) => currency.symbol === 'ETH',
     ),
     receiveCurrency: undefined,
-    receiveValue: '',
-    sendValue: '',
+    receiveValue: undefined,
+    sendValue: undefined,
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.walletCurrencies !== this.props.walletCurrencies) {
       const { walletCurrencies } = this.props;
 
@@ -167,6 +167,16 @@ export class Dashboard extends Component {
       );
 
       this.setState({ sendCurrency });
+    }
+
+    if (
+      prevState.sendCurrency !== this.state.sendCurrency ||
+      prevState.receiveCurrency !== this.state.receiveCurrency
+    ) {
+      this.setState({
+        receiveValue: undefined,
+        sendValue: undefined,
+      });
     }
   }
 
@@ -229,30 +239,39 @@ export class Dashboard extends Component {
   populateConverter() {
     const { walletCurrencies } = this.props;
     const { activeCommunity } = this.state;
-    const communityStake = activeCommunity.currency.minimumStake;
-    const nativeBalance = walletCurrencies.find(
+    const native = walletCurrencies.find(
       (currency) => currency.symbol === 'NTV',
     );
-    const sendCurrency = walletCurrencies.find(
+    const ethereum = walletCurrencies.find(
       (currency) => currency.symbol === 'ETH',
     );
-    const receiveCurrency = walletCurrencies.find(
-      (currency) => currency.symbol === 'NTV',
-    );
+    const communityStake = fromWei(activeCommunity.currency.minimumStake);
+    const nativeBalance = fromWei(native.balance);
+    const nativePrice = fromWei(native.price);
 
-    const receiveValue = fromWei(
-      bigNumber(communityStake)
-        .minus(nativeBalance.balance)
-        .toString(),
-    );
-    const sendValue = bigNumber(receiveValue)
-      .multipliedBy(receiveCurrency.price)
+    const receiveValue = bigNumber(communityStake)
+      .minus(nativeBalance)
+      .decimalPlaces(18)
       .toString();
 
-    this.setState({ receiveCurrency, sendCurrency }, () =>
-      this.setState({ receiveValue, sendValue: fromWei(sendValue) }, () =>
-        this.closeModal(),
-      ),
+    const sendValue = bigNumber(receiveValue)
+      .multipliedBy(nativePrice)
+      .decimalPlaces(18)
+      .toString();
+
+    this.setState(
+      {
+        sendCurrency: ethereum,
+        receiveCurrency: native,
+      },
+      () =>
+        this.setState(
+          {
+            receiveValue,
+            sendValue,
+          },
+          () => this.closeModal(),
+        ),
     );
 
     window.scrollTo(0, this.form.offsetTop);

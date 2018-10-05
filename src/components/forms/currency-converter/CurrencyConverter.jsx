@@ -56,12 +56,14 @@ export class CurrencyConverter extends Component {
       this.props.defaultValues.sendCurrency ||
       this.props.sendCurrencies.find((currency) => currency.symbol === 'ETH'),
     sendCurrencies: this.props.sendCurrencies || [],
+    sendValue: this.props.defaultValues.sendValue || '',
     activeReceiveCurrency:
       this.props.defaultValues.receiveCurrency ||
       this.props.receiveCurrencies.find(
         (currency) => currency.symbol === 'NTV',
       ),
     receiveCurrencies: this.props.receiveCurrencies || [],
+    receiveValue: this.props.defaultValues.receiveValue || '',
   };
 
   componentDidMount() {
@@ -83,7 +85,9 @@ export class CurrencyConverter extends Component {
       ) {
         this.setState({
           activeSendCurrency: this.props.defaultValues.sendCurrency,
+          sendValue: this.props.defaultValues.sendValue,
           activeReceiveCurrency: this.props.defaultValues.receiveCurrency,
+          receiveValue: this.props.defaultValues.receiveValue,
         });
       }
     }
@@ -97,6 +101,8 @@ export class CurrencyConverter extends Component {
           receiveCurrencies: this.props.receiveCurrencies.filter(
             (c) => c.symbol !== 'NTV',
           ),
+          sendValue: '',
+          receiveValue: '',
         });
       } else if (this.state.activeSendCurrency.symbol === 'ETH') {
         this.setState({
@@ -104,6 +110,8 @@ export class CurrencyConverter extends Component {
             (c) => c.symbol === 'NTV',
           ),
           receiveCurrencies: [],
+          sendValue: '',
+          receiveValue: '',
         });
       }
     }
@@ -129,15 +137,15 @@ export class CurrencyConverter extends Component {
   }
 
   render() {
-    const { toValidation, defaultValues } = this.props;
+    const { toValidation } = this.props;
     return (
       <Form
         decorators={[CurrencyConverterDecorator]}
         initialValues={{
           sendCurrency: this.state.activeSendCurrency,
-          sendValue: defaultValues.sendValue || '',
+          sendValue: this.state.sendValue || '',
           receiveCurrency: this.state.activeReceiveCurrency,
-          receiveValue: defaultValues.receiveValue,
+          receiveValue: this.state.receiveValue,
         }}
         onSubmit={this.handleSubmit.bind(this)}
         className={styles.ConversionInputs}
