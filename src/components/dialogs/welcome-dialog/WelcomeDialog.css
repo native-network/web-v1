@@ -65,3 +65,12 @@
   background: var(--primary-black);
   border-color: var(--primary-black);
 }
+
+.FeatureList {
+  list-style: none;
+
+  & li {
+    list-style: none;
+    margin: 0 0 0.4rem;
+  }
+}
