@@ -56,12 +56,14 @@ export class CurrencyConverter extends Component {
       this.props.defaultValues.sendCurrency ||
       this.props.sendCurrencies.find((currency) => currency.symbol === 'ETH'),
     sendCurrencies: this.props.sendCurrencies || [],
+    sendValue: this.props.defaultValues.sendValue || '',
     activeReceiveCurrency:
       this.props.defaultValues.receiveCurrency ||
       this.props.receiveCurrencies.find(
         (currency) => currency.symbol === 'NTV',
       ),
     receiveCurrencies: this.props.receiveCurrencies || [],
+    receiveValue: this.props.defaultValues.receiveValue || '',
   };
 
   componentDidMount() {
@@ -83,7 +85,9 @@ export class CurrencyConverter extends Component {
       ) {
         this.setState({
           activeSendCurrency: this.props.defaultValues.sendCurrency,
+          sendValue: this.props.defaultValues.sendValue,
           activeReceiveCurrency: this.props.defaultValues.receiveCurrency,
+          receiveValue: this.props.defaultValues.receiveValue,
         });
       }
     }
@@ -97,6 +101,8 @@ export class CurrencyConverter extends Component {
           receiveCurrencies: this.props.receiveCurrencies.filter(
             (c) => c.symbol !== 'NTV',
           ),
+          sendValue: '',
+          receiveValue: '',
         });
       } else if (this.state.activeSendCurrency.symbol === 'ETH') {
         this.setState({
@@ -104,6 +110,8 @@ export class CurrencyConverter extends Component {
             (c) => c.symbol === 'NTV',
           ),
           receiveCurrencies: [],
+          sendValue: '',
+          receiveValue: '',
         });
       }
     }
@@ -129,118 +137,149 @@ export class CurrencyConverter extends Component {
   }
 
   render() {
-    const { toValidation, defaultValues } = this.props;
+    const { toValidation } = this.props;
     return (
-      <Form
-        decorators={[CurrencyConverterDecorator]}
-        initialValues={{
-          sendCurrency: this.state.activeSendCurrency,
-          sendValue: defaultValues.sendValue || '',
-          receiveCurrency: this.state.activeReceiveCurrency,
-          receiveValue: defaultValues.receiveValue,
-        }}
-        onSubmit={this.handleSubmit.bind(this)}
-        className={styles.ConversionInputs}
-      >
-        {({ handleSubmit, invalid, form }) => {
-          const formState = form.getState();
-          const { values } = formState;
+      <div className="formWrap">
+        {this.props.isLoading ? (
+          <div className={styles.loadWrapper}>
+            <div className={styles.loaderWrap}>
+              <Loader isFullScreen={false} />
+            </div>
+            {this.props.hash ? (
+              <div className={styles.etherscanMessage}>
+                <p>
+                  Your transaction progress can be viewed on{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener nofollow"
+                    href={`https://${
+                      process.env.WEB3NETWORK == 'rinkeby' ? 'rinkeby.' : ''
+                    }etherscan.io/tx/${this.props.hash}`}
+                  >
+                    etherscan.io
+                  </a>
+                  .
+                </p>
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <Form
+            decorators={[CurrencyConverterDecorator]}
+            initialValues={{
+              sendCurrency: this.state.activeSendCurrency,
+              sendValue: this.state.sendValue || '',
+              receiveCurrency: this.state.activeReceiveCurrency,
+              receiveValue: this.state.receiveValue,
+            }}
+            onSubmit={this.handleSubmit.bind(this)}
+            className={styles.ConversionInputs}
+          >
+            {({ handleSubmit, invalid, form }) => {
+              const formState = form.getState();
+              const { values } = formState;
 
-          const areValuesDefined = Object.entries(values)
-            .filter(([key]) => {
-              return /Value/.test(key);
-            })
-            .map(([, value]) => value)
-            .reduce((prev, curr) => (curr ? !!curr : prev), false);
+              const areValuesDefined = Object.entries(values)
+                .filter(([key]) => {
+                  return /Value/.test(key);
+                })
+                .map(([, value]) => value)
+                .reduce((prev, curr) => (curr ? !!curr : prev), false);
 
-          return (
-            <form
-              ref={this.props.formRef}
-              className={`${styles.CurrencyForm} ${this.props.className}`}
-              onSubmit={handleSubmit}
-            >
-              <div className={styles.ConversionInputs}>
-                {this.props.isLoading ? <Loader isFullScreen={false} /> : null}
-                <Field5
-                  name="sendValue"
-                  validate={(value, allValues) => {
-                    const valueInWei = !!value && toWei(value);
-                    return new BigNumber(valueInWei).gt(
-                      allValues.sendCurrency.balance,
-                    )
-                      ? `You don't have enough ${allValues.sendCurrency.symbol}`
-                      : undefined;
-                  }}
+              return (
+                <form
+                  ref={this.props.formRef}
+                  className={`${styles.CurrencyForm} ${this.props.className}`}
+                  onSubmit={handleSubmit}
                 >
-                  {({ input, meta }) => (
-                    <div className={styles.ConversionInput}>
-                      <CurrencyInput
-                        {...input}
-                        currency={this.state.activeSendCurrency}
-                        renderLabel={(currency) => (
-                          <Field
-                            currency={currency}
-                            isFrom
-                            changeHandler={this.handleChange.bind(this)}
-                            component={CurrencySelector}
-                            name="sendCurrency"
-                            currencies={this.state.sendCurrencies}
-                          />
-                        )}
-                      />
-                      {meta.error &&
-                        !!input.value && (
-                          <span className={styles.Error}>{meta.error}</span>
-                        )}
-                    </div>
-                  )}
-                </Field5>
-                <span className={`visible-md ${styles.Arrow}`}>
-                  <Icon icon="arrow" />
-                </span>
-                <Field5 name="receiveValue" validate={toValidation}>
-                  {({ input, meta }) => {
-                    return (
-                      <div className={styles.ConversionInput}>
-                        <CurrencyInput
-                          currency={this.state.activeReceiveCurrency}
-                          {...input}
-                          renderLabel={(currency) => {
-                            return (
+                  <div className={styles.ConversionInputs}>
+                    {this.props.isLoading ? (
+                      <Loader isFullScreen={false} />
+                    ) : null}
+                    <Field5
+                      name="sendValue"
+                      validate={(value, allValues) => {
+                        const valueInWei = !!value && toWei(value);
+                        return new BigNumber(valueInWei).gt(
+                          allValues.sendCurrency.balance,
+                        )
+                          ? `You don't have enough ${
+                              allValues.sendCurrency.symbol
+                            }`
+                          : undefined;
+                      }}
+                    >
+                      {({ input, meta }) => (
+                        <div className={styles.ConversionInput}>
+                          <CurrencyInput
+                            {...input}
+                            currency={this.state.activeSendCurrency}
+                            renderLabel={(currency) => (
                               <Field
                                 currency={currency}
+                                isFrom
                                 changeHandler={this.handleChange.bind(this)}
                                 component={CurrencySelector}
-                                name="receiveCurrency"
-                                currencies={this.state.receiveCurrencies}
+                                name="sendCurrency"
+                                currencies={this.state.sendCurrencies}
                               />
-                            );
-                          }}
-                        />
-                        {meta.error && (
-                          <span className={styles.Error}>{meta.error}</span>
-                        )}
-                      </div>
-                    );
-                  }}
-                </Field5>
-              </div>
-              <Button
-                content={
-                  <span>
-                    <Icon icon="convert" /> Convert
-                  </span>
-                }
-                centered
-                disabled={invalid || !areValuesDefined}
-                theme="secondary"
-                type="submit"
-                className={styles.ConversionButton}
-              />
-            </form>
-          );
-        }}
-      </Form>
+                            )}
+                          />
+                          {meta.error &&
+                            !!input.value && (
+                              <span className={styles.Error}>{meta.error}</span>
+                            )}
+                        </div>
+                      )}
+                    </Field5>
+                    <span className={`visible-md ${styles.Arrow}`}>
+                      <Icon icon="arrow" />
+                    </span>
+                    <Field5 name="receiveValue" validate={toValidation}>
+                      {({ input, meta }) => {
+                        return (
+                          <div className={styles.ConversionInput}>
+                            <CurrencyInput
+                              currency={this.state.activeReceiveCurrency}
+                              {...input}
+                              renderLabel={(currency) => {
+                                return (
+                                  <Field
+                                    currency={currency}
+                                    changeHandler={this.handleChange.bind(this)}
+                                    component={CurrencySelector}
+                                    name="receiveCurrency"
+                                    currencies={this.state.receiveCurrencies}
+                                  />
+                                );
+                              }}
+                            />
+                            {meta.error && (
+                              <span className={styles.Error}>{meta.error}</span>
+                            )}
+                          </div>
+                        );
+                      }}
+                    </Field5>
+                  </div>
+                  <Button
+                    content={
+                      <span>
+                        <Icon icon="convert" /> Convert
+                      </span>
+                    }
+                    centered
+                    disabled={invalid || !areValuesDefined}
+                    theme="secondary"
+                    type="submit"
+                    className={styles.ConversionButton}
+                  />
+                </form>
+              );
+            }}
+          </Form>
+        )}
+      </div>
     );
   }
 }
@@ -250,6 +289,7 @@ export default connect(
     const isLoading = state.currencies.loading;
     return {
       isLoading,
+      hash: state.currencies.hash,
     };
   },
   null,

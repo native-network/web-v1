@@ -18,12 +18,24 @@ export default class Web3Service {
     provider = new Web3.providers[providerType](
       process.env.REMOTE_WEB3_PROVIDER,
     );
-    this.web3 =
-      typeof window.web3 !== 'undefined'
-        ? new Web3(window.web3.currentProvider)
-        : new Web3(provider);
+
+    if (window.ethereum) {
+      this.web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        this.mainAccount = await this.getMainAccount();
+      } catch (err) {
+        return new Error(
+          'You must enable access to your wallet to interact with Native.',
+        );
+      }
+    } else if (window.web3) {
+      this.web3 = new Web3(window.web3.currentProvider);
+      this.mainAccount = await this.getMainAccount();
+    } else {
+      this.web3 = new Web3(provider);
+    }
     this.web3Remote = new Web3(provider);
-    this.mainAccount = await this.getMainAccount();
   }
 
   getMainAccount() {
@@ -36,6 +48,37 @@ export default class Web3Service {
           return resolve(accts[0]);
         })
         .catch((err) => reject(err));
+    });
+  }
+
+  async sendTransaction(address, value, cb) {
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const transaction = this.web3.eth.sendTransaction({
+        from: this.mainAccount,
+        to: address,
+        value,
+      });
+
+      transaction.on('transactionHash', (hash) => {
+        cb(hash);
+        transactionHash = hash;
+      });
+      transaction.on('error', () =>
+        reject('There was a problem with the purchase process.'),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
     });
   }
 
@@ -72,15 +115,23 @@ export const getAddress = () => {
     });
 };
 
+export const sendTransaction = async (address, amount, cb) => {
+  return await web3Service.sendTransaction(address, amount, cb);
+};
+
 export const getBalance = async (address) => {
   const balance = await web3Service.getAccountBalance(address);
   return { ...ETH_CONSTANT, balance };
 };
 
 export const promptSign = async (rawMessage) => {
-  const message = ethUtil.bufferToHex(new Buffer(rawMessage, 'utf8'));
-  let address = await web3Service.getMainAccount();
-  address = sigUtil.normalize(address);
-  let signed = await web3Service.web3.eth.personal.sign(message, address);
-  return signed;
+  try {
+    const message = ethUtil.bufferToHex(new Buffer(rawMessage, 'utf8'));
+    const address = sigUtil.normalize(await web3Service.getMainAccount());
+    return await web3Service.web3.eth.personal.sign(message, address);
+  } catch (err) {
+    return new Error(
+      'You must enable access to your wallet to interact with Native.',
+    );
+  }
 };

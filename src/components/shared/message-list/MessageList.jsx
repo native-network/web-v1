@@ -13,7 +13,7 @@ const renderListItem = (message, index) => {
 class MessageList extends Component {
   render() {
     return (
-      <ul className={styles.MessageList}>
+      <ul ref={this.props.forwardRef} className={styles.MessageList}>
         {this.props.messages.length === 0 ? (
           <div className={styles.NoNotifications}>No notifications</div>
         ) : null}

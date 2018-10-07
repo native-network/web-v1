@@ -55,6 +55,22 @@ export default function communitiesReducer(
           ),
         ],
       };
+    case actions.UPDATE_COMMUNITY_WITH_CURRENCY_DATA_ERROR:
+      return {
+        ...state,
+        communities: [
+          ...state.communities.map(
+            (community) =>
+              community.id === action.error.communityId
+                ? {
+                    ...community,
+                    currency: undefined,
+                    error: action.error.message,
+                  }
+                : community,
+          ),
+        ],
+      };
     case actions.ADD_NEW_COMMUNITY_SUCCESS:
       return {
         ...state,

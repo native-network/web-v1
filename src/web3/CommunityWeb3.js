@@ -27,6 +27,17 @@ export default class CommunityService {
       communityAbi,
       this.community.address,
     );
+
+    this.communityRemoteContract = await this.web3Service.initContractRemote(
+      communityAbi,
+      this.community.address,
+    );
+
+    this.smartTokenRemoteContract = await this.web3Service.initContractRemote(
+      smartTokenAbi,
+      this.community.tokenAddress,
+    );
+
     this.smartTokenContractWS = await this.web3Service.initContract(
       smartTokenAbi,
       this.community.tokenAddress,
@@ -43,59 +54,99 @@ export default class CommunityService {
   }
 
   async minimumStakingRequirement() {
-    return await await this.communityContract.methods
+    const stake = await this.communityRemoteContract.methods
       .minimumStakingRequirement()
       .call();
+    return stake;
   }
 
   async getPrice() {
-    return await this.smartTokenContractWS.methods.price().call();
+    const price = await this.smartTokenRemoteContract.methods.price().call();
+    return price;
   }
 
   async getSymbol() {
-    return await this.smartTokenContractWS.methods.symbol().call();
+    const symbol = await this.smartTokenRemoteContract.methods.symbol().call();
+    return symbol;
   }
 
   async getTotalSupply() {
-    return await this.smartTokenContractWS.methods.totalSupply().call();
+    const supply = await this.smartTokenRemoteContract.methods
+      .totalSupply()
+      .call();
+    return supply;
   }
 
   async getTokenBalance(address) {
-    return await this.smartTokenContractWS.methods.balanceOf(address).call();
+    return await this.smartTokenRemoteContract.methods
+      .balanceOf(address)
+      .call();
   }
 
   async approve(receivingAddress, transactionAmount, cb) {
-    try {
-      let gasPrice = await this.getGasPrice();
-      gasPrice = gasPrice * 1.5;
-      return await this.smartTokenContractWS.methods
+    let gasPrice = await this.getGasPrice();
+    gasPrice = gasPrice * 1.5;
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const approve = this.smartTokenContractWS.methods
         .approve(receivingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount, gasPrice })
-        .on('transactionHash', (hash) => {
-          if (cb) {
-            cb(hash);
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      approve.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+      approve.on('error', () =>
+        reject('There was a problem with the approval process.'),
+      );
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
           }
-        });
-    } catch (err) {
-      throw new Error('There was a problem with the approval process.');
-    }
+        }
+      }, 1000);
+    });
   }
 
   async buyWithToken(sendingAddress, transactionAmount, cb) {
-    try {
-      let gasPrice = await this.getGasPrice();
-      gasPrice = gasPrice * 1.25;
-      return await this.smartTokenContractWS.methods
+    let gasPrice = await this.getGasPrice();
+    gasPrice = gasPrice * 1.25;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const buyWithToken = this.smartTokenContractWS.methods
         .buyWithToken(sendingAddress, transactionAmount)
-        .send({ from: this.web3Service.mainAccount, gasPrice })
-        .on('transactionHash', (hash) => {
-          if (cb) {
-            cb(hash);
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      buyWithToken.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      buyWithToken.on('error', () =>
+        reject('There was a problem with the purchase process.'),
+      );
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
           }
-        });
-    } catch (err) {
-      throw new Error('There was a problem with the purchase process.');
-    }
+        }
+      }, 1000);
+    });
   }
 
   async communityAvailableDevFund() {
@@ -109,19 +160,37 @@ export default class CommunityService {
   }
 
   async stake(cb) {
-    try {
-      let gasPrice = await this.getGasPrice();
-      gasPrice = gasPrice * 1.25;
-      await this.communityContract.methods
+    let gasPrice = await this.getGasPrice();
+    gasPrice = gasPrice * 1.25;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+
+      const stakeCommunityTokens = this.communityContract.methods
         .stakeCommunityTokens()
-        .send({ from: this.web3Service.mainAccount, gasPrice })
-        .on('transactionHash', (hash) => {
-          if (cb) {
-            cb(hash);
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      stakeCommunityTokens.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+      stakeCommunityTokens.on('error', () =>
+        reject('There was a problem staking into that community.'),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
           }
-        });
-    } catch (err) {
-      throw new Error('There was a problem staking into that community.');
-    }
+        }
+      }, 1000);
+    });
   }
 }
