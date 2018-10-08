@@ -44,11 +44,9 @@ class TabPanels extends Component {
     const { props, state } = this;
     const { panels, community } = props;
     const { activeTab } = state;
-    const panelNames = panels.map((panel) => {
-      return panel.items
-        ? `${panel.name} (${(panel.items && panel.items.length) || 0})`
-        : panel.name;
-    });
+    const panelNames = panels.map(
+      (panel) => `${panel.name} (${(panel.items && panel.items.length) || 0})`,
+    );
 
     const { filter } = this.state.activeFilter;
 
