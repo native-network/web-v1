@@ -30,6 +30,7 @@ export class ManageProjectsNew extends Component {
       ...vals,
       communityId: this.props.communityId,
     };
+
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
     newVals.totalCost = +vals.totalCost;
@@ -46,7 +47,6 @@ export class ManageProjectsNew extends Component {
           theme="secondary"
           content="Add Project"
           clickHandler={this.openModal.bind(this)}
-          disabled={true}
         />
         <Modal
           renderHeader={() => (
@@ -80,7 +80,9 @@ export const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
+    const community = state.communities.communities.find((c) => c.active);
     return {
+      communityId: community.id,
       isLoading: state.loading > 0,
     };
   },

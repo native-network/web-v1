@@ -14,7 +14,7 @@ export default function ManagePollForm({ submitForm }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   const required = (value) => (value ? undefined : 'Required');
   const validateTitle = (value) =>
-    value.length > 2 ? undefined : 'Must be atleast 3 characters';
+    value.length > 9 ? undefined : 'Must be atleast 10 characters';
   const composeValidators = (...validators) => (value) =>
     validators.reduce(
       (error, validator) => error || validator(value),
@@ -54,10 +54,10 @@ export default function ManagePollForm({ submitForm }) {
                   </div>
                 )}
               </Field>
-              <Field name="description">
+              <Field name="description" validate={required}>
                 {({ input, meta }) => (
                   <div className={styles.FieldGroup}>
-                    <label>Poll Description</label>
+                    <label>Poll Description*</label>
                     <textarea
                       rows="6"
                       {...input}
@@ -107,15 +107,6 @@ export default function ManagePollForm({ submitForm }) {
                   value="5"
                 />
                 5 Days
-              </label>
-              <label className={styles.RadioField}>
-                <Field
-                  name="endDate"
-                  component="input"
-                  type="radio"
-                  value="30"
-                />
-                30 Days
               </label>
             </div>
 

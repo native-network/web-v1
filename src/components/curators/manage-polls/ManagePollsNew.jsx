@@ -29,14 +29,13 @@ export class ManagePollsNew extends Component {
     const newVals = {
       ...vals,
       communityId: this.props.communityId,
-      // fileUrl: 'https://via.placeholder.com/500x300',
+      fileUrl: 'https://via.placeholder.com/500x300',
     };
     newVals.startDate = moment().toISOString();
     newVals.endDate = moment()
       .add(+vals.endDate, 'days')
       .toISOString();
     newVals.options = vals.options.filter((option) => option);
-
     this.props.addNewPoll(newVals);
   }
 
@@ -66,10 +65,7 @@ export class ManagePollsNew extends Component {
           isOpen={this.state.isModalOpen}
         >
           <div>
-            <ManagePollForm
-              submitForm={this.handleSubmit.bind(this)}
-              communityId={this.props.communityId}
-            />
+            <ManagePollForm submitForm={this.handleSubmit.bind(this)} />
           </div>
         </Modal>
       </div>
@@ -85,7 +81,9 @@ export const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
+    const community = state.communities.communities.find((c) => c.active);
     return {
+      communityId: community.id,
       isLoading: state.loading > 0,
     };
   },

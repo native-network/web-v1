@@ -46,7 +46,6 @@ export class ManageTasksNew extends Component {
           theme="secondary"
           content="Add Task"
           clickHandler={this.openModal.bind(this)}
-          disabled={true}
         />
         <Modal
           renderHeader={() => (
@@ -80,7 +79,9 @@ export const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   (state) => {
+    const community = state.communities.communities.find((c) => c.active);
     return {
+      communityId: community.id,
       isLoading: state.loading > 0,
     };
   },
