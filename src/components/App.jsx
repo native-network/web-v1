@@ -76,10 +76,7 @@ export class App extends Component {
           user={this.props.user}
           isLoggedIn={this.props.isLoggedIn}
         />
-        {routes(
-          this.props.user && this.props.user.role === 'curator',
-          this.props.user && this.props.user.role === 'member',
-        )}
+        {routes(this.props.user)}
         <Footer location={this.props.location} user={this.props.user} />
       </Fragment>
     );

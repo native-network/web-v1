@@ -11,31 +11,42 @@ import Terms from './views/terms';
 import CommunityAdmin from './views/community-admin';
 import FourOhFour from './views/404';
 
-export const PrivateRoute = ({ component: Component, isAllowed, ...rest }) => (
-  <Route
-    {...rest}
-    render={(props) =>
-      isAllowed ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: '/',
-            state: { from: props.location },
-          }}
-        />
-      )
-    }
-  />
-);
+export const PrivateRoute = ({ component: Component, relations, ...rest }) => {
+  const isRelated = (relations || []).includes(
+    +rest.computedMatch.params.communityId,
+  );
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isRelated ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/',
+              state: { from: props.location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
 
-export const routes = (isCurator, isMember) => {
+export const routes = (user) => {
+  const memberArray = user.memberOf.map((community) => community.id);
+  const curatorArray = user.curatorOf.map((community) => community.id);
+  const affiliatedArray = [...memberArray, ...curatorArray].filter(
+    (item, pos, arr) => arr.indexOf(item) === pos,
+  );
+
   return (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/communities" component={Communities} />
       <PrivateRoute
-        isAllowed={isMember || isCurator}
+        relations={affiliatedArray}
         exact
         path="/community/:communityId"
         component={Community}
@@ -45,7 +56,7 @@ export const routes = (isCurator, isMember) => {
       <Route exact path="/learn" component={FAQ} />
       <Route exact path="/terms" component={Terms} />
       <PrivateRoute
-        isAllowed={isCurator}
+        relations={curatorArray}
         exact
         path="/manage/:communityId"
         component={CommunityAdmin}
