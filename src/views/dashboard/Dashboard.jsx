@@ -154,9 +154,31 @@ export class Dashboard extends Component {
       (currency) => currency.symbol === 'ETH',
     ),
     receiveCurrency: undefined,
-    receiveValue: '',
-    sendValue: '',
+    receiveValue: undefined,
+    sendValue: undefined,
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.walletCurrencies !== this.props.walletCurrencies) {
+      const { walletCurrencies } = this.props;
+
+      const sendCurrency = walletCurrencies.find(
+        (currency) => currency.symbol === 'ETH',
+      );
+
+      this.setState({ sendCurrency });
+    }
+
+    if (
+      prevState.sendCurrency !== this.state.sendCurrency ||
+      prevState.receiveCurrency !== this.state.receiveCurrency
+    ) {
+      this.setState({
+        receiveValue: undefined,
+        sendValue: undefined,
+      });
+    }
+  }
 
   communityPrice(community) {
     if (community.currency.symbol === 'NTV') {
@@ -217,30 +239,39 @@ export class Dashboard extends Component {
   populateConverter() {
     const { walletCurrencies } = this.props;
     const { activeCommunity } = this.state;
-    const communityStake = activeCommunity.currency.minimumStake;
-    const nativeBalance = walletCurrencies.find(
+    const native = walletCurrencies.find(
       (currency) => currency.symbol === 'NTV',
     );
-    const sendCurrency = walletCurrencies.find(
+    const ethereum = walletCurrencies.find(
       (currency) => currency.symbol === 'ETH',
     );
-    const receiveCurrency = walletCurrencies.find(
-      (currency) => currency.symbol === 'NTV',
-    );
+    const communityStake = fromWei(activeCommunity.currency.minimumStake);
+    const nativeBalance = fromWei(native.balance);
+    const nativePrice = fromWei(native.price);
 
-    const receiveValue = fromWei(
-      bigNumber(communityStake)
-        .minus(nativeBalance.balance)
-        .toString(),
-    );
-    const sendValue = bigNumber(receiveValue)
-      .multipliedBy(receiveCurrency.price)
+    const receiveValue = bigNumber(communityStake)
+      .minus(nativeBalance)
+      .decimalPlaces(18)
       .toString();
 
-    this.setState({ receiveCurrency, sendCurrency }, () =>
-      this.setState({ receiveValue, sendValue: fromWei(sendValue) }, () =>
-        this.closeModal(),
-      ),
+    const sendValue = bigNumber(receiveValue)
+      .multipliedBy(nativePrice)
+      .decimalPlaces(18)
+      .toString();
+
+    this.setState(
+      {
+        sendCurrency: ethereum,
+        receiveCurrency: native,
+      },
+      () =>
+        this.setState(
+          {
+            receiveValue,
+            sendValue,
+          },
+          () => this.closeModal(),
+        ),
     );
 
     window.scrollTo(0, this.form.offsetTop);
@@ -310,29 +341,34 @@ export class Dashboard extends Component {
                   ? 'Get Native Token'
                   : 'Convert Currencies'}
               </h1>
-              {this.props.communities &&
-              !!this.props.communities.length &&
-              !!this.props.walletCurrencies.length ? (
-                <CurrencyConverter
-                  formRef={(form) => (this.form = form)}
-                  className={styles.DashboardConverter}
-                  defaultValues={{
-                    sendCurrency: this.state.sendCurrency,
-                    sendValue: this.state.sendValue,
-                    receiveValue: this.state.receiveValue,
-                    receiveCurrency: this.state.receiveCurrency,
-                  }}
-                  sendCurrencies={this.props.user.wallet.currencies.filter(
-                    (currency) =>
-                      (currency.symbol === 'ETH' ||
-                        currency.symbol === 'NTV') &&
-                      +currency.balance > 0,
-                  )}
-                  receiveCurrencies={this.props.communities.map(
-                    (c) => c.currency,
-                  )}
-                  submitHandler={this.submitTransaction.bind(this)}
-                />
+              {this.state.sendCurrency ? (
+                <div>
+                  <CurrencyConverter
+                    formRef={(form) => (this.form = form)}
+                    className={styles.DashboardConverter}
+                    defaultValues={{
+                      sendCurrency: this.state.sendCurrency,
+                      sendValue: this.state.sendValue,
+                      receiveValue: this.state.receiveValue,
+                      receiveCurrency: this.state.receiveCurrency,
+                    }}
+                    sendCurrencies={this.props.user.wallet.currencies.filter(
+                      (currency) =>
+                        (currency.symbol === 'ETH' ||
+                          currency.symbol === 'NTV') &&
+                        +currency.balance > 0,
+                    )}
+                    receiveCurrencies={this.props.communities.map(
+                      (c) => c.currency,
+                    )}
+                    submitHandler={this.submitTransaction.bind(this)}
+                  />
+                  <p className={styles.DashboardConverterMessage}>
+                    Welcome to the Native Alpha. Beta (Q1 2019) will enable
+                    conversions from Community Tokens and NTV back into other
+                    cryptocurrencies.
+                  </p>
+                </div>
               ) : null}
               <div className={styles.TableTitle}>
                 <h1>Your Communities</h1>

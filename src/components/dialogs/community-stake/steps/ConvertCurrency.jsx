@@ -25,8 +25,8 @@ export class ConvertCurrency extends Component {
       (c) => c.symbol === community.currency.symbol,
     );
     const userMemberOf = user.memberOf.find((c) => c.id === community.id);
-    const minRequirementValidator = (value) =>
-      parseInt(value, 10) <
+    const minRequirementValidator = (value) => {
+      return +value <
         +fromWei(
           bigNumber(
             community.currency.minimumStake - userCommunity.balance,
@@ -34,6 +34,7 @@ export class ConvertCurrency extends Component {
         ) && !userMemberOf
         ? `You don't have enough to stake`
         : undefined;
+    };
     const minRequirement = userMemberOf
       ? 1
       : community.currency &&

@@ -50,11 +50,17 @@
 .DashboardConverter {
   padding: 1rem 0;
   box-shadow: 0 0.5rem 2rem var(--transparent-black-20);
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
 
   @media (--medium-viewport) {
     padding: 2rem;
   }
+}
+
+.DashboardConverterMessage {
+  text-align: right;
+  font-size: 0.8rem;
+  margin-bottom: 3rem;
 }
 
 .Table {

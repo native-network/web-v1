@@ -7,6 +7,7 @@ import {
   getUserWalletAddress,
   updateUserWalletEthBalance,
 } from './userWalletActions';
+import { MESSAGES } from '../utils/constants';
 import { toastrError, toastrInfo } from './toastrActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
 
@@ -35,6 +36,30 @@ export const getUserSession = () => {
       dispatch(toastrError(message));
       return dispatch(getUserSessionError(message));
     }
+  };
+};
+
+export const pollUserStake = (stakeConfirmationInterval) => {
+  return async (dispatch) => {
+    const messageId = MESSAGES.STAKE_CONFIRM;
+    stakeConfirmationInterval = setInterval(async () => {
+      try {
+        const { data } = await get(`user`);
+        const { user } = data;
+        if (user) {
+          dispatch({ type: actions.POLL_USER_COMPLETE, user });
+        }
+        const stakedConfirmationMessage = user.messages.find((message) => {
+          return message.id === messageId;
+        });
+        if (stakedConfirmationMessage) {
+          clearInterval(stakeConfirmationInterval);
+        }
+      } catch (err) {
+        const { message } = err;
+        console.log(message); // eslint-disable-line
+      }
+    }, 1000);
   };
 };
 

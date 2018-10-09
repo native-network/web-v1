@@ -22,12 +22,22 @@ class StakeCommunity extends Component {
         <h1 className={styles.Header}>Join {community.name} Community</h1>
         <div className={styles.TextContainer}>
           <p>
+            Welcome to the Alpha version of the Native platform. Here you can
+            convert Ether to Native Token (NTV) and support any Community by
+            converting NTV to their Community Token. By converting to Community
+            Token you get to participate in Community votes about how to
+            allocate funds, and earn Community Token in exchange for completing
+            tasks that further the Community’s interests. The Beta version of
+            the platform, which is scheduled for release by the end of Q1 2019,
+            will enable you to convert from Community Token and NTV back into
+            Ether and other cryptocurrencies.
+          </p>
+          <p>
             To join {community.name}, you will need to stake{' '}
             {`${fromWei(community.currency.minimumStake)} ${
               community.currency.symbol
             }`}
-            . You can retreive your currency if you choose to leave the
-            community at some point in the future.
+            .
           </p>
           <p>
             <strong>

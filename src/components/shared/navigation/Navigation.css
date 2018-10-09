@@ -102,20 +102,30 @@
   }
 }
 
+.MenuContainer {
+  @media (--max-small-viewport) {
+    position: absolute;
+    top: 100%;
+    left: -1%;
+    width: 102%;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  @media (--medium-viewport) {
+
+    /* stylelint-disable-next-line declaration-no-important */
+    height: auto !important;
+
+    /* stylelint-disable-next-line declaration-no-important */
+    visibility: visible !important;
+  }
+}
+
 .PrimaryMenu {
   @extend %unstyled-list;
 
-  display: none;
-  position: absolute;
   background: var(--greenish-blue);
-  top: 100%;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-
-  &.MenuOpen {
-    display: block;
-  }
 
   & .MenuListItem {
     &:not(:last-child) {

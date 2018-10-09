@@ -1,10 +1,11 @@
 import { currencyActions as actions } from './actionTypes';
-import { getWeb3ServiceInstance } from '../web3/Web3Service';
+import { getWeb3ServiceInstance, sendTransaction } from '../web3/Web3Service';
 import {
   allCommunityContractInstances,
   communityContractInstance,
 } from '../utils/constants';
 import { getUserWalletBalances } from './userWalletActions';
+import { pollUserStake } from '../actions/userSessionActions';
 import { toastrError, toastrSuccess } from './toastrActions';
 
 export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
@@ -16,12 +17,9 @@ export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
       const { toWei } = service.web3.utils;
       const account = await service.getMainAccount();
 
-      service.web3.eth
-        .sendTransaction({
-          from: account,
-          to: tokenAddress,
-          value: toWei(transactionAmount),
-        })
+      sendTransaction(tokenAddress, toWei(transactionAmount), (hash) =>
+        dispatch(pendingTransactionComplete(hash)),
+      )
         .then((receipt) => {
           dispatch(sendTransactionInEthSuccess(receipt));
           dispatch(toastrSuccess('Your purchase was successful!'));
@@ -79,33 +77,41 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
             community3.community.tokenAddress !== communityAddress,
         );
 
-        try {
-          await sendingCommunity.approve(
+        sendingCommunity
+          .approve(
             receivingCommunity.community.tokenAddress,
             transactionAmount,
             (hash) => {
               dispatch(pendingTransactionComplete(hash));
             },
-          );
-          await receivingCommunity.buyWithToken(
-            sendingCommunity.community.tokenAddress,
-            transactionAmount,
-            (hash) => {
-              dispatch(pendingTransactionComplete(hash));
-            },
-          );
-
-          dispatch(getUserWalletBalances(address))
-            .then(() => {
-              dispatch(toastrSuccess('Your purchase was successful!'));
-              dispatch(sendTransactionInNtvSuccess());
-            })
-            .catch((err) => {
-              throw new Error(err);
-            });
-        } catch (err) {
-          throw new Error(err);
-        }
+          )
+          .then(() => {
+            return receivingCommunity
+              .buyWithToken(
+                sendingCommunity.community.tokenAddress,
+                transactionAmount,
+                (hash) => {
+                  dispatch(pendingTransactionComplete(hash));
+                },
+              )
+              .then(() => {
+                dispatch(sendTransactionInNtvSuccess());
+              })
+              .then(() => {
+                dispatch(toastrSuccess('Your purchase was successful!'));
+                return dispatch(getUserWalletBalances(address));
+              })
+              .catch((err) => {
+                const { message } = err;
+                dispatch(toastrError(message));
+                return dispatch(sendTransactionInNtvError(message));
+              });
+          })
+          .catch((err) => {
+            const { message } = err;
+            dispatch(toastrError(message));
+            return dispatch(sendTransactionInNtvError(message));
+          });
       })
       .catch((err) => {
         const { message } = err;
@@ -134,30 +140,45 @@ export const sendTransactionInNtvError = (error) => {
 };
 
 export const stake = (community) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch({ type: actions.STAKE_TRANSACTION });
     const { community3 } = await communityContractInstance(community);
-    try {
-      await community3.approve(
-        community.address,
-        community.currency.minimumStake,
-        (hash) => {
-          dispatch(pendingTransactionComplete(hash));
-        },
-      );
-      await community3.stake((hash) => {
+    const { address } = getState().user.wallet;
+    community3
+      .approve(community.address, community.currency.minimumStake, (hash) => {
         dispatch(pendingTransactionComplete(hash));
+      })
+      .then(() => {
+        return community3
+          .stake((hash) => {
+            dispatch(pendingTransactionComplete(hash));
+          })
+          .then(() => {
+            let stakeConfirmationInterval;
+            dispatch(stakeSuccess());
+            dispatch(pollUserStake(stakeConfirmationInterval));
+          })
+          .then(() => {
+            dispatch(
+              toastrSuccess(
+                `You have been staked into ${
+                  community.name
+                }, pending confirmation.`,
+              ),
+            );
+            return dispatch(getUserWalletBalances(address));
+          })
+          .catch((err) => {
+            const { message } = err;
+            dispatch(toastrError(message));
+            return dispatch(stakeError(message));
+          });
+      })
+      .catch((err) => {
+        const { message } = err;
+        dispatch(toastrError(message));
+        return dispatch(stakeError(message));
       });
-      dispatch(stakeSuccess());
-      dispatch(
-        toastrSuccess(`You have successfully staked into ${community.name}!`),
-      );
-    } catch (err) {
-      const { message } = err;
-
-      dispatch(toastrError(message));
-      return dispatch(stakeError(message));
-    }
   };
 };
 

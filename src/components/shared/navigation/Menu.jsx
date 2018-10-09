@@ -3,6 +3,7 @@ import React from 'react';
 import MenuItem from './MenuItem';
 
 function Menu({
+  forwardRef,
   hidden,
   menuClass,
   menuItemClass,
@@ -11,7 +12,11 @@ function Menu({
   menuItems,
 }) {
   return (
-    <ul aria-hidden={hidden} className={menuClass}>
+    <ul
+      ref={forwardRef ? forwardRef : null}
+      aria-hidden={hidden}
+      className={menuClass}
+    >
       <MenuItem
         menuItemClass={menuItemClass}
         linkClass={linkClass}

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import MetamaskButton from '../shared/MetamaskButton';
-
 import styles from '../WelcomeDialog.css';
 
 export default function StepOne() {
@@ -9,15 +7,16 @@ export default function StepOne() {
     <div>
       <p>
         Native is a platform for communities to realize their inherent value
-        through local currency and set of governance tools.
+        through their own local currency and set of governance tools. Native
+        tokens are used to support communities you care about by converting them
+        into a community’s token and joining that community.
       </p>
-      <p className={styles.Important}>
-        Metamask is required to interact with the Native Platform.
-      </p>
-      <MetamaskButton
-        link="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
-        content="Download Metamask"
-      />
+      <p className={styles.Important}>Joining a community allows you to:</p>
+      <ul className={styles.FeatureList}>
+        <li>- Vote on issues that are important to you</li>
+        <li>- Decide and support which projects will be funded</li>
+        <li>- Earn tokens by completing tasks for the community</li>
+      </ul>
     </div>
   );
 }

@@ -19,6 +19,22 @@
   }
 }
 
+.etherscanMessage {
+  text-align: center;
+  padding: 1rem;
+}
+
+.loadWrapper {
+  @extend %box-shadow;
+
+  background-color: var(--primary-white);
+}
+
+.loaderWrap {
+  position: relative;
+  min-height: 10rem;
+}
+
 .ConversionInputs {
   flex-grow: 1;
 

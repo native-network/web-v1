@@ -50,17 +50,9 @@ export class ManagePollsNew extends Component {
           clickHandler={this.openModal.bind(this)}
         />
         <Modal
-          renderHeader={() => (
-            <div className={styles.ModalHeader}>
-              <h1>Add Poll</h1>
-              <button
-                style={{ color: 'black' }}
-                onClick={this.closeModal.bind(this)}
-              >
-                x
-              </button>
-            </div>
-          )}
+          hasCloseButton
+          closeModal={this.closeModal.bind(this)}
+          renderHeader={() => <h1>Add Poll</h1>}
           label="Add Poll"
           isOpen={this.state.isModalOpen}
         >
@@ -83,7 +75,7 @@ export default connect(
   (state) => {
     const community = state.communities.communities.find((c) => c.active);
     return {
-      communityId: community.id,
+      communityId: community && community.id,
       isLoading: state.loading > 0,
     };
   },

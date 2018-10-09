@@ -42,6 +42,7 @@ export default function userWalletReducer(state = {}, action) {
       return {
         ...state,
         wallet: {
+          ...state.wallet,
           currencyError: action.error,
         },
       };

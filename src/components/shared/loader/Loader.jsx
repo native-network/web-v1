@@ -19,5 +19,4 @@ function Loader({ isFullScreen }) {
     </div>
   );
 }
-
 export default Loader;
