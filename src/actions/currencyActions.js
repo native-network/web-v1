@@ -5,6 +5,7 @@ import {
   communityContractInstance,
 } from '../utils/constants';
 import { getUserWalletBalances } from './userWalletActions';
+import { pollUserStake } from '../actions/userSessionActions';
 import { toastrError, toastrSuccess } from './toastrActions';
 
 export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
@@ -153,12 +154,16 @@ export const stake = (community) => {
             dispatch(pendingTransactionComplete(hash));
           })
           .then(() => {
+            let stakeConfirmationInterval;
             dispatch(stakeSuccess());
+            dispatch(pollUserStake(stakeConfirmationInterval));
           })
           .then(() => {
             dispatch(
               toastrSuccess(
-                `You have successfully staked into ${community.name}!`,
+                `You have been staked into ${
+                  community.name
+                }, pending confirmation.`,
               ),
             );
             return dispatch(getUserWalletBalances(address));

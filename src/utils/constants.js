@@ -11,6 +11,12 @@ export const ETH_CONSTANT = {
   price: toWei('1', 'ether').toString(),
 };
 
+export const MESSAGES = {
+  STAKE_CONFIRM: 1,
+  UNSTAKE_CONFIRM: 2,
+  STAKE_PENDING: 3,
+};
+
 export const communityContractInstance = async (community) => {
   const { id } = community;
   const community3 = new Community3(community, getWeb3ServiceInstance());

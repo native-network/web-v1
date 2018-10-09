@@ -9,6 +9,8 @@ export default function userSessionReducer(state = {}, action) {
       return { ...state, address: '', sessionError: action.error };
     case actions.END_SESSION_SUCCESS:
       return { ...initialState.user, address: '', sessionError: '' };
+    case actions.POLL_USER_COMPLETE:
+      return { ...state, ...action.user };
     case actions.NETWORK_CHANGE:
       return { ...state, doesNetworkMatch: action.doesNetworkMatch };
     case actions.END_SESSION_ERROR:
