@@ -28,7 +28,7 @@ export class ManagePolls extends Component {
   render() {
     return (
       <div>
-        <ManagePollsNew />
+        <ManagePollsNew communityId={this.props.communityId} />
         <div className={styles.TableTitle}>
           <h2>Current Polls</h2>
         </div>

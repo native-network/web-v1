@@ -16,68 +16,65 @@ import {
   ManageProjects,
   ManageTasks,
 } from '../../components/curators';
-
-const initiatives = [
-  {
-    name: 'Polls',
-    items: [],
-    render: (items) => <ManagePolls items={items} />,
-  },
-  {
-    name: 'Tasks',
-    items: [],
-    render: (items) => <ManageTasks items={items} />,
-  },
-  {
-    name: 'Projects',
-    items: [],
-    render: (items) => <ManageProjects items={items} />,
-  },
-];
+import Manage from '../manage';
 
 export class CommunityAdmin extends Component {
-  state = {
-    initiatives: initiatives,
-    activeTab: 1,
-  };
-
   componentDidMount() {
-    this.props.setActiveCommunity(this.props.id);
-    this.props.getCommunityPolls(this.props.id);
-    this.props.getCommunityProjects(this.props.id);
-    this.props.getCommunityTasks(this.props.id);
+    const { id } = this.props;
+    this.props.setActiveCommunity(id);
+    this.props.getCommunityPolls(id);
+    this.props.getCommunityProjects(id);
+    this.props.getCommunityTasks(id);
   }
 
   componentWillUnmount() {
     this.props.unsetActiveCommunity();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      initiatives: initiatives.map((initiative) => {
-        return {
-          ...initiative,
-          items: nextProps[initiative.name.toLowerCase()],
-        };
-      }),
-    });
-  }
-
   render() {
-    const { props, state } = this;
+    const { community, polls, tasks, projects } = this.props;
+    const initiatives = formatInitiatives(polls, tasks, projects, community);
 
-    return props.isLoading ? (
-      <Loader />
-    ) : (
+    if (this.props.isLoading) {
+      return <Loader />;
+    }
+    return community ? (
       <main>
         <h2>Manage Your Community</h2>
-        <TabPanels
-          community={this.props.community}
-          panels={state.initiatives}
-        />
+        <TabPanels community={community} panels={initiatives} />
       </main>
-    );
+    ) : null;
   }
+}
+
+function formatInitiatives(polls, tasks, projects, community) {
+  return [
+    {
+      name: 'Community Info',
+      render: (community) => <Manage community={community} />,
+    },
+    {
+      name: 'Polls',
+      items: polls,
+      render: (items) => (
+        <ManagePolls items={items} communityId={community.id} />
+      ),
+    },
+    {
+      name: 'Tasks',
+      items: tasks,
+      render: (items) => (
+        <ManageTasks items={items} communityId={community.id} />
+      ),
+    },
+    {
+      name: 'Projects',
+      items: projects,
+      render: (items) => (
+        <ManageProjects items={items} communityId={community.id} />
+      ),
+    },
+  ];
 }
 
 export function mapDispatchToProps(dispatch) {
@@ -93,15 +90,15 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   (state, ownProps) => {
     const { communityId: id } = ownProps.match.params;
-    const { loading, communities } = state;
-    const community = communities.communities.find(
-      (c) => c.id === parseInt(id),
-    );
-    const { polls } = state.polls;
-    const { projects } = state.projects;
-    const { tasks } = state.tasks;
-
-    return { community, id, isLoading: loading > 0, polls, projects, tasks };
+    const { loading } = state;
+    return {
+      id,
+      community: state.communities.communities.find((c) => c.id === +id),
+      isLoading: loading > 0,
+      polls: state.polls.polls,
+      tasks: state.tasks.tasks,
+      projects: state.projects.projects,
+    };
   },
   mapDispatchToProps,
 )(CommunityAdmin);
