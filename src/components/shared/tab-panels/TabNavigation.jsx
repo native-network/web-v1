@@ -37,7 +37,7 @@ export default function TabNavigation({
           <a
             target="_blank"
             rel="noopener nofollow"
-            href="http://telegram.com"
+            href={telegramLink}
             className={`${styles.CommunityCTA} visible-md`}
           >
             <Icon className={styles.CTAIcon} icon="telegram" />
