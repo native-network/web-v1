@@ -52,7 +52,7 @@ export default connect(
       (c) => c.name === 'Native',
     );
     return {
-      socialLinks: native && JSON.parse(native.socialMediaLinks),
+      socialLinks: (native && native.socialMediaLinks) || [],
     };
   },
   null,

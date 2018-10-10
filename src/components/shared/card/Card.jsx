@@ -93,8 +93,8 @@ export class Card extends Component {
     const { props, state } = this;
     const { community, render } = props;
     const { isReadMoreOpen } = state;
-    const socialLinks = JSON.parse(community.socialMediaLinks);
-    const membershipBenefits = JSON.parse(community.membershipBenefits);
+    const socialLinks = community.socialMediaLinks || [];
+    const membershipBenefits = community.membershipBenefits || [];
     const isMember = !!this.props.user.memberOf.find((userCommunity) => {
       return userCommunity.id === community.id;
     });
