@@ -17,11 +17,6 @@ const cols = [
     maxWidth: 160,
   },
   {
-    Header: 'Poll Description',
-    accessor: 'description',
-    style: {},
-  },
-  {
     Header: 'Poll Question',
     accessor: 'question',
     style: {
@@ -77,18 +72,9 @@ function ManagePollsList({ polls }) {
       <ReactTable
         columns={cols}
         data={polls.map(
-          ({
-            title,
-            description,
-            question,
-            options,
-            votes,
-            startDate,
-            endDate,
-          }) => {
+          ({ title, question, options, votes, startDate, endDate }) => {
             return {
               title,
-              description,
               question,
               results: { options, votes },
               startDate,
