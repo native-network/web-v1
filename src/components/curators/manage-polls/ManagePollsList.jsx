@@ -1,60 +1,104 @@
 import React from 'react';
+import ReactTable, { ReactTableDefaults } from 'react-table';
+import moment from 'moment';
+import VoteResults from '../../shared/vote-results';
 
 import styles from './ManagePolls.css';
 
+Object.assign(ReactTableDefaults, {
+  minRows: 0,
+  showPaginationBottom: false,
+});
+
+const cols = [
+  {
+    Header: 'Title',
+    accessor: 'title',
+    maxWidth: 160,
+  },
+  {
+    Header: 'Poll Description',
+    accessor: 'description',
+    style: {},
+  },
+  {
+    Header: 'Poll Question',
+    accessor: 'question',
+    style: {
+      whiteSpace: 'normal',
+    },
+  },
+  {
+    Header: 'Start Date',
+    accessor: 'startDate',
+    maxWidth: 150,
+    Cell: ({ value }) => moment(value).fromNow(),
+  },
+  {
+    Header: 'End Date',
+    accessor: 'endDate',
+    maxWidth: 150,
+    Cell: ({ value }) => moment(value).fromNow(),
+  },
+  {
+    Header: 'Results',
+    accessor: 'results',
+    Cell: ({ value }) => (
+      <VoteResults votes={value.votes} options={value.options} />
+    ),
+  },
+  {
+    Header: 'Status',
+    accessor: 'status',
+    Cell: ({ value }) => (value ? 'Open' : 'Closed'),
+    maxWidth: 130,
+    filterable: true,
+    filterMethod: (filter, row) => {
+      if (filter.value === 'all') return row;
+      if (filter.value === 'true') return row.status;
+      if (filter.value === 'false') return !row.status;
+    },
+    Filter: ({ filter, onChange }) => (
+      <select
+        onChange={(event) => onChange(event.target.value)}
+        value={filter ? filter.value : 'all'}
+      >
+        <option value="all">Show All</option>
+        <option value="true">Open</option>
+        <option value="false">Closed</option>
+      </select>
+    ),
+  },
+];
+
 function ManagePollsList({ polls }) {
-  const renderItem = ({ index, item }) => {
-    return (
-      <tr key={index} className={styles.TableRow}>
-        <td className={styles.TableCell}>{item.title}</td>
-        <td className={styles.TableCell}>{item.question}</td>
-        <td className={styles.TableCell}>
-          {new Date(item.startDate).toLocaleDateString()}
-        </td>
-        <td className={styles.TableCell}>
-          {new Date(item.endDate).toLocaleDateString()}
-        </td>
-        <td className={styles.TableCell}>
-          <p>{item.votes.length} - Total Votes</p>
-          {(item.options || []).map((option, i) => {
-            return renderStat({ index: i, option, item });
-          })}
-        </td>
-      </tr>
-    );
-  };
-
-  const renderStat = ({ index, option, item }) => {
-    const optionVoteCount = option.votes.length;
-    const voteCount = item.votes.length;
-
-    const votePercentage = voteCount
-      ? ((optionVoteCount / voteCount) * 100).toFixed(2)
-      : 0;
-    return (
-      <p key={index}>
-        {`${option.votes.length} - ${option.name}: ${votePercentage}%`}
-      </p>
-    );
-  };
-
   return (
-    <table className={styles.Table}>
-      <thead>
-        <tr className={styles.TableRow}>
-          <th className={styles.TableCell}>Title</th>
-          <th className={styles.TableCell}>Question</th>
-          <th className={styles.TableCell}>Start Date</th>
-          <th className={styles.TableCell}>End Date</th>
-          <th className={styles.TableCell}>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {(polls || []).map((item, i) => {
-          return renderItem({ index: i, item });
-        })}
-      </tbody>
-    </table>
+    <div className={styles.TableContainer}>
+      <ReactTable
+        columns={cols}
+        data={polls.map(
+          ({
+            title,
+            description,
+            question,
+            options,
+            votes,
+            startDate,
+            endDate,
+          }) => {
+            return {
+              title,
+              description,
+              question,
+              results: { options, votes },
+              startDate,
+              endDate,
+              status: moment(endDate).isAfter(moment()),
+            };
+          },
+        )}
+      />
+    </div>
   );
 }
 
