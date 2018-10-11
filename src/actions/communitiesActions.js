@@ -1,8 +1,8 @@
 import { communitiesActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { get, post } from '../requests';
+import { get, post, put } from '../requests';
 import { communityContractInstance } from '../utils/constants';
-import { toastrError } from './toastrActions';
+import { toastrError, toastrSuccess } from './toastrActions';
 import { setPriceNTV } from './pricesActions';
 
 export const getCommunities = () => {
@@ -150,6 +150,37 @@ export const addNewCommunitySuccess = (community) => {
 export const addNewCommunityError = (error) => {
   return {
     type: actions.ADD_NEW_COMMUNITY_ERROR,
+    error,
+  };
+};
+
+export const updateCommunity = (community) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.UPDATE_COMMUNITY });
+    dispatch(beginAjaxCall());
+
+    try {
+      const { data } = await put(`communities/${community.id}`, community);
+
+      dispatch(toastrSuccess(`${community.name} has been updated.`));
+      return dispatch(updateCommunitySuccess(data));
+    } catch ({ message }) {
+      dispatch(toastrError(message));
+      return dispatch(updateCommunityError({ message, id: community.id }));
+    }
+  };
+};
+
+export const updateCommunitySuccess = (community) => {
+  return {
+    type: actions.UPDATE_COMMUNITY_SUCCESS,
+    community,
+  };
+};
+
+export const updateCommunityError = (error) => {
+  return {
+    type: actions.UPDATE_COMMUNITY_ERROR,
     error,
   };
 };

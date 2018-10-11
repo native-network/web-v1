@@ -16,7 +16,7 @@ export const instance = axios.create({
 });
 
 export const s3Path = (fileName) => {
-  return `${baseURL}/s3uploader/uploads/${fileName}`;
+  return `${baseURL}/community-assets/uploads/${fileName}`;
 };
 
 export const get = async (endpoint) => {

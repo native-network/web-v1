@@ -41,20 +41,27 @@ const cols = [
     accessor: 'community',
     Cell: ({ value }) =>
       value.isMemberOf || value.isCuratorOf ? (
-        <Link className={styles.CommunityLink} to={`/community/${value.id}`}>
-          <img src={value.icon} />
-          <span>
-            <span className={styles.CommunityTitle}>
-              {value.name} ({value.symbol})
+        <div className={styles.CommunityLink}>
+          <Link className={styles.CommunityLink} to={`/community/${value.id}`}>
+            <img src={value.icon} />
+            <span>
+              <span className={styles.CommunityTitle}>
+                {value.name} ({value.symbol})
+              </span>
+              {value.isCuratorOf ? (
+                <span className={styles.Curator}>Curator</span>
+              ) : null}
+              {value.isMemberOf ? (
+                <span className={styles.Member}>Member</span>
+              ) : null}
             </span>
-            {value.isCuratorOf ? (
-              <span className={styles.Curator}>Curator</span>
-            ) : null}
-            {value.isMemberOf ? (
-              <span className={styles.Member}>Member</span>
-            ) : null}
-          </span>
-        </Link>
+          </Link>
+          {value.isCuratorOf ? (
+            <Link className={styles.CommunityLink} to={`/manage/${value.id}`}>
+              <span className={styles.CommunityTitle}>Manage Community</span>
+            </Link>
+          ) : null}
+        </div>
       ) : (
         <div className={styles.CommunityLinkDisabled}>
           <img src={value.icon} />

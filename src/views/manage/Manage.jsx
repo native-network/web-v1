@@ -2,38 +2,40 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewCommunity } from '../../actions/communitiesActions';
+import { updateCommunity } from '../../actions/communitiesActions';
 
 import Loader from '../../components/shared/loader';
 import ManageCommunityForm from '../../components/forms/manage-community';
 
 export class Manage extends Component {
   handleSubmit(vals) {
+    const { community } = this.props;
+    const { membershipBenefits } = vals;
     const newVals = {
+      ...community,
       ...vals,
-      address: '0x3imaginalfilms',
-      tokenAddress: 'foo',
-      loggerAddress: 'foo',
-      subtitle: 'Foo',
-      image: 'static/media/cloud_header.png',
-      icon: 'static/media/cloud_header.png',
-      dataImage: 'static/media/cloud_header.png',
+      membershipBenefits:
+        membershipBenefits.filter((benefit) => !!benefit.length) || [],
     };
-    this.props.addNewCommunity(newVals);
+
+    this.props.updateCommunity(newVals);
   }
 
   render() {
     return this.props.isLoading ? (
       <Loader />
     ) : (
-      <ManageCommunityForm submitForm={this.handleSubmit.bind(this)} />
+      <ManageCommunityForm
+        community={this.props.community}
+        submitForm={this.handleSubmit.bind(this)}
+      />
     );
   }
 }
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    addNewCommunity: bindActionCreators(addNewCommunity, dispatch),
+    updateCommunity: bindActionCreators(updateCommunity, dispatch),
   };
 };
 
