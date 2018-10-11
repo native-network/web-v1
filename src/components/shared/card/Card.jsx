@@ -11,6 +11,7 @@ import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 import { Link } from 'react-router-dom';
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
+import { uploadableField } from '../../../utils/helpers';
 
 import styles from './Card.css';
 
@@ -219,7 +220,7 @@ export class Card extends Component {
                       <a
                         target="_blank"
                         rel="noopener nofollow"
-                        href={community.votingPolicy}
+                        href={uploadableField(community.votingPolicy)}
                       >
                         Download the voting policy
                       </a>
@@ -230,7 +231,9 @@ export class Card extends Component {
                       <a
                         target="_blank"
                         rel="noopener nofollow"
-                        href={community.revenueDistributionPolicy}
+                        href={uploadableField(
+                          community.revenueDistributionPolicy,
+                        )}
                       >
                         Download the revenue distribution policy
                       </a>

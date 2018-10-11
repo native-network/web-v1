@@ -17,6 +17,7 @@ class Notifications extends Component {
     super();
 
     this.messageList = React.createRef();
+    this.listHeight = 0;
 
     this.state = {
       isNotificationsOpen: false,
@@ -29,28 +30,28 @@ class Notifications extends Component {
       this.calculateListHeight(this.messageList.current);
     }
 
-    window.addEventListener('resize', () =>
+    window.addEventListener(
+      'resize',
       this.calculateListHeight(this.messageList.current),
     );
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize');
+    window.removeEventListener(
+      'resize',
+      this.calculateListHeight(this.messageList.current),
+    );
   }
 
   calculateListHeight(list) {
-    if (list && list.offsetHeight !== this.state.listHeight) {
-      this.setState({ listHeight: list && list.offsetHeight });
+    if (list && list.offsetHeight !== this.listHeight) {
+      this.listHeight = list.offsetHeight;
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { location: oldLocation } = prevProps;
     const { location: newLocation } = this.props;
-
-    if (prevState !== this.state) {
-      this.calculateListHeight(this.messageList.current);
-    }
 
     if (oldLocation !== newLocation) {
       this.setState({ isNotificationsOpen: false });

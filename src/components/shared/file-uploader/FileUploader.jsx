@@ -19,10 +19,10 @@ class FileUpload extends Component {
   };
 
   onUploadFinish = (res) => {
-    this.props.onChange(res);
     this.setState({
       image: res.fileKey,
     });
+    this.props.onChange(res);
   };
 
   onUploadProgress = (percent) => {
@@ -40,7 +40,8 @@ class FileUpload extends Component {
     return (
       <div>
         <ReactS3Uploader
-          signingUrl="/s3uploader/"
+          className={this.props.className}
+          signingUrl="/community-assets/"
           signingUrlMethod="GET"
           accept="image/*,application/pdf"
           s3path=""

@@ -40,7 +40,9 @@ export class CommunityAdmin extends Component {
     }
     return community ? (
       <main>
-        <h2>Manage Your Community</h2>
+        <div className="container">
+          <h1>Manage Your Community</h1>
+        </div>
         <TabPanels community={community} panels={initiatives} />
       </main>
     ) : null;
@@ -51,7 +53,7 @@ function formatInitiatives(polls, tasks, projects, community) {
   return [
     {
       name: 'Community Info',
-      render: (community) => <Manage community={community} />,
+      render: () => <Manage community={community} />,
     },
     {
       name: 'Polls',
