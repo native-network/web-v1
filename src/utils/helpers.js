@@ -20,10 +20,11 @@ export function numberWithCommas(x = 0) {
 }
 
 export function formatUsd(amt = 0) {
-  if (Number(amt) === 0) {
-    return Number(amt);
-  }
-  return '$' + numberWithCommas(parseFloat(amt || 0).toFixed(2));
+  return `$${
+    Number(amt) === 0
+      ? Number(amt)
+      : numberWithCommas(parseFloat(amt || 0).toFixed(2))
+  }`;
 }
 
 export function formatCrypto(amt = 0) {
@@ -31,3 +32,26 @@ export function formatCrypto(amt = 0) {
     .decimalPlaces(3)
     .toString();
 }
+
+export function capitalizeFirstLetter(str) {
+  return str.slice(0, 1).toUpperCase() + str.slice(1);
+}
+
+export const uploadableField = (field) => {
+  const portAppend = process.env.REACT_APP_API_PORT
+    ? ':' + process.env.REACT_APP_API_PORT
+    : '';
+  return isUrl(field)
+    ? field
+    : process.env.REACT_APP_API_HOST +
+        portAppend +
+        '/community-assets/uploads/' +
+        field;
+};
+
+export const isUrl = (test) => {
+  const re = new RegExp(
+    '[(http(s)?)://(www.)?a-zA-Z0-9@:%._+~#=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)',
+  );
+  return re.test(test);
+};

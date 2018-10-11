@@ -1,4 +1,6 @@
 @import '../../../styles/media-queries.css';
+@import '../../../styles/extends.css';
+@import '../../shared/button/Button.css';
 
 %label {
   color: var(--primary-color);
@@ -7,8 +9,32 @@
 }
 
 .ManageCommunityForm {
-  composes: container from global;
-  margin-top: 2rem;
+  margin: 2rem 0;
+
+  & .SubmitButton {
+    margin-top: 3rem;
+  }
+
+  & label {
+    @extend %label;
+  }
+
+  & input:not([type="radio"]) {
+    height: 3rem;
+  }
+
+  & input:not([type="radio"]),
+  & textarea {
+    border: 1px solid var(--gray-8);
+    width: 100%;
+    padding-left: 0.5rem;
+    font: 1rem 'azo-sans-web', sans-serif;
+  }
+
+  & textarea {
+    padding: 0.5rem;
+    resize: none;
+  }
 }
 
 .ManageCommunityFields {
@@ -29,45 +55,117 @@
 .FieldGroup {
   margin-bottom: 1rem;
 
-  & label {
-    @extend %label;
+  & .FileUploaderContainer {
+    position: relative;
+
+    & input {
+
+      /* stylelint-disable-next-line declaration-no-important */
+      margin-bottom: 0 !important;
+    }
+
+    & .Uploader {
+      background: var(--primary-white);
+    }
+
+    & button {
+      @extend %button;
+      @extend %secondary-theme;
+
+      border-radius: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.BenefitContainer {
+  position: relative;
+  margin: 0 0 1rem;
+
+  & input:not([type="radio"]) {
+    padding-right: 2rem;
+  }
+}
+
+.AddBenefit {
+  font-size: 0.8rem;
+}
+
+.RemoveBenefit {
+  @extend %link-style;
+
+  position: absolute;
+  line-height: 1.5;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.5rem;
+  color: var(--primary-black);
+}
+
+.SocialMediaSelection {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+
+  & .AddSocialMedia {
+    @extend %button;
+    @extend %secondary-theme;
+    @extend %box-shadow;
+
+    border-radius: 5rem;
+    font-size: 0.8rem;
+    position: relative;
+
+    & span {
+      font-size: 1rem;
+      position: absolute;
+      top: 50%;
+      right: 0.75rem;
+      transform: translateY(-50%);
+    }
   }
 
-  & input,
-  & textarea {
-    border: 1px solid var(--primary-color);
-    width: 100%;
-    padding-left: 0.5rem;
-    font: 1rem 'azo-sans-web', sans-serif;
+  & .SocialMediaList {
+    @extend %unstyled-list;
+    @extend %box-shadow;
+
+    position: absolute;
+    top: 100%;
+    background: var(--primary-white);
   }
 
-  & input {
-    height: 2rem;
-  }
-
-  & textarea {
-    padding: 0.5rem;
-    resize: none;
+  & .SocialMediaListItem {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
   }
 }
 
 .GroupedFieldGroup {
   break-before: avoid;
-  break-after: always;
+  margin-bottom: 1rem;
 
   & h2 {
     @extend %label;
 
-    margin: 0;
+    margin: 0 0 0.5rem;
   }
 
   & label {
     font-size: 1rem;
     font-weight: 400;
     color: var(--primary-black);
+    margin-bottom: 0.25rem;
+  }
+
+  & input:not([type="radio"]) {
+    margin-bottom: 0.5rem;
   }
 }
 
 .Error {
-  color: var(--secondary-color);
+  color: var(--warm-coral);
 }

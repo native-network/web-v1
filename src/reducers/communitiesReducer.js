@@ -76,6 +76,25 @@ export default function communitiesReducer(
         ...state,
         communities: [...state.communities, action.community],
       };
+
+    case actions.UPDATE_COMMUNITY_SUCCESS:
+      return {
+        ...state,
+        communities: state.communities.map(
+          (c) => (c.id === action.community.id ? action.community : c),
+        ),
+      };
+
+    case actions.UPDATE_COMMUNITY_ERROR:
+      return {
+        ...state,
+        communities: state.communities.map(
+          (c) =>
+            c.id === action.error.id
+              ? { ...c, error: action.error.message }
+              : c,
+        ),
+      };
     default:
       return state;
   }

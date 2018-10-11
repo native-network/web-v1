@@ -35,7 +35,8 @@ export class ManageTasks extends Component {
   render() {
     return (
       <div>
-        <ManageTasksNew />
+        <ManageTasksNew communityId={this.props.communityId} />
+        <h4>Tasks are coming soon!</h4>
         <div className={styles.TableTitle}>
           <h2>Current Tasks</h2>
         </div>
