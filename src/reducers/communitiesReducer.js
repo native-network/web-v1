@@ -95,6 +95,14 @@ export default function communitiesReducer(
               : c,
         ),
       };
+
+    case actions.GET_COMMUNITY_MEMBERS_SUCCESS:
+      return {
+        ...state,
+        communities: state.communities.map(
+          (c) => (c.id === +action.id ? { ...c, members: action.members } : c),
+        ),
+      };
     default:
       return state;
   }
