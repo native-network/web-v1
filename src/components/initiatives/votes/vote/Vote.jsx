@@ -3,48 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 
+import VoteResults from '../../../shared/vote-results';
 import VoteForm from '../../../forms/vote/index';
 import { submitVote } from '../../../../actions/voteActions';
 
 import styles from './Vote.css';
-
-function renderVoteResults(votes, options) {
-  const totalVotes = votes.length;
-  const maxVotes = options.reduce(
-    (prev, current) =>
-      prev.votes && prev.votes.length > current.votes.length ? prev : current,
-  );
-
-  const isMaxTied =
-    options.filter((option) => option.votes.length === maxVotes.votes.length)
-      .length > 1;
-
-  return options.map((o, i) => {
-    const percentage = Math.floor((o.votes.length / totalVotes) * 100) || 0;
-    return (
-      <div
-        key={i}
-        className={`${styles.VoteResults} ${
-          maxVotes === o && !isMaxTied ? styles.Winner : styles.Loser
-        }`}
-      >
-        <span className={styles.ResultsLabel}>
-          {o.name} ({percentage}
-          %)
-        </span>
-        <svg
-          className={`${styles.Progress} ${
-            maxVotes === o && !isMaxTied ? styles.Winner : styles.Loser
-          }`}
-          viewBox="0 0 10 10"
-          preserveAspectRatio="none"
-        >
-          <rect x="0" width={`${percentage}%`} />
-        </svg>
-      </div>
-    );
-  });
-}
 
 function Vote({ vote, submitVote }) {
   const today = moment();
@@ -79,7 +42,7 @@ function Vote({ vote, submitVote }) {
       </div>
       <div className={styles.VoteMeta}>
         {hasVoted || isClosed ? (
-          renderVoteResults(votes, options)
+          <VoteResults votes={votes} options={options} />
         ) : (
           <VoteForm submitForm={handleSubmit} options={options} />
         )}
