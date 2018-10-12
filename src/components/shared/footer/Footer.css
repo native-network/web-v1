@@ -4,6 +4,7 @@
 .Footer {
   background: var(--gray-2);
   color: var(--primary-white);
+  margin-top: auto;
 
   @media (--medium-viewport) {
     background: linear-gradient(to right, var(--gray-2) 90%, var(--neutral-gray) 90%);
