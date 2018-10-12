@@ -339,7 +339,10 @@ export class Dashboard extends Component {
                   <img src={eth} /> ETH Balance:&nbsp;
                   <b>{ethBalance}</b> ({ethInUSD})
                 </div>
-                <WalletAddress address={this.props.user.wallet.address} />
+                <WalletAddress
+                  displayPrepend
+                  address={this.props.user.wallet.address}
+                />
               </div>
             </div>
             <section className={styles.Dashboard}>

@@ -184,3 +184,34 @@ export const updateCommunityError = (error) => {
     error,
   };
 };
+
+export const getCommunityMembers = (communityId) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.GET_COMMUNITY_MEMBERS });
+    dispatch(beginAjaxCall());
+
+    try {
+      const { data } = await get(`communities/${communityId}/members`);
+
+      return dispatch(getCommunityMembersSuccess(communityId, data));
+    } catch (err) {
+      dispatch({ type: '_ERROR' });
+      console.log(err) // eslint-disable-line
+    }
+  };
+};
+
+export const getCommunityMembersSuccess = (communityId, members) => {
+  return {
+    type: actions.GET_COMMUNITY_MEMBERS_SUCCESS,
+    id: communityId,
+    members,
+  };
+};
+
+export const getCommunityMembersError = (error) => {
+  return {
+    type: actions.GET_COMMUNITY_MEMBERS_ERROR,
+    error,
+  };
+};

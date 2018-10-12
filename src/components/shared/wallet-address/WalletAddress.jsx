@@ -33,14 +33,16 @@ export class WalletAddress extends Component {
   }
 
   render() {
-    const { address } = this.props;
+    const { address, displayPrepend } = this.props;
     const len = address.length;
     const trimmedAddress = address.slice(0, len - 3);
     const finalChars = address.slice(len - 3);
 
     return (
       <div className={styles.AddressContainer}>
-        <span className={`${styles.Label}`}>Address:&nbsp;</span>
+        {displayPrepend && (
+          <span className={`${styles.Label}`}>Address:&nbsp;</span>
+        )}
         <span className={styles.TrimmedAddress}>{trimmedAddress}</span>
         <span className={styles.TrimmedAddressSuffix}>{finalChars}</span>
         <button
