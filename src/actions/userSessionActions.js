@@ -1,14 +1,14 @@
 import { push } from 'connected-react-router';
 import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { get, post } from '../requests';
+import { get, post, patch } from '../requests';
 import { promptSign, getAddress } from '../web3/Web3Service';
 import {
   getUserWalletAddress,
   updateUserWalletEthBalance,
 } from './userWalletActions';
 import { MESSAGES } from '../utils/constants';
-import { toastrError, toastrInfo } from './toastrActions';
+import { toastrError, toastrInfo, toastrSuccess } from './toastrActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
 
 export const getUserSession = () => {
@@ -200,5 +200,47 @@ export const dismissUserMessage = (messageId) => {
         );
       }
     }
+  };
+};
+
+export const updateUser = (user, values) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.UPDATE_USER });
+    dispatch(beginAjaxCall());
+    try {
+      const updatedValues = Object.entries(values)
+        .filter(
+          ([key, val]) => Object.keys(user).includes(key) && user[key] !== val,
+        )
+        .reduce((acc, [key, val]) => {
+          acc[key] = val;
+          return acc;
+        }, {});
+
+      const { data } = await patch(`user/${user.id}`, {
+        id: user.id,
+        ...updatedValues,
+      });
+
+      dispatch(toastrSuccess('Profile updated successfully!'));
+      return dispatch(updateUserSuccess(data));
+    } catch (err) {
+      const { message } = err;
+      dispatch(updateUserError(message));
+    }
+  };
+};
+
+export const updateUserSuccess = (user) => {
+  return {
+    type: actions.UPDATE_USER_SUCCESS,
+    user,
+  };
+};
+
+export const updateUserError = (error) => {
+  return {
+    type: actions.UPDATE_USER_ERROR,
+    error,
   };
 };

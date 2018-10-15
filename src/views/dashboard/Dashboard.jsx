@@ -5,6 +5,7 @@ import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
+import EditProfile from '../../components/forms/edit-profile';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
@@ -155,6 +156,7 @@ const cols = [
 
 export class Dashboard extends Component {
   state = {
+    isProfileModalOpen: false,
     isModalOpen: false,
     activeCommunity: {},
     sendCurrency: this.props.walletCurrencies.find(
@@ -298,6 +300,14 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: false });
   }
 
+  openProfileModal() {
+    this.setState({ isProfileModalOpen: true });
+  }
+
+  closeProfileModal() {
+    this.setState({ isProfileModalOpen: false });
+  }
+
   render() {
     const userEth = this.props.user.wallet.currencies.find(
       (c) => c.symbol === 'ETH',
@@ -343,10 +353,30 @@ export class Dashboard extends Component {
               </div>
             </div>
             <section className={styles.Dashboard}>
-              <h1>
+              <h1 className={styles.DashboardTitle}>
                 {!nativeBalance || nativeBalance === '0'
                   ? 'Get Native Token'
                   : 'Convert Currencies'}
+                <Fragment>
+                  <Modal
+                    label="Edit Your Profile"
+                    isOpen={this.state.isProfileModalOpen}
+                    renderHeader={() => <h1>Edit Your Profile</h1>}
+                    hasCloseButton
+                    closeModal={this.closeProfileModal.bind(this)}
+                  >
+                    <EditProfile
+                      user={this.props.user}
+                      submitHandler={this.closeProfileModal.bind(this)}
+                    />
+                  </Modal>
+                  <Button
+                    className={styles.ProfileEdit}
+                    clickHandler={this.openProfileModal.bind(this)}
+                    theme="secondary"
+                    content="Edit your profile"
+                  />
+                </Fragment>
               </h1>
               {this.state.sendCurrency ? (
                 <div>
