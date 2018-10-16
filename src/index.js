@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
@@ -32,7 +32,7 @@ store.dispatch(checkNetwork()).then(({ doesNetworkMatch }) => {
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
+      <Fragment>
         <ReduxToastr
           transitionIn="bounceInDown"
           transitionOut="bounceOutUp"
@@ -41,7 +41,7 @@ ReactDOM.render(
           closeOnToastrClick
         />
         <App />
-      </div>
+      </Fragment>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),

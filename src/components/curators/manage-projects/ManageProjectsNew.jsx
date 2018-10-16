@@ -46,7 +46,7 @@ export class ManageProjectsNew extends Component {
           theme="secondary"
           content="Add Project"
           clickHandler={this.openModal.bind(this)}
-          disabled={true}
+          disabled
         />
         <Modal
           renderHeader={() => (

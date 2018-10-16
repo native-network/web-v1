@@ -73,7 +73,12 @@ class TabPanels extends Component {
         {(panels || []).map(
           ({ render, items }, index) =>
             index === activeTab ? (
-              <TabPanel key={index} render={() => render(filter(items))} />
+              <TabPanel
+                key={index}
+                render={() =>
+                  this.props.hasFilter ? render(filter(items)) : render(items)
+                }
+              />
             ) : null,
         )}
       </div>

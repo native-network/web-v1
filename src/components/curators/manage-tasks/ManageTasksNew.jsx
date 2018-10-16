@@ -46,7 +46,7 @@ export class ManageTasksNew extends Component {
           theme="secondary"
           content="Add Task"
           clickHandler={this.openModal.bind(this)}
-          disabled={true}
+          disabled
         />
         <Modal
           renderHeader={() => (
