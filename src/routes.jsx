@@ -6,9 +6,9 @@ import Communities from './views/communities';
 import Dashboard from './views/dashboard';
 import Community from './views/community';
 import Tokens from './views/tokens';
-import FAQ from './views/faq';
 import Terms from './views/terms';
 import CommunityAdmin from './views/community-admin';
+import Settings from './views/settings';
 import FourOhFour from './views/404';
 
 export const PrivateRoute = ({ component: Component, relations, ...rest }) => {
@@ -53,7 +53,6 @@ export const routes = (user) => {
       />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route path="/tokens" component={Tokens} />
-      <Route exact path="/learn" component={FAQ} />
       <Route exact path="/terms" component={Terms} />
       <PrivateRoute
         relations={curatorArray}
@@ -61,6 +60,7 @@ export const routes = (user) => {
         path="/manage/:communityId"
         component={CommunityAdmin}
       />
+      <Route exact path="/settings" component={Settings} />
       <Route component={FourOhFour} />
     </Switch>
   );

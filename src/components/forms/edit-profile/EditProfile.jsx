@@ -7,13 +7,15 @@ import Button from '../../../components/shared/button';
 
 import styles from './EditProfile.css';
 
-function EditProfile({ user, updateUser, submitHandler }) {
+function EditProfile({ user, updateUser }) {
   return (
     <Form
       initialValues={{
         address: user.address,
         alias: user.alias,
-        location: user.location,
+        country: user.country,
+        state: user.state,
+        city: user.city,
         email: user.email,
         telegram: user.telegram,
         preferredContact: user.preferredContact,
@@ -21,13 +23,7 @@ function EditProfile({ user, updateUser, submitHandler }) {
       onSubmit={(values) => updateUser(user, values)}
     >
       {({ handleSubmit, values }) => (
-        <form
-          className={styles.EditProfile}
-          onSubmit={() => {
-            submitHandler();
-            handleSubmit(values);
-          }}
-        >
+        <form className={styles.EditProfile} onSubmit={handleSubmit}>
           <Field name="address">
             {({ input }) => (
               <div className={styles.FieldGroup}>
@@ -44,10 +40,26 @@ function EditProfile({ user, updateUser, submitHandler }) {
               </div>
             )}
           </Field>
-          <Field name="location">
+          <Field name="country">
             {({ input }) => (
               <div className={styles.FieldGroup}>
-                <label>Location</label>
+                <label>Country</label>
+                <input type="text" {...input} />
+              </div>
+            )}
+          </Field>
+          <Field name="state">
+            {({ input }) => (
+              <div className={styles.FieldGroup}>
+                <label>State/Province</label>
+                <input type="text" {...input} />
+              </div>
+            )}
+          </Field>
+          <Field name="city">
+            {({ input }) => (
+              <div className={styles.FieldGroup}>
+                <label>City</label>
                 <input type="text" {...input} />
               </div>
             )}

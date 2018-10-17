@@ -21,7 +21,7 @@ function Menu({
         menuItemClass={menuItemClass}
         linkClass={linkClass}
         path="/"
-        label="All Communities"
+        label="Communities"
         exact
       />
       {address && (
@@ -53,6 +53,13 @@ function Menu({
           Learn
         </a>
       </li>
+      <MenuItem
+        menuItemClass={menuItemClass}
+        linkClass={linkClass}
+        path="/settings"
+        label="Settings"
+        exact
+      />
       {menuItems &&
         (menuItems || []).map((item, i) => (
           <MenuItem
