@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
@@ -19,8 +18,7 @@ const WhenFieldChanges = ({ field, set, to }) => (
       <OnChange name={field}>
         {(value, previous) => {
           if (value !== previous) {
-            console.log('now')
-            onChange(to)
+            onChange(to);
           }
         }}
       </OnChange>
@@ -49,7 +47,7 @@ function EditProfile({ user, updateUser }) {
         return updateUser(user, {
           ...values,
           country: updatedCountry,
-          state: state.name,
+          state: state && state.name,
         });
       }}
     >
@@ -59,11 +57,7 @@ function EditProfile({ user, updateUser }) {
 
         return (
           <form className={styles.EditProfile} onSubmit={handleSubmit}>
-            <WhenFieldChanges
-              field="country"
-              set="state"
-              to=""
-            />
+            <WhenFieldChanges field="country" set="state" to="" />
             <Field name="address">
               {({ input }) => (
                 <div className={styles.FieldGroup}>

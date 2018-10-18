@@ -1,17 +1,25 @@
-/* eslint-disable */
 import React from 'react';
 import Downshift from 'downshift';
 
 import styles from './DropDown.css';
 
-function DropDown({ label, items, itemToString, itemToStore, ...rest }) {
+function DropDown({ label, items, itemToString, ...rest }) {
   const { input } = rest;
   return (
     <Downshift
       {...input}
-      initialInputValue={typeof input.value === 'object' ? itemToString(input.value) : input.value}
+      defaultInputValue={
+        typeof input.value === 'object'
+          ? itemToString(input.value)
+          : input.value
+      }
+      initialInputValue={
+        typeof input.value === 'object'
+          ? itemToString(input.value)
+          : input.value
+      }
       itemToString={itemToString}
-      onSelect={(select) => input.onChange(itemToStore(select))}
+      onChange={(select) => input.onChange(itemToString(select))}
     >
       {({
         getInputProps,
@@ -24,10 +32,7 @@ function DropDown({ label, items, itemToString, itemToStore, ...rest }) {
       }) => (
         <div className={styles.DropdownContainer}>
           <label {...getLabelProps()}>{label}</label>
-          <input type="text" {...getInputProps({
-            ...input,
-            value: typeof input.value === 'object' ? itemToString(input.value) : input.value
-          })} />
+          <input type="text" {...getInputProps()} />
           {isOpen ? (
             <ul
               {...getMenuProps({
