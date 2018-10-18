@@ -120,15 +120,6 @@ function EditProfile({ user, updateUser }) {
                 </Field>
               ) : null
             }
-            {/* <div className={styles.FieldGroup}>
-            <Field
-              label="State/Province/Region"
-              name="state"
-              component={DropDown}
-              itemToString={(item) => item ? item.name : ''}
-              items={country ? regions.filter(region => region.country === country.alpha2) : []}
-            />
-          </div> */}
             <Field name="city">
               {({ input }) => (
                 <div className={styles.FieldGroup}>

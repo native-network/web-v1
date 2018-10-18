@@ -6,7 +6,7 @@ import styles from './DropDown.css';
 
 function DropDown({ label, items, activeItem, itemToString, ...rest }) {
   const { value } = rest;
-  return value ? (
+  return (
     <Downshift
       defaultInputValue={itemToString(value)}
       defaultSelectedItem={activeItem}
@@ -23,6 +23,7 @@ function DropDown({ label, items, activeItem, itemToString, ...rest }) {
         clearSelection,
       }) => (
         <div className={styles.DropdownContainer}>
+          {console.log(inputValue)}
           <input
             type="text"
             {...getInputProps({
@@ -67,7 +68,7 @@ function DropDown({ label, items, activeItem, itemToString, ...rest }) {
         </div>
       )}
     </Downshift>
-  ) : null;
+  );
 }
 
 export default DropDown;
