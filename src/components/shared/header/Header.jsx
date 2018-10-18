@@ -6,6 +6,7 @@ import classNames from 'classnames/bind';
 import Navigation from '../navigation';
 import Notifications from '../notifications';
 import WrongNetworkWarning from '../wrong-network-warning';
+import FeedbackHeader from '../feedback-header';
 
 import logo from '../../../assets/img/native-white.svg';
 import wallet from '../../../assets/img/wallet.svg';
@@ -39,6 +40,7 @@ export class Header extends Component {
 
     return (
       <header className={styles.Header}>
+        <FeedbackHeader />
         <WrongNetworkWarning />
         <div className={styles.HeaderContainer}>
           <Link className={styles.LogoLink} to="/">

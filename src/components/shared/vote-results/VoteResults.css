@@ -1,0 +1,43 @@
+.ResultsContainer {
+  display: grid;
+  grid-auto-rows: 2rem;
+  grid-auto-flow: column;
+  grid-column-gap: 0.5rem;
+  grid-auto-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.Progress {
+  height: 0.5rem;
+  grid-column: 2;
+  width: 100%;
+  align-content: center;
+
+  &.Winner {
+    & rect {
+      fill: var(--primary-color);
+    }
+  }
+
+  &.Loser {
+    & rect {
+      fill: var(--gray-10);
+    }
+  }
+}
+
+.ResultsLabel {
+  display: inline-flex;
+  flex-basis: 4rem;
+  grid-column: 1;
+
+  &.Winner {
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  &.Loser {
+    font-weight: 400;
+    color: var(--gray-5);
+  }
+}
