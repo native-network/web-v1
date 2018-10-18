@@ -12,17 +12,13 @@ function FeedbackHeader() {
             <strong>Native is currently in Alpha.</strong> We want your feedback
             so we can give you the best user experience possible.&nbsp;
             <span>
-              Ask us anything in our
-              <a
-                className={styles.FeedbackLink}
-                href="https://telegram.me/nativeproject"
-                target="_blank"
-              >
+              Ask us anything in our&nbsp;
+              <a href="https://telegram.me/nativeproject" target="_blank">
                 Telegram
               </a>
-              channel, or send us your bug reports and general feedback at our
+              &nbsp;channel, or send us your bug reports and general feedback at
+              our&nbsp;
               <a
-                className={styles.FeedbackLink__zen}
                 href="https://nativeproject.zendesk.com/hc/en-us/requests/new"
                 target="_blank"
               >

@@ -23,20 +23,12 @@
 }
 
 .Feedback__message span {
-  display: block;
-
-  @media (--max-small-viewport) {
-    display: inline;
+  @media (--medium-viewport) {
+    display: block;
   }
 }
 
-.FeedbackLink {
-  margin: 0 3px;
-  color: var(--black-0);
-}
-
-.FeedbackLink__zen {
-  margin: 0 0 0 3px;
+.Feedback__message a {
   color: var(--black-0);
 }
 
@@ -49,7 +41,7 @@
   padding: 0.5rem 1rem;
   margin: 0.5rem 0.5rem 0.5rem 0;
   border-radius: 9999px;
-  
+
   @media (--max-small-viewport) {
     display: none;
   }
