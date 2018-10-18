@@ -1,10 +1,9 @@
-/* eslint-disable */
 import React from 'react';
 import Downshift from 'downshift';
 
 import styles from './DropDown.css';
 
-function DropDown({ label, items, activeItem, itemToString, ...rest }) {
+function DropDown({ items, activeItem, itemToString, ...rest }) {
   const { value } = rest;
   return (
     <Downshift
@@ -23,7 +22,6 @@ function DropDown({ label, items, activeItem, itemToString, ...rest }) {
         clearSelection,
       }) => (
         <div className={styles.DropdownContainer}>
-          {console.log(inputValue)}
           <input
             type="text"
             {...getInputProps({
