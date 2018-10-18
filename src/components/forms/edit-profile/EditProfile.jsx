@@ -91,7 +91,6 @@ function EditProfile({ user, updateUser }) {
                 region.country === country.alpha2,
             ).length ? (
               <div className={styles.FieldGroup}>
-                {console.log(country) /* eslint-disable-line */}
                 <Field
                   label="State/Province/Region"
                   name="state"
