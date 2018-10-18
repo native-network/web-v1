@@ -11,20 +11,23 @@
   align-items: center;
   justify-content: flex-start;
   padding: 10px 0;
-
-  /* @media (--medium-viewport) {
-    flex-direction: column;
-  } */
 }
 
 .Feedback__message {
   margin-left: 1em;
-  max-width: 75%;
 }
 
 .Feedback__message p {
   margin: 0;
   line-height: 1.25rem;
+}
+
+.Feedback__message span {
+  display: block;
+
+  @media (--max-small-viewport) {
+    display: inline;
+  }
 }
 
 .FeedbackLink {
@@ -46,4 +49,8 @@
   padding: 0.5rem 1rem;
   margin: 0.5rem 0.5rem 0.5rem 0;
   border-radius: 9999px;
+  
+  @media (--max-small-viewport) {
+    display: none;
+  }
 }
