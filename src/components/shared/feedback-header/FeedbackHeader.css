@@ -1,0 +1,48 @@
+@import '../../../styles/globals.css';
+@import '../../../styles/media-queries.css';
+
+.FeedbackHeader__container {
+  background: var(--native-cream);
+}
+
+.FeedbackHeader {
+  composes: container from global;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 0;
+}
+
+.Feedback__message {
+  margin-left: 1em;
+}
+
+.Feedback__message p {
+  margin: 0;
+  line-height: 1.25rem;
+}
+
+.Feedback__message span {
+  @media (--medium-viewport) {
+    display: block;
+  }
+}
+
+.Feedback__message a {
+  color: var(--black-0);
+}
+
+.Feedback__tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--primary-white);
+  background: var(--primary-button-default);
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  border-radius: 9999px;
+
+  @media (--max-small-viewport) {
+    display: none;
+  }
+}
