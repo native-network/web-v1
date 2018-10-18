@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import {
   setActiveCommunity,
   unsetActiveCommunity,
+  getCommunityMembers,
 } from '../../actions/communitiesActions';
 import { getCommunityPolls } from '../../actions/communityPollsActions';
 import { getCommunityProjects } from '../../actions/communityProjectsActions';
@@ -15,6 +16,7 @@ import {
   ManagePolls,
   ManageProjects,
   ManageTasks,
+  ManageMembers,
 } from '../../components/curators';
 import Manage from '../manage';
 
@@ -25,6 +27,7 @@ export class CommunityAdmin extends Component {
     this.props.getCommunityPolls(id);
     this.props.getCommunityProjects(id);
     this.props.getCommunityTasks(id);
+    this.props.getCommunityMembers(id);
   }
 
   componentWillUnmount() {
@@ -56,6 +59,10 @@ function formatInitiatives(polls, tasks, projects, community) {
       render: () => <Manage community={community} />,
     },
     {
+      name: 'Members',
+      render: () => <ManageMembers members={community.members} />,
+    },
+    {
       name: 'Polls',
       items: polls,
       render: () => <ManagePolls items={polls} communityId={community.id} />,
@@ -81,6 +88,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     setActiveCommunity: bindActionCreators(setActiveCommunity, dispatch),
     unsetActiveCommunity: bindActionCreators(unsetActiveCommunity, dispatch),
+    getCommunityMembers: bindActionCreators(getCommunityMembers, dispatch),
     getCommunityPolls: bindActionCreators(getCommunityPolls, dispatch),
     getCommunityProjects: bindActionCreators(getCommunityProjects, dispatch),
     getCommunityTasks: bindActionCreators(getCommunityTasks, dispatch),
