@@ -1,29 +1,20 @@
+/* eslint-disable */
 import React from 'react';
 import Downshift from 'downshift';
 
 import styles from './DropDown.css';
 
-function DropDown({ label, items, itemToString, ...rest }) {
-  const { input } = rest;
-  return (
+function DropDown({ label, items, activeItem, itemToString, ...rest }) {
+  const { value } = rest;
+  return value ? (
     <Downshift
-      {...input}
-      defaultInputValue={
-        typeof input.value === 'object'
-          ? itemToString(input.value)
-          : input.value
-      }
-      initialInputValue={
-        typeof input.value === 'object'
-          ? itemToString(input.value)
-          : input.value
-      }
+      defaultInputValue={itemToString(value)}
+      defaultSelectedItem={activeItem}
       itemToString={itemToString}
-      onChange={(select) => input.onChange(itemToString(select))}
+      onSelect={(select) => rest.onChange(select)}
     >
       {({
         getInputProps,
-        getLabelProps,
         inputValue,
         getItemProps,
         highlightedIndex,
@@ -32,7 +23,6 @@ function DropDown({ label, items, itemToString, ...rest }) {
         clearSelection,
       }) => (
         <div className={styles.DropdownContainer}>
-          <label {...getLabelProps()}>{label}</label>
           <input
             type="text"
             {...getInputProps({
@@ -77,7 +67,7 @@ function DropDown({ label, items, itemToString, ...rest }) {
         </div>
       )}
     </Downshift>
-  );
+  ) : null;
 }
 
 export default DropDown;

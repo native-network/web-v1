@@ -1,6 +1,7 @@
+/* eslint-disable */
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { OnChange } from 'react-final-form-listeners';
+// import { OnChange } from 'react-final-form-listeners';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateUser } from '../../../actions/userSessionActions';
@@ -12,23 +13,23 @@ import regions from '../../../utils/regions.json';
 
 import styles from './EditProfile.css';
 
-const WhenFieldChanges = ({ field, set, to }) => (
-  <Field name={set} subscription={{}}>
-    {({ input: { onChange } }) => (
-      <OnChange name={field}>
-        {(value, previous) => {
-          if (value !== previous) {
-            onChange(to);
-          }
-        }}
-      </OnChange>
-    )}
-  </Field>
-);
+// const WhenFieldChanges = ({ field, set, to }) => (
+//   <Field name={set} subscription={{}}>
+//     {({ input: { onChange } }) => (
+//       <OnChange name={field}>
+//         {(value, previous) => {
+//           if (value !== previous) {
+//             onChange(to);
+//           }
+//         }}
+//       </OnChange>
+//     )}
+//   </Field>
+// );
 
-function EditProfile({ user /*, updateUser */ }) {
+function EditProfile({ user, updateUser }) {
   const activeCountry = countries.find((c) => c.alpha2 === user.country);
-  // console.log(activeCountry);
+  console.log(activeCountry); // eslint-disable-line
   return (
     <Form
       initialValues={{
@@ -42,20 +43,16 @@ function EditProfile({ user /*, updateUser */ }) {
         preferredContact: user.preferredContact,
       }}
       onSubmit={(values) => {
-        {
-          /* const { country, state } = values;
+        const { country, state } = values;
         const updatedCountry =
-          typeof country === 'object' ? country.alpha2 : country; */
-        }
-
+          typeof country === 'object' ? country.alpha2 : country;
+        console.log(user); // eslint-disable-line
         console.log(values); // eslint-disable-line
-        {
-          /* return updateUser(user, {
+        return updateUser(user, {
           ...values,
           country: updatedCountry,
           state: state && state.name,
-        }); */
-        }
+        });
       }}
     >
       {({ handleSubmit, values, form }) => {
@@ -64,7 +61,7 @@ function EditProfile({ user /*, updateUser */ }) {
 
         return (
           <form className={styles.EditProfile} onSubmit={handleSubmit}>
-            <WhenFieldChanges field="country" set="state" to="" />
+            {/* <WhenFieldChanges field="country" set="state" to="" /> */}
             <Field name="address">
               {({ input }) => (
                 <div className={styles.FieldGroup}>
@@ -81,37 +78,48 @@ function EditProfile({ user /*, updateUser */ }) {
                 </div>
               )}
             </Field>
-            <div className={styles.FieldGroup}>
-              <Field
-                label="Country"
-                name="country"
-                component={DropDown}
-                itemToString={(item) => (item ? item.label : '')}
-                items={countries}
-              />
-            </div>
-            {country &&
-            !!regions.filter(
-              (region) =>
-                typeof country === 'object' &&
-                region.country === country.alpha2,
-            ).length ? (
-              <div className={styles.FieldGroup}>
-                <Field
-                  label="State/Province/Region"
-                  name="state"
-                  component={DropDown}
-                  itemToString={(item) => (item ? item.name : '')}
-                  items={
-                    country
-                      ? regions.filter(
-                          (region) => region.country === country.alpha2,
-                        )
-                      : []
-                  }
-                />
-              </div>
+            {activeCountry && activeCountry.label ? (
+              <Field name="country">
+                {({input}) => (
+                  <div className={styles.FieldGroup}>
+                    <label>Country</label>
+                    <DropDown
+                      {...input}
+                      itemToString={(item) => (item ? item.label : '')}
+                      items={countries}
+                      activeItem={activeCountry}
+                    />
+                  </div>
+                )}
+              </Field>
             ) : null}
+            {country &&
+              !!regions.filter(
+                (region) =>
+                  typeof country === 'object' &&
+                  region.country === country.alpha2,
+              ).length ? (
+                <Field name="state">
+                  {({input}) => (
+                    <div className={styles.FieldGroup}>
+                      <label>State/Province/Region</label>
+                      <DropDown
+                        {...input}
+                        itemToString={(item) => (item ? item.name : '')}
+                        activeItem={''}
+                        items={
+                          country
+                            ? regions.filter(
+                                (region) => region.country === country.alpha2,
+                              )
+                            : []
+                        }
+                      />
+                    </div>
+                  )}
+                </Field>
+              ) : null
+            }
             {/* <div className={styles.FieldGroup}>
             <Field
               label="State/Province/Region"
