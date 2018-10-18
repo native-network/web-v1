@@ -29,10 +29,18 @@ function DropDown({ label, items, itemToString, ...rest }) {
         highlightedIndex,
         getMenuProps,
         isOpen,
+        clearSelection,
       }) => (
         <div className={styles.DropdownContainer}>
           <label {...getLabelProps()}>{label}</label>
-          <input type="text" {...getInputProps()} />
+          <input
+            type="text"
+            {...getInputProps({
+              onBlur: (e) => {
+                if (e.target.value === '') clearSelection();
+              },
+            })}
+          />
           {isOpen ? (
             <ul
               {...getMenuProps({

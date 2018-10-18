@@ -26,14 +26,15 @@ const WhenFieldChanges = ({ field, set, to }) => (
   </Field>
 );
 
-function EditProfile({ user, updateUser }) {
+function EditProfile({ user /*, updateUser */ }) {
   const activeCountry = countries.find((c) => c.alpha2 === user.country);
+  // console.log(activeCountry);
   return (
     <Form
       initialValues={{
         address: user.address,
         alias: user.alias,
-        country: activeCountry || '',
+        country: activeCountry || {},
         state: user.state || '',
         city: user.city,
         email: user.email,
@@ -41,14 +42,20 @@ function EditProfile({ user, updateUser }) {
         preferredContact: user.preferredContact,
       }}
       onSubmit={(values) => {
-        const { country, state } = values;
+        {
+          /* const { country, state } = values;
         const updatedCountry =
-          typeof country === 'object' ? country.alpha2 : country;
-        return updateUser(user, {
+          typeof country === 'object' ? country.alpha2 : country; */
+        }
+
+        console.log(values); // eslint-disable-line
+        {
+          /* return updateUser(user, {
           ...values,
           country: updatedCountry,
           state: state && state.name,
-        });
+        }); */
+        }
       }}
     >
       {({ handleSubmit, values, form }) => {
@@ -80,7 +87,6 @@ function EditProfile({ user, updateUser }) {
                 name="country"
                 component={DropDown}
                 itemToString={(item) => (item ? item.label : '')}
-                itemToStore={(item) => (item ? item.alpha2 : '')}
                 items={countries}
               />
             </div>
@@ -96,7 +102,6 @@ function EditProfile({ user, updateUser }) {
                   name="state"
                   component={DropDown}
                   itemToString={(item) => (item ? item.name : '')}
-                  itemToStore={(item) => (item ? item.name : '')}
                   items={
                     country
                       ? regions.filter(
