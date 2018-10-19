@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Loader from '../../components/shared/loader';
 import EditProfile from '../../components/forms/edit-profile';
 
 export class Settings extends Component {
   render() {
-    const { user } = this.props;
-    return (
+    const { user, isLoading } = this.props;
+    return isLoading ? (
+      <Loader />
+    ) : (
       <div className="container">
         <h1>Settings</h1>
         <EditProfile user={user} updateUser={() => alert('foo!')} />
@@ -18,6 +21,7 @@ export class Settings extends Component {
 export default connect(
   (state) => ({
     user: state.user,
+    isLoading: state.loading > 0,
   }),
   null,
 )(Settings);
