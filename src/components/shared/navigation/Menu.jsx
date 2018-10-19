@@ -5,6 +5,7 @@ import MenuItem from './MenuItem';
 function Menu({
   forwardRef,
   hidden,
+  role,
   menuClass,
   menuItemClass,
   linkClass,
@@ -53,13 +54,15 @@ function Menu({
           Learn
         </a>
       </li>
-      <MenuItem
-        menuItemClass={menuItemClass}
-        linkClass={linkClass}
-        path="/settings"
-        label="Settings"
-        exact
-      />
+      {(role === 'member' || role === 'curator') && (
+        <MenuItem
+          menuItemClass={menuItemClass}
+          linkClass={linkClass}
+          path="/settings"
+          label="Settings"
+          exact
+        />
+      )}
       {menuItems &&
         (menuItems || []).map((item, i) => (
           <MenuItem

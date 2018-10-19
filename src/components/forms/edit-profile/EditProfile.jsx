@@ -59,21 +59,19 @@ function EditProfile({ user, updateUser }) {
                 </div>
               )}
             </Field>
-            {activeCountry && activeCountry.label ? (
-              <Field name="country">
-                {({ input }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>Country</label>
-                    <DropDown
-                      {...input}
-                      itemToString={(item) => (item ? item.label : '')}
-                      items={countries}
-                      activeItem={activeCountry}
-                    />
-                  </div>
-                )}
-              </Field>
-            ) : null}
+            <Field name="country">
+              {({ input }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Country</label>
+                  <DropDown
+                    {...input}
+                    itemToString={(item) => (item ? item.label : '')}
+                    items={countries}
+                    activeItem={activeCountry}
+                  />
+                </div>
+              )}
+            </Field>
             {country &&
             !!regions.filter(
               (region) =>

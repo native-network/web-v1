@@ -11,7 +11,12 @@ import CommunityAdmin from './views/community-admin';
 import Settings from './views/settings';
 import FourOhFour from './views/404';
 
-export const PrivateRoute = ({ component: Component, relations, ...rest }) => {
+export const PrivateRoute = ({
+  component: Component,
+  relations,
+  isAuth,
+  ...rest
+}) => {
   const isRelated = (relations || []).includes(
     +rest.computedMatch.params.communityId,
   );
@@ -19,7 +24,7 @@ export const PrivateRoute = ({ component: Component, relations, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isRelated ? (
+        isRelated || isAuth ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -40,7 +45,6 @@ export const routes = (user) => {
   const affiliatedArray = [...memberArray, ...curatorArray].filter(
     (item, pos, arr) => arr.indexOf(item) === pos,
   );
-
   return (
     <Switch>
       <Route exact path="/" component={Home} />
