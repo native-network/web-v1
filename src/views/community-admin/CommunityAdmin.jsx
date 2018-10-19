@@ -60,7 +60,7 @@ function formatInitiatives(polls, tasks, projects, community) {
     },
     {
       name: 'Members',
-      render: () => <ManageMembers members={community.members} />,
+      render: () => <ManageMembers community={community} />,
     },
     {
       name: 'Polls',
