@@ -8738,6 +8738,10 @@ react-final-form-html5-validation@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-final-form-html5-validation/-/react-final-form-html5-validation-1.0.2.tgz#2e7c9f474e2bb9570e6e4f3f245c6480d04a3f15"
   integrity sha512-qygcmUgiTtpdZ9BgjleJ2BK4unKDA/O0ynhtXM2I8De01tdyzfJ5WOQCiQD84h7eC5DmrGRqsLGNoxN/wGQTcg==
 
+react-final-form-listeners@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-final-form-listeners/-/react-final-form-listeners-1.0.1.tgz#1604bdaa4b8a2ee16bf6bafadd8f977e359c9900"
+
 react-final-form@^3.6.5:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/react-final-form/-/react-final-form-3.6.5.tgz#191324bc686b20e9e49c929a79949f34b38ba8e5"
