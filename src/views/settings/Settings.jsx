@@ -12,7 +12,7 @@ export class Settings extends Component {
     ) : (
       <div className="container">
         <h1>Settings</h1>
-        <EditProfile user={user} updateUser={() => alert('foo!')} />
+        <EditProfile user={user} />
       </div>
     );
   }
