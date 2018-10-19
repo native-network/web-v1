@@ -226,6 +226,7 @@ export const updateUser = (user, values) => {
       return dispatch(updateUserSuccess(data));
     } catch (err) {
       const { message } = err;
+      dispatch(toastrError('Something went wrong'));
       dispatch(updateUserError(message));
     }
   };

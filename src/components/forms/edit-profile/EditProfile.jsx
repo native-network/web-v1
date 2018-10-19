@@ -12,14 +12,19 @@ import regions from '../../../utils/regions.json';
 import styles from './EditProfile.css';
 
 function EditProfile({ user, updateUser }) {
+  console.log(user); // eslint-disable-line
   const activeCountry = countries.find((c) => c.alpha2 === user.country);
-  return (
+  const activeState = regions
+    .filter((r) => r.country === user.country)
+    .find((r) => r.name === user.state);
+
+  return user.address ? (
     <Form
       initialValues={{
         address: user.address,
         alias: user.alias,
         country: activeCountry || {},
-        state: user.state || '',
+        state: activeState || '',
         city: user.city,
         email: user.email,
         telegram: user.telegram,
@@ -29,11 +34,12 @@ function EditProfile({ user, updateUser }) {
         const { country, state } = values;
         const updatedCountry =
           typeof country === 'object' ? country.alpha2 : country;
+        const updatedState = typeof state === 'object' ? state.name : state;
 
         return updateUser(user, {
           ...values,
           country: updatedCountry,
-          state: state && state.name,
+          state: updatedState,
         });
       }}
     >
@@ -85,7 +91,7 @@ function EditProfile({ user, updateUser }) {
                     <DropDown
                       {...input}
                       itemToString={(item) => (item ? item.name : '')}
-                      activeItem={''}
+                      activeItem={activeState}
                       items={
                         country
                           ? regions.filter(
@@ -178,7 +184,7 @@ function EditProfile({ user, updateUser }) {
         );
       }}
     </Form>
-  );
+  ) : null;
 }
 
 const mapDispatchToProps = (dispatch) => {
