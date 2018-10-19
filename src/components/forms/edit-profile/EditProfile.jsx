@@ -12,7 +12,6 @@ import regions from '../../../utils/regions.json';
 import styles from './EditProfile.css';
 
 function EditProfile({ user, updateUser }) {
-  console.log(user); // eslint-disable-line
   const activeCountry = countries.find((c) => c.alpha2 === user.country);
   const activeState = regions
     .filter((r) => r.country === user.country)
