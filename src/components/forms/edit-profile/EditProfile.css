@@ -1,0 +1,48 @@
+@import '../../../styles/media-queries.css';
+@import '../../../styles/extends.css';
+@import '../../shared/button/Button.css';
+@import '../styles.css';
+
+.EditProfile {
+  composes: FormStyles from '../styles.css';
+}
+
+.FieldGroup {
+  composes: FieldGroup from '../styles.css';
+}
+
+.RadioList {
+  @extend %unstyled-list;
+
+  margin: 0.5rem 0 0;
+  display: flex;
+  justify-content: space-between;
+
+  & li {
+    flex-basis: 49%;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+}
+
+label.RadioLabel {
+  padding: 0.75rem 0;
+  display: inline-flex;
+  width: 100%;
+  text-align: center;
+  justify-content: space-around;
+  cursor: pointer;
+  font-weight: 300;
+  font-size: 1rem;
+  background: var(--primary-white);
+}
+
+.RadioInput {
+  @extend %visually-hidden;
+
+  &:checked + .RadioLabel {
+    background: var(--primary-color);
+    color: var(--primary-white);
+  }
+}

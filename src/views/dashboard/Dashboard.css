@@ -47,6 +47,11 @@
   margin-bottom: 5rem;
 }
 
+.DashboardTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
 .DashboardConverter {
   padding: 1rem 0;
   box-shadow: 0 0.5rem 2rem var(--transparent-black-20);

@@ -42,3 +42,11 @@ export const put = async (endpoint, payload) => {
     throw new Error(err);
   }
 };
+
+export const patch = async (endpoint, payload) => {
+  try {
+    return await instance.patch(`/${endpoint}`, payload);
+  } catch (err) {
+    throw new Error(err);
+  }
+};

@@ -15,6 +15,10 @@ export default function userSessionReducer(state = {}, action) {
       return { ...state, doesNetworkMatch: action.doesNetworkMatch };
     case actions.END_SESSION_ERROR:
       return { ...initialState.user, address: '', sessionError: action.error };
+    case actions.UPDATE_USER_SUCCESS:
+      return { ...state, ...action.user };
+    case actions.UPDATE_USER_ERROR:
+      return { ...state, userError: action.error };
     case actions.DISMISS_USER_MESSAGE: {
       const filteredMessages = state.messages.filter((message) => {
         return message.id !== action.messageId;
