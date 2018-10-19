@@ -5,7 +5,7 @@ import Icon from '../icon';
 import styles from './SocialMedia.css';
 
 function SocialMedia({ className, links }) {
-  return links ? (
+  return links && Array.isArray(links) ? (
     <ul className={`${className} ${styles.SocialMedia}`}>
       {(links || []).map((link, index) => (
         <li key={index}>

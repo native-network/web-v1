@@ -201,7 +201,7 @@ export class Card extends Component {
               >
                 <div className={styles.Benefits}>
                   <h3>Membership Benefits:</h3>
-                  {membershipBenefits ? (
+                  {Array.isArray(membershipBenefits) ? (
                     <ul>
                       {membershipBenefits.map((benefit, index) => (
                         <li key={index}>{benefit}</li>
