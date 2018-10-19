@@ -91,7 +91,6 @@
     @extend %secondary-theme;
     @extend %box-shadow;
 
-    border-radius: 5rem;
     font-size: 0.8rem;
     position: relative;
 

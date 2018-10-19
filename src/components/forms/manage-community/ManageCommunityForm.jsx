@@ -184,7 +184,6 @@ export default function ManageCommunityForm({ community, submitForm }) {
                     </div>
                   ))}
                   <Button
-                    rounded
                     centered
                     className={styles.AddBenefit}
                     type="button"
