@@ -137,7 +137,7 @@ export function ManageMembers({
     <div className={styles.ManageMembers}>
       <h2 className={styles.ManageMembersTitle}>Members</h2>
       <h3 className={styles.ManageMembersSubtitle}>
-        Total Members: {numberWithCommas(members.length || 0)}
+        Total Members: {numberWithCommas((members && members.length) || 0)}
       </h3>
       <ReactTable
         columns={cols}
