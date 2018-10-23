@@ -1,6 +1,7 @@
 import sigUtil from 'eth-sig-util';
 import ethUtil from 'ethereumjs-util';
 import Web3 from 'web3';
+import ReactGA from 'react-ga';
 import Web3ServiceMock from './Web3ServiceMock';
 import { ETH_CONSTANT } from '../utils/constants';
 
@@ -35,6 +36,8 @@ export default class Web3Service {
     } else {
       this.web3 = new Web3(provider);
     }
+
+    this.trackMetamaskVersion();
     this.web3Remote = new Web3(provider);
   }
 
@@ -49,6 +52,19 @@ export default class Web3Service {
         })
         .catch((err) => reject(err));
     });
+  }
+
+  trackMetamaskVersion() {
+    const ga = ReactGA.ga();
+
+    if (window.web3) {
+      window.web3.version.getNode((er, res) => {
+        ga('create', 'UA-125567970-2', 'auto');
+        ga('send', 'pageview', {
+          MetamaskVersion: res,
+        });
+      });
+    }
   }
 
   async sendTransaction(address, value, cb) {
