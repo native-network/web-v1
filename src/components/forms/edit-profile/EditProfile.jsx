@@ -31,9 +31,8 @@ function EditProfile({ user, updateUser }) {
       }}
       onSubmit={(values) => {
         const { country, state } = values;
-        const updatedCountry =
-          typeof country === 'object' ? country.alpha2 : country;
-        const updatedState = typeof state === 'object' ? state.name : state;
+        const updatedCountry = country !== null ? country.alpha2 : '';
+        const updatedState = state !== null ? state.name : '';
 
         return updateUser(user, {
           ...values,
@@ -89,6 +88,7 @@ function EditProfile({ user, updateUser }) {
                     <label>State/Province/Region</label>
                     <DropDown
                       {...input}
+                      watchedValue={country}
                       itemToString={(item) => (item ? item.name : '')}
                       activeItem={activeState}
                       items={
