@@ -14,14 +14,14 @@ import {
   removeBlacklistMember,
 } from '../../../actions/communitiesActions';
 
-import styles from './ManageMembers.css';
+import styles from './CommunityTable.css';
 
 Object.assign(ReactTableDefaults, {
   minRows: 0,
   showPaginationBottom: false,
 });
 
-export function ManageMembers({
+export function CommunityTable({
   community,
   blacklistMember,
   removeBlacklistMember,
@@ -241,4 +241,4 @@ export default connect(
     user: state.user,
   }),
   mapDispatchToProps,
-)(ManageMembers);
+)(CommunityTable);
