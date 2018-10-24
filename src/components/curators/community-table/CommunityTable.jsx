@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,7 +28,28 @@ export function CommunityTable({
   removeBlacklistMember,
   user,
 }) {
-  const { members, blacklisted } = community;
+  // const { members, blacklisted } = community;
+  const { blacklisted } = community;
+  // console.log('members', members)
+  const members = [
+    {
+      address: "0x9Fef75af579bFFF2a9A7Cca1825Bf82DbbAD17dC",
+      alias: "Max",
+      city: null,
+      country: null,
+      createdAt: "2018-09-24T21:09:51.603Z",
+      email: null,
+      id: 21,
+      preferredContact: null,
+      role: "curator",
+      signing: null,
+      state: "yo",
+      status: null,
+      telegram: null,
+      updatedAt: "2018-10-04T14:53:29.578Z",
+      communityStatus: "pending"
+    },
+  ]
 
   const blacklistedIds = blacklisted.map((item) => item.id);
 
@@ -93,14 +115,19 @@ export function CommunityTable({
       Cell: ({ value }) => (value ? capitalizeFirstLetter(value) : ''),
     },
     {
-      Header: 'Blacklist',
-      accessor: 'isBlacklisted',
+      Header: 'Status',
+      accessor: 'communityStatus',
       resizable: false,
       width: 165,
       filterMethod: (filter, row) => {
+        console.log('filter', filter)
+        console.log('row', row)
         if (filter.value === 'all') return row;
-        if (filter.value === 'false') return !row.isBlacklisted;
-        if (filter.value === 'true') return row.isBlacklisted;
+        if (filter.value === 'pending') return row.communityStatus === 'pending';
+        if (filter.value === 'denied') return row.communityStatus === 'denied';
+        if (filter.value === 'approved') return row.communityStatus === 'approved';
+        if (filter.value === 'member') return row.communityStatus === 'member';
+        if (filter.value === 'blacklisted') return row.communityStatus === 'blacklisted';
       },
       Filter: ({ filter, onChange }) => (
         <select
@@ -109,30 +136,22 @@ export function CommunityTable({
           style={{ width: '100%' }}
         >
           <option value="all">All</option>
-          <option value="false">Unblacklisted</option>
-          <option value="true">Blacklisted</option>
+          <option value="pending">Pending</option>
+          <option value="denied">Denied</option>
+          <option value="approved">Approved</option>
+          <option value="member">Member</option>
+          <option value="blacklisted">Blacklisted</option>
         </select>
       ),
-      style: {
-        textAlign: 'center',
-      },
-      Cell: ({ value, row }) => {
-        const isUser = row.userId === user.id;
-        return (
-          <input
-            type="checkbox"
-            disabled={isUser}
-            checked={value}
-            onChange={() =>
-              value
-                ? removeBlacklistMember(community.id, row.userId)
-                : blacklistMember(community.id, row.userId)
-            }
-          />
-        );
-      },
+      Cell: ({ value }) => (value ? capitalizeFirstLetter(value) : ''),
+    },
+    {
+      Header: 'Actions',
+      resizable: false,
+      width: 165,
     },
   ];
+
   return (
     <div className={styles.ManageMembers}>
       <h2 className={styles.ManageMembersTitle}>Members</h2>
@@ -157,6 +176,7 @@ export function CommunityTable({
             city,
             role,
             preferredContact,
+            communityStatus,
           }) => ({
             userId: id,
             alias,
@@ -168,6 +188,7 @@ export function CommunityTable({
             city,
             role,
             preferredContact,
+            communityStatus,
             isBlacklisted: blacklistedIds.includes(id),
           }),
         )}
