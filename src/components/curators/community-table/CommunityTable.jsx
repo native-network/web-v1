@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,35 +21,8 @@ Object.assign(ReactTableDefaults, {
   showPaginationBottom: false,
 });
 
-export function CommunityTable({
-  community,
-  blacklistMember,
-  removeBlacklistMember,
-  user,
-}) {
-  // const { members, blacklisted } = community;
-  const { blacklisted } = community;
-  // console.log('members', members)
-  const members = [
-    {
-      address: "0x9Fef75af579bFFF2a9A7Cca1825Bf82DbbAD17dC",
-      alias: "Max",
-      city: null,
-      country: null,
-      createdAt: "2018-09-24T21:09:51.603Z",
-      email: null,
-      id: 21,
-      preferredContact: null,
-      role: "curator",
-      signing: null,
-      state: "yo",
-      status: null,
-      telegram: null,
-      updatedAt: "2018-10-04T14:53:29.578Z",
-      communityStatus: "pending"
-    },
-  ]
-
+export function CommunityTable({ community, user }) {
+  const { members, blacklisted } = community;
   const blacklistedIds = blacklisted.map((item) => item.id);
 
   const cols = [
@@ -120,14 +92,15 @@ export function CommunityTable({
       resizable: false,
       width: 165,
       filterMethod: (filter, row) => {
-        console.log('filter', filter)
-        console.log('row', row)
         if (filter.value === 'all') return row;
-        if (filter.value === 'pending') return row.communityStatus === 'pending';
+        if (filter.value === 'pending')
+          return row.communityStatus === 'pending';
         if (filter.value === 'denied') return row.communityStatus === 'denied';
-        if (filter.value === 'approved') return row.communityStatus === 'approved';
+        if (filter.value === 'approved')
+          return row.communityStatus === 'approved';
         if (filter.value === 'member') return row.communityStatus === 'member';
-        if (filter.value === 'blacklisted') return row.communityStatus === 'blacklisted';
+        if (filter.value === 'blacklisted')
+          return row.communityStatus === 'blacklisted';
       },
       Filter: ({ filter, onChange }) => (
         <select
