@@ -11,6 +11,7 @@ import styles from './ManageCommunityForm.css';
 import Button from '../../shared/button';
 import Icon from '../../shared/icon';
 import FileUploader from '../../shared/file-uploader';
+import Tooltip from '../../../components/shared/tooltip';
 
 const { web3 } = getWeb3ServiceInstance();
 
@@ -314,6 +315,20 @@ export default function ManageCommunityForm({ community, submitForm }) {
                     placeholder="100"
                   />
                   {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+            <Field name="privateCommnity">
+              {({ input }) => (
+                <div className={styles.FieldGroup}>
+                  <label>
+                    Private Community{' '}
+                    <Tooltip
+                      placement="topRight"
+                      message="Only approved members are able to join a private community."
+                    />
+                  </label>
+                  <input {...input} type="checkbox" />
                 </div>
               )}
             </Field>
