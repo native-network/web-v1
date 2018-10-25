@@ -1,10 +1,8 @@
-/* eslint-disable */
-import React, { Fragment } from 'react';
+import React from 'react';
 import tooltipImg from '../../../assets/img/tooltip.svg';
 import styles from './Tooltip.css';
 
-const Tooltip = ({ placement, message }) => {
-
+const Tooltip = ({ message }) => {
   return (
     <div className={styles.tooltip}>
       <img src={tooltipImg} />

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,17 +12,29 @@ export class Manage extends Component {
   handleSubmit(vals) {
     const { community } = this.props;
     const { membershipBenefits } = vals;
+    // shoud get this data back from the backend.
+    // mocking data here. 
+    this.props.community.privateCommunity = false
     const newVals = {
       ...community,
       ...vals,
       membershipBenefits:
         membershipBenefits.filter((benefit) => !!benefit.length) || [],
     };
+    
+    // console.log('vals', vals.privateCommunity)
+    // console.log('community', community.privateCommunity)
+
+
 
     this.props.updateCommunity(newVals);
   }
 
   render() {
+    // shoud get this data back from the backend.
+    // mocking data here. 
+    this.props.community.privateCommunity = false
+
     return this.props.isLoading ? (
       <Loader />
     ) : (

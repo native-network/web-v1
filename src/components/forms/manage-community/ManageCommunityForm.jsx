@@ -45,6 +45,7 @@ export default function ManageCommunityForm({ community, submitForm }) {
         telegramLink: community.telegramLink,
         quorum: community.quorum,
         tokenRequirements: fromWei(community.currency.minimumStake),
+        privateCommunity: community.privateCommunity,
       }}
       onSubmit={(values) => submitForm(values)}
       render={({ handleSubmit, pristine, invalid, form }) => (
@@ -318,17 +319,14 @@ export default function ManageCommunityForm({ community, submitForm }) {
                 </div>
               )}
             </Field>
-            <Field name="privateCommnity">
+            <Field name="privateCommunity" type="checkbox">
               {({ input }) => (
                 <div className={styles.FieldGroup}>
                   <label>
-                    Private Community{' '}
-                    <Tooltip
-                      placement="topRight"
-                      message="Only approved members are able to join a private community."
-                    />
+                    Private Community
+                    <Tooltip message="Only approved members are able to join a private community." />
                   </label>
-                  <input {...input} type="checkbox" />
+                  <input className="checkbox" {...input} type="checkbox" />
                 </div>
               )}
             </Field>

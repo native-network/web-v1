@@ -5,6 +5,7 @@
   display: inline-block;
   vertical-align: bottom;
   position: relative;
+  margin-left: 40px;
 
   & img {
     width: 19px;
@@ -29,7 +30,7 @@
     background-color: #fff;
 
     @media (--medium-viewport) {
-      left: 50px;
+      left: 10px;
     }
   }
 
