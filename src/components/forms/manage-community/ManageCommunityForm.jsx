@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -17,7 +19,7 @@ const { web3 } = getWeb3ServiceInstance();
 
 const { fromWei } = web3.utils;
 
-export default function ManageCommunityForm({ community, submitForm }) {
+export default function ManageCommunityForm({ community, submitForm, clickPrivateCommunity }) {
   // Render Error
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   // Validations
@@ -326,7 +328,8 @@ export default function ManageCommunityForm({ community, submitForm }) {
                     Private Community
                     <Tooltip message="Only approved members are able to join a private community." />
                   </label>
-                  <input className="checkbox" {...input} type="checkbox" />
+
+                  <input className="checkbox" {...input} type="checkbox" onClick={(e) => clickPrivateCommunity(e)} />
                 </div>
               )}
             </Field>
