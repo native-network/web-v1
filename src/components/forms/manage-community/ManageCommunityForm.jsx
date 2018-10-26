@@ -321,15 +321,14 @@ export default function ManageCommunityForm({ community, submitForm, clickPrivat
                 </div>
               )}
             </Field>
-            <Field name="privateCommunity" type="checkbox">
-              {({ input }) => (
+            <Field name="privateCommunity" type="checkbox" >
+              {( { input, meta } ) => console.log('hey', input, meta) || (
                 <div className={styles.FieldGroup}>
                   <label>
                     Private Community
                     <Tooltip message="Only approved members are able to join a private community." />
                   </label>
-
-                  <input className="checkbox" {...input} type="checkbox" onChange={(e) => clickPrivateCommunity(e)}/>
+                  <input className="checkbox" {...input} type="checkbox" />
                 </div>
               )}
             </Field>

@@ -1,28 +1,34 @@
-@import '../../../styles/media-queries.css';
-
-
+%label {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
 
 .modalContent {
     & .prompt {
       text-align: center;
-      color: var(--primary-color);
-      font-size: 1.25rem;
-      font-weight: 700;
+      @extend %label;
       margin: 0;
     }
 
     & .description {
-        text-align: center;
+      text-align: left;
     }
 
     & form {
-        & .fieldGroup {
+        margin-top: 2rem;
+
+        & .radioItem {
               margin-bottom: 1rem;
-            & label {
-              color: var(--primary-color);
-              font-size: 1.25rem;
-              font-weight: 700;
+            & input {
+                  margin-right: 1rem;
             }
+        }
+        & .warning {
+            text-align: center;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            color: var(--native-red);
         }
     }
 }

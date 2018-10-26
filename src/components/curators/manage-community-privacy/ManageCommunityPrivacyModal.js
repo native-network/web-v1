@@ -20,30 +20,28 @@ const ManageCommunityPrivacy = (props) => {
           Are you sure you want to set the community to private?
         </p>
         <p className={styles.description}>
-          By checking private community, only whitelisted members can join.
+          By checking private community, only approved users can join. And you
+          must choose to whitelist or blacklist all current users.
         </p>
 
         <form onSubmit={handleSubmit}>
-          <div className={styles.fieldGroup}>
+          <div className={styles.radioItem}>
             <label>
-              Whitelist all current members{' '}
-              <Tooltip
-                message="(Recommended) Afterwords you may want to 
-              Blacklist certain members in the community table"
-              />
+              <input name="list" type="radio" value="whitelist" />
+              Whitelist all current members
             </label>
-            <input name="whitelist" type="radio" value="whitelist" />
+            <Tooltip message="(Recommended) Afterwords you may want to Blacklist certain members in the community table" />
           </div>
-          <div className={styles.fieldGroup}>
+          <div className={styles.radioItem}>
             <label>
-              Blacklist all current members{' '}
-              <Tooltip message="Afterwords you may want to whitelist individual members" />
+              <input name="list" type="radio" value="blacklist" />
+              Blacklist all current members
             </label>
-            <input name="blacklist" type="radio" value="blacklist" />
+            <Tooltip message="Afterwords you may want to whitelist individual members in the community table" />
           </div>
-          <p>
-            Warning, you cannot change a private community to public at this
-            time.
+          <p className={styles.warning}>
+            Warning, you cannot change a private community back to public at
+            this time.
           </p>
 
           <div className={styles.buttonWrapper}>
