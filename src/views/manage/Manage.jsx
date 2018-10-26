@@ -12,6 +12,7 @@ import ManageCommunityPrivacyModal from '../../components/curators/manage-commun
 export class Manage extends Component {
   state = {
     isModalOpen: false,
+    initialLoad: false,
   };
 
   handleSubmit(vals) {
@@ -31,11 +32,12 @@ export class Manage extends Component {
   //   e.preventDefault()
   // }
 
-  handleClickPrivateCommunity(val, preVal) {
+  handleClickPrivateCommunity(e, value) {
     // const { value } = e.target;
-    console.log('val',val)
-    console.log('preVal',preVal)
+    console.log('val',  e)
+    console.log('preVal',value)
     this.setState({ isModalOpen: true });
+    value = true
   }
 
   closeModal() {
