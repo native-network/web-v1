@@ -1,0 +1,35 @@
+@import '../../../styles/media-queries.css';
+
+
+
+.modalContent {
+    & .prompt {
+      text-align: center;
+      color: var(--primary-color);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    & .description {
+        text-align: center;
+    }
+
+    & form {
+        & .fieldGroup {
+              margin-bottom: 1rem;
+            & label {
+              color: var(--primary-color);
+              font-size: 1.25rem;
+              font-weight: 700;
+            }
+        }
+    }
+}
+
+.buttonWrapper {
+    display: flex;
+    flex-direction: row;
+    flex: no-wrap;
+    justify-content: space-between;
+}
