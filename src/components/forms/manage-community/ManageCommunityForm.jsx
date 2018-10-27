@@ -19,7 +19,12 @@ const { web3 } = getWeb3ServiceInstance();
 
 const { fromWei } = web3.utils;
 
-export default function ManageCommunityForm({ community, submitForm, clickPrivateCommunity }) {
+export default function ManageCommunityForm({
+  community,
+  submitForm,
+  clickPrivateCommunity,
+  list,
+}) {
   // Render Error
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   // Validations
@@ -321,23 +326,32 @@ export default function ManageCommunityForm({ community, submitForm, clickPrivat
                 </div>
               )}
             </Field>
-            <Field name="privateCommunity" type="checkbox" >
-              {( { input, meta: {pristine} } ) => console.log('hey', input) || (
+            <Field
+              name="privateCommunity"
+              type="checkbox"
+              onChange={(v) => clickPrivateCommunity(v)}
+            >
+              {({ input, meta: { pristine }, onChange }) => (
                 <div className={styles.FieldGroup}>
                   <label>
                     Private Community
                     <Tooltip message="Only approved members are able to join a private community." />
                   </label>
-                  <input 
-                    className="checkbox" 
-                    {...input} 
-                    type="checkbox" 
-                    disabled={pristine && input.value} 
-                    onChange={(e) => clickPrivateCommunity(e)}/>
+                  <input
+                    className="checkbox"
+                    {...input}
+                    type="checkbox"
+                    disabled={pristine && input.value}
+                    value={community.privateCommunity}
+                    onChange={() => {
+                      onChange(input.value);
+                    }}
+                  />
                 </div>
               )}
             </Field>
           </div>
+          <input name="list" value={list} />
           <Button
             className={styles.SubmitButton}
             centered

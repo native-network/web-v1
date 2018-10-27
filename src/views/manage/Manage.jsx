@@ -13,6 +13,10 @@ export class Manage extends Component {
   state = {
     isModalOpen: false,
     initialLoad: false,
+    list: null,
+    // should get this data back from the backend.
+    // mocking data here.
+    privateComunity: false,
   };
 
   handleSubmit(vals) {
@@ -28,26 +32,25 @@ export class Manage extends Component {
     this.props.updateCommunity(newVals);
   }
 
-  // handleCommunityPrivacySubmit(e) {
-  //   e.preventDefault()
-  // }
+  handleSubmitModal(e) {
+    e.preventDefault();
+    this.setState({ list: e.target.list.value });
+    this.setState({ privateCommunity: true });
+    this.closeModal();
+  }
 
-  handleClickPrivateCommunity(e, value) {
-    // const { value } = e.target;
-    console.log('val',  e)
-    console.log('preVal',value)
-    this.setState({ isModalOpen: true });
-    value = true
+  handleClickPrivateCommunity(value) {
+    if (!value) {
+      this.setState({ isModalOpen: true });
+    }
   }
 
   closeModal() {
     this.setState({ isModalOpen: false });
-  };
-  //
+  }
+
   render() {
-    // shoud get this data back from the backend.
-    // mocking data here.
-    this.props.community.privateCommunity = false;
+    this.props.community.privateCommunity = this.state.privateCommunity;
 
     return this.props.isLoading ? (
       <Loader />
@@ -57,10 +60,12 @@ export class Manage extends Component {
           community={this.props.community}
           submitForm={this.handleSubmit.bind(this)}
           clickPrivateCommunity={this.handleClickPrivateCommunity.bind(this)}
+          list={this.state.list}
         />
         <ManageCommunityPrivacyModal
           isModalOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
+          handleSubmit={this.handleSubmitModal.bind(this)}
         />
       </Fragment>
     );
