@@ -6,7 +6,7 @@ import Tooltip from '../../shared/tooltip';
 import styles from './ManageCommunityPrivacyModal.css';
 
 const ManageCommunityPrivacy = (props) => {
-  const { isModalOpen, closeModal, handleSubmit } = props;
+  const { isModalOpen, closeModal, handleSubmit, handleUndo } = props;
   return (
     <Modal
       hasCloseButton
@@ -45,7 +45,12 @@ const ManageCommunityPrivacy = (props) => {
           </p>
 
           <div className={styles.buttonWrapper}>
-            <Button theme="tertiary" content="Undo" type="button" />
+            <Button
+              theme="tertiary"
+              content="Undo"
+              type="button"
+              clickHandler={handleUndo}
+            />
             <Button theme="secondary" type="submit" content="Continue" />
           </div>
         </form>

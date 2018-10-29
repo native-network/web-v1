@@ -14,9 +14,7 @@ export class Manage extends Component {
     isModalOpen: false,
     initialLoad: false,
     list: null,
-    // should get this data back from the backend.
-    // mocking data here.
-    privateComunity: false,
+    privateSelected: false,
   };
 
   handleSubmit(vals) {
@@ -35,12 +33,19 @@ export class Manage extends Component {
   handleSubmitModal(e) {
     e.preventDefault();
     this.setState({ list: e.target.list.value });
-    this.setState({ privateCommunity: true });
+    this.setState({ privateSelected: true });
+    this.props.community.privateCommunity = true;
+    this.closeModal();
+  }
+
+  handleUndoModal(e) {
+    e.preventDefault();
+    this.props.community.privateCommunity = false;
     this.closeModal();
   }
 
   handleClickPrivateCommunity(value) {
-    if (!value) {
+    if (value) {
       this.setState({ isModalOpen: true });
     }
   }
@@ -50,8 +55,8 @@ export class Manage extends Component {
   }
 
   render() {
-    this.props.community.privateCommunity = this.state.privateCommunity;
-
+    this.props.community.privateCommunity = !!this.props.community
+      .privateCommunity;
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -61,11 +66,13 @@ export class Manage extends Component {
           submitForm={this.handleSubmit.bind(this)}
           clickPrivateCommunity={this.handleClickPrivateCommunity.bind(this)}
           list={this.state.list}
+          privateSelected={this.state.privateSelected}
         />
         <ManageCommunityPrivacyModal
           isModalOpen={this.state.isModalOpen}
           closeModal={this.closeModal.bind(this)}
           handleSubmit={this.handleSubmitModal.bind(this)}
+          handleUndo={this.handleUndoModal.bind(this)}
         />
       </Fragment>
     );

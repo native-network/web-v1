@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Form, Field } from 'react-final-form';
+import { OnChange } from 'react-final-form-listeners';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
@@ -24,6 +25,7 @@ export default function ManageCommunityForm({
   submitForm,
   clickPrivateCommunity,
   list,
+  privateSelected,
 }) {
   // Render Error
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
@@ -326,12 +328,8 @@ export default function ManageCommunityForm({
                 </div>
               )}
             </Field>
-            <Field
-              name="privateCommunity"
-              type="checkbox"
-              onChange={(v) => clickPrivateCommunity(v)}
-            >
-              {({ input, meta: { pristine }, onChange }) => (
+            <Field name="privateCommunity" type="checkbox">
+              {({ input }) => (
                 <div className={styles.FieldGroup}>
                   <label>
                     Private Community
@@ -341,23 +339,27 @@ export default function ManageCommunityForm({
                     className="checkbox"
                     {...input}
                     type="checkbox"
-                    disabled={pristine && input.value}
+                    disabled={!privateSelected && community.privateCommunity}
                     value={community.privateCommunity}
-                    onChange={() => {
-                      onChange(input.value);
-                    }}
                   />
                 </div>
               )}
             </Field>
+            <OnChange name="privateCommunity">
+              {(value) => {
+                if (value === true) {
+                  clickPrivateCommunity(value);
+                }
+              }}
+            </OnChange>
           </div>
-          <input name="list" value={list} />
+          <input name="list" defaultValue={list ? list : ''} />
           <Button
             className={styles.SubmitButton}
             centered
             type="submit"
             theme="secondary"
-            disabled={pristine || invalid}
+            disabled={(pristine || invalid) && !privateSelected}
             content="Save"
           />
         </form>
