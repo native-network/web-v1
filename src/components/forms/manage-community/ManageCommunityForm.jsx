@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
@@ -341,16 +339,17 @@ export default function ManageCommunityForm({
                     type="checkbox"
                     disabled={!privateSelected && community.isPrivate}
                     value={community.isPrivate}
-                  /> {list ? list + " all users in current community" : ''}
-             
+                  />
+                  {list && community.isPrivate
+                    ? list + ' all users in current community'
+                    : ''}
                 </div>
               )}
             </Field>
             <OnChange name="isPrivate">
               {(value) => {
-                if (value === true) {
-                  clickPrivateCommunity(value);
-                }
+                clickPrivateCommunity(value);
+                return true;
               }}
             </OnChange>
           </div>

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,16 +11,16 @@ import ManageCommunityPrivacyModal from '../../components/curators/manage-commun
 export class Manage extends Component {
   state = {
     isModalOpen: false,
-    list: null,
+    list: 'Whitelist',
     formPCSelectedTouched: false,
   };
 
   handleSubmit(vals) {
     const { community } = this.props;
     const { membershipBenefits } = vals;
-    const { list } = this.state
+    const { list } = this.state;
 
-    community.blackListAll = (list === "Blacklist")
+    community.blackListAll = list === 'Blacklist';
 
     const newVals = {
       ...community,
@@ -37,12 +36,15 @@ export class Manage extends Component {
     e.preventDefault();
     this.setState({ list: e.target.list.value });
     this.setState({ formPCSelectedTouched: true });
-    // this.props.community.privateCommunity = true;
     this.closeModal();
   }
 
   handleUndoModal(e) {
     e.preventDefault();
+    this.setState({
+      list: '',
+      formPCSelectedTouched: false,
+    });
     this.closeModal();
   }
 
@@ -50,6 +52,8 @@ export class Manage extends Component {
     if (value) {
       this.setState({ isModalOpen: true });
     }
+
+    this.setState({ list: '' });
   }
 
   closeModal() {
@@ -57,7 +61,7 @@ export class Manage extends Component {
   }
 
   render() {
-    this.props.community.isPrivate = false
+    this.props.community.isPrivate = this.state.formPCSelectedTouched;
 
     return this.props.isLoading ? (
       <Loader />
