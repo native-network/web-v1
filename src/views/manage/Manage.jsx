@@ -19,6 +19,9 @@ export class Manage extends Component {
   handleSubmit(vals) {
     const { community } = this.props;
     const { membershipBenefits } = vals;
+    const { list } = this.state
+
+    community.blackListAll = (list === "Blacklist")
 
     const newVals = {
       ...community,
@@ -26,6 +29,9 @@ export class Manage extends Component {
       membershipBenefits:
         membershipBenefits.filter((benefit) => !!benefit.length) || [],
     };
+
+    console.log('newVals', newVals)
+
     this.props.updateCommunity(newVals);
   }
 
