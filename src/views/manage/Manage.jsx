@@ -30,8 +30,6 @@ export class Manage extends Component {
         membershipBenefits.filter((benefit) => !!benefit.length) || [],
     };
 
-    console.log('newVals', newVals)
-
     this.props.updateCommunity(newVals);
   }
 
@@ -59,8 +57,8 @@ export class Manage extends Component {
   }
 
   render() {
-    this.props.community.isPrivate = !!this.props.community
-    .isPrivate;
+    this.props.community.isPrivate = false
+
     return this.props.isLoading ? (
       <Loader />
     ) : (

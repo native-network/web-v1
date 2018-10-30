@@ -37,7 +37,6 @@ export const addNewTask = (task) => {
   return async (dispatch) => {
     dispatch({ type: actions.ADD_NEW_TASK });
     dispatch(beginAjaxCall());
-
     try {
       const { data } = await post('tasks', task);
 
