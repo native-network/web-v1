@@ -155,6 +155,7 @@ const cols = [
 
 export class Dashboard extends Component {
   state = {
+    isLoading: true,
     isModalOpen: false,
     activeCommunity: {},
     sendCurrency: this.props.walletCurrencies.find(
@@ -184,6 +185,10 @@ export class Dashboard extends Component {
         receiveValue: undefined,
         sendValue: undefined,
       });
+    }
+
+    if (prevProps.isLoading !== this.props.isLoading && !this.props.isLoading) {
+      this.setState({ isLoading: false });
     }
   }
 
@@ -311,7 +316,7 @@ export class Dashboard extends Component {
     );
     const nativeBalance = nativeCurrency && nativeCurrency.balance;
 
-    return this.props.isLoading ? (
+    return this.state.isLoading ? (
       <Loader />
     ) : (
       <Fragment>
