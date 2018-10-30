@@ -54,7 +54,7 @@ export default function ManageCommunityForm({
         telegramLink: community.telegramLink,
         quorum: community.quorum,
         tokenRequirements: fromWei(community.currency.minimumStake),
-        privateCommunity: community.privateCommunity,
+        isPrivate: community.isPrivate,
       }}
       onSubmit={(values) => submitForm(values)}
       render={({ handleSubmit, pristine, invalid, form }) => (
@@ -328,7 +328,7 @@ export default function ManageCommunityForm({
                 </div>
               )}
             </Field>
-            <Field name="privateCommunity" type="checkbox">
+            <Field name="isPrivate" type="checkbox">
               {({ input }) => (
                 <div className={styles.FieldGroup}>
                   <label>
@@ -339,13 +339,15 @@ export default function ManageCommunityForm({
                     className="checkbox"
                     {...input}
                     type="checkbox"
-                    disabled={!privateSelected && community.privateCommunity}
-                    value={community.privateCommunity}
+                    disabled={!privateSelected && community.isPrivate}
+                    value={community.isPrivate}
                   />
+                    {!privateSelected}
+                  { community.isPrivate}
                 </div>
               )}
             </Field>
-            <OnChange name="privateCommunity">
+            <OnChange name="isPrivate">
               {(value) => {
                 if (value === true) {
                   clickPrivateCommunity(value);
@@ -353,7 +355,6 @@ export default function ManageCommunityForm({
               }}
             </OnChange>
           </div>
-          <input name="list" defaultValue={list ? list : ''} />
           <Button
             className={styles.SubmitButton}
             centered

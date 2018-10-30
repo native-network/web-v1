@@ -27,7 +27,12 @@ const ManageCommunityPrivacy = (props) => {
         <form onSubmit={handleSubmit}>
           <div className={styles.radioItem}>
             <label>
-              <input name="list" type="radio" value="whitelist" />
+              <input
+                name="list"
+                type="radio"
+                value="whitelist"
+                defaultChecked
+              />
               Whitelist all current members
             </label>
             <Tooltip message="(Recommended) Afterwords you may want to Blacklist certain members in the community table" />

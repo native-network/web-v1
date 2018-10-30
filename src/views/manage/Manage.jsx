@@ -14,7 +14,7 @@ export class Manage extends Component {
     isModalOpen: false,
     initialLoad: false,
     list: null,
-    privateSelected: false,
+    privateSelected: true,
   };
 
   handleSubmit(vals) {
@@ -55,8 +55,16 @@ export class Manage extends Component {
   }
 
   render() {
-    this.props.community.privateCommunity = !!this.props.community
-      .privateCommunity;
+   
+    console.log(this.props.community.isPrivate)
+    console.log(!!this.props.community.isPrivate)
+    // console.log(!this.props.community.isPrivate)
+
+    // if()
+    // this.props.community.isPrivate = !!this.props.community
+    //   .isPrivate;
+
+      // console.log('this.props.community.isPrivate ', this.props.community.isPrivate )
     return this.props.isLoading ? (
       <Loader />
     ) : (
