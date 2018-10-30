@@ -12,9 +12,8 @@ import ManageCommunityPrivacyModal from '../../components/curators/manage-commun
 export class Manage extends Component {
   state = {
     isModalOpen: false,
-    initialLoad: false,
     list: null,
-    privateSelected: true,
+    formPCSelectedTouched: false,
   };
 
   handleSubmit(vals) {
@@ -33,14 +32,13 @@ export class Manage extends Component {
   handleSubmitModal(e) {
     e.preventDefault();
     this.setState({ list: e.target.list.value });
-    this.setState({ privateSelected: true });
-    this.props.community.privateCommunity = true;
+    this.setState({ formPCSelectedTouched: true });
+    // this.props.community.privateCommunity = true;
     this.closeModal();
   }
 
   handleUndoModal(e) {
     e.preventDefault();
-    this.props.community.privateCommunity = false;
     this.closeModal();
   }
 
@@ -55,16 +53,8 @@ export class Manage extends Component {
   }
 
   render() {
-   
-    console.log(this.props.community.isPrivate)
-    console.log(!!this.props.community.isPrivate)
-    // console.log(!this.props.community.isPrivate)
-
-    // if()
-    // this.props.community.isPrivate = !!this.props.community
-    //   .isPrivate;
-
-      // console.log('this.props.community.isPrivate ', this.props.community.isPrivate )
+    this.props.community.isPrivate = !!this.props.community
+    .isPrivate;
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -74,7 +64,7 @@ export class Manage extends Component {
           submitForm={this.handleSubmit.bind(this)}
           clickPrivateCommunity={this.handleClickPrivateCommunity.bind(this)}
           list={this.state.list}
-          privateSelected={this.state.privateSelected}
+          privateSelected={this.state.formPCSelectedTouched}
         />
         <ManageCommunityPrivacyModal
           isModalOpen={this.state.isModalOpen}
@@ -86,7 +76,6 @@ export class Manage extends Component {
     );
   }
 }
-// submitForm={this.handleCommunityPrivacySubmit.bind(this)}
 
 export const mapDispatchToProps = (dispatch) => {
   return {

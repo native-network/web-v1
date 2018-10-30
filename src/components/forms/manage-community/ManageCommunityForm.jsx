@@ -341,9 +341,8 @@ export default function ManageCommunityForm({
                     type="checkbox"
                     disabled={!privateSelected && community.isPrivate}
                     value={community.isPrivate}
-                  />
-                    {!privateSelected}
-                  { community.isPrivate}
+                  /> {list ? list + " all users in current community" : ''}
+             
                 </div>
               )}
             </Field>

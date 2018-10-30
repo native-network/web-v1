@@ -30,7 +30,7 @@ const ManageCommunityPrivacy = (props) => {
               <input
                 name="list"
                 type="radio"
-                value="whitelist"
+                value="Whitelist"
                 defaultChecked
               />
               Whitelist all current members
@@ -39,7 +39,7 @@ const ManageCommunityPrivacy = (props) => {
           </div>
           <div className={styles.radioItem}>
             <label>
-              <input name="list" type="radio" value="blacklist" />
+              <input name="list" type="radio" value="Blacklist" />
               Blacklist all current members
             </label>
             <Tooltip message="Afterwords you may want to whitelist individual members in the community table" />
