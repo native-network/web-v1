@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import { communitiesActions as actions } from '../actions/actionTypes';
 import { initialState } from './initialState';
 
@@ -85,20 +87,22 @@ export default function communitiesReducer(
             c.id === action.community.id ? { ...c, ...action.community } : c,
         ),
       };
-    case actions.BLACKLIST_COMPLETE:
+    case actions.UPDATE_USER_STATUS_COMPLETE:
+      console.log('action', action)
       return {
         ...state,
-        communities: state.communities.map(
-          (c) =>
-            c.id === action.communityId
-              ? { ...c, blacklisted: action.blacklist }
-              : c,
-        ),
+        updateUserStatusError: '',
+        // communities: state.communities.map(
+        //   (c) =>
+        //     c.id === action.communityId
+        //       ? { ...c, blacklisted: action.blacklist }
+        //       : c,
+        // ),
       };
-    case actions.BLACKLIST_ISSUE:
+    case actions.UPDATE_USER_STATUS_ERROR:
       return {
         ...state,
-        blacklistError: action.error,
+        updateUserStatusError: action.error,
       };
     case actions.UPDATE_COMMUNITY_ERROR:
       return {

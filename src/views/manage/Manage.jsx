@@ -61,7 +61,8 @@ export class Manage extends Component {
   }
 
   render() {
-    this.props.community.isPrivate = this.state.formPCSelectedTouched;
+    // this.props.community.isPrivate = this.state.formPCSelectedTouched;
+    // this.props.community.isPrivate = false;
 
     return this.props.isLoading ? (
       <Loader />

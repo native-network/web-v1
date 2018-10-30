@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,8 +12,7 @@ import {
 } from '../../../utils/helpers';
 import countries from '../../../utils/countries.json';
 import {
-  blacklistMember,
-  removeBlacklistMember,
+  updateUserStatus,
 } from '../../../actions/communitiesActions';
 
 import styles from './CommunityTable.css';
@@ -88,19 +89,17 @@ export function CommunityTable({ community, user }) {
     },
     {
       Header: 'Status',
-      accessor: 'communityStatus',
+      accessor: 'userStatus',
       resizable: false,
       width: 165,
       filterMethod: (filter, row) => {
         if (filter.value === 'all') return row;
-        if (filter.value === 'pending')
-          return row.communityStatus === 'pending';
-        if (filter.value === 'denied') return row.communityStatus === 'denied';
-        if (filter.value === 'approved')
-          return row.communityStatus === 'approved';
-        if (filter.value === 'member') return row.communityStatus === 'member';
+        if (filter.value === 'pending') return row.userStatus === 'pending';
+        if (filter.value === 'denied') return row.userStatus === 'denied';
+        if (filter.value === 'approved') return row.userStatus === 'approved';
+        if (filter.value === 'member') return row.userStatus === 'member';
         if (filter.value === 'blacklisted')
-          return row.communityStatus === 'blacklisted';
+          return row.userStatus === 'blacklisted';
       },
       Filter: ({ filter, onChange }) => (
         <select
@@ -121,7 +120,21 @@ export function CommunityTable({ community, user }) {
     {
       Header: 'Actions',
       resizable: false,
-      width: 165,
+      width: 190,
+      sortable: false,
+      filterable: false,
+      Cell: ({row}) => {
+        const { userId, userStatus } = row
+        const requestBody = {
+          communityId: community.id,
+          userId: userId,
+          status: userStatus,
+        }
+        const action = userStatus === 'member' ? 'Blacklist user' : "Whitelist user"
+        const theme = action === 'Whitelist user' ? 'tertiary' : 'primary'
+ 
+        return <Button theme={theme} clickHandler={() => updateUserStatus(requestBody)} content={action} />
+      }
     },
   ];
 
@@ -149,7 +162,7 @@ export function CommunityTable({ community, user }) {
             city,
             role,
             preferredContact,
-            communityStatus,
+            userStatus,
           }) => ({
             userId: id,
             alias,
@@ -161,7 +174,7 @@ export function CommunityTable({ community, user }) {
             city,
             role,
             preferredContact,
-            communityStatus,
+            userStatus,
             isBlacklisted: blacklistedIds.includes(id),
           }),
         )}
@@ -225,8 +238,7 @@ export function CommunityTable({ community, user }) {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    blacklistMember: bindActionCreators(blacklistMember, dispatch),
-    removeBlacklistMember: bindActionCreators(removeBlacklistMember, dispatch),
+    updateUserStatus: bindActionCreators(updateUserStatus, dispatch),
   };
 };
 
