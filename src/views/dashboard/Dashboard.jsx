@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -5,6 +7,7 @@ import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
+import PrivateCommunityRequest from '../../components/dialogs/private-community-request';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
@@ -303,6 +306,28 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: false });
   }
 
+  renderModalContent() {
+    if (this.state.activeCommunity) {
+      if (this.state.activeCommunity.isPrivate) {
+        return (
+          <PrivateCommunityRequest
+            community={this.state.activeCommunity}
+            user={this.props.user}
+          />
+        );
+      }
+      return (
+        <CommunityStake
+          loading={this.props.isCurrencyLoading}
+          user={this.props.user}
+          populateNativeBalance={this.populateConverter.bind(this)}
+          community={this.state.activeCommunity}
+          dismissDialog={this.closeModal.bind(this)}
+        />
+      );
+    }
+  }
+
   render() {
     const userEth = this.props.user.wallet.currencies.find(
       (c) => c.symbol === 'ETH',
@@ -330,13 +355,7 @@ export class Dashboard extends Component {
               closeModal={this.closeModal.bind(this)}
               maxWidth="1020px"
             >
-              <CommunityStake
-                loading={this.props.isCurrencyLoading}
-                user={this.props.user}
-                populateNativeBalance={this.populateConverter.bind(this)}
-                community={this.state.activeCommunity}
-                dismissDialog={this.closeModal.bind(this)}
-              />
+              {this.renderModalContent(this.state)}
             </Modal>
             <div className={styles.DashboardBanner}>
               <div className={styles.TokenBalances}>
@@ -416,11 +435,21 @@ export class Dashboard extends Component {
                         .toString(),
                       price: this.communityPrice(community),
                       actions: {
-                        name: this.props.user.memberOf.find(
-                          (c) => c.id === community.id,
-                        )
-                          ? `Get ${currency && currency.symbol}`
-                          : `Support Community`,
+                        name: () => {
+                          const isMember = this.props.user.memberOf.find(
+                            (c) => c.id === community.id,
+                          )
+                            ? true
+                            : false;
+
+                          if (isMember) {
+                            return `Get ${currency && currency.symbol}`;
+                          }
+                          if (!community.isPrivate && !isMember) {
+                            return 'Support Community';
+                          }
+                          return 'Request Membership';
+                        },
                         clickHandler: () => this.openModal(community),
                         communitySymbol: community.currency.symbol,
                       },
@@ -435,6 +464,12 @@ export class Dashboard extends Component {
     );
   }
 }
+
+// name: this.props.user.memberOf.find(
+//   (c) => c.id === community.id,
+// )
+//   ? `Get ${currency && currency.symbol}`
+//   : `Support Community`,
 
 const mapDispatchToProps = (dispatch) => {
   return {

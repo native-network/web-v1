@@ -61,20 +61,20 @@ function formatInitiatives(polls, tasks, projects, community) {
       address: 'fake',
       userStatus: 'member',
       alias: 'Max',
-      id: '1'
+      id: 31
     },
     { 
       alias: 'Nick',
       address: 'fake',
       userStatus: 'member',
-      id: '2'
+      id: 32
 
     },
     { 
       alias: 'Alex',
       address: 'fake',
       userStatus: 'blacklisted',
-      id: '3'
+      id: 33
     }
   ]
   return [

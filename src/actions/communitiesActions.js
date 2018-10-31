@@ -221,7 +221,10 @@ export const getCommunityMembersError = (error) => {
 export const updateUserStatus = ({ communityId, userId, status }) => {
   console.log('Action', communityId, userId, status)
   return async (dispatch) => {
-    try {
+    console.log('entereted returned function for redux thunk')
+    try { 
+      // dispatch({ type: actions.UPDATE_USER_STATUS });
+      
       const { data } = await post(
         `communities/${+communityId}/updateUserStatus`,
         {communityId, userId, status},
@@ -245,7 +248,7 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
 
 // export const removeBlacklistMember = (communityId, userId) => {
 //   return async (dispatch) => {
-//     dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
+    // dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
 
 //     try {
 //       const { data } = await post(
