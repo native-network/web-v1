@@ -156,13 +156,17 @@ export const addNewCommunityError = (error) => {
   };
 };
 
-export const updateCommunity = (community) => {
+export const updateCommunity = (community, blacklistAll = '') => {
+  const requestObjet = {
+    community,
+    blacklistAll
+  }
   return async (dispatch) => {
     dispatch({ type: actions.UPDATE_COMMUNITY });
     dispatch(beginAjaxCall());
 
     try {
-      const { data } = await put(`communities/${community.id}`, community);
+      const { data } = await put(`communities/${community.id}`, requestObjet);
 
       dispatch(toastrSuccess(`${community.name} has been updated.`));
       return dispatch(updateCommunitySuccess(data));

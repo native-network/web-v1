@@ -340,9 +340,7 @@ export default function ManageCommunityForm({
                     disabled={!privateSelected && community.isPrivate}
                     value={community.isPrivate}
                   />
-                  {list && community.isPrivate
-                    ? list + ' all users in current community'
-                    : ''}
+                  {list ? list + ' all users in current community' : ''}
                 </div>
               )}
             </Field>

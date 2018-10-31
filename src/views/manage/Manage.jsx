@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +13,7 @@ import ManageCommunityPrivacyModal from '../../components/curators/manage-commun
 export class Manage extends Component {
   state = {
     isModalOpen: false,
-    list: 'Whitelist',
+    list: '',
     formPCSelectedTouched: false,
   };
 
@@ -20,7 +22,7 @@ export class Manage extends Component {
     const { membershipBenefits } = vals;
     const { list } = this.state;
 
-    community.blackListAll = list === 'Blacklist';
+    const blacklistAll = list === 'Blacklist';
 
     const newVals = {
       ...community,
@@ -28,14 +30,15 @@ export class Manage extends Component {
       membershipBenefits:
         membershipBenefits.filter((benefit) => !!benefit.length) || [],
     };
-
-    this.props.updateCommunity(newVals);
+    console.log('new vals', newVals)
+    this.props.updateCommunity(newVals, blacklistAll);
   }
 
   handleSubmitModal(e) {
     e.preventDefault();
     this.setState({ list: e.target.list.value });
     this.setState({ formPCSelectedTouched: true });
+    // console.log('this.state', this.state)
     this.closeModal();
   }
 
@@ -61,8 +64,8 @@ export class Manage extends Component {
   }
 
   render() {
-    // this.props.community.isPrivate = this.state.formPCSelectedTouched;
-    // this.props.community.isPrivate = false;
+    
+    // console.log('community', this.props.community)
 
     return this.props.isLoading ? (
       <Loader />
