@@ -1,9 +1,9 @@
 /*eslint-disable */
 import React from 'react';
-import styles from './PrivateCommunityRequest.css';
+import styles from './CommunityPrivateUserRequest.css';
 import Button from '../../shared/button';
 
-const PrivateCommunityRequest = ({ community, user }) => {
+const CommunityPrivateUserRequest = ({ community, user }) => {
   const { name } = community;
   const { address } = user;
 
@@ -33,4 +33,4 @@ const PrivateCommunityRequest = ({ community, user }) => {
   );
 };
 
-export default PrivateCommunityRequest;
+export default CommunityPrivateUserRequest;

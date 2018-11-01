@@ -7,7 +7,7 @@ import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
-import PrivateCommunityRequest from '../../components/dialogs/private-community-request';
+import CommunityPrivateUserRequest from '../../components/forms/community-private-user-request';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
@@ -310,7 +310,7 @@ export class Dashboard extends Component {
     if (this.state.activeCommunity) {
       if (this.state.activeCommunity.isPrivate) {
         return (
-          <PrivateCommunityRequest
+          <CommunityPrivateUserRequest
             community={this.state.activeCommunity}
             user={this.props.user}
           />
