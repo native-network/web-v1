@@ -22,7 +22,7 @@ Object.assign(ReactTableDefaults, {
   showPaginationBottom: false,
 });
 
-export function CommunityTable({ community, user }) {
+export function CommunityTable({ community, user, updateUserStatus }) {
   const { members, blacklisted } = community;
   const blacklistedIds = blacklisted.map((item) => item.id);
 
@@ -132,7 +132,7 @@ export function CommunityTable({ community, user }) {
         }
         const action = userStatus === 'member' ? 'Blacklist user' : "Whitelist user"
         const theme = action === 'Whitelist user' ? 'tertiary' : 'primary'
- 
+
         return <Button theme={theme} clickHandler={() => updateUserStatus(requestBody)} content={action} />
       }
     },
