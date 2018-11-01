@@ -6,13 +6,50 @@
   margin: 0 auto;
   text-align: center;
 
-  & textArea {
-    height: 100px;
+  & h1 {
+    color: var(--primary-color);
+  }
+
+  & input {
+    margin: 0.4rem 0;
+  }
+
+  & .address {
+    margin-top: 0.4rem;
+    margin-bottom: 3rem;
+  }
+
+  & .descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    & p {
+      align-self: flex-start;
+      margin: 0;
+    }
+
+    & textarea {
+      height: 100px;
+      margin: 0.4rem 0;
+    }
+
+    & span {
+      align-self: flex-end;
+    }
+  }
+
+  & .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & span {
+      margin-top: 1.8rem;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 }
-
-.FieldGroup {
-  composes: FieldGroup from '../../forms/styles.css';
-}
-
-

@@ -1,11 +1,11 @@
 /*eslint-disable */
 import React from 'react';
 import styles from './PrivateCommunityRequest.css';
+import Button from '../../shared/button';
 
 const PrivateCommunityRequest = ({ community, user }) => {
   const { name } = community;
   const { address } = user;
-
 
   return (
     <form className={styles.form}>
@@ -14,21 +14,23 @@ const PrivateCommunityRequest = ({ community, user }) => {
       <input type="text" />
 
       <label>Wallet Address</label>
-      <p>{address}</p>
+      <p className={styles.address}>{address}</p>
 
-      <p>
-        Please provide a short message describing why you would like to join our
-        community.
-      </p>
-      <textarea />
-      
-      <button>Request to Join</button>
-      <a>Cancel</a>
+      <div className={styles.descriptionContainer}>
+        <p>
+          Please provide a short message describing why you would like to join
+          our community.
+        </p>
+        <textarea />
+        <span>280 Characters Max</span>
+      </div>
+
+      <div className={styles.buttonContainer}>
+        <Button theme="primary" content="Request to Join Community" />
+        <span>Cancel</span>
+      </div>
     </form>
   );
 };
-{
-  /* <span>{wallet}</span> */
-}
 
 export default PrivateCommunityRequest;
