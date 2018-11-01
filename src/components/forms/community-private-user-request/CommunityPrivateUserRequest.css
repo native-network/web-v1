@@ -14,6 +14,11 @@
     margin: 0.4rem 0;
   }
 
+  & .error {
+    margin-top: 0;
+    color: var(--warm-coral);
+  }
+
   & .address {
     margin-top: 0.4rem;
     margin-bottom: 3rem;
@@ -33,6 +38,11 @@
       height: 100px;
       margin: 0.4rem 0;
     }
+
+    & .error {
+      align-self: center;
+    }
+
 
     & span {
       align-self: flex-end;
