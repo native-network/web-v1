@@ -5,37 +5,40 @@
 }
 
 .modalContent {
-    & .prompt {
+  & .prompt {
+    @extend %label;
+
+    text-align: center;
+    margin: 0;
+  }
+
+  & .description {
+    text-align: left;
+  }
+
+  & form {
+    margin-top: 2rem;
+
+    & .radioItem {
+      margin-bottom: 1rem;
+
+      & input {
+        margin-right: 1rem;
+      }
+    }
+
+    & .warning {
       text-align: center;
-      @extend %label;
-      margin: 0;
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+      color: var(--native-red);
     }
-
-    & .description {
-      text-align: left;
-    }
-
-    & form {
-        margin-top: 2rem;
-
-        & .radioItem {
-              margin-bottom: 1rem;
-            & input {
-                  margin-right: 1rem;
-            }
-        }
-        & .warning {
-            text-align: center;
-            margin-top: 3rem;
-            margin-bottom: 2rem;
-            color: var(--native-red);
-        }
-    }
+  }
 }
 
 .buttonWrapper {
-    display: flex;
-    flex-direction: row;
-    flex: no-wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  flex: no-wrap;
+  justify-content: space-between;
 }
