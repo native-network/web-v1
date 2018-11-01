@@ -2,28 +2,33 @@
 import React from 'react';
 import styles from './PrivateCommunityRequest.css';
 
-const PrivateCommunityRequest = ({community, user}) => {
-  const { name } = community
-  const { address } = user
+const PrivateCommunityRequest = ({ community, user }) => {
+  const { name } = community;
+  const { address } = user;
 
-//   console.log('user', wallet)
 
-  return  (
-      <div className={styles.content}>
-        <h1>Join {name} Community</h1>
-        <label>Please Enter your email</label>
-        <input type="text" />
+  return (
+    <form className={styles.form}>
+      <h1>Join {name} Community</h1>
+      <label>Please Enter your email</label>
+      <input type="text" />
 
-        <label>{address}</label>
+      <label>Wallet Address</label>
+      <p>{address}</p>
 
-        <p>Please provide a short message describing why you would like to join our community.</p>
-        <textarea></textarea>
-
-        <button>Request to Join</button>
-        <a>Cancel</a>
-        </div>
-  )
+      <p>
+        Please provide a short message describing why you would like to join our
+        community.
+      </p>
+      <textarea />
+      
+      <button>Request to Join</button>
+      <a>Cancel</a>
+    </form>
+  );
 };
-{/* <span>{wallet}</span> */}
+{
+  /* <span>{wallet}</span> */
+}
 
 export default PrivateCommunityRequest;

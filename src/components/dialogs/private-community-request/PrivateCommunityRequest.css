@@ -1,4 +1,18 @@
-.content {
-    height: 100%;
-    border: 1px solid red;
+@import '../../forms/styles.css';
+
+.form {
+  composes: FormStyles from '../../forms/styles.css';
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+
+  & textArea {
+    height: 100px;
+  }
 }
+
+.FieldGroup {
+  composes: FieldGroup from '../../forms/styles.css';
+}
+
+
