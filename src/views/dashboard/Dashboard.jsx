@@ -313,6 +313,7 @@ export class Dashboard extends Component {
           <CommunityPrivateUserRequest
             community={this.state.activeCommunity}
             user={this.props.user}
+            closeModal={this.closeModal.bind(this)}
           />
         );
       }

@@ -1,12 +1,19 @@
 /*eslint-disable */
 import React, { Fragment } from 'react';
 import { Form, Field } from 'react-final-form';
-// import { Field as Field5 } from 'react-final-form-html5-validation';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import { requestPrivateCommunityAccess } from '../../../actions/communitiesActions';
 import styles from './CommunityPrivateUserRequest.css';
 import Button from '../../shared/button';
 
-const CommunityPrivateUserRequest = ({ community, user }) => {
+const CommunityPrivateUserRequest = ({
+  community,
+  user,
+  closeModal,
+  requestPrivateCommunityAccess,
+}) => {
   const { name } = community;
   const { address } = user;
 
@@ -39,12 +46,15 @@ const CommunityPrivateUserRequest = ({ community, user }) => {
 
   return (
     <Form
-      onSubmit={(values) => {
-        const { description, email } = values;
-        console.log('description', description);
-        console.log('email', email);
+      onSubmit={({ description, email }) => {
+        const { id } = community;
 
-        // call action
+        requestPrivateCommunityAccess({
+          description,
+          email,
+          address,
+          communityId: id,
+        });
       }}
     >
       {({ handleSubmit, pristine, invalid }) => (
@@ -85,7 +95,7 @@ const CommunityPrivateUserRequest = ({ community, user }) => {
               type="submit"
               disabled={pristine || invalid}
             />
-            <span>Cancel</span>
+            <span onClick={closeModal}>Cancel</span>
           </div>
         </form>
       )}
@@ -93,15 +103,16 @@ const CommunityPrivateUserRequest = ({ community, user }) => {
   );
 };
 
-export default CommunityPrivateUserRequest;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    requestPrivateCommunityAccess: bindActionCreators(
+      requestPrivateCommunityAccess,
+      dispatch,
+    ),
+  };
+};
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     updateUser: bindActionCreators(updateUser, dispatch),
-//   };
-// };
-
-// export default connect(
-//   null,
-//   mapDispatchToProps,
-// )(EditProfile);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(CommunityPrivateUserRequest);

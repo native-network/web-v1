@@ -219,17 +219,17 @@ export const getCommunityMembersError = (error) => {
 };
 
 export const updateUserStatus = ({ communityId, userId, status }) => {
-  console.log('Action', communityId, userId, status)
+  //console.log('Action', communityId, userId, status)
   return async (dispatch) => {
-    console.log('entereted returned function for redux thunk')
-    try { 
+    console.log('entereted returned function for redux thunk');
+    try {
       // dispatch({ type: actions.UPDATE_USER_STATUS });
-      
+
       const { data } = await post(
         `communities/${+communityId}/updateUserStatus`,
-        {communityId, userId, status},
+        { communityId, userId, status },
       );
-      console.log('data', data)
+      console.log('data', data);
       dispatch(
         toastrSuccess('This user has been blacklisted from the community.'),
       );
@@ -248,7 +248,7 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
 
 // export const removeBlacklistMember = (communityId, userId) => {
 //   return async (dispatch) => {
-    // dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
+// dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
 
 //     try {
 //       const { data } = await post(
@@ -272,12 +272,11 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
 // };
 
 export const updateUserStatusComplete = (communityId, userId, status) => {
-  console.log('dispatching UPDATE_USER_STATUS_COMPLETE')
   return {
     type: actions.UPDATE_USER_STATUS_COMPLETE,
     communityId,
     userId,
-    status
+    status,
   };
 };
 
@@ -287,3 +286,47 @@ export const updateUserStatusError = (error) => {
     error,
   };
 };
+
+export const requestPrivateCommunityAccess = ({
+  description,
+  email,
+  communityId,
+  address,
+}) => {
+  //console.log('Action', communityId, userId, status)
+  return async (dispatch) => {
+    console.log('entereted returned function for redux thunk');
+    try {
+      dispatch({ type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS });
+      const { data } = await post(`communities/${+communityId}/requestAccess`, {
+        description,
+        email,
+        address,
+      });
+      console.log('data', data);
+      dispatch(
+        toastrSuccess('Successfully Request approval to join community'),
+      );
+      // dispatch(requestPrivateCommunityAccessComplete());
+    } catch (err) {
+      const { message } = err;
+      dispatch(
+        toastrError('There was a problem requesting access to join community'),
+      );
+      // dispatch(requestPrivateCommunityAccessError(message));
+    }
+  };
+};
+
+// export const requestPrivateCommunityAccessComplete = () => {
+//   return {
+//     type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_COMPLETE,
+//   };
+// };
+
+// export const requestPrivateCommunityAccessError = (error) => {
+//   return {
+//     type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_COMPLETE_ERROR,
+//     error,
+//   };
+// };
