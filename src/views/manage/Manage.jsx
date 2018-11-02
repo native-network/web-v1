@@ -30,7 +30,6 @@ export class Manage extends Component {
       membershipBenefits:
         membershipBenefits.filter((benefit) => !!benefit.length) || [],
     };
-    console.log('new vals', newVals)
     this.props.updateCommunity(newVals, blacklistAll);
   }
 
@@ -64,9 +63,6 @@ export class Manage extends Component {
   }
 
   render() {
-    
-    // console.log('community', this.props.community)
-
     return this.props.isLoading ? (
       <Loader />
     ) : (
@@ -74,15 +70,8 @@ export class Manage extends Component {
         <ManageCommunityForm
           community={this.props.community}
           submitForm={this.handleSubmit.bind(this)}
-          clickPrivateCommunity={this.handleClickPrivateCommunity.bind(this)}
+          // clickPrivateCommunity={this.handleClickPrivateCommunity.bind(this)}
           list={this.state.list}
-          privateSelected={this.state.formPCSelectedTouched}
-        />
-        <ManageCommunityPrivacyModal
-          isModalOpen={this.state.isModalOpen}
-          closeModal={this.closeModal.bind(this)}
-          handleSubmit={this.handleSubmitModal.bind(this)}
-          handleUndo={this.handleUndoModal.bind(this)}
         />
       </Fragment>
     );

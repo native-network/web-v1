@@ -1,6 +1,6 @@
 /* eslint-disable */
-
-import React from 'react';
+import React, { Fragment } from 'react';
+import { Field } from 'react-final-form';
 
 import Modal from '../../shared/modal';
 import Button from '../../shared/button';
@@ -8,12 +8,18 @@ import Tooltip from '../../shared/tooltip';
 import styles from './ManageCommunityPrivacyModal.css';
 
 const ManageCommunityPrivacy = (props) => {
-  const { isModalOpen, closeModal, handleSubmit, handleUndo } = props;
+  const { isOpen, closeModal, form } = props;
+
+  const toggleIsPrivate = ({ onChange }) => {
+    onChange(true);
+    closeModal();
+  };
+
   return (
     <Modal
       hasCloseButton
       closeModal={closeModal}
-      isOpen={isModalOpen}
+      isOpen={isOpen}
       renderHeader={() => <h1>Set community to private</h1>}
       label="Add Poll"
     >
@@ -26,41 +32,62 @@ const ManageCommunityPrivacy = (props) => {
           must choose to whitelist or blacklist all current users.
         </p>
 
-        <form onSubmit={handleSubmit}>
-          <div className={styles.radioItem}>
-            <label>
-              <input
-                name="list"
-                type="radio"
-                value="Whitelist"
-                defaultChecked
-              />
-              Whitelist all current members
-            </label>
-            <Tooltip message="(Recommended) Afterwords you may want to Blacklist certain members in the community table" />
-          </div>
-          <div className={styles.radioItem}>
-            <label>
-              <input name="list" type="radio" value="Blacklist" />
-              Blacklist all current members
-            </label>
-            <Tooltip message="Afterwords you may want to whitelist individual members in the community table" />
-          </div>
-          <p className={styles.warning}>
-            Warning, you cannot change a private community back to public at
-            this time.
-          </p>
+        <Field name="blacklistAll" type="radio">
+          {({ input }) => (
+            <div className={styles.radioItem}>
+              <label>
+                <input
+                  type="radio"
+                  {...input}
+                  checked={!input.value}
+                  onChange={() => false}
+                />
+                Whitelist all current members
+              </label>
+              <Tooltip message="(Recommended) Afterwords you may want to Blacklist certain members in the community table" />
+            </div>
+          )}
+        </Field>
 
-          <div className={styles.buttonWrapper}>
-            <Button
-              theme="tertiary"
-              content="Undo"
-              type="button"
-              clickHandler={handleUndo}
-            />
-            <Button theme="secondary" type="submit" content="Continue" />
-          </div>
-        </form>
+        <Field name="blacklistAll" type="radio">
+          {({ input }) => (
+            <div className={styles.radioItem}>
+              <label>
+                <input
+                  type="radio"
+                  {...input}
+                  checked={input.value}
+                  onChange={() => true}
+                />
+                Blacklist all current members
+              </label>
+              <Tooltip message="Afterwards you may want to whitelist individual members in the community table" />
+            </div>
+          )}
+        </Field>
+
+        <p className={styles.warning}>
+          Warning, you cannot change a private community back to public at this
+          time.
+        </p>
+
+        <div className={styles.buttonWrapper}>
+          <Button
+            theme="tertiary"
+            content="Undo"
+            type="button"
+            clickHandler={() => closeModal()}
+          />
+          <Field name="isPrivate">
+            {({ input }) => (
+              <Button
+                theme="secondary"
+                clickHandler={() => toggleIsPrivate(input)}
+                content="Continue"
+              />
+            )}
+          </Field>
+        </div>
       </div>
     </Modal>
   );
