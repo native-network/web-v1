@@ -29,8 +29,7 @@ export default class ManageCommunityForm extends Component {
   openPrivacyModal = () => {
     this.setState({ isPrivacyModalOpen: true });
   };
-  closePrivacyModal = (meta) => {
-    console.log(meta);
+  closePrivacyModal = () => {
     this.setState({ isPrivacyModalOpen: false });
   };
 
@@ -356,16 +355,15 @@ export default class ManageCommunityForm extends Component {
                     </label>
                     <input
                       className="checkbox"
-                      onClick={() => this.openPrivacyModal(form)}
+                      onClick={this.openPrivacyModal.bind(this)}
                       type="checkbox"
                       readOnly
                       checked={values.isPrivate}
                     />
                     <ManageCommunityPrivacyModal
                       input={input}
-                      meta={meta}
                       isOpen={this.state.isPrivacyModalOpen}
-                      closeModal={() => this.closePrivacyModal(form)}
+                      closeModal={this.closePrivacyModal.bind(this)}
                     />
                     {list ? list + ' all users in current community' : ''}
                   </div>
