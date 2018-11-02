@@ -65,7 +65,7 @@ export default class ManageCommunityForm extends Component {
           quorum: community.quorum,
           tokenRequirements: fromWei(community.currency.minimumStake),
           isPrivate: community.isPrivate,
-          blacklistAll: false,
+          blacklistAll: 'whitelist',
         }}
         onSubmit={(values) => submitForm(values)}
         render={({ handleSubmit, pristine, invalid, values, form }) => (
@@ -358,18 +358,17 @@ export default class ManageCommunityForm extends Component {
                     type="checkbox"
                     readOnly
                     checked={values.isPrivate}
-                    // disabled={!privateSelected && community.isPrivate}
                   />
                   <ManageCommunityPrivacyModal
                     isOpen={this.state.isPrivacyModalOpen}
                     closeModal={this.closePrivacyModal.bind(this)}
-                    form={form}
+                    blacklistAll={values.blacklistAll}
                   />
                   {list ? list + ' all users in current community' : ''}
                 </div>
               </div>
             </div>
-            {JSON.stringify(values.blacklistAll)}
+            {JSON.stringify(values)}
             <Button
               className={styles.SubmitButton}
               centered

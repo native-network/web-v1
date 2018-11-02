@@ -8,7 +8,7 @@ import Tooltip from '../../shared/tooltip';
 import styles from './ManageCommunityPrivacyModal.css';
 
 const ManageCommunityPrivacy = (props) => {
-  const { isOpen, closeModal, form } = props;
+  const { isOpen, closeModal, blacklistAll } = props;
 
   const toggleIsPrivate = ({ onChange }) => {
     onChange(true);
@@ -32,39 +32,32 @@ const ManageCommunityPrivacy = (props) => {
           must choose to whitelist or blacklist all current users.
         </p>
 
-        <Field name="blacklistAll" type="radio">
-          {({ input }) => (
-            <div className={styles.radioItem}>
-              <label>
-                <input
-                  type="radio"
-                  {...input}
-                  checked={!input.value}
-                  onChange={() => false}
-                />
-                Whitelist all current members
-              </label>
-              <Tooltip message="(Recommended) Afterwords you may want to Blacklist certain members in the community table" />
-            </div>
-          )}
-        </Field>
+        <div className={styles.radioItem}>
+          <label>
+            <Field
+              name="blacklistAll"
+              value="whitelist"
+              type="radio"
+              component="input"
+            />
+            Whitelist all current members
+          </label>
+          <Tooltip message="(Recommended) Afterwords you may want to Blacklist certain members in the community table" />
+        </div>
 
-        <Field name="blacklistAll" type="radio">
-          {({ input }) => (
-            <div className={styles.radioItem}>
-              <label>
-                <input
-                  type="radio"
-                  {...input}
-                  checked={input.value}
-                  onChange={() => true}
-                />
-                Blacklist all current members
-              </label>
-              <Tooltip message="Afterwards you may want to whitelist individual members in the community table" />
-            </div>
-          )}
-        </Field>
+
+        <div className={styles.radioItem}>
+          <label>
+            <Field
+              name="blacklistAll"
+              value="blacklist"
+              type="radio"
+              component="input"
+            />
+            Blacklist all current members
+          </label>
+          <Tooltip message="Afterwards you may want to whitelist individual members in the community table" />
+        </div>
 
         <p className={styles.warning}>
           Warning, you cannot change a private community back to public at this
