@@ -42,7 +42,7 @@ const ManageCommunityPrivacy = (props) => {
             />
             Whitelist all current members
           </label>
-          <Tooltip message="(Recommended) Afterwords you may want to Blacklist certain members in the community table" />
+          <Tooltip message="(Recommended) Afterwards you may want to Blacklist certain members in the community table" />
         </div>
 
 

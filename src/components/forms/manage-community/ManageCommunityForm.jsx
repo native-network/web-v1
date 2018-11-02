@@ -355,7 +355,7 @@ export default class ManageCommunityForm extends Component {
                     </label>
                     <input
                       className="checkbox"
-                      onClick={this.openPrivacyModal.bind(this)}
+                      onClick={!values.isPrivate ? this.openPrivacyModal.bind(this) : null}
                       type="checkbox"
                       readOnly
                       checked={values.isPrivate}
