@@ -11,12 +11,6 @@ import ManageCommunityForm from '../../components/forms/manage-community';
 import ManageCommunityPrivacyModal from '../../components/curators/manage-community-privacy';
 
 export class Manage extends Component {
-  state = {
-    isModalOpen: false,
-    list: '',
-    formPCSelectedTouched: false,
-  };
-
   handleSubmit(vals) {
     const { community } = this.props;
     const { membershipBenefits } = vals;
@@ -33,35 +27,6 @@ export class Manage extends Component {
     this.props.updateCommunity(newVals, blacklistAll);
   }
 
-  handleSubmitModal(e) {
-    e.preventDefault();
-    this.setState({ list: e.target.list.value });
-    this.setState({ formPCSelectedTouched: true });
-    // console.log('this.state', this.state)
-    this.closeModal();
-  }
-
-  handleUndoModal(e) {
-    e.preventDefault();
-    this.setState({
-      list: '',
-      formPCSelectedTouched: false,
-    });
-    this.closeModal();
-  }
-
-  handleClickPrivateCommunity(value) {
-    if (value) {
-      this.setState({ isModalOpen: true });
-    }
-
-    this.setState({ list: '' });
-  }
-
-  closeModal() {
-    this.setState({ isModalOpen: false });
-  }
-
   render() {
     return this.props.isLoading ? (
       <Loader />
@@ -70,7 +35,6 @@ export class Manage extends Component {
         <ManageCommunityForm
           community={this.props.community}
           submitForm={this.handleSubmit.bind(this)}
-          // clickPrivateCommunity={this.handleClickPrivateCommunity.bind(this)}
           list={this.state.list}
         />
       </Fragment>

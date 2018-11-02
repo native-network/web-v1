@@ -36,7 +36,7 @@ const ManageCommunityPrivacy = (props) => {
           <label>
             <Field
               name="blacklistAll"
-              value="whitelist"
+              value="Whitelist"
               type="radio"
               component="input"
             />
@@ -45,12 +45,11 @@ const ManageCommunityPrivacy = (props) => {
           <Tooltip message="(Recommended) Afterwards you may want to Blacklist certain members in the community table" />
         </div>
 
-
         <div className={styles.radioItem}>
           <label>
             <Field
               name="blacklistAll"
-              value="blacklist"
+              value="Blacklist"
               type="radio"
               component="input"
             />
