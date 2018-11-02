@@ -35,7 +35,6 @@ export class Manage extends Component {
         <ManageCommunityForm
           community={this.props.community}
           submitForm={this.handleSubmit.bind(this)}
-          list={this.state.list}
         />
       </Fragment>
     );
