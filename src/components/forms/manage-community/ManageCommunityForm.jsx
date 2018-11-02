@@ -1,8 +1,5 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
-// import { OnChange } from 'react-final-form-listeners';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
@@ -34,7 +31,7 @@ export default class ManageCommunityForm extends Component {
   };
 
   render() {
-    const { community, submitForm, list, privateSelected } = this.props;
+    const { community, submitForm } = this.props;
 
     const renderError = (error) => (
       <span className={styles.Error}>{error}</span>
@@ -382,7 +379,7 @@ export default class ManageCommunityForm extends Component {
               centered
               type="submit"
               theme="secondary"
-              disabled={(pristine || invalid) && !privateSelected}
+              disabled={pristine || invalid}
               content="Save"
             />
           </form>

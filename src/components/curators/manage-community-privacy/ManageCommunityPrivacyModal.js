@@ -10,8 +10,8 @@ import styles from './ManageCommunityPrivacyModal.css';
 const ManageCommunityPrivacy = (props) => {
   const { isOpen, closeModal, input } = props;
 
-  const toggleIsPrivate = ({ onChange }) => {
-    onChange(true);
+  const toggleIsPrivate = ({ onChange }, value) => {
+    onChange(value);
     closeModal();
   };
 
@@ -66,15 +66,15 @@ const ManageCommunityPrivacy = (props) => {
         <div className={styles.buttonWrapper}>
           <Button
             theme="tertiary"
-            content="Undo"
+            content="Cancel"
             type="button"
-            clickHandler={() => closeModal()}
+            clickHandler={() => toggleIsPrivate(input, false)}
           />
           <Button
             {...input}
             theme="secondary"
-            clickHandler={() => toggleIsPrivate(input)}
-            content="Continue"
+            clickHandler={() => toggleIsPrivate(input, true)}
+            content="Confirm"
           />
         </div>
       </div>
