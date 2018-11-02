@@ -219,17 +219,20 @@ export const getCommunityMembersError = (error) => {
 };
 
 export const updateUserStatus = ({ communityId, userId, status }) => {
-  console.log('Action', communityId, userId, status)
+  console.log('Action', communityId, userId, status);
   return async (dispatch) => {
+    dispatch({ type: actions.UPDATE_USER_STATUS });
+
     try {
       const { data } = await post(
         `communities/${+communityId}/updateUserStatus`,
-        {communityId, userId, status},
+        { communityId, userId, status },
       );
-      console.log('data', data)
-      dispatch(
-        toastrSuccess('This user has been blacklisted from the community.'),
-      );
+
+      console.log('user Status', status);
+      // dispatch(
+      //   toastrSuccess('This user has been blacklisted from the community.'),
+      // );
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
@@ -269,12 +272,12 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
 // };
 
 export const updateUserStatusComplete = (communityId, userId, status) => {
-  console.log('dispatching UPDATE_USER_STATUS_COMPLETE')
+  console.log('dispatching UPDATE_USER_STATUS_COMPLETE');
   return {
     type: actions.UPDATE_USER_STATUS_COMPLETE,
     communityId,
     userId,
-    status
+    status,
   };
 };
 
