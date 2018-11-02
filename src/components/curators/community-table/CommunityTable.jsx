@@ -124,16 +124,18 @@ export function CommunityTable({ community, user, updateUserStatus }) {
       sortable: false,
       filterable: false,
       Cell: ({row}) => {
-        const { userId, userStatus } = row
+        const { userId, userStatus = 'member' } = row
+
+        const content = userStatus === 'member' ? 'Blacklist user' : 'Whitelist user';
+        const theme = content === 'Whitelist user' ? 'tertiary' : 'primary';
+        const action = userStatus === 'member' ? 'blacklisted' : 'member';
         const requestBody = {
           communityId: community.id,
           userId: userId,
-          status: userStatus,
+          status: action,
         }
-        const action = userStatus === 'member' ? 'Blacklist user' : "Whitelist user"
-        const theme = action === 'Whitelist user' ? 'tertiary' : 'primary'
 
-        return <Button theme={theme} clickHandler={() => updateUserStatus(requestBody)} content={action} />
+        return <Button theme={theme} clickHandler={() => updateUserStatus(requestBody)} content={content} />
       }
     },
   ];

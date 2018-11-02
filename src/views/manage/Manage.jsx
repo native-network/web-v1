@@ -13,18 +13,17 @@ import ManageCommunityPrivacyModal from '../../components/curators/manage-commun
 export class Manage extends Component {
   handleSubmit(vals) {
     const { community } = this.props;
-    const { membershipBenefits } = vals;
-    const { list } = this.state;
-
-    const blacklistAll = list === 'Blacklist';
+    const { membershipBenefits, blacklistAll } = vals;
 
     const newVals = {
-      ...community,
+      id: community.id,
       ...vals,
       membershipBenefits:
         membershipBenefits.filter((benefit) => !!benefit.length) || [],
+      blacklistAll: blacklistAll === 'Blacklist'
     };
-    this.props.updateCommunity(newVals, blacklistAll);
+
+    this.props.updateCommunity(newVals);
   }
 
   render() {
