@@ -87,17 +87,21 @@ export default function communitiesReducer(
             c.id === action.community.id ? { ...c, ...action.community } : c,
         ),
       };
+
     case actions.UPDATE_USER_STATUS_COMPLETE:
-      console.log('action', action)
+      const { communityId, status, userId } = action;
+
       return {
         ...state,
-        updateUserStatusError: '',
-        // communities: state.communities.map(
-        //   (c) =>
-        //     c.id === action.communityId
-        //       ? { ...c, blacklisted: action.blacklist }
-        //       : c,
-        // ),
+        communities: state.communities.map((community) => {
+          if (community.id === communityId) {
+            comminity.members.map((member) => {
+              if (member.userId === userId) {
+                member.status = status;
+              }
+            });
+          }
+        }),
       };
     case actions.UPDATE_USER_STATUS_ERROR:
       return {

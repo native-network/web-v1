@@ -219,20 +219,22 @@ export const getCommunityMembersError = (error) => {
 };
 
 export const updateUserStatus = ({ communityId, userId, status }) => {
-  console.log('Action', communityId, userId, status);
   return async (dispatch) => {
     dispatch({ type: actions.UPDATE_USER_STATUS });
-
     try {
       const { data } = await post(
         `communities/${+communityId}/updateUserStatus`,
         { communityId, userId, status },
       );
 
-      console.log('user Status', status);
-      // dispatch(
-      //   toastrSuccess('This user has been blacklisted from the community.'),
-      // );
+      if (status === 'blacklisted') {
+        dispatch(
+          toastrSuccess('User has been blacklisted from the community.'),
+        );
+      }
+      if (status === 'member') {
+        dispatch(toastrSuccess('User has been whitelisted to the community.'));
+      }
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
@@ -246,33 +248,7 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
   };
 };
 
-// export const removeBlacklistMember = (communityId, userId) => {
-//   return async (dispatch) => {
-//     dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
-
-//     try {
-//       const { data } = await post(
-//         `communities/${+communityId}/removeBlacklistUser`,
-//         { id: userId },
-//       );
-//       const { blacklisted } = data;
-
-//       dispatch(toastrSuccess('This user has been removed from the blacklist.'));
-//       dispatch(blacklistMemberComplete(communityId, blacklisted));
-//     } catch (err) {
-//       const { message } = err;
-//       dispatch(
-//         toastrError(
-//           'There was a problem removing this member from the blacklist. Please try again.',
-//         ),
-//       );
-//       dispatch(blacklistMemberError(message));
-//     }
-//   };
-// };
-
 export const updateUserStatusComplete = (communityId, userId, status) => {
-  console.log('dispatching UPDATE_USER_STATUS_COMPLETE');
   return {
     type: actions.UPDATE_USER_STATUS_COMPLETE,
     communityId,
