@@ -8,7 +8,7 @@ import Tooltip from '../../shared/tooltip';
 import styles from './ManageCommunityPrivacyModal.css';
 
 const ManageCommunityPrivacy = (props) => {
-  const { isOpen, closeModal, blacklistAll } = props;
+  const { isOpen, closeModal, input } = props;
 
   const toggleIsPrivate = ({ onChange }) => {
     onChange(true);
@@ -71,15 +71,12 @@ const ManageCommunityPrivacy = (props) => {
             type="button"
             clickHandler={() => closeModal()}
           />
-          <Field name="isPrivate">
-            {({ input }) => (
-              <Button
-                theme="secondary"
-                clickHandler={() => toggleIsPrivate(input)}
-                content="Continue"
-              />
-            )}
-          </Field>
+          <Button
+            {...input}
+            theme="secondary"
+            clickHandler={() => toggleIsPrivate(input)}
+            content="Continue"
+          />
         </div>
       </div>
     </Modal>

@@ -29,7 +29,8 @@ export default class ManageCommunityForm extends Component {
   openPrivacyModal = () => {
     this.setState({ isPrivacyModalOpen: true });
   };
-  closePrivacyModal = () => {
+  closePrivacyModal = (meta) => {
+    console.log(meta);
     this.setState({ isPrivacyModalOpen: false });
   };
 
@@ -346,29 +347,31 @@ export default class ManageCommunityForm extends Component {
                   </div>
                 )}
               </Field>
-              <div>
-                <div className={styles.FieldGroup}>
-                  <label>
-                    Private Community
-                    <Tooltip message="Only approved members are able to join a private community." />
-                  </label>
-                  <input
-                    className="checkbox"
-                    onClick={() => this.openPrivacyModal()}
-                    type="checkbox"
-                    readOnly
-                    checked={values.isPrivate}
-                  />
-                  <ManageCommunityPrivacyModal
-                    isOpen={this.state.isPrivacyModalOpen}
-                    closeModal={this.closePrivacyModal.bind(this)}
-                    blacklistAll={values.blacklistAll}
-                  />
-                  {list ? list + ' all users in current community' : ''}
-                </div>
-              </div>
+              <Field name="isPrivate">
+                {({ input }) => (
+                  <div className={styles.FieldGroup}>
+                    <label>
+                      Private Community
+                      <Tooltip message="Only approved members are able to join a private community." />
+                    </label>
+                    <input
+                      className="checkbox"
+                      onClick={() => this.openPrivacyModal(form)}
+                      type="checkbox"
+                      readOnly
+                      checked={values.isPrivate}
+                    />
+                    <ManageCommunityPrivacyModal
+                      input={input}
+                      meta={meta}
+                      isOpen={this.state.isPrivacyModalOpen}
+                      closeModal={() => this.closePrivacyModal(form)}
+                    />
+                    {list ? list + ' all users in current community' : ''}
+                  </div>
+                )}
+              </Field>
             </div>
-            {JSON.stringify(values)}
             <Button
               className={styles.SubmitButton}
               centered
