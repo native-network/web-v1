@@ -195,8 +195,8 @@ export const getCommunityMembers = (communityId) => {
 
       return dispatch(getCommunityMembersSuccess(communityId, data));
     } catch (err) {
-      dispatch({ type: '_ERROR' });
-      console.log(err) // eslint-disable-line
+      const { message } = err;
+      dispatch(getCommunitiesError({ id: communityId, message }));
     }
   };
 };
@@ -212,6 +212,73 @@ export const getCommunityMembersSuccess = (communityId, members) => {
 export const getCommunityMembersError = (error) => {
   return {
     type: actions.GET_COMMUNITY_MEMBERS_ERROR,
+    error,
+  };
+};
+
+export const blacklistMember = (communityId, userId) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.BLACKLIST_MEMBER });
+
+    try {
+      const { data } = await post(
+        `communities/${+communityId}/addBlacklistUser`,
+        { id: userId },
+      );
+      const { blacklisted } = data;
+
+      dispatch(
+        toastrSuccess('This user has been blacklisted from the community.'),
+      );
+      dispatch(blacklistMemberComplete(communityId, blacklisted));
+    } catch (err) {
+      const { message } = err;
+      dispatch(
+        toastrError(
+          'There was a problem blacklisting this member. Please try again.',
+        ),
+      );
+      dispatch(blacklistMemberError(message));
+    }
+  };
+};
+
+export const removeBlacklistMember = (communityId, userId) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
+
+    try {
+      const { data } = await post(
+        `communities/${+communityId}/removeBlacklistUser`,
+        { id: userId },
+      );
+      const { blacklisted } = data;
+
+      dispatch(toastrSuccess('This user has been removed from the blacklist.'));
+      dispatch(blacklistMemberComplete(communityId, blacklisted));
+    } catch (err) {
+      const { message } = err;
+      dispatch(
+        toastrError(
+          'There was a problem removing this member from the blacklist. Please try again.',
+        ),
+      );
+      dispatch(blacklistMemberError(message));
+    }
+  };
+};
+
+export const blacklistMemberComplete = (communityId, blacklist) => {
+  return {
+    type: actions.BLACKLIST_COMPLETE,
+    communityId,
+    blacklist,
+  };
+};
+
+export const blacklistMemberError = (error) => {
+  return {
+    type: actions.BLACKLIST_ISSUE,
     error,
   };
 };

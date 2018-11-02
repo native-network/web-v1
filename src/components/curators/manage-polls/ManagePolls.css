@@ -9,6 +9,10 @@
   }
 }
 
+.TableContainer {
+  margin: 3rem 0;
+}
+
 .Table {
   width: 100%;
   border-bottom: 1px solid var(--primary-color);

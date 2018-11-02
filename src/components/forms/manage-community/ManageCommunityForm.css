@@ -9,32 +9,7 @@
 }
 
 .ManageCommunityForm {
-  margin: 2rem 0;
-
-  & .SubmitButton {
-    margin-top: 3rem;
-  }
-
-  & label {
-    @extend %label;
-  }
-
-  & input:not([type="radio"]) {
-    height: 3rem;
-  }
-
-  & input:not([type="radio"]),
-  & textarea {
-    border: 1px solid var(--gray-8);
-    width: 100%;
-    padding-left: 0.5rem;
-    font: 1rem 'azo-sans-web', sans-serif;
-  }
-
-  & textarea {
-    padding: 0.5rem;
-    resize: none;
-  }
+  composes: FormStyles from '../styles.css';
 }
 
 .ManageCommunityFields {
@@ -116,7 +91,6 @@
     @extend %secondary-theme;
     @extend %box-shadow;
 
-    border-radius: 5rem;
     font-size: 0.8rem;
     position: relative;
 

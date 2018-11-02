@@ -1,7 +1,6 @@
 import sigUtil from 'eth-sig-util';
 import ethUtil from 'ethereumjs-util';
 import Web3 from 'web3';
-import ReactGA from 'react-ga';
 import Web3ServiceMock from './Web3ServiceMock';
 import { ETH_CONSTANT } from '../utils/constants';
 
@@ -19,16 +18,13 @@ export default class Web3Service {
     provider = new Web3.providers[providerType](
       process.env.REMOTE_WEB3_PROVIDER,
     );
-
     if (window.ethereum) {
       this.web3 = new Web3(window.ethereum);
       try {
         await window.ethereum.enable();
         this.mainAccount = await this.getMainAccount();
       } catch (err) {
-        return new Error(
-          'You must enable access to your wallet to interact with Native.',
-        );
+        console.log(err); // eslint-disable-line
       }
     } else if (window.web3) {
       this.web3 = new Web3(window.web3.currentProvider);
@@ -37,7 +33,6 @@ export default class Web3Service {
       this.web3 = new Web3(provider);
     }
 
-    this.trackMetamaskVersion();
     this.web3Remote = new Web3(provider);
   }
 
@@ -52,19 +47,6 @@ export default class Web3Service {
         })
         .catch((err) => reject(err));
     });
-  }
-
-  trackMetamaskVersion() {
-    const ga = ReactGA.ga();
-
-    if (window.web3) {
-      window.web3.version.getNode((er, res) => {
-        ga('create', 'UA-125567970-2', 'auto');
-        ga('send', 'pageview', {
-          MetamaskVersion: res,
-        });
-      });
-    }
   }
 
   async sendTransaction(address, value, cb) {

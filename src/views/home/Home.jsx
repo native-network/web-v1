@@ -54,8 +54,12 @@ export class Home extends Component {
       <main>
         <div className={styles.Header}>
           <h1>Discover Communities</h1>
+          <p>
+            You will Need Native Tokens to use the application. Click "Get
+            Started" to start the purchase.
+          </p>
           <Link className={styles.CTAButton} to="/dashboard">
-            Get Native Tokens
+            Get Started
           </Link>
         </div>
         {this.props.communities.length > 0 ? (

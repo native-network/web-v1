@@ -26,6 +26,7 @@
     "react-final-form-arrays": "^1.0.6",
     "react-final-form-html5-validation": "^1.0.1",
     "react-ga": "^2.5.3",
+    "react-final-form-listeners": "^1.0.1",
     "react-inlinesvg": "^0.8.1",
     "react-modal": "^3.5.1",
     "react-redux": "5.0.7",

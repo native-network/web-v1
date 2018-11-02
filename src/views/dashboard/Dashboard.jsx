@@ -346,7 +346,7 @@ export class Dashboard extends Component {
               </div>
             </div>
             <section className={styles.Dashboard}>
-              <h1>
+              <h1 className={styles.DashboardTitle}>
                 {!nativeBalance || nativeBalance === '0'
                   ? 'Get Native Token'
                   : 'Convert Currencies'}

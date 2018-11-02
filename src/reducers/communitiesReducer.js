@@ -81,10 +81,25 @@ export default function communitiesReducer(
       return {
         ...state,
         communities: state.communities.map(
-          (c) => (c.id === action.community.id ? action.community : c),
+          (c) =>
+            c.id === action.community.id ? { ...c, ...action.community } : c,
         ),
       };
-
+    case actions.BLACKLIST_COMPLETE:
+      return {
+        ...state,
+        communities: state.communities.map(
+          (c) =>
+            c.id === action.communityId
+              ? { ...c, blacklisted: action.blacklist }
+              : c,
+        ),
+      };
+    case actions.BLACKLIST_ISSUE:
+      return {
+        ...state,
+        blacklistError: action.error,
+      };
     case actions.UPDATE_COMMUNITY_ERROR:
       return {
         ...state,
@@ -101,6 +116,16 @@ export default function communitiesReducer(
         ...state,
         communities: state.communities.map(
           (c) => (c.id === +action.id ? { ...c, members: action.members } : c),
+        ),
+      };
+    case actions.GET_COMMUNITY_MEMBERS_ERROR:
+      return {
+        ...state,
+        communities: state.communities.map(
+          (c) =>
+            c.id === action.error.id
+              ? { ...c, error: action.error.message }
+              : c,
         ),
       };
     default:
