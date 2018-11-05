@@ -346,22 +346,26 @@ export default class ManageCommunityForm extends Component {
               <Field name="isPrivate">
                 {({ input }) => (
                   <div className={styles.FieldGroup}>
-                    <label>
+                    <label
+                      className={styles.checkboxContainer}
+                      disabled={community.isPrivate}
+                    >
                       Private Community
                       <Tooltip message="Only approved members are able to join a private community." />
+                      <input
+                        className={styles.isPrivateCheckbox}
+                        onClick={
+                          !community.isPrivate
+                            ? this.openPrivacyModal.bind(this)
+                            : null
+                        }
+                        type="checkbox"
+                        readOnly
+                        checked={values.isPrivate}
+                        disabled={community.isPrivate}
+                      />
+                      <span className={styles.customCheckbox} />
                     </label>
-                    <input
-                      className="checkbox"
-                      disabled={community.isPrivate}
-                      onClick={
-                        !community.isPrivate
-                          ? this.openPrivacyModal.bind(this)
-                          : null
-                      }
-                      type="checkbox"
-                      readOnly
-                      checked={values.isPrivate}
-                    />
                     <ManageCommunityPrivacyModal
                       input={input}
                       isOpen={this.state.isPrivacyModalOpen}
