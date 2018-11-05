@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -27,12 +27,10 @@ export class Manage extends Component {
     return this.props.isLoading ? (
       <Loader />
     ) : (
-      <Fragment>
-        <ManageCommunityForm
-          community={this.props.community}
-          submitForm={this.handleSubmit.bind(this)}
-        />
-      </Fragment>
+      <ManageCommunityForm
+        community={this.props.community}
+        submitForm={this.handleSubmit.bind(this)}
+      />
     );
   }
 }
