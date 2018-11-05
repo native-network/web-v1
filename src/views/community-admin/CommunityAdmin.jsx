@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import React, { Component } from 'react';
 import Loader from '../../components/shared/loader';
 import { connect } from 'react-redux';
@@ -38,7 +36,6 @@ export class CommunityAdmin extends Component {
 
   render() {
     const { community, polls, tasks, projects } = this.props;
-    console.log('community updates in admin');
     const initiatives = formatInitiatives(polls, tasks, projects, community);
 
     if (this.props.isLoading) {

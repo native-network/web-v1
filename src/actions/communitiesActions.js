@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import { communitiesActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post, put } from '../requests';
@@ -222,10 +220,11 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
   return async (dispatch) => {
     dispatch({ type: actions.UPDATE_USER_STATUS });
     try {
-      const { data } = await post(
-        `communities/${+communityId}/updateUserStatus`,
-        { communityId, userId, status },
-      );
+      await post(`communities/${+communityId}/updateUserStatus`, {
+        communityId,
+        userId,
+        status,
+      });
       if (status === 'blacklisted') {
         dispatch(
           toastrSuccess('User has been blacklisted from the community.'),

@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import { communitiesActions as actions } from '../actions/actionTypes';
 import { initialState } from './initialState';
 
@@ -89,16 +87,15 @@ export default function communitiesReducer(
       };
 
     case actions.UPDATE_USER_STATUS_COMPLETE:
-      const { communityId, status, userId } = action;
       return {
         ...state,
         communities: state.communities.map((community) => {
-          if (community.id === communityId) {
+          if (community.id === action.communityId) {
             return {
               ...community,
               members: community.members.map((member) => {
-                if (member.id === userId) {
-                  return { ...member, userStatus: status };
+                if (member.id === action.userId) {
+                  return { ...member, userStatus: action.status };
                 }
                 return member;
               }),

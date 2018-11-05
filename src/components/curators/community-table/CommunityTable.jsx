@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -23,7 +21,6 @@ Object.assign(ReactTableDefaults, {
 export function CommunityTable({ community, user, updateUserStatus }) {
   const { members, blacklisted } = community;
   const blacklistedIds = blacklisted.map((item) => item.id);
-  console.log('community table render', community);
 
   const cols = [
     {

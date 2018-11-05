@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,7 +6,6 @@ import { updateCommunity } from '../../actions/communitiesActions';
 
 import Loader from '../../components/shared/loader';
 import ManageCommunityForm from '../../components/forms/manage-community';
-import ManageCommunityPrivacyModal from '../../components/curators/manage-community-privacy';
 
 export class Manage extends Component {
   handleSubmit(vals) {
@@ -27,7 +24,6 @@ export class Manage extends Component {
   }
 
   render() {
-    console.log('manage re renders');
     return this.props.isLoading ? (
       <Loader />
     ) : (
