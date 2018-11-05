@@ -238,6 +238,7 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
+      console.log('err', err);
       dispatch(
         toastrError(
           'There was a problem blacklisting this member. Please try again.',

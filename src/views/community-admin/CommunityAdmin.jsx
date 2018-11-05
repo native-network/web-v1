@@ -38,6 +38,7 @@ export class CommunityAdmin extends Component {
 
   render() {
     const { community, polls, tasks, projects } = this.props;
+    console.log('community updates in admin', community);
     const initiatives = formatInitiatives(polls, tasks, projects, community);
 
     if (this.props.isLoading) {
@@ -55,7 +56,6 @@ export class CommunityAdmin extends Component {
 }
 
 function formatInitiatives(polls, tasks, projects, community) {
-
   return [
     {
       name: 'Community Info',

@@ -11,9 +11,7 @@ import {
   capitalizeFirstLetter,
 } from '../../../utils/helpers';
 import countries from '../../../utils/countries.json';
-import {
-  updateUserStatus,
-} from '../../../actions/communitiesActions';
+import { updateUserStatus } from '../../../actions/communitiesActions';
 
 import styles from './CommunityTable.css';
 
@@ -25,6 +23,7 @@ Object.assign(ReactTableDefaults, {
 export function CommunityTable({ community, user, updateUserStatus }) {
   const { members, blacklisted } = community;
   const blacklistedIds = blacklisted.map((item) => item.id);
+  console.log('should re render');
 
   const cols = [
     {
@@ -123,20 +122,27 @@ export function CommunityTable({ community, user, updateUserStatus }) {
       width: 190,
       sortable: false,
       filterable: false,
-      Cell: ({row}) => {
-        const { userId, userStatus = 'member' } = row
+      Cell: ({ row }) => {
+        const { userId, userStatus = 'member' } = row;
 
-        const content = userStatus === 'member' ? 'Blacklist user' : 'Whitelist user';
+        const content =
+          userStatus === 'member' ? 'Blacklist user' : 'Whitelist user';
         const theme = content === 'Whitelist user' ? 'tertiary' : 'primary';
         const action = userStatus === 'member' ? 'blacklisted' : 'member';
         const requestBody = {
           communityId: community.id,
           userId: userId,
           status: action,
-        }
+        };
 
-        return <Button theme={theme} clickHandler={() => updateUserStatus(requestBody)} content={content} />
-      }
+        return (
+          <Button
+            theme={theme}
+            clickHandler={() => updateUserStatus(requestBody)}
+            content={content}
+          />
+        );
+      },
     },
   ];
 
