@@ -430,11 +430,9 @@ export class Dashboard extends Component {
                       price: this.communityPrice(community),
                       actions: {
                         name: () => {
-                          const isMember = this.props.user.memberOf.find(
+                          const isMember = !!this.props.user.memberOf.find(
                             (c) => c.id === community.id,
-                          )
-                            ? true
-                            : false;
+                          );
 
                           if (isMember) {
                             return `Get ${currency && currency.symbol}`;

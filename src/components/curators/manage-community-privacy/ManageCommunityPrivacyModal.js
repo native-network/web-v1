@@ -21,7 +21,7 @@ const ManageCommunityPrivacy = (props) => {
       closeModal={closeModal}
       isOpen={isOpen}
       renderHeader={() => <h1>Set community to private</h1>}
-      label="Add Poll"
+      label="Set Community Privacy"
     >
       <div className={styles.modalContent}>
         <p className={styles.prompt}>
