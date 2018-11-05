@@ -241,7 +241,7 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
           'There was a problem blacklisting this member. Please try again.',
         ),
       );
-      dispatch(updateUserStatusError(message));
+      dispatch(updateUserStatusIssue(message));
     }
   };
 };
@@ -255,9 +255,9 @@ export const updateUserStatusComplete = (communityId, userId, status) => {
   };
 };
 
-export const updateUserStatusError = (error) => {
+export const updateUserStatusIssue = (error) => {
   return {
-    type: actions.UPDATE_USER_STATUS_ERROR,
+    type: actions.UPDATE_USER_STATUS_ISSUE,
     error,
   };
 };
