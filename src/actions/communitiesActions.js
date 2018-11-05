@@ -261,3 +261,44 @@ export const updateUserStatusIssue = (error) => {
     error,
   };
 };
+
+export const requestPrivateCommunityAccess = ({
+  description,
+  email,
+  communityId,
+  address,
+}) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS });
+      await post(`communities/${+communityId}/requestAccess`, {
+        description,
+        email,
+        address,
+      });
+      dispatch(
+        toastrSuccess('Successfully Request approval to join community'),
+      );
+      dispatch(requestPrivateCommunityAccessComplete());
+    } catch (err) {
+      const { message } = err;
+      dispatch(
+        toastrError('There was a problem requesting access to join community'),
+      );
+      dispatch(requestPrivateCommunityAccessIssue(message));
+    }
+  };
+};
+
+export const requestPrivateCommunityAccessComplete = () => {
+  return {
+    type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_COMPLETE,
+  };
+};
+
+export const requestPrivateCommunityAccessIssue = (error) => {
+  return {
+    type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_ISSUE,
+    error,
+  };
+};

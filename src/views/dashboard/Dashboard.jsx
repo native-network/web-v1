@@ -1,5 +1,4 @@
 /*eslint-disable */
-
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -297,7 +296,7 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: true });
   }
 
-  closeModal() {
+  closeModal(e) {
     this.setState({ isModalOpen: false });
   }
 

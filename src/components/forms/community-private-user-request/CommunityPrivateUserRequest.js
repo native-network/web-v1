@@ -1,4 +1,3 @@
-/*eslint-disable */
 import React, { Fragment } from 'react';
 import { Form, Field } from 'react-final-form';
 import { connect } from 'react-redux';
@@ -22,7 +21,7 @@ const CommunityPrivateUserRequest = ({
 
   // Validations
   const validateEmail = (value) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return !re.test(String(value).toLowerCase()) ? 'Invalid Email' : undefined;
   };
 
@@ -55,6 +54,7 @@ const CommunityPrivateUserRequest = ({
           address,
           communityId: id,
         });
+        closeModal();
       }}
     >
       {({ handleSubmit, pristine, invalid }) => (
@@ -65,7 +65,7 @@ const CommunityPrivateUserRequest = ({
             {({ input, meta }) => (
               <Fragment>
                 <label>Please Enter your email</label>
-                <input type="text" {...input} autoFocus />
+                <input type="text" {...input} />
                 {meta.error && meta.touched && renderError(meta.error)}
               </Fragment>
             )}
