@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Field } from 'react-final-form';
 
 import Modal from '../../shared/modal';
