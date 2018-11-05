@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -139,7 +137,6 @@ const cols = [
     resizable: false,
     maxWidth: 300,
     Cell: ({ value }) => {
-      console.log('value', value);
       return value.communitySymbol === 'NTV' ? (
         ''
       ) : (
@@ -160,6 +157,7 @@ const cols = [
 export class Dashboard extends Component {
   state = {
     isModalOpen: false,
+    isPrivateModalOpen: false,
     activeCommunity: {},
     sendCurrency: this.props.walletCurrencies.find(
       (currency) => currency.symbol === 'ETH',
@@ -222,9 +220,16 @@ export class Dashboard extends Component {
       return 'Request Membership';
     };
 
+    const clickHandler = () => {
+      if (!isMember && !isCurator && community.isPrivate) {
+        return this.openIsPrivateModal();
+      }
+      return this.openModal(community);
+    };
+
     return {
-      name: name,
-      clickHandler: () => this.openModal(community),
+      name,
+      clickHandler,
       communitySymbol: currency.symbol,
     };
   }
@@ -323,38 +328,12 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: true });
   }
 
-  closeModal() {
-    this.setState({ isModalOpen: false });
+  openIsPrivateModal() {
+    this.setState({ isPrivateModalOpen: true });
   }
 
-  renderModalContent() {
-    // const isMember = !!this.props.user.memberOf.find(
-    //   (c) => c.id === community.id,
-    // );
-    // const isCurator = !!this.props.user.curatorOf.find(
-    //   (c) => c.id === community.id,
-    // );
-
-    if (this.state.activeCommunity) {
-      if (this.state.activeCommunity.isPrivate) {
-        return (
-          <CommunityPrivateUserRequest
-            community={this.state.activeCommunity}
-            user={this.props.user}
-            closeModal={this.closeModal.bind(this)}
-          />
-        );
-      }
-      return (
-        <CommunityStake
-          loading={this.props.isCurrencyLoading}
-          user={this.props.user}
-          populateNativeBalance={this.populateConverter.bind(this)}
-          community={this.state.activeCommunity}
-          dismissDialog={this.closeModal.bind(this)}
-        />
-      );
-    }
+  closeModal() {
+    this.setState({ isModalOpen: false, isPrivateModalOpen: false });
   }
 
   render() {
@@ -384,7 +363,25 @@ export class Dashboard extends Component {
               closeModal={this.closeModal.bind(this)}
               maxWidth="1020px"
             >
-              {this.renderModalContent()}
+              <CommunityStake
+                loading={this.props.isCurrencyLoading}
+                user={this.props.user}
+                populateNativeBalance={this.populateConverter.bind(this)}
+                community={this.state.activeCommunity}
+                dismissDialog={this.closeModal.bind(this)}
+              />
+            </Modal>
+            <Modal
+              hasCloseButton
+              isOpen={this.state.isPrivateModalOpen}
+              closeModal={this.closeModal.bind(this)}
+              maxWidth="1020px"
+            >
+              <CommunityPrivateUserRequest
+                community={this.state.activeCommunity}
+                user={this.props.user}
+                closeModal={this.closeModal.bind(this)}
+              />
             </Modal>
             <div className={styles.DashboardBanner}>
               <div className={styles.TokenBalances}>
