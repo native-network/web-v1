@@ -6,16 +6,26 @@ export default function StepOne() {
   return (
     <div>
       <p>
-        Native is a platform for communities to realize their inherent value
-        through their own local currency and set of governance tools. Native
-        tokens are used to support communities you care about by converting them
-        into a community’s token and joining that community.
+        Native is a platform for Communities to created tokenized ecosystems on
+        the blockchain. Native Tokens (NTV) are used to join and participate in
+        communities by converting them into a Community’s Token.
       </p>
-      <p className={styles.Important}>Joining a community allows you to:</p>
+      <p>
+        Community Tokens are used to become a member of a Community and can also
+        be used to transact value.
+      </p>
+      <p>
+        <strong>Joining a community allows you to:</strong>
+      </p>
       <ul className={styles.FeatureList}>
-        <li>- Vote on issues that are important to you</li>
-        <li>- Decide and support which projects will be funded</li>
-        <li>- Earn tokens by completing tasks for the community</li>
+        <li>Vote on important decisions</li>
+        <li>
+          Decide which projects will be funded through the Community’s Fund
+        </li>
+        <li>
+          Earn both Community and Native tokens by completing tasks created by
+          the Community Curator
+        </li>
       </ul>
     </div>
   );
