@@ -20,13 +20,14 @@ export class Manage extends Component {
       ...vals,
       membershipBenefits:
         membershipBenefits.filter((benefit) => !!benefit.length) || [],
-      blacklistAll: blacklistAll === 'Blacklist'
+      blacklistAll: blacklistAll === 'Blacklist',
     };
 
     this.props.updateCommunity(newVals);
   }
 
   render() {
+    console.log('manage re renders');
     return this.props.isLoading ? (
       <Loader />
     ) : (

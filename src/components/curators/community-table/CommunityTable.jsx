@@ -253,7 +253,6 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => ({
     user: state.user,
-    yo: state.communities,
   }),
   mapDispatchToProps,
 )(CommunityTable);

@@ -226,7 +226,6 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
         `communities/${+communityId}/updateUserStatus`,
         { communityId, userId, status },
       );
-
       if (status === 'blacklisted') {
         dispatch(
           toastrSuccess('User has been blacklisted from the community.'),
@@ -238,7 +237,6 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
-      console.log('err', err);
       dispatch(
         toastrError(
           'There was a problem blacklisting this member. Please try again.',

@@ -90,26 +90,19 @@ export default function communitiesReducer(
 
     case actions.UPDATE_USER_STATUS_COMPLETE:
       const { communityId, status, userId } = action;
-      // console.log('action', action);
-
-      // console.log(' state.communities', state.communities);
-      // console.log('yo', yo);
-      // if (yo) {
-      // }
-
-      // console.log('state.communities', state.communities);
-
       return {
         ...state,
         communities: state.communities.map((community) => {
           if (community.id === communityId) {
-            community.members.map((member) => {
-              if (member.id === userId) {
-                member.userStatus = status;
+            return {
+              ...community,
+              members: community.members.map((member) => {
+                if (member.id === userId) {
+                  return { ...member, userStatus: status };
+                }
                 return member;
-              }
-              return member;
-            });
+              }),
+            };
           }
           return community;
         }),
