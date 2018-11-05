@@ -95,7 +95,12 @@ const CommunityPrivateUserRequest = ({
               type="submit"
               disabled={pristine || invalid}
             />
-            <span onClick={closeModal}>Cancel</span>
+            <Button
+              theme="link"
+              content="Cancel"
+              type="button"
+              clickHandler={closeModal}
+            />
           </div>
         </form>
       )}
