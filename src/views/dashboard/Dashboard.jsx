@@ -1,4 +1,3 @@
-/*eslint-disable */
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -296,7 +295,7 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: true });
   }
 
-  closeModal(e) {
+  closeModal() {
     this.setState({ isModalOpen: false });
   }
 
@@ -459,12 +458,6 @@ export class Dashboard extends Component {
     );
   }
 }
-
-// name: this.props.user.memberOf.find(
-//   (c) => c.id === community.id,
-// )
-//   ? `Get ${currency && currency.symbol}`
-//   : `Support Community`,
 
 const mapDispatchToProps = (dispatch) => {
   return {

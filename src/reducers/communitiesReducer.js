@@ -5,7 +5,6 @@ export default function communitiesReducer(
   state = initialState.communities,
   action,
 ) {
-  // console.log('action in reducer', action)
   switch (action.type) {
     case actions.GET_COMMUNITIES_SUCCESS:
       return {
