@@ -23,7 +23,7 @@ Object.assign(ReactTableDefaults, {
 export function CommunityTable({ community, user, updateUserStatus }) {
   const { members, blacklisted } = community;
   const blacklistedIds = blacklisted.map((item) => item.id);
-  console.log('should re render');
+  console.log('community table render', community);
 
   const cols = [
     {
@@ -253,6 +253,7 @@ export const mapDispatchToProps = (dispatch) => {
 export default connect(
   (state) => ({
     user: state.user,
+    yo: state.communities,
   }),
   mapDispatchToProps,
 )(CommunityTable);

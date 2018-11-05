@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React, { Component } from 'react';
 import moment from 'moment';
 
@@ -49,6 +51,8 @@ class TabPanels extends Component {
         ? `${panel.name} (${(panel.items && panel.items.length) || 0})`
         : panel.name;
     });
+
+    console.log('tab pannel render');
 
     const { filter } = this.state.activeFilter;
 
