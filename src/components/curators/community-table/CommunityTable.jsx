@@ -121,23 +121,74 @@ export function CommunityTable({ community, user, updateUserStatus }) {
       filterable: false,
       Cell: ({ row }) => {
         const { userId, userStatus = 'member' } = row;
+        let listOfButtons = [];
 
-        const content =
-          userStatus === 'member' ? 'Blacklist user' : 'Whitelist user';
-        const theme = content === 'Whitelist user' ? 'tertiary' : 'primary';
-        const action = userStatus === 'member' ? 'blacklisted' : 'member';
-        const requestBody = {
-          communityId: community.id,
-          userId: userId,
-          status: action,
-        };
+        switch (userStatus) {
+          case 'member':
+            listOfButtons.push({
+              content: 'Blacklist user',
+              action: 'blacklisted',
+              theme: 'primary',
+            });
+            break;
+          case 'blacklisted':
+            listOfButtons.push({
+              content: 'Whitelist user',
+              action: 'member',
+              theme: 'tertiary',
+            });
+            break;
+          case 'pending':
+            listOfButtons.push({
+              content: 'Approve user',
+              action: 'approved',
+              theme: 'tertiary',
+            });
+            listOfButtons.push({
+              content: 'Deny user',
+              action: 'denied',
+              theme: 'primary',
+            });
+            break;
+          case 'approved':
+            listOfButtons.push({
+              content: 'Deny user',
+              action: 'denied',
+              theme: 'tertiary',
+            });
+            break;
+          case 'denied':
+            listOfButtons.push({
+              content: 'Approve user',
+              action: 'approved',
+              theme: 'tertiary',
+            });
+            break;
+        }
+
+        const formatedListOfActionbuttons = listOfButtons.map(
+          ({ action, content, theme }, ind) => {
+            return (
+              <Button
+                key={ind}
+                theme={theme}
+                clickHandler={() =>
+                  updateUserStatus({
+                    communityId: community.id,
+                    userId: userId,
+                    status: action,
+                  })
+                }
+                content={content}
+              />
+            );
+          },
+        );
 
         return (
-          <Button
-            theme={theme}
-            clickHandler={() => updateUserStatus(requestBody)}
-            content={content}
-          />
+          <div className={styles.actionButtonsContainer}>
+            {formatedListOfActionbuttons}
+          </div>
         );
       },
     },

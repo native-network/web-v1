@@ -55,3 +55,12 @@
     flex: 1 1 100%;
   }
 }
+
+.actionButtonsContainer {
+  display: flex;
+  flex-direction: column;
+
+  & button:nth-child(2) {
+    margin-top: 1rem;
+  }
+}
