@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -137,6 +139,7 @@ const cols = [
     resizable: false,
     maxWidth: 300,
     Cell: ({ value }) => {
+      console.log('value', value);
       return value.communitySymbol === 'NTV' ? (
         ''
       ) : (
@@ -199,6 +202,31 @@ export class Dashboard extends Component {
         ).toString(),
       ) * this.props.prices.ethUSD
     );
+  }
+
+  formatAction(community, currency) {
+    const isMember = !!this.props.user.memberOf.find(
+      (c) => c.id === community.id,
+    );
+    const isCurator = !!this.props.user.curatorOf.find(
+      (c) => c.id === community.id,
+    );
+
+    const name = () => {
+      if (isMember || isCurator) {
+        return `Get ${currency && currency.symbol}`;
+      }
+      if (!community.isPrivate && !isMember) {
+        return 'Support Community';
+      }
+      return 'Request Membership';
+    };
+
+    return {
+      name: name,
+      clickHandler: () => this.openModal(community),
+      communitySymbol: currency.symbol,
+    };
   }
 
   authorize() {
@@ -300,6 +328,13 @@ export class Dashboard extends Component {
   }
 
   renderModalContent() {
+    // const isMember = !!this.props.user.memberOf.find(
+    //   (c) => c.id === community.id,
+    // );
+    // const isCurator = !!this.props.user.curatorOf.find(
+    //   (c) => c.id === community.id,
+    // );
+
     if (this.state.activeCommunity) {
       if (this.state.activeCommunity.isPrivate) {
         return (
@@ -349,7 +384,7 @@ export class Dashboard extends Component {
               closeModal={this.closeModal.bind(this)}
               maxWidth="1020px"
             >
-              {this.renderModalContent(this.state)}
+              {this.renderModalContent()}
             </Modal>
             <div className={styles.DashboardBanner}>
               <div className={styles.TokenBalances}>
@@ -428,23 +463,7 @@ export class Dashboard extends Component {
                         .decimalPlaces(3)
                         .toString(),
                       price: this.communityPrice(community),
-                      actions: {
-                        name: () => {
-                          const isMember = !!this.props.user.memberOf.find(
-                            (c) => c.id === community.id,
-                          );
-
-                          if (isMember) {
-                            return `Get ${currency && currency.symbol}`;
-                          }
-                          if (!community.isPrivate && !isMember) {
-                            return 'Support Community';
-                          }
-                          return 'Request Membership';
-                        },
-                        clickHandler: () => this.openModal(community),
-                        communitySymbol: community.currency.symbol,
-                      },
+                      actions: this.formatAction(community, currency),
                     };
                   })}
                 />
