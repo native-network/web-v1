@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import { communitiesActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post, put } from '../requests';
@@ -219,20 +217,22 @@ export const getCommunityMembersError = (error) => {
 };
 
 export const updateUserStatus = ({ communityId, userId, status }) => {
-  //console.log('Action', communityId, userId, status)
   return async (dispatch) => {
-    console.log('entereted returned function for redux thunk');
+    dispatch({ type: actions.UPDATE_USER_STATUS });
     try {
-      // dispatch({ type: actions.UPDATE_USER_STATUS });
-
-      const { data } = await post(
-        `communities/${+communityId}/updateUserStatus`,
-        { communityId, userId, status },
-      );
-      console.log('data', data);
-      dispatch(
-        toastrSuccess('This user has been blacklisted from the community.'),
-      );
+      await post(`communities/${+communityId}/updateUserStatus`, {
+        communityId,
+        userId,
+        status,
+      });
+      if (status === 'blacklisted') {
+        dispatch(
+          toastrSuccess('User has been blacklisted from the community.'),
+        );
+      }
+      if (status === 'member') {
+        dispatch(toastrSuccess('User has been whitelisted to the community.'));
+      }
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
@@ -241,35 +241,10 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
           'There was a problem blacklisting this member. Please try again.',
         ),
       );
-      dispatch(updateUserStatusError(message));
+      dispatch(updateUserStatusIssue(message));
     }
   };
 };
-
-// export const removeBlacklistMember = (communityId, userId) => {
-//   return async (dispatch) => {
-// dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
-
-//     try {
-//       const { data } = await post(
-//         `communities/${+communityId}/removeBlacklistUser`,
-//         { id: userId },
-//       );
-//       const { blacklisted } = data;
-
-//       dispatch(toastrSuccess('This user has been removed from the blacklist.'));
-//       dispatch(blacklistMemberComplete(communityId, blacklisted));
-//     } catch (err) {
-//       const { message } = err;
-//       dispatch(
-//         toastrError(
-//           'There was a problem removing this member from the blacklist. Please try again.',
-//         ),
-//       );
-//       dispatch(blacklistMemberError(message));
-//     }
-//   };
-// };
 
 export const updateUserStatusComplete = (communityId, userId, status) => {
   return {
@@ -280,53 +255,9 @@ export const updateUserStatusComplete = (communityId, userId, status) => {
   };
 };
 
-export const updateUserStatusError = (error) => {
+export const updateUserStatusIssue = (error) => {
   return {
-    type: actions.UPDATE_USER_STATUS_ERROR,
+    type: actions.UPDATE_USER_STATUS_ISSUE,
     error,
   };
 };
-
-export const requestPrivateCommunityAccess = ({
-  description,
-  email,
-  communityId,
-  address,
-}) => {
-  //console.log('Action', communityId, userId, status)
-  return async (dispatch) => {
-    console.log('entereted returned function for redux thunk');
-    try {
-      dispatch({ type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS });
-      const { data } = await post(`communities/${+communityId}/requestAccess`, {
-        description,
-        email,
-        address,
-      });
-      console.log('data', data);
-      dispatch(
-        toastrSuccess('Successfully Request approval to join community'),
-      );
-      // dispatch(requestPrivateCommunityAccessComplete());
-    } catch (err) {
-      const { message } = err;
-      dispatch(
-        toastrError('There was a problem requesting access to join community'),
-      );
-      // dispatch(requestPrivateCommunityAccessError(message));
-    }
-  };
-};
-
-// export const requestPrivateCommunityAccessComplete = () => {
-//   return {
-//     type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_COMPLETE,
-//   };
-// };
-
-// export const requestPrivateCommunityAccessError = (error) => {
-//   return {
-//     type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_COMPLETE_ERROR,
-//     error,
-//   };
-// };

@@ -5,7 +5,7 @@
   display: inline-block;
   vertical-align: bottom;
   position: relative;
-  margin-left: 40px;
+  margin-left: 0.5rem;
 
   & img {
     width: 19px;
@@ -16,21 +16,31 @@
   & .popper {
     display: none;
     position: absolute;
-    bottom: 125%;
-    right: -120px;
+    bottom: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%);
     width: 240px;
     height: auto;
-    padding: 30px 20px;
+    padding: 1.5rem 1rem;
     z-index: 99999;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
-    color: #4a4a4a;
+    color: var(--gray-0);
     border-radius: 5px;
-    border: 1px solid #2c5e5e;
-    background-color: #fff;
+    background-color: var(--primary-white);
+    filter: drop-shadow(0 0.15rem 0.25rem var(--transparent-black-20));
 
-    @media (--medium-viewport) {
-      left: 10px;
+    &::after {
+      content: "";
+      position: absolute;
+      border: 0.5rem solid transparent;
+      border-left-width: 0.75rem;
+      border-right-width: 0.75rem;
+      border-top-color: var(--primary-white);
+      top: 100%;
+      transform: translateX(-50%);
+      left: 50%;
+      pointer-events: none;
     }
   }
 

@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import React, { Component } from 'react';
 import Loader from '../../components/shared/loader';
 import { connect } from 'react-redux';
@@ -55,28 +53,6 @@ export class CommunityAdmin extends Component {
 }
 
 function formatInitiatives(polls, tasks, projects, community) {
-  // console.log('community', community)
-  community.members = [
-    {
-      address: 'fake',
-      userStatus: 'member',
-      alias: 'Max',
-      id: 31
-    },
-    { 
-      alias: 'Nick',
-      address: 'fake',
-      userStatus: 'member',
-      id: 32
-
-    },
-    { 
-      alias: 'Alex',
-      address: 'fake',
-      userStatus: 'blacklisted',
-      id: 33
-    }
-  ]
   return [
     {
       name: 'Community Info',

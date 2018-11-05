@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,9 +9,7 @@ import {
   capitalizeFirstLetter,
 } from '../../../utils/helpers';
 import countries from '../../../utils/countries.json';
-import {
-  updateUserStatus,
-} from '../../../actions/communitiesActions';
+import { updateUserStatus } from '../../../actions/communitiesActions';
 
 import styles from './CommunityTable.css';
 
@@ -22,7 +18,7 @@ Object.assign(ReactTableDefaults, {
   showPaginationBottom: false,
 });
 
-export function CommunityTable({ community, user }) {
+export function CommunityTable({ community, user, updateUserStatus }) {
   const { members, blacklisted } = community;
   const blacklistedIds = blacklisted.map((item) => item.id);
 
@@ -120,23 +116,30 @@ export function CommunityTable({ community, user }) {
     {
       Header: 'Actions',
       resizable: false,
-      width: 200,
+      width: 190,
       sortable: false,
       filterable: false,
-      Cell: ({row}) => {
-        const { userId, userStatus } = row
-        const updateStatus =  userStatus === 'member' ? 'blacklisted' : "member"
-        const action = userStatus === 'member' ? 'Blacklist user' : "Whitelist user"
-        const theme = action === 'Whitelist user' ? 'tertiary' : 'primary'
-      
+      Cell: ({ row }) => {
+        const { userId, userStatus = 'member' } = row;
+
+        const content =
+          userStatus === 'member' ? 'Blacklist user' : 'Whitelist user';
+        const theme = content === 'Whitelist user' ? 'tertiary' : 'primary';
+        const action = userStatus === 'member' ? 'blacklisted' : 'member';
         const requestBody = {
           communityId: community.id,
           userId: userId,
-          status: updateStatus,
-        }
- 
-        return <Button theme={theme} clickHandler={() => updateUserStatus(requestBody)} content={action} />
-      }
+          status: action,
+        };
+
+        return (
+          <Button
+            theme={theme}
+            clickHandler={() => updateUserStatus(requestBody)}
+            content={content}
+          />
+        );
+      },
     },
   ];
 
