@@ -10,6 +10,7 @@ import {
 } from '../../../utils/helpers';
 import countries from '../../../utils/countries.json';
 import { updateUserStatus } from '../../../actions/communitiesActions';
+import preApproveUserModal from './components/pre-approve-user-modal';
 
 import styles from './CommunityTable.css';
 
@@ -200,6 +201,7 @@ export function CommunityTable({ community, user, updateUserStatus }) {
       <h3 className={styles.ManageMembersSubtitle}>
         Total Members: {numberWithCommas((members && members.length) || 0)}
       </h3>
+      <preApproveUserModal />
       <ReactTable
         columns={cols}
         defaultPageSize={25}
