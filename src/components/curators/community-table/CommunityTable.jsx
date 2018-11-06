@@ -224,7 +224,7 @@ class CommunityTable extends Component {
           <Button
             theme="tertiary"
             clickHandler={this.openPreApproveModal}
-            content="Pre-Approve members"
+            content="Pre Approve members"
           />
         </div>
         <ReactTable
