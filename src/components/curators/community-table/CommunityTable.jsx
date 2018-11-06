@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -31,7 +29,6 @@ class CommunityTable extends Component {
   };
 
   openPreApproveModal = () => {
-    console.log('yo');
     this.setState({ openPreApproveModal: true });
   };
 
@@ -221,6 +218,7 @@ class CommunityTable extends Component {
         <PreApproveUserModal
           isOpen={this.state.openPreApproveModal}
           closeModal={this.closePreApproveModal}
+          communityId={community.id}
         />
         <div className={styles.buttonContainer}>
           <Button
