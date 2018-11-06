@@ -37,7 +37,7 @@ Object.assign(ReactTableDefaults, {
 
 const cols = [
   {
-    Header: 'Community Name',
+    Header: 'Community',
     accessor: 'community',
     Cell: ({ value }) =>
       value.isMemberOf || value.isCuratorOf ? (
@@ -337,7 +337,17 @@ export class Dashboard extends Component {
               <div className={styles.TokenBalances}>
                 <div className={styles.Balance}>
                   <img src={eth} /> ETH Balance:&nbsp;
-                  <b>{ethBalance}</b> ({ethInUSD})
+                  <b>{ethBalance}</b>
+                  &nbsp;(
+                  {ethInUSD}) &nbsp;
+                  <a
+                    className={styles.Button}
+                    href="https://buy.mycrypto.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Buy ETH
+                  </a>
                 </div>
                 <WalletAddress
                   displayPrepend
@@ -380,9 +390,6 @@ export class Dashboard extends Component {
                   </p>
                 </div>
               ) : null}
-              <div className={styles.TableTitle}>
-                <h1>Your Communities</h1>
-              </div>
               <div className={styles.Table}>
                 <ReactTable
                   columns={cols}
@@ -414,8 +421,8 @@ export class Dashboard extends Component {
                         name: this.props.user.memberOf.find(
                           (c) => c.id === community.id,
                         )
-                          ? `Get ${currency && currency.symbol}`
-                          : `Support Community`,
+                          ? `Get more ${currency && currency.symbol}`
+                          : `Join Community`,
                         clickHandler: () => this.openModal(community),
                         communitySymbol: community.currency.symbol,
                       },
