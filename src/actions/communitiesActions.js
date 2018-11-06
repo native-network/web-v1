@@ -1,4 +1,3 @@
-/*eslint-disable */
 import { communitiesActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post, put } from '../requests';
@@ -304,46 +303,26 @@ export const requestPrivateCommunityAccessIssue = (error) => {
   };
 };
 
+/*eslint-disable */
 export const preApprovedUser = ({ communityId, walletAddress }) => {
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
-    // try {
-    // const { data } = await post(`communities/preapproveUsers`, {
-    //   communityId,
-    //   walletAddress,
-    // });
-
-    dispatch(
-      toastrSuccess(
-        `User with an Ethereum address of ${walletAddress}, has been pre approved`,
-      ),
-    );
-
-    //mock data response
-    const data = {
-      address: '0x9Fef75af579bFFF2a9A7Cca1825Bf82DbbAD17dC',
-      alias: 'Maximum Exposure',
-      city: 'denver',
-      country: 'us of a',
-      createdAt: '2018-09-24T21:09:51.603Z',
-      email: null,
-      id: 21,
-      preferredContact: null,
-      role: 'curator',
-      signing: null,
-      state: null,
-      status: null,
-      telegram: null,
-      updatedAt: '2018-10-04T14:53:29.578Z',
-      userStatus: 'approved',
-    };
-
-    return dispatch(preApprovedUserComplete({ data, communityId }));
-    // } catch (err) {
-    //   const { message } = err;
-    //   dispatch(toastrError('Something went wrong'));
-    //   dispatch(preApprovedUserIssue(message));
-    // }
+    try {
+      const { data } = await post(`communities/${communityId}/preapproveUser`, {
+        communityId,
+        walletAddress,
+      });
+      dispatch(
+        toastrSuccess(
+          `User with an Ethereum address of ${walletAddress}, has been pre approved`,
+        ),
+      );
+      return dispatch(preApprovedUserComplete({ data, communityId }));
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError('Something went wrong'));
+      dispatch(preApprovedUserIssue(message));
+    }
   };
 };
 
