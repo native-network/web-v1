@@ -4,6 +4,7 @@ import React, { Component, Fragment } from 'react';
 import { Form, Field } from 'react-final-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { number } from 'prop-types';
 
 import Modal from '../../../../shared/modal';
 import Button from '../../../../shared/button';
@@ -12,11 +13,16 @@ import styles from './PreApproveUserModal.css';
 import { preApprovedUser } from '../../../../../actions/communitiesActions';
 
 class PreApproveUserModal extends Component {
-  validateEthereumAddress = (address) => {
-    return !/^(0x)?[0-9a-f]{40}$/i.test(address)
+  static propTypes = {
+    communityId: number.isRequired,
+  };
+
+  validateEthereumAddress = (address) =>
+    /^(0x)?[0-9a-f]{40}$/i.test(address)
       ? undefined
       : 'Please enter valid ethereum adreess';
-  };
+
+  renderError = (error) => <p className={styles.error}>{error}</p>;
 
   render() {
     const { closeModal, isOpen, communityId, preApprovedUser } = this.props;
@@ -30,6 +36,7 @@ class PreApproveUserModal extends Component {
       >
         <Form
           onSubmit={({ walletAddress }) => {
+            console.log('walletAddress', walletAddress);
             preApprovedUser({
               walletAddress,
               communityId,
@@ -39,14 +46,17 @@ class PreApproveUserModal extends Component {
         >
           {({ handleSubmit, pristine, invalid }) => (
             <form className={styles.form} onSubmit={handleSubmit}>
-              <Field name="email" validate={this.validateEthereumAddress}>
+              <Field
+                name="walletAddress"
+                validate={this.validateEthereumAddress}
+              >
                 {({ input, meta }) => (
                   <Fragment>
                     <label className={styles.label}>
                       Please Enter the users Ethereum Address
                     </label>
                     <input type="text" {...input} />
-                    {meta.error && meta.touched && renderError(meta.error)}
+                    {meta.error && meta.touched && this.renderError(meta.error)}
                   </Fragment>
                 )}
               </Field>

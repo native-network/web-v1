@@ -305,6 +305,8 @@ export const requestPrivateCommunityAccessIssue = (error) => {
 };
 
 export const preApprovedUser = ({ communityId, walletAddress }) => {
+  console.log('communityId', communityId);
+  console.log('walletAddress', walletAddress);
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
     try {
