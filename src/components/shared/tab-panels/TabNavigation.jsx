@@ -41,7 +41,7 @@ export default function TabNavigation({
             className={`${styles.CommunityCTA} visible-md`}
           >
             <Icon className={styles.CTAIcon} icon="telegram" />
-            <span>Talk with Community members on Telegram</span>
+            <span>Join Community Telegram</span>
           </a>
         )}
       </div>
