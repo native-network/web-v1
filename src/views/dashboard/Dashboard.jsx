@@ -346,7 +346,7 @@ export class Dashboard extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Buy ETH
+                    MyCrypto
                   </a>
                 </div>
                 <WalletAddress
