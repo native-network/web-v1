@@ -119,7 +119,28 @@ export default function communitiesReducer(
               : c,
         ),
       };
-
+    case actions.PRE_APPROVE_USER_COMPLETE:
+      return {
+        ...state,
+        communities: state.communities.map((community) => {
+          if (community.id === action.communityId) {
+            return {
+              ...community,
+              members: community.members.map((member) => {
+                // console.log('member', member);
+                //
+                // Here we will create a user object and append it to our members list
+                //
+                // if (member.id === action.userId) {
+                //   return { ...member, userStatus: action.status };
+                // }
+                return member;
+              }),
+            };
+          }
+          return community;
+        }),
+      };
     case actions.GET_COMMUNITY_MEMBERS_SUCCESS:
       return {
         ...state,
