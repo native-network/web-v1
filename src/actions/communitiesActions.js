@@ -302,3 +302,55 @@ export const requestPrivateCommunityAccessIssue = (error) => {
     error,
   };
 };
+
+export const preApprovedUser = ({
+  communityId,
+  walletAddress,
+  emailAddress,
+}) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.PRE_APPROVE_USER });
+    try {
+      await post(`user/preapproveUser`, {
+        communityId,
+        walletAddress,
+        emailAddress,
+      });
+
+      if (emailAddress) {
+        dispatch(
+          toastrSuccess(
+            `User with an email address of ${emailAddress}, has been pre approved`,
+          ),
+        );
+      } else if (walletAddress) {
+        dispatch(
+          toastrSuccess(
+            `User with an Ethereum address of ${emailAddress}, has been pre approved`,
+          ),
+        );
+      }
+      return dispatch(
+        preApprovedUserComplete({ communityId, walletAddress, emailAddress }),
+      );
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError('Something went wrong'));
+      dispatch(preApprovedUserIssue(message));
+    }
+  };
+};
+
+export const preApprovedUserComplete = (data) => {
+  return {
+    type: actions.PRE_APPROVE_USER_COMPLETE,
+    data,
+  };
+};
+
+export const preApprovedUserIssue = (error) => {
+  return {
+    type: actions.PRE_APPROVE_USER_ISSUE,
+    error,
+  };
+};
