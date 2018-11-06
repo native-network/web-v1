@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import Modal from '../../../../shared/modal';
-import styles from './preApproveUserModal';
+import styles from './PreApproveUserModal';
 
-class preApproveUserModal extends Component {
+class PreApproveUserModal extends Component {
   render() {
     const { closeModal, isOpen } = this.props;
     return (
@@ -20,4 +20,4 @@ class preApproveUserModal extends Component {
   }
 }
 
-export default preApproveUserModal;
+export default PreApproveUserModal;

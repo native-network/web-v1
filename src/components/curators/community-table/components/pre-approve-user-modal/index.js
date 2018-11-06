@@ -1,1 +1,1 @@
-export { default } from './preApproveUserModal';
+export { default } from './PreApproveUserModal';
