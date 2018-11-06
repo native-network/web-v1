@@ -232,26 +232,30 @@ export class Dashboard extends Component {
         )}
         isOpen={!this.props.hasSession}
       >
-        <div className={styles.AuthorizeModalContainer}>
-          <p>
-            If you haven't set up MetaMask (or another Web3 wallet) yet, please{' '}
-            <a
-              href="https://metamask.io"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              download and set up MetaMask
-            </a>
-            .
-          </p>
-        </div>
-        <Button
-          centered
-          theme="primary"
-          content="Sign Message"
-          className={styles.AuthorizeButton}
-          clickHandler={this.authorize.bind(this)}
-        />
+        {!this.props.user.wallet.address ? (
+          <div className={styles.AuthorizeModalContainer}>
+            <p>
+              If you haven't set up MetaMask (or another Web3 wallet) yet,
+              please{' '}
+              <a
+                href="https://metamask.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                download and set up MetaMask
+              </a>
+              .
+            </p>
+          </div>
+        ) : (
+          <Button
+            centered
+            theme="primary"
+            content="Sign Message"
+            className={styles.AuthorizeButton}
+            clickHandler={this.authorize.bind(this)}
+          />
+        )}
       </Modal>
     );
   }
