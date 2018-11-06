@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { communitiesActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post, put } from '../requests';
@@ -303,18 +304,13 @@ export const requestPrivateCommunityAccessIssue = (error) => {
   };
 };
 
-export const preApprovedUser = ({
-  communityId,
-  walletAddress,
-  emailAddress,
-}) => {
+export const preApprovedUser = ({ communityId, walletAddress }) => {
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
     try {
-      await post(`user/preapproveUser`, {
+      const { data } = await post(`user/preapproveUser`, {
         communityId,
         walletAddress,
-        emailAddress,
       });
 
       if (emailAddress) {
@@ -330,9 +326,9 @@ export const preApprovedUser = ({
           ),
         );
       }
-      return dispatch(
-        preApprovedUserComplete({ communityId, walletAddress, emailAddress }),
-      );
+      // this data will be passed to our reducer and prepended to our community table members list.
+      console.log('data', data);
+      return dispatch(preApprovedUserComplete());
     } catch (err) {
       const { message } = err;
       dispatch(toastrError('Something went wrong'));
