@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -37,6 +39,7 @@ class CommunityTable extends Component {
     const { members, blacklisted } = community;
     const blacklistedIds = blacklisted.map((item) => item.id);
 
+    console.log('members', members);
     const cols = [
       {
         Header: 'User ID',

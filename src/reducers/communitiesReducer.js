@@ -126,16 +126,7 @@ export default function communitiesReducer(
           if (community.id === action.communityId) {
             return {
               ...community,
-              members: community.members.map((member) => {
-                // console.log('member', member);
-                //
-                // Here we will create a user object and append it to our members list
-                //
-                // if (member.id === action.userId) {
-                //   return { ...member, userStatus: action.status };
-                // }
-                return member;
-              }),
+              members: [action.data, ...community.members],
             };
           }
           return community;

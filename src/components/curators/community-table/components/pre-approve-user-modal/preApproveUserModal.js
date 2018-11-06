@@ -1,5 +1,3 @@
-/*eslint-disable */
-
 import React, { Component, Fragment } from 'react';
 import { Form, Field } from 'react-final-form';
 import { connect } from 'react-redux';
@@ -36,7 +34,6 @@ class PreApproveUserModal extends Component {
       >
         <Form
           onSubmit={({ walletAddress }) => {
-            console.log('walletAddress', walletAddress);
             preApprovedUser({
               walletAddress,
               communityId,

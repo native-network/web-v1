@@ -305,44 +305,53 @@ export const requestPrivateCommunityAccessIssue = (error) => {
 };
 
 export const preApprovedUser = ({ communityId, walletAddress }) => {
-  console.log('communityId', communityId);
-  console.log('walletAddress', walletAddress);
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
-    try {
-      const { data } = await post(`user/preapproveUser`, {
-        communityId,
-        walletAddress,
-      });
+    // try {
+    // const { data } = await post(`communities/preapproveUsers`, {
+    //   communityId,
+    //   walletAddress,
+    // });
 
-      if (emailAddress) {
-        dispatch(
-          toastrSuccess(
-            `User with an email address of ${emailAddress}, has been pre approved`,
-          ),
-        );
-      } else if (walletAddress) {
-        dispatch(
-          toastrSuccess(
-            `User with an Ethereum address of ${emailAddress}, has been pre approved`,
-          ),
-        );
-      }
-      // this data will be passed to our reducer and prepended to our community table members list.
-      console.log('data', data);
-      return dispatch(preApprovedUserComplete());
-    } catch (err) {
-      const { message } = err;
-      dispatch(toastrError('Something went wrong'));
-      dispatch(preApprovedUserIssue(message));
-    }
+    dispatch(
+      toastrSuccess(
+        `User with an Ethereum address of ${walletAddress}, has been pre approved`,
+      ),
+    );
+
+    //mock data response
+    const data = {
+      address: '0x9Fef75af579bFFF2a9A7Cca1825Bf82DbbAD17dC',
+      alias: 'Maximum Exposure',
+      city: 'denver',
+      country: 'us of a',
+      createdAt: '2018-09-24T21:09:51.603Z',
+      email: null,
+      id: 21,
+      preferredContact: null,
+      role: 'curator',
+      signing: null,
+      state: null,
+      status: null,
+      telegram: null,
+      updatedAt: '2018-10-04T14:53:29.578Z',
+      userStatus: 'approved',
+    };
+
+    return dispatch(preApprovedUserComplete({ data, communityId }));
+    // } catch (err) {
+    //   const { message } = err;
+    //   dispatch(toastrError('Something went wrong'));
+    //   dispatch(preApprovedUserIssue(message));
+    // }
   };
 };
 
-export const preApprovedUserComplete = (data) => {
+export const preApprovedUserComplete = ({ data, communityId }) => {
   return {
     type: actions.PRE_APPROVE_USER_COMPLETE,
     data,
+    communityId,
   };
 };
 
