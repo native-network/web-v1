@@ -145,8 +145,12 @@ export class CurrencyConverter extends Component {
             <div className={styles.loaderWrap}>
               <Loader isFullScreen={false} />
             </div>
-            {this.props.hash ? (
-              <div className={styles.etherscanMessage}>
+            <div className={styles.etherscanMessage}>
+              <p>
+                Your transaction has been initiated. Check your wallet to sign
+                the transaction. Be patient as tokens convert.
+              </p>
+              {this.props.hash ? (
                 <p>
                   Your transaction progress can be viewed on{' '}
                   <a
@@ -160,8 +164,8 @@ export class CurrencyConverter extends Component {
                   </a>
                   .
                 </p>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
           </div>
         ) : (
           <Form
