@@ -138,6 +138,47 @@
   & input:not([type="radio"]) {
     margin-bottom: 0.5rem;
   }
+
+  & input[type=checkbox] {
+    visibility: hidden;
+  }
+}
+
+.checkboxContainer {
+  display: block;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  & .customCheckbox {
+    display: block;
+    margin: 1rem 0;
+    border: 2px solid var(--dark-green);
+    height: 20px;
+    width: 20px;
+  }
+
+  & .isPrivateCheckbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    &:checked {
+      & ~ .customCheckbox {
+        background-color: var(--dark-green);
+      }
+    }
+
+    &:disabled {
+      & ~ .customCheckbox {
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 
 .Error {

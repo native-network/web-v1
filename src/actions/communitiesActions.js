@@ -216,21 +216,24 @@ export const getCommunityMembersError = (error) => {
   };
 };
 
-export const blacklistMember = (communityId, userId) => {
+export const updateUserStatus = ({ communityId, userId, status }) => {
   return async (dispatch) => {
-    dispatch({ type: actions.BLACKLIST_MEMBER });
-
+    dispatch({ type: actions.UPDATE_USER_STATUS });
     try {
-      const { data } = await post(
-        `communities/${+communityId}/addBlacklistUser`,
-        { id: userId },
-      );
-      const { blacklisted } = data;
-
-      dispatch(
-        toastrSuccess('This user has been blacklisted from the community.'),
-      );
-      dispatch(blacklistMemberComplete(communityId, blacklisted));
+      await post(`communities/${+communityId}/updateUserStatus`, {
+        communityId,
+        userId,
+        status,
+      });
+      if (status === 'blacklisted') {
+        dispatch(
+          toastrSuccess('User has been blacklisted from the community.'),
+        );
+      }
+      if (status === 'member') {
+        dispatch(toastrSuccess('User has been whitelisted to the community.'));
+      }
+      dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
       dispatch(
@@ -238,47 +241,23 @@ export const blacklistMember = (communityId, userId) => {
           'There was a problem blacklisting this member. Please try again.',
         ),
       );
-      dispatch(blacklistMemberError(message));
+      dispatch(updateUserStatusIssue(message));
     }
   };
 };
 
-export const removeBlacklistMember = (communityId, userId) => {
-  return async (dispatch) => {
-    dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
-
-    try {
-      const { data } = await post(
-        `communities/${+communityId}/removeBlacklistUser`,
-        { id: userId },
-      );
-      const { blacklisted } = data;
-
-      dispatch(toastrSuccess('This user has been removed from the blacklist.'));
-      dispatch(blacklistMemberComplete(communityId, blacklisted));
-    } catch (err) {
-      const { message } = err;
-      dispatch(
-        toastrError(
-          'There was a problem removing this member from the blacklist. Please try again.',
-        ),
-      );
-      dispatch(blacklistMemberError(message));
-    }
-  };
-};
-
-export const blacklistMemberComplete = (communityId, blacklist) => {
+export const updateUserStatusComplete = (communityId, userId, status) => {
   return {
-    type: actions.BLACKLIST_COMPLETE,
+    type: actions.UPDATE_USER_STATUS_COMPLETE,
     communityId,
-    blacklist,
+    userId,
+    status,
   };
 };
 
-export const blacklistMemberError = (error) => {
+export const updateUserStatusIssue = (error) => {
   return {
-    type: actions.BLACKLIST_ISSUE,
+    type: actions.UPDATE_USER_STATUS_ISSUE,
     error,
   };
 };

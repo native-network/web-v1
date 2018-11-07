@@ -16,7 +16,7 @@ import {
   ManagePolls,
   ManageProjects,
   ManageTasks,
-  ManageMembers,
+  CommunityTable,
 } from '../../components/curators';
 import Manage from '../manage';
 
@@ -59,8 +59,8 @@ function formatInitiatives(polls, tasks, projects, community) {
       render: () => <Manage community={community} />,
     },
     {
-      name: 'Members',
-      render: () => <ManageMembers community={community} />,
+      name: 'Community Table',
+      render: () => <CommunityTable community={community} />,
     },
     {
       name: 'Polls',

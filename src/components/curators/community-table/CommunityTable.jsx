@@ -9,26 +9,17 @@ import {
   capitalizeFirstLetter,
 } from '../../../utils/helpers';
 import countries from '../../../utils/countries.json';
-import {
-  blacklistMember,
-  removeBlacklistMember,
-} from '../../../actions/communitiesActions';
+import { updateUserStatus } from '../../../actions/communitiesActions';
 
-import styles from './ManageMembers.css';
+import styles from './CommunityTable.css';
 
 Object.assign(ReactTableDefaults, {
   minRows: 0,
   showPaginationBottom: false,
 });
 
-export function ManageMembers({
-  community,
-  blacklistMember,
-  removeBlacklistMember,
-  user,
-}) {
+export function CommunityTable({ community, user, updateUserStatus }) {
   const { members, blacklisted } = community;
-
   const blacklistedIds = blacklisted.map((item) => item.id);
 
   const cols = [
@@ -93,14 +84,18 @@ export function ManageMembers({
       Cell: ({ value }) => (value ? capitalizeFirstLetter(value) : ''),
     },
     {
-      Header: 'Blacklist',
-      accessor: 'isBlacklisted',
+      Header: 'Status',
+      accessor: 'userStatus',
       resizable: false,
       width: 165,
       filterMethod: (filter, row) => {
         if (filter.value === 'all') return row;
-        if (filter.value === 'false') return !row.isBlacklisted;
-        if (filter.value === 'true') return row.isBlacklisted;
+        if (filter.value === 'pending') return row.userStatus === 'pending';
+        if (filter.value === 'denied') return row.userStatus === 'denied';
+        if (filter.value === 'approved') return row.userStatus === 'approved';
+        if (filter.value === 'member') return row.userStatus === 'member';
+        if (filter.value === 'blacklisted')
+          return row.userStatus === 'blacklisted';
       },
       Filter: ({ filter, onChange }) => (
         <select
@@ -109,30 +104,45 @@ export function ManageMembers({
           style={{ width: '100%' }}
         >
           <option value="all">All</option>
-          <option value="false">Unblacklisted</option>
-          <option value="true">Blacklisted</option>
+          <option value="pending">Pending</option>
+          <option value="denied">Denied</option>
+          <option value="approved">Approved</option>
+          <option value="member">Member</option>
+          <option value="blacklisted">Blacklisted</option>
         </select>
       ),
-      style: {
-        textAlign: 'center',
-      },
-      Cell: ({ value, row }) => {
-        const isUser = row.userId === user.id;
+      Cell: ({ value }) => (value ? capitalizeFirstLetter(value) : ''),
+    },
+    {
+      Header: 'Actions',
+      resizable: false,
+      width: 190,
+      sortable: false,
+      filterable: false,
+      Cell: ({ row }) => {
+        const { userId, userStatus = 'member' } = row;
+
+        const content =
+          userStatus === 'member' ? 'Blacklist user' : 'Whitelist user';
+        const theme = content === 'Whitelist user' ? 'tertiary' : 'primary';
+        const action = userStatus === 'member' ? 'blacklisted' : 'member';
+        const requestBody = {
+          communityId: community.id,
+          userId: userId,
+          status: action,
+        };
+
         return (
-          <input
-            type="checkbox"
-            disabled={isUser}
-            checked={value}
-            onChange={() =>
-              value
-                ? removeBlacklistMember(community.id, row.userId)
-                : blacklistMember(community.id, row.userId)
-            }
+          <Button
+            theme={theme}
+            clickHandler={() => updateUserStatus(requestBody)}
+            content={content}
           />
         );
       },
     },
   ];
+
   return (
     <div className={styles.ManageMembers}>
       <h2 className={styles.ManageMembersTitle}>Members</h2>
@@ -157,6 +167,7 @@ export function ManageMembers({
             city,
             role,
             preferredContact,
+            userStatus,
           }) => ({
             userId: id,
             alias,
@@ -168,6 +179,7 @@ export function ManageMembers({
             city,
             role,
             preferredContact,
+            userStatus,
             isBlacklisted: blacklistedIds.includes(id),
           }),
         )}
@@ -231,8 +243,7 @@ export function ManageMembers({
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    blacklistMember: bindActionCreators(blacklistMember, dispatch),
-    removeBlacklistMember: bindActionCreators(removeBlacklistMember, dispatch),
+    updateUserStatus: bindActionCreators(updateUserStatus, dispatch),
   };
 };
 
@@ -241,4 +252,4 @@ export default connect(
     user: state.user,
   }),
   mapDispatchToProps,
-)(ManageMembers);
+)(CommunityTable);
