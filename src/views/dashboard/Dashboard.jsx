@@ -38,7 +38,7 @@ Object.assign(ReactTableDefaults, {
 
 const cols = [
   {
-    Header: 'Community Name',
+    Header: 'Community',
     accessor: 'community',
     Cell: ({ value }) =>
       value.isMemberOf || value.isCuratorOf ? (
@@ -212,10 +212,10 @@ export class Dashboard extends Component {
 
     const name = () => {
       if (isMember || isCurator) {
-        return `Get ${currency && currency.symbol}`;
+        return `Get more ${currency && currency.symbol}`;
       }
       if (!community.isPrivate && !isMember) {
-        return 'Support Community';
+        return 'Join Community';
       }
       return 'Request Membership';
     };
@@ -404,7 +404,17 @@ export class Dashboard extends Component {
               <div className={styles.TokenBalances}>
                 <div className={styles.Balance}>
                   <img src={eth} /> ETH Balance:&nbsp;
-                  <b>{ethBalance}</b> ({ethInUSD})
+                  <b>{ethBalance}</b>
+                  &nbsp;(
+                  {ethInUSD}) &nbsp;
+                  <a
+                    className={styles.Button}
+                    href="https://buy.mycrypto.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    MyCrypto
+                  </a>
                 </div>
                 <WalletAddress
                   displayPrepend
@@ -447,9 +457,6 @@ export class Dashboard extends Component {
                   </p>
                 </div>
               ) : null}
-              <div className={styles.TableTitle}>
-                <h1>Your Communities</h1>
-              </div>
               <div className={styles.Table}>
                 <ReactTable
                   columns={cols}
