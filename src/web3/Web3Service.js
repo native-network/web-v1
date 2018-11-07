@@ -18,6 +18,7 @@ export default class Web3Service {
     provider = new Web3.providers[providerType](
       process.env.REMOTE_WEB3_PROVIDER,
     );
+    this.web3Remote = new Web3(provider);
     if (window.ethereum) {
       this.web3 = new Web3(window.ethereum);
       try {
@@ -32,7 +33,6 @@ export default class Web3Service {
     } else {
       this.web3 = new Web3(provider);
     }
-    this.web3Remote = new Web3(provider);
   }
 
   getMainAccount() {
