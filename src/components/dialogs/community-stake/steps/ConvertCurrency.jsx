@@ -48,14 +48,22 @@ export class ConvertCurrency extends Component {
         <h1 className={styles.Header}>Get {community.name} Tokens</h1>
         <div className={styles.TextContainer}>
           <p>
-            <strong>
-              You must convert NTV to {community.name} Tokens (
-              {community.currency.symbol}) in order to support the community.
-            </strong>
+            <strong>You have enough NTV to join {community.name}!</strong>
           </p>
           <p>
-            This transaction could take up to 5 minutes. You will be notified
-            when your currency has been transferred.
+            Now, convert your NTV into {community.name} Tokens (
+            {community.currency.symbol}
+            ).
+          </p>
+          <p>
+            The minimum amount required to join is{' '}
+            {fromWei(community.currency.minimumStake)}{' '}
+            {community.currency.symbol}. Remember, you can always get more than
+            the minimum if you want to further support the community.
+          </p>
+          <p>
+            Be patient as the transaction processes. Please note, you will need
+            to sign two wallet transactions to complete the purchase.
           </p>
         </div>
         <CurrencyConverter
