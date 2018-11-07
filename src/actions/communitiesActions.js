@@ -303,7 +303,6 @@ export const requestPrivateCommunityAccessIssue = (error) => {
   };
 };
 
-/*eslint-disable */
 export const preApprovedUser = ({ communityId, walletAddress }) => {
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
