@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Field } from 'react-final-form';
 
 import Modal from '../../shared/modal';
@@ -21,7 +20,7 @@ const ManageCommunityPrivacy = (props) => {
       closeModal={closeModal}
       isOpen={isOpen}
       renderHeader={() => <h1>Set community to private</h1>}
-      label="Add Poll"
+      label="Set Community Privacy"
     >
       <div className={styles.modalContent}>
         <p className={styles.prompt}>

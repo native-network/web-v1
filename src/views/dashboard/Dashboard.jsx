@@ -5,6 +5,7 @@ import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
+import CommunityPrivateUserRequest from '../../components/forms/community-private-user-request';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
@@ -156,6 +157,7 @@ const cols = [
 export class Dashboard extends Component {
   state = {
     isModalOpen: false,
+    isPrivateModalOpen: false,
     activeCommunity: {},
     sendCurrency: this.props.walletCurrencies.find(
       (currency) => currency.symbol === 'ETH',
@@ -198,6 +200,38 @@ export class Dashboard extends Component {
         ).toString(),
       ) * this.props.prices.ethUSD
     );
+  }
+
+  formatAction(community, currency) {
+    const isMember = !!this.props.user.memberOf.find(
+      (c) => c.id === community.id,
+    );
+    const isCurator = !!this.props.user.curatorOf.find(
+      (c) => c.id === community.id,
+    );
+
+    const name = () => {
+      if (isMember || isCurator) {
+        return `Get ${currency && currency.symbol}`;
+      }
+      if (!community.isPrivate && !isMember) {
+        return 'Support Community';
+      }
+      return 'Request Membership';
+    };
+
+    const clickHandler = () => {
+      if (!isMember && !isCurator && community.isPrivate) {
+        return this.openIsPrivateModal();
+      }
+      return this.openModal(community);
+    };
+
+    return {
+      name,
+      clickHandler,
+      communitySymbol: currency.symbol,
+    };
   }
 
   authorize() {
@@ -311,8 +345,12 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: true });
   }
 
+  openIsPrivateModal() {
+    this.setState({ isPrivateModalOpen: true });
+  }
+
   closeModal() {
-    this.setState({ isModalOpen: false });
+    this.setState({ isModalOpen: false, isPrivateModalOpen: false });
   }
 
   render() {
@@ -348,6 +386,18 @@ export class Dashboard extends Component {
                 populateNativeBalance={this.populateConverter.bind(this)}
                 community={this.state.activeCommunity}
                 dismissDialog={this.closeModal.bind(this)}
+              />
+            </Modal>
+            <Modal
+              hasCloseButton
+              isOpen={this.state.isPrivateModalOpen}
+              closeModal={this.closeModal.bind(this)}
+              maxWidth="1020px"
+            >
+              <CommunityPrivateUserRequest
+                community={this.state.activeCommunity}
+                user={this.props.user}
+                closeModal={this.closeModal.bind(this)}
               />
             </Modal>
             <div className={styles.DashboardBanner}>
@@ -427,15 +477,7 @@ export class Dashboard extends Component {
                         .decimalPlaces(3)
                         .toString(),
                       price: this.communityPrice(community),
-                      actions: {
-                        name: this.props.user.memberOf.find(
-                          (c) => c.id === community.id,
-                        )
-                          ? `Get ${currency && currency.symbol}`
-                          : `Support Community`,
-                        clickHandler: () => this.openModal(community),
-                        communitySymbol: community.currency.symbol,
-                      },
+                      actions: this.formatAction(community, currency),
                     };
                   })}
                 />

@@ -1,0 +1,64 @@
+@import '../../forms/styles.css';
+
+.form {
+  composes: FormStyles from '../../forms/styles.css';
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+
+  & h1 {
+    color: var(--primary-color);
+  }
+
+  & input {
+    margin: 0.4rem 0;
+  }
+
+  & .error {
+    margin-top: 0;
+    color: var(--warm-coral);
+  }
+
+  & .address {
+    margin-top: 0.4rem;
+    margin-bottom: 3rem;
+  }
+
+  & .descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    & p {
+      align-self: flex-start;
+      margin: 0;
+    }
+
+    & textarea {
+      height: 100px;
+      margin: 0.4rem 0;
+    }
+
+    & .error {
+      align-self: center;
+    }
+
+    & span {
+      align-self: flex-end;
+    }
+  }
+
+  & .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & span {
+      margin-top: 1.8rem;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
