@@ -8,7 +8,7 @@ import Modal from '../../../../shared/modal';
 import Button from '../../../../shared/button';
 import styles from './PreApproveUserModal.css';
 
-import { preApprovedUser } from '../../../../../actions/communitiesActions';
+import { preApproveUser } from '../../../../../actions/communitiesActions';
 
 class PreApproveUserModal extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ class PreApproveUserModal extends Component {
   renderError = (error) => <p className={styles.error}>{error}</p>;
 
   render() {
-    const { closeModal, isOpen, communityId, preApprovedUser } = this.props;
+    const { closeModal, isOpen, communityId, preApproveUser } = this.props;
     return (
       <Modal
         hasCloseButton
@@ -34,7 +34,7 @@ class PreApproveUserModal extends Component {
       >
         <Form
           onSubmit={({ walletAddress }) => {
-            preApprovedUser({
+            preApproveUser({
               walletAddress,
               communityId,
             });
@@ -82,7 +82,7 @@ class PreApproveUserModal extends Component {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    preApprovedUser: bindActionCreators(preApprovedUser, dispatch),
+    preApproveUser: bindActionCreators(preApproveUser, dispatch),
   };
 };
 

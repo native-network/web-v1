@@ -303,7 +303,7 @@ export const requestPrivateCommunityAccessIssue = (error) => {
   };
 };
 
-export const preApprovedUser = ({ communityId, walletAddress }) => {
+export const preApproveUser = ({ communityId, walletAddress }) => {
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
     try {
