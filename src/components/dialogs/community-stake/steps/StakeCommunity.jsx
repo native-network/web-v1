@@ -33,17 +33,14 @@ class StakeCommunity extends Component {
             Ether and other cryptocurrencies.
           </p>
           <p>
-            To join {community.name}, you will need to stake{' '}
+            To become a member of {community.name}, you will need to stake{' '}
             {`${fromWei(community.currency.minimumStake)} ${
               community.currency.symbol
             }`}
             .
           </p>
           <p>
-            <strong>
-              This transaction could take up to 5 minutes. You will be notified
-              when your currency has been transferred.
-            </strong>
+            <strong>This process will be two transactions.</strong>
           </p>
         </div>
         <Button

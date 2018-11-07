@@ -38,7 +38,7 @@ Object.assign(ReactTableDefaults, {
 
 const cols = [
   {
-    Header: 'Community Name',
+    Header: 'Community',
     accessor: 'community',
     Cell: ({ value }) =>
       value.isMemberOf || value.isCuratorOf ? (
@@ -212,10 +212,10 @@ export class Dashboard extends Component {
 
     const name = () => {
       if (isMember || isCurator) {
-        return `Get ${currency && currency.symbol}`;
+        return `Get more ${currency && currency.symbol}`;
       }
       if (!community.isPrivate && !isMember) {
-        return 'Support Community';
+        return 'Join Community';
       }
       return 'Request Membership';
     };
@@ -266,13 +266,30 @@ export class Dashboard extends Component {
         )}
         isOpen={!this.props.hasSession}
       >
-        <Button
-          centered
-          theme="primary"
-          content="Sign Message"
-          className={styles.AuthorizeButton}
-          clickHandler={this.authorize.bind(this)}
-        />
+        {!this.props.user.wallet.address ? (
+          <div className={styles.AuthorizeModalContainer}>
+            <p>
+              If you haven't set up MetaMask (or another Web3 wallet) yet,
+              please{' '}
+              <a
+                href="https://metamask.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                download and set up MetaMask
+              </a>
+              .
+            </p>
+          </div>
+        ) : (
+          <Button
+            centered
+            theme="primary"
+            content="Sign Message"
+            className={styles.AuthorizeButton}
+            clickHandler={this.authorize.bind(this)}
+          />
+        )}
       </Modal>
     );
   }
@@ -387,7 +404,17 @@ export class Dashboard extends Component {
               <div className={styles.TokenBalances}>
                 <div className={styles.Balance}>
                   <img src={eth} /> ETH Balance:&nbsp;
-                  <b>{ethBalance}</b> ({ethInUSD})
+                  <b>{ethBalance}</b>
+                  &nbsp;(
+                  {ethInUSD}) &nbsp;
+                  <a
+                    className={styles.Button}
+                    href="https://buy.mycrypto.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    MyCrypto
+                  </a>
                 </div>
                 <WalletAddress
                   displayPrepend
@@ -430,9 +457,6 @@ export class Dashboard extends Component {
                   </p>
                 </div>
               ) : null}
-              <div className={styles.TableTitle}>
-                <h1>Your Communities</h1>
-              </div>
               <div className={styles.Table}>
                 <ReactTable
                   columns={cols}

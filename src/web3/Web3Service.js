@@ -32,6 +32,7 @@ export default class Web3Service {
     } else {
       this.web3 = new Web3(provider);
     }
+
     this.web3Remote = new Web3(provider);
   }
 

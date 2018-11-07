@@ -20,7 +20,7 @@ const furtherInstructionText = (populateNativeBalance, dismissDialog) => {
     </div>
   ) : (
     <Fragment>
-      <p>Please use the currency converter above.</p>
+      <p>First, please use the token converter to get the necessary NTV.</p>
       <Button
         className={styles.DismissButton}
         clickHandler={() => populateNativeBalance()}
@@ -55,18 +55,27 @@ function InsufficientFunds({
       <div className={styles.TextContainer}>
         <p>
           <strong>
-            In order to join a community, you must first purchase Native Tokens
-            (NTV). Once you have Native Tokens, you can use that to purchase the
-            community tokens of your choice and join that community.
+            To become a community member, you must first purchase enough Native
+            Tokens (NTV).
           </strong>
         </p>
         <p>
+          Once you have Native Tokens, you will use them to convert to the
+          Community Token of your choice, so you can join that community.
+        </p>
+        <p>
           It appears you don't have enough NTV to convert to{' '}
-          {community.currency.symbol} needed to stake into the {community.name}{' '}
-          Community. You need a minimum of {fromWei(minStake)}{' '}
-          {community.currency.symbol} to stake into the community. Your current
-          balance is {fromWei(userBalance)} {community.currency.symbol} and{' '}
-          {fromWei(nativeCurrency.balance)} {nativeCurrency.symbol}.
+          {community.currency.symbol} to become a member of the {community.name}{' '}
+          Community.
+        </p>
+        <p>
+          You need a minimum of {fromWei(minStake)} {community.currency.symbol}{' '}
+          to stake into the community.
+        </p>
+        <p>
+          Your current balances are {fromWei(nativeCurrency.balance)}{' '}
+          {nativeCurrency.symbol} and {fromWei(userBalance)}{' '}
+          {community.currency.symbol}.
         </p>
         {furtherInstructionText(populateNativeBalance, dismissDialog)}
       </div>
