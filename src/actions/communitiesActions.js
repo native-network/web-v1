@@ -277,7 +277,7 @@ export const requestPrivateCommunityAccess = ({
         address,
       });
       dispatch(
-        toastrSuccess('Successfully Request approval to join community'),
+        toastrSuccess('Successfully Requested approval to join community'),
       );
       dispatch(requestPrivateCommunityAccessComplete());
     } catch (err) {
