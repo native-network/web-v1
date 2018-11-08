@@ -222,7 +222,7 @@ export class Dashboard extends Component {
 
     const clickHandler = () => {
       if (!isMember && !isCurator && community.isPrivate) {
-        return this.openIsPrivateModal();
+        return this.openIsPrivateModal(community);
       }
       return this.openModal(community);
     };
@@ -345,7 +345,12 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: true });
   }
 
-  openIsPrivateModal() {
+  openIsPrivateModal(activeCommunity) {
+    this.setState({
+      activeCommunity: {
+        ...activeCommunity,
+      },
+    });
     this.setState({ isPrivateModalOpen: true });
   }
 
