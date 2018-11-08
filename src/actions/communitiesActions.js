@@ -303,17 +303,18 @@ export const requestPrivateCommunityAccessIssue = (error) => {
   };
 };
 
-export const preApproveUser = ({ communityId, walletAddress }) => {
+export const preApproveUser = ({ communityId, address }) => {
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
     try {
+      console.log(communityId, address); //eslint-disable-line
       const { data } = await post(`communities/${communityId}/preapproveUser`, {
         communityId,
-        walletAddress,
+        address,
       });
       dispatch(
         toastrSuccess(
-          `User with an Ethereum address of ${walletAddress}, has been pre approved`,
+          `User with an Ethereum address of ${address}, has been pre approved`,
         ),
       );
       return dispatch(preApprovedUserComplete({ data, communityId }));

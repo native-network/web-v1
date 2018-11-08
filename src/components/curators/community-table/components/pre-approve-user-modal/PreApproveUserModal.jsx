@@ -33,9 +33,9 @@ class PreApproveUserModal extends Component {
         label="Pre Approve User"
       >
         <Form
-          onSubmit={({ walletAddress }) => {
+          onSubmit={({ address }) => {
             preApproveUser({
-              walletAddress,
+              address,
               communityId,
             });
             closeModal();
@@ -43,10 +43,7 @@ class PreApproveUserModal extends Component {
         >
           {({ handleSubmit, pristine, invalid }) => (
             <form className={styles.form} onSubmit={handleSubmit}>
-              <Field
-                name="walletAddress"
-                validate={this.validateEthereumAddress}
-              >
+              <Field name="address" validate={this.validateEthereumAddress}>
                 {({ input, meta }) => (
                   <Fragment>
                     <label className={styles.label}>
