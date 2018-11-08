@@ -66,6 +66,7 @@
 
   &:--enter {
     background: var(--tertiary-button-active);
+    border-color: var(--tertiary-button-active);
   }
 }
 
@@ -139,7 +140,8 @@
 
   &.Primary,
   &.Secondary,
-  &.Tertiary {
+  &.Tertiary,
+  &.White {
     &:not([disabled]) {
       @extend %box-shadow;
     }
