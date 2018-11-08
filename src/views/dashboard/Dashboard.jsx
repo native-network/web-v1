@@ -389,6 +389,7 @@ export class Dashboard extends Component {
               <CommunityStake
                 loading={this.props.isCurrencyLoading}
                 user={this.props.user}
+                error={this.props.currencyError}
                 populateNativeBalance={this.populateConverter.bind(this)}
                 community={this.state.activeCommunity}
                 dismissDialog={this.closeModal.bind(this)}
@@ -516,6 +517,7 @@ export default connect(
     return {
       communities: state.communities.communities,
       isCurrencyLoading: state.currencies.loading,
+      currencyError: state.currencies.error,
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,
