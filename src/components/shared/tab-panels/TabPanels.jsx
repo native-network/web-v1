@@ -49,7 +49,6 @@ class TabPanels extends Component {
         ? `${panel.name} (${(panel.items && panel.items.length) || 0})`
         : panel.name;
     });
-
     const { filter } = this.state.activeFilter;
 
     return (
