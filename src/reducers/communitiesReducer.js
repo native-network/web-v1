@@ -119,7 +119,19 @@ export default function communitiesReducer(
               : c,
         ),
       };
-
+    case actions.PRE_APPROVE_USER_COMPLETE:
+      return {
+        ...state,
+        communities: state.communities.map((community) => {
+          if (community.id === action.communityId) {
+            return {
+              ...community,
+              members: [action.data, ...community.members],
+            };
+          }
+          return community;
+        }),
+      };
     case actions.GET_COMMUNITY_MEMBERS_SUCCESS:
       return {
         ...state,

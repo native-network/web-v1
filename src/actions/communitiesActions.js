@@ -302,3 +302,41 @@ export const requestPrivateCommunityAccessIssue = (error) => {
     error,
   };
 };
+
+export const preApproveUser = ({ communityId, address }) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.PRE_APPROVE_USER });
+    try {
+      console.log(communityId, address); //eslint-disable-line
+      const { data } = await post(`communities/${communityId}/preapproveUser`, {
+        communityId,
+        address,
+      });
+      dispatch(
+        toastrSuccess(
+          `User with an Ethereum address of ${address}, has been pre approved`,
+        ),
+      );
+      return dispatch(preApprovedUserComplete({ data, communityId }));
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError('Something went wrong'));
+      dispatch(preApprovedUserIssue(message));
+    }
+  };
+};
+
+export const preApprovedUserComplete = ({ data, communityId }) => {
+  return {
+    type: actions.PRE_APPROVE_USER_COMPLETE,
+    data,
+    communityId,
+  };
+};
+
+export const preApprovedUserIssue = (error) => {
+  return {
+    type: actions.PRE_APPROVE_USER_ISSUE,
+    error,
+  };
+};
