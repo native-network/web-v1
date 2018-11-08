@@ -12,6 +12,7 @@ import { routes } from '../routes';
 import styles from './App.css';
 import native from '../assets/img/native.svg';
 
+import { initGoogleAnalytics } from '../utils/analytics';
 import { getUserSession, refreshAccounts } from '../actions/userSessionActions';
 import { getCurrentPrices } from '../actions/pricesActions';
 
@@ -22,6 +23,8 @@ export class App extends Component {
   };
 
   componentWillMount() {
+    initGoogleAnalytics();
+
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }

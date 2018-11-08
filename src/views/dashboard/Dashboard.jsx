@@ -5,6 +5,7 @@ import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
+import CommunityPrivateUserRequest from '../../components/forms/community-private-user-request';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
@@ -37,7 +38,7 @@ Object.assign(ReactTableDefaults, {
 
 const cols = [
   {
-    Header: 'Community Name',
+    Header: 'Community',
     accessor: 'community',
     Cell: ({ value }) =>
       value.isMemberOf || value.isCuratorOf ? (
@@ -156,6 +157,7 @@ const cols = [
 export class Dashboard extends Component {
   state = {
     isModalOpen: false,
+    isPrivateModalOpen: false,
     activeCommunity: {},
     sendCurrency: this.props.walletCurrencies.find(
       (currency) => currency.symbol === 'ETH',
@@ -200,6 +202,38 @@ export class Dashboard extends Component {
     );
   }
 
+  formatAction(community, currency) {
+    const isMember = !!this.props.user.memberOf.find(
+      (c) => c.id === community.id,
+    );
+    const isCurator = !!this.props.user.curatorOf.find(
+      (c) => c.id === community.id,
+    );
+
+    const name = () => {
+      if (isMember || isCurator) {
+        return `Get more ${currency && currency.symbol}`;
+      }
+      if (!community.isPrivate && !isMember) {
+        return 'Join Community';
+      }
+      return 'Request Membership';
+    };
+
+    const clickHandler = () => {
+      if (!isMember && !isCurator && community.isPrivate) {
+        return this.openIsPrivateModal();
+      }
+      return this.openModal(community);
+    };
+
+    return {
+      name,
+      clickHandler,
+      communitySymbol: currency.symbol,
+    };
+  }
+
   authorize() {
     if (this.props.user.wallet.address) {
       this.props.promptAuthorize(this.props.user.wallet.address);
@@ -232,13 +266,30 @@ export class Dashboard extends Component {
         )}
         isOpen={!this.props.hasSession}
       >
-        <Button
-          centered
-          theme="primary"
-          content="Sign Message"
-          className={styles.AuthorizeButton}
-          clickHandler={this.authorize.bind(this)}
-        />
+        {!this.props.user.wallet.address ? (
+          <div className={styles.AuthorizeModalContainer}>
+            <p>
+              If you haven't set up MetaMask (or another Web3 wallet) yet,
+              please{' '}
+              <a
+                href="https://metamask.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                download and set up MetaMask
+              </a>
+              .
+            </p>
+          </div>
+        ) : (
+          <Button
+            centered
+            theme="primary"
+            content="Sign Message"
+            className={styles.AuthorizeButton}
+            clickHandler={this.authorize.bind(this)}
+          />
+        )}
       </Modal>
     );
   }
@@ -294,8 +345,12 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: true });
   }
 
+  openIsPrivateModal() {
+    this.setState({ isPrivateModalOpen: true });
+  }
+
   closeModal() {
-    this.setState({ isModalOpen: false });
+    this.setState({ isModalOpen: false, isPrivateModalOpen: false });
   }
 
   render() {
@@ -333,11 +388,33 @@ export class Dashboard extends Component {
                 dismissDialog={this.closeModal.bind(this)}
               />
             </Modal>
+            <Modal
+              hasCloseButton
+              isOpen={this.state.isPrivateModalOpen}
+              closeModal={this.closeModal.bind(this)}
+              maxWidth="1020px"
+            >
+              <CommunityPrivateUserRequest
+                community={this.state.activeCommunity}
+                user={this.props.user}
+                closeModal={this.closeModal.bind(this)}
+              />
+            </Modal>
             <div className={styles.DashboardBanner}>
               <div className={styles.TokenBalances}>
                 <div className={styles.Balance}>
                   <img src={eth} /> ETH Balance:&nbsp;
-                  <b>{ethBalance}</b> ({ethInUSD})
+                  <b>{ethBalance}</b>
+                  &nbsp;(
+                  {ethInUSD}) &nbsp;
+                  <a
+                    className={styles.Button}
+                    href="https://buy.mycrypto.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    MyCrypto
+                  </a>
                 </div>
                 <WalletAddress
                   displayPrepend
@@ -380,9 +457,6 @@ export class Dashboard extends Component {
                   </p>
                 </div>
               ) : null}
-              <div className={styles.TableTitle}>
-                <h1>Your Communities</h1>
-              </div>
               <div className={styles.Table}>
                 <ReactTable
                   columns={cols}
@@ -410,15 +484,7 @@ export class Dashboard extends Component {
                         .decimalPlaces(3)
                         .toString(),
                       price: this.communityPrice(community),
-                      actions: {
-                        name: this.props.user.memberOf.find(
-                          (c) => c.id === community.id,
-                        )
-                          ? `Get ${currency && currency.symbol}`
-                          : `Support Community`,
-                        clickHandler: () => this.openModal(community),
-                        communitySymbol: community.currency.symbol,
-                      },
+                      actions: this.formatAction(community, currency),
                     };
                   })}
                 />
