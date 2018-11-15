@@ -10,6 +10,7 @@ class KYC extends Component {
   state = {
     scriptLoaded: false,
     iframeInitialized: false,
+    timedout: false,
   }
 
   componentDidMount() {
@@ -18,23 +19,29 @@ class KYC extends Component {
     script.src = 'https://test-api.sumsub.com/idensic/static/idensic.js';
     script.async = true;
 
-    document.body.appendChild(script);
+    if (this.props.user.id) {
+      this.props.getKycToken(this.props.user.id);
+    }
 
+    document.body.appendChild(script);
     script.onload = () => this.setState({scriptLoaded: true});
   }
 
   componentDidUpdate(prevProps, prevState) {
-
-    const { scriptLoaded: oldLoaded } = prevState;
     const { scriptLoaded: newLoaded } = this.state;
+    const { kycToken: newToken } = this.props.user;
 
-    const { kycToken: token } = this.props.user;
-    if (oldLoaded !== newLoaded && newLoaded) {
-
-      if (this.ifr && token && !this.state.iframeInitialized) {
-        this.initializeIframe(token);
-      }
+    if (prevState.timedout !== this.state.timedout && !this.state.timedout) {
+      this.renewToken(newToken);
     }
+
+    if (newLoaded && prevProps.kycToken !== newToken && !this.state.iframeInitialized) {
+      this.initializeIframe(newToken);
+    }
+  }
+
+  renewToken() {
+    this.setState({timedout: false}, () => this.props.getKycToken(this.props.user.id));
   }
 
   initializeIframe(token) {
@@ -68,16 +75,18 @@ class KYC extends Component {
 
         switch (messageType) {
           case 'idCheck.onApplicantCreated':
-          this.props.updateKyc(user.id, payload.applicantId);
-          console.log('payload', payload);
+            this.props.updateKyc(user.id, payload.applicantId);
             return;
           case 'idCheck.onError':
             if (payload.code === 'session-expired') {
-              this.props.getKycToken(user.address);
+              this.setState({timedout: true});
             }
             return;
+          case 'idCheck.onApplicantSubmitted':
+
           default:
             console.log('messageType', messageType);
+            console.log('payload', payload);
             return;
         }
       }

@@ -295,16 +295,23 @@ export const updateKycIssue = (error) => {
   };
 };
 
-export const getKycToken = (address) => {
+export const getKycToken = (userId) => {
   return async (dispatch) => {
     dispatch({ type: 'GET_KYC_TOKEN' });
 
     try {
-      const { data } = await get(`user/${address}/get-kyc-token`);
+      const { data } = await get(`user/${userId}/get-kyc-token`);
 
-      console.log(data);
+      return dispatch(getKycTokenComplete(data));
     } catch (err) {
       console.log(err);
     }
   };
 };
+
+export const getKycTokenComplete = (token) => {
+  return {
+    type: 'GET_KYC_TOKEN_COMPLETE',
+    token,
+  }
+}

@@ -29,6 +29,9 @@ export default function userSessionReducer(state = {}, action) {
     case 'UPDATE_KYC_ISSUE':
       console.log(action); // eslint-disable-line
       return { ...state };
+
+    case 'GET_KYC_TOKEN_COMPLETE':
+      return { ...state, kycToken: action.token };
     case actions.DISMISS_USER_MESSAGE: {
       const filteredMessages = state.messages.filter((message) => {
         return message.id !== action.messageId;
