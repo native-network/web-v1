@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { promptAuthorize } from '../../../../actions/userSessionActions';
 
+import styles from '../VerifyUser.css';
+
 import Button from '../../../shared/button';
 import native from '../../../../assets/img/native.svg';
 
@@ -13,31 +15,33 @@ function Authorize(props) {
     submitHandler();
   };
 
-  return user.wallet.address.length === 0 ? (
-    <div className={'foo'}>
-      <div className={''}>
+  return (
+    <div>
+      <div className={styles.ModalHeader}>
         <img src={native} alt="" />
         <h1>Connect Your Wallet to Continue</h1>
       </div>
-      <p>
-        If you haven't set up MetaMask (or another Web3 wallet) yet, please{' '}
-        <a href="https://metamask.io" target="_blank" rel="noopener noreferrer">
-          download and set up MetaMask
-        </a>
-        .
-      </p>
-    </div>
-  ) : (
-    <div className={''}>
-      <img src={native} alt="" />
-      <h1>Connect Your Wallet to Continue</h1>
-      <Button
-        centered
-        theme="primary"
-        content="Sign Message"
-        className={'foo'}
-        clickHandler={() => handleStep(user.wallet.address)}
-      />
+      {user.wallet.address.length === 0 ? (
+        <p>
+          If you haven't set up MetaMask (or another Web3 wallet) yet, please{' '}
+          <a
+            href="https://metamask.io"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            download and set up MetaMask
+          </a>
+          .
+        </p>
+      ) : (
+        <Button
+          centered
+          theme="primary"
+          content="Sign Message"
+          className={'foo'}
+          clickHandler={() => handleStep(user.wallet.address)}
+        />
+      )}
     </div>
   );
 }
