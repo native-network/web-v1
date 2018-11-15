@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { push } from 'connected-react-router';
 import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
@@ -11,7 +12,12 @@ import { MESSAGES } from '../utils/constants';
 import { toastrError, toastrInfo, toastrSuccess } from './toastrActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
 
-export const getUserSession = () => {
+export /**
+ * getUserSession
+ *
+ * @returns session object
+ */
+const getUserSession = () => {
   return async (dispatch, getState) => {
     const { state } = getState().router.location;
     const { address: walletAddress } = getState().user.wallet;
@@ -39,7 +45,13 @@ export const getUserSession = () => {
   };
 };
 
-export const pollUserStake = (stakeConfirmationInterval) => {
+export /**
+ *
+ *
+ * @param {*} stakeConfirmationInterval - intervbal fn
+ * @returns
+ */
+const pollUserStake = (stakeConfirmationInterval) => {
   return async (dispatch) => {
     const messageId = MESSAGES.STAKE_CONFIRM;
     stakeConfirmationInterval = setInterval(async () => {
@@ -66,7 +78,6 @@ export const pollUserStake = (stakeConfirmationInterval) => {
 export const promptAuthorize = (address) => {
   return async (dispatch) => {
     dispatch({ type: actions.PROMPT_AUTHORIZE });
-    dispatch(beginAjaxCall());
     try {
       const { data } = await post(`user/signing`, { address });
       if (data) {
@@ -87,12 +98,19 @@ export const promptSignature = (signing, address) => {
     try {
       const signature = await promptSign(signing);
       const { data } = await post(`user/authorize`, { signature, address });
-      return dispatch(getUserSessionSuccess(data));
+      return dispatch(authorizationComplete(data));
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
       return dispatch(getUserSessionError(message));
     }
+  };
+};
+
+export const authorizationComplete = (user) => {
+  return {
+    type: actions.AUTHORIZATION_COMPLETE,
+    user,
   };
 };
 
@@ -243,5 +261,50 @@ export const updateUserError = (error) => {
   return {
     type: actions.UPDATE_USER_ERROR,
     error,
+  };
+};
+
+export const updateKyc = (userId, applicantId) => {
+  return async (dispatch) => {
+    dispatch({ type: 'UPDATE_KYC' });
+    try {
+      const { data } = await post(`user/${userId}/updateKyc`, {
+        id: userId,
+        kycApplicantId: applicantId,
+      });
+
+      dispatch(updateKycComplete(data));
+    } catch (err) {
+      const { message } = err;
+      dispatch(updateKycIssue(message));
+    }
+  };
+};
+
+export const updateKycComplete = (user) => {
+  return {
+    type: 'UPDATE_KYC_COMPLETE',
+    user,
+  };
+};
+
+export const updateKycIssue = (error) => {
+  return {
+    type: 'UPDATE_KYC_ISSUE',
+    error,
+  };
+};
+
+export const getKycToken = (address) => {
+  return async (dispatch) => {
+    dispatch({ type: 'GET_KYC_TOKEN' });
+
+    try {
+      const { data } = await get(`user/${address}/get-kyc-token`);
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 };

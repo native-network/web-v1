@@ -3,6 +3,10 @@ import { initialState } from './initialState';
 
 export default function userSessionReducer(state = {}, action) {
   switch (action.type) {
+    case actions.PROMPT_AUTHORIZE:
+      return { ...state, loading: true };
+    case actions.AUTHORIZATION_COMPLETE:
+      return { ...state, loading: false, ...action.user, sessionErrror: '' };
     case actions.GET_USER_SESSION_SUCCESS:
       return { ...state, ...action.user, sessionErrror: '' };
     case actions.GET_USER_SESSION_ERROR:
@@ -19,6 +23,12 @@ export default function userSessionReducer(state = {}, action) {
       return { ...state, ...action.user };
     case actions.UPDATE_USER_ERROR:
       return { ...state, userError: action.error };
+    case 'UPDATE_KYC_COMPLETE':
+      console.log(action); // eslint-disable-line
+      return { ...state, kycApplicantId: action.user.kycApplicantId };
+    case 'UPDATE_KYC_ISSUE':
+      console.log(action); // eslint-disable-line
+      return { ...state };
     case actions.DISMISS_USER_MESSAGE: {
       const filteredMessages = state.messages.filter((message) => {
         return message.id !== action.messageId;
