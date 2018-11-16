@@ -34,16 +34,10 @@ export default class CommunityService {
       this.community.address,
     );
 
-    /* eslint-disable */
-    // console.log('are u defined?', this.community.address);
-    console.log('Community Remote Contract`', this.communityRemoteContract);
-    console.log('=======================');
-
     const communityAccount = await this.communityRemoteContract.methods
       .communityAccount()
       .call();
 
-    console.log('what is this', communityAccount);
     this.smartTokenRemoteContract = await this.web3Service.initContractRemote(
       smartTokenAbi,
       this.community.tokenAddress,
@@ -53,7 +47,6 @@ export default class CommunityService {
       smartTokenAbi,
       this.community.tokenAddress,
     );
-    // console.log('!!!!!!', this.communityContract.methods.communityAccount);
 
     this.communityStorageRemoteContract = await this.web3Service.initContractRemote(
       communityStorageAbi,
@@ -178,8 +171,6 @@ export default class CommunityService {
   }
 
   async getAmountStaked(address) {
-    // TODO: Check this method call, I'm not 100% on if this is the corect format for getting the val of a public
-    // TODO: key/value variable in a contract
     return this.communityStorageRemoteContract.methods
       .stakedBalances(address)
       .call();

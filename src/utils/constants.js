@@ -36,8 +36,6 @@ export const retrieveWalletCurrencyData = async (address, community) => {
       community3.getAmountStaked(address),
     ])
       .then((data) => {
-        /* eslint-disable */
-        console.log('data', data);
         if (data) {
           const [price, symbol, balance] = data;
 
@@ -51,7 +49,6 @@ export const retrieveWalletCurrencyData = async (address, community) => {
         }
       })
       .catch((err) => {
-        console.log('err', err);
         return err;
       });
   });
