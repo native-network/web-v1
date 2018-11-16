@@ -13,7 +13,7 @@ export class VerifyUser extends Component {
 
   componentDidMount() {
     const { user } = this.props;
-
+    console.log(user);
     if (!user.id) {
       this.setState({components: [Authorize, Processing, KYC]})
     } else if (user.id) {
