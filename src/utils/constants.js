@@ -33,7 +33,7 @@ export const retrieveWalletCurrencyData = async (address, community) => {
       community3.getPrice(),
       community3.getSymbol(),
       community3.getTokenBalance(address),
-      // community3.getAmountStaked(address),
+      community3.getAmountStaked(address),
     ])
       .then((data) => {
         /* eslint-disable */
