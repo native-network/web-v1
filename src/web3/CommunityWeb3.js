@@ -159,11 +159,6 @@ export default class CommunityService {
     }
   }
 
-  // async getAmountStaked(address) {
-  //   const amountStaked = this.communityContract.stakedBalances[address];
-  //   return amountStaked;
-  // }
-
   async getAmountStaked(address) {
     // TODO: Check this method call, I'm not 100% on if this is the corect format for getting the val of a public
     // TODO: key/value variable in a contract
