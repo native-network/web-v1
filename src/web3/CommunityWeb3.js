@@ -1,6 +1,7 @@
 import { communityAbi } from '../contracts/abi/community';
 import { smartTokenAbi } from '../contracts/abi/smarttoken';
 import { getAddress } from '../web3/Web3Service';
+import { communityStorageAbi } from '../contracts/abi/communitystorage';
 
 export default class CommunityService {
   web3Service;
@@ -32,6 +33,10 @@ export default class CommunityService {
       communityAbi,
       this.community.address,
     );
+    /* eslint-disable */
+    console.log('this.communityRemoteContract', this.communityRemoteContract);
+    // const communityAccount = await this.communityRemoteContract.methods
+    //   .communityAccoun;
 
     this.smartTokenRemoteContract = await this.web3Service.initContractRemote(
       smartTokenAbi,
@@ -41,6 +46,11 @@ export default class CommunityService {
     this.smartTokenContractWS = await this.web3Service.initContract(
       smartTokenAbi,
       this.community.tokenAddress,
+    );
+
+    this.communityStorageRemoteContract = await this.web3Service.initContractRemote(
+      communityStorageAbi,
+      communityAccount,
     );
   }
   async communityIsMember(address) {
