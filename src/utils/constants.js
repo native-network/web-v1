@@ -37,13 +37,14 @@ export const retrieveWalletCurrencyData = async (address, community) => {
     ])
       .then((data) => {
         if (data) {
-          const [price, symbol, balance] = data;
+          const [price, symbol, balance, staked] = data;
 
           return {
             id,
             price,
             symbol,
             balance,
+            staked,
             iconUrl: community.icon,
           };
         }

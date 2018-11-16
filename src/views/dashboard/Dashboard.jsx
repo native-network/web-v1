@@ -132,10 +132,17 @@ const cols = [
   },
   {
     Header: 'Amount Staked',
-    id: 'total',
+    accessor: 'amountStaked',
     maxWidth: 150,
     Cell: ({ value }) => {
       return formatUsd(value);
+    },
+    Footer: ({ data }) => {
+      const sum = data.reduce((sum, { amountStaked }) => {
+        return (+amountStaked + +sum).toFixed(2);
+      }, 0);
+
+      return `$${sum}`;
     },
     style: {
       textAlign: 'right',
@@ -507,6 +514,10 @@ export class Dashboard extends Component {
                       userCurrency && userCurrency.balance
                         ? fromWei(userCurrency.balance)
                         : '0';
+                    const userAmountStaked =
+                      userCurrency && userCurrency.staked
+                        ? fromWei(userCurrency.staked)
+                        : '0';
                     return {
                       community: {
                         ...community,
@@ -519,6 +530,9 @@ export class Dashboard extends Component {
                         ),
                       },
                       quantity: bigNumber(userBalance)
+                        .decimalPlaces(3)
+                        .toString(),
+                      amountStaked: bigNumber(userAmountStaked)
                         .decimalPlaces(3)
                         .toString(),
                       price: this.communityPrice(community),
