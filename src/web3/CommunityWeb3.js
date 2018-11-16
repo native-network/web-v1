@@ -159,6 +159,11 @@ export default class CommunityService {
     }
   }
 
+  async getAmountStaked(address) {
+    const amountStaked = this.communityContract.stakedBalances[address];
+    return amountStaked;
+  }
+
   async stake(cb) {
     let gasPrice = await this.getGasPrice();
     gasPrice = gasPrice * 1.25;

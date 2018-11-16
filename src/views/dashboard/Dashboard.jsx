@@ -131,6 +131,20 @@ const cols = [
     },
   },
   {
+    Header: 'Amount Staked',
+    id: 'total',
+    maxWidth: 150,
+    Cell: ({ value }) => {
+      return formatUsd(value);
+    },
+    style: {
+      textAlign: 'right',
+    },
+    headerStyle: {
+      textAlign: 'right',
+    },
+  },
+  {
     Header: 'Actions',
     accessor: 'actions',
     sortable: false,
