@@ -203,27 +203,44 @@ export class Dashboard extends Component {
   }
 
   formatAction(community, currency) {
-    const isMember = !!this.props.user.memberOf.find(
-      (c) => c.id === community.id,
-    );
-    const isCurator = !!this.props.user.curatorOf.find(
-      (c) => c.id === community.id,
-    );
+    const { communityStatusOf, curatorOf, memberOf } = this.props.user;
+    const isMember = !!memberOf.find((c) => c.id === community.id);
+    const isCurator = !!curatorOf.find((c) => c.id === community.id);
+    let communityStatus;
+
+    if (communityStatusOf.length >= 1) {
+      const userCommunityStatus = this.props.user.communityStatusOf.find(
+        (c) => c.communityId === community.id,
+      );
+      if (userCommunityStatus) {
+        communityStatus = userCommunityStatus.userStatus;
+      }
+    }
 
     const name = () => {
       if (isMember || isCurator) {
         return `Get more ${currency && currency.symbol}`;
       }
-      if (!community.isPrivate && !isMember) {
+      if (
+        (!community.isPrivate && !isMember) ||
+        (community.isPrivate && communityStatus === 'approved')
+      ) {
         return 'Join Community';
       }
+
       return 'Request Membership';
     };
 
     const clickHandler = () => {
-      if (!isMember && !isCurator && community.isPrivate) {
+      if (
+        !isMember &&
+        !isCurator &&
+        community.isPrivate &&
+        communityStatus !== 'approved'
+      ) {
         return this.openIsPrivateModal(community);
       }
+
       return this.openModal(community);
     };
 
@@ -388,6 +405,7 @@ export class Dashboard extends Component {
               <CommunityStake
                 loading={this.props.isCurrencyLoading}
                 user={this.props.user}
+                error={this.props.currencyError}
                 populateNativeBalance={this.populateConverter.bind(this)}
                 community={this.state.activeCommunity}
                 dismissDialog={this.closeModal.bind(this)}
@@ -515,6 +533,7 @@ export default connect(
     return {
       communities: state.communities.communities,
       isCurrencyLoading: state.currencies.loading,
+      currencyError: state.currencies.error,
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,

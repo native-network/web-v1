@@ -18,7 +18,7 @@ export const sendTransactionInEth = (tokenAddress, transactionAmount) => {
       const account = await service.getMainAccount();
 
       sendTransaction(tokenAddress, toWei(transactionAmount), (hash) =>
-        dispatch(pendingTransactionComplete(hash)),
+        dispatch(pendingTransactionComplete({ hash })),
       )
         .then((receipt) => {
           dispatch(sendTransactionInEthSuccess(receipt));
@@ -82,7 +82,14 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
             receivingCommunity.community.tokenAddress,
             transactionAmount,
             (hash) => {
-              dispatch(pendingTransactionComplete(hash));
+              dispatch(
+                pendingTransactionComplete({
+                  message: `Purchasing ${
+                    receivingCommunity.community.name
+                  } Tokens. Transaction 1 of 2.`,
+                  hash,
+                }),
+              );
             },
           )
           .then(() => {
@@ -91,7 +98,14 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
                 sendingCommunity.community.tokenAddress,
                 transactionAmount,
                 (hash) => {
-                  dispatch(pendingTransactionComplete(hash));
+                  dispatch(
+                    pendingTransactionComplete({
+                      message: `Purchasing ${
+                        receivingCommunity.community.name
+                      } Tokens. Transaction 2 of 2.`,
+                      hash,
+                    }),
+                  );
                 },
               )
               .then(() => {
@@ -121,8 +135,9 @@ export const sendTransactionInNtv = (communityAddress, transactionAmount) => {
   };
 };
 
-export const pendingTransactionComplete = (hash) => {
-  return { type: 'PENDING_TRANSACTION_HASH', hash };
+export const pendingTransactionComplete = (transactionObject) => {
+  const { message = '', hash } = transactionObject;
+  return { type: 'PENDING_TRANSACTION_HASH', hash, message };
 };
 
 export const sendTransactionInNtvSuccess = (data) => {
@@ -146,12 +161,26 @@ export const stake = (community) => {
     const { address } = getState().user.wallet;
     community3
       .approve(community.address, community.currency.minimumStake, (hash) => {
-        dispatch(pendingTransactionComplete(hash));
+        dispatch(
+          pendingTransactionComplete({
+            message: `Staking into the ${
+              community.name
+            } Community. Transaction 1 of 2.`,
+            hash,
+          }),
+        );
       })
       .then(() => {
         return community3
           .stake((hash) => {
-            dispatch(pendingTransactionComplete(hash));
+            dispatch(
+              pendingTransactionComplete({
+                message: `Staking into the ${
+                  community.name
+                } Community. Transaction 2 of 2.`,
+                hash,
+              }),
+            );
           })
           .then(() => {
             let stakeConfirmationInterval;

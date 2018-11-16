@@ -34,6 +34,12 @@ export class App extends Component {
   componentDidUpdate(prevProps) {
     const { address: oldUserAddress } = prevProps.user.wallet;
     const { address: newUserAddress } = this.props.user.wallet;
+    const { pathname: oldPathname } = prevProps.location;
+    const { pathname: newPathname } = this.props.location;
+
+    if (oldPathname !== newPathname) {
+      window.scrollTo(0, 0);
+    }
 
     if (!!newUserAddress && newUserAddress !== oldUserAddress) {
       this.props.getUserSession();
