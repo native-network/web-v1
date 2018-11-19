@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewTask } from '../../../actions/communityTasksActions';
+import { addNewTask } from '../../../../../actions/communityTasksActions';
 
-import Loader from '../../shared/loader';
-import Button from '../../shared/button';
-import Modal from '../../shared/modal';
-import ManageTaskForm from '../../forms/manage-task';
+import Loader from '../../../../shared/loader';
+import Button from '../../../../shared/button';
+import Modal from '../../../../shared/modal';
+import ManageTaskForm from '../../../../forms/manage-task';
 import moment from 'moment';
 
-import styles from './ManageTasks.css';
+import styles from './ManageTasksNew.css';
 
 export class ManageTasksNew extends Component {
   state = {
