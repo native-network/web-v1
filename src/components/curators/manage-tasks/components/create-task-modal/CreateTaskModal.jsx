@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import { addNewTask } from '../../../../../actions/communityTasksActions';
 
-import Loader from '../../../../shared/loader';
 import Modal from '../../../../shared/modal';
 import ManageTaskForm from '../../../../forms/manage-task';
 import moment from 'moment';
@@ -27,9 +26,7 @@ export class CreateTaskModal extends Component {
   render() {
     const { closeModal, isModalOpen } = this.props;
 
-    return this.props.isLoading ? (
-      <Loader />
-    ) : (
+    return (
       <div className={styles.PollButton}>
         <Modal
           renderHeader={() => (
