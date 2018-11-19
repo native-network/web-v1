@@ -2,7 +2,7 @@
 
 .TableTitle {
   width: 100%;
-  text-align: center;
+  text-align: left;
 
   & h2 {
     color: var(--primary-color);

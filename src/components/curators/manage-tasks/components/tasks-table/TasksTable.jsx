@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 
-import { manageTasksColumnConfig } from './utils/manageTasksColumnConfig';
+import { tasksTableColumnConfig } from './utils/tasksTableColumnConfig';
 
 Object.assign(ReactTableDefaults, {
   minRows: 0,
@@ -10,11 +10,9 @@ Object.assign(ReactTableDefaults, {
 
 function ManageTasksList(props) {
   const { tasks } = props;
-  /* eslint-disable */
-  console.log('tasks', tasks)
   return (
     <ReactTable
-      columns={manageTasksColumnConfig}
+      columns={tasksTableColumnConfig}
       noDataText="No tasks were found"
       data={tasks}
     />

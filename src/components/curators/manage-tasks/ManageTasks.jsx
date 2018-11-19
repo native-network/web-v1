@@ -1,22 +1,39 @@
-import React, { Component } from 'react';
-// import moment from 'moment';
+import React, { Component, Fragment } from 'react';
 
-import ManageTasksTable from './components/manage-tasks-table';
-import ManageTasksNew from './components/manage-tasks-new';
+import TasksTable from './components/tasks-table';
+import CreateTaskModal from './components/create-task-modal';
+import Button from '../../shared/button';
 
-import styles from './ManageTasks.css';
-// import PropTypes from 'prop-types';
+// import styles from './ManageTasks.css';
 
 export class ManageTasks extends Component {
+  state = {
+    isModalOpen: false,
+  };
+
+  openModal() {
+    this.setState({ isModalOpen: true });
+  }
+
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
+
   render() {
     return (
-      <div>
-        <ManageTasksNew communityId={this.props.communityId} />
-        <div className={styles.TableTitle}>
-          <h2>Current Tasks</h2>
-        </div>
-        <ManageTasksTable {...this.props} />
-      </div>
+      <Fragment>
+        <Button
+          theme="secondary"
+          content="Add Task"
+          clickHandler={() => this.openModal()}
+        />
+        <CreateTaskModal
+          communityId={this.props.communityId}
+          closeModal={() => this.closeModal()}
+          isModalOpen={this.state.isModalOpen}
+        />
+        <TasksTable {...this.props} />
+      </Fragment>
     );
   }
 }

@@ -1,4 +1,6 @@
-export const manageTasksColumnConfig = [
+import moment from 'moment';
+
+export const tasksTableColumnConfig = [
   {
     Header: 'Task Title',
     accessor: 'title',
@@ -20,16 +22,12 @@ export const manageTasksColumnConfig = [
   {
     Header: 'Start Date',
     accessor: 'startDate',
-    Cell: ({ value }) => {
-      return value;
-    },
+    Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
   },
   {
     Header: 'End Date',
     accessor: 'endDate',
-    Cell: ({ value }) => {
-      return value;
-    },
+    Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
   },
   {
     Header: 'Reward',
