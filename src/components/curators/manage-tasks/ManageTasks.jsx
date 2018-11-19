@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import ManageTasksList from './ManageTasksList';
-// import ManageTasksNew from './ManageTasksNew';
+// import ManageTasksList from './ManageTasksList';
+import ManageTasksList from './components/manage-tasks-list';
 import ManageTasksNew from './components/manage-tasks-new';
 
 import styles from './ManageTasks.css';

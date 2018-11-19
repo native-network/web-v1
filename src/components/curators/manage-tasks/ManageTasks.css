@@ -8,38 +8,3 @@
     color: var(--primary-color);
   }
 }
-
-.Table {
-  width: 100%;
-  border-bottom: 1px solid var(--primary-color);
-  border-right: 1px solid var(--primary-color);
-  border-collapse: collapse;
-  border-spacing: none;
-}
-
-.TableRow {
-  width: 100%;
-  background: #efefef;
-  text-align: center;
-}
-
-.TableCell {
-  border-top: 1px solid var(--primary-color);
-  border-left: 1px solid var(--primary-color);
-  padding: 10px;
-  text-align: left;
-}
-
-.ExpandedCell {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  & p {
-    margin-top: 0;
-  }
-}
-
-.CellButton {
-  padding: 10px;
-}
