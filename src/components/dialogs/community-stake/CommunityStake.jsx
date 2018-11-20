@@ -40,6 +40,10 @@ class CommunityStake extends Component {
       !userMemberOf
     ) {
       this.setState({ components: [InsufficientFunds] });
+    } else if (userMemberOf) {
+      this.setState({
+        components: [ConvertCurrency, ProcessTransaction],
+      });
     } else if (+communityBalance >= +minStake) {
       this.setState({ components: [StakeCommunity, ProcessTransaction] });
     } else {
