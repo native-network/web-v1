@@ -7,7 +7,6 @@
 }
 
 .ManageTaskForm {
-  composes: container from global;
   margin-top: 2rem;
 }
 
@@ -21,7 +20,8 @@
   }
 
   @media (--medium-viewport) {
-    columns: 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     column-gap: 2rem;
   }
 }
@@ -63,7 +63,7 @@
 }
 
 .Error {
-  color: var(--secondary-color);
+  color: var(--warm-coral);
 }
 
 .RadioField {
@@ -73,4 +73,45 @@
 input[type=number]::-webkit-inner-spin-button {
   margin: 0;
   -webkit-appearance: none;
+}
+
+.description {
+  grid-column: span 2;
+}
+
+.checkboxContainer {
+  display: block;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  & .customCheckbox {
+    display: block;
+    margin: 1rem 0;
+    border: 2px solid var(--dark-green);
+    height: 20px;
+    width: 20px;
+  }
+
+  & .conditionsCheckbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    &:checked {
+      & ~ .customCheckbox {
+        background-color: var(--dark-green);
+      }
+    }
+
+    &:disabled {
+      & ~ .customCheckbox {
+        cursor: not-allowed;
+      }
+    }
+  }
 }

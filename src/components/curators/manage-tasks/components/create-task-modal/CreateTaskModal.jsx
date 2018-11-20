@@ -11,7 +11,9 @@ import moment from 'moment';
 import styles from './CreateTaskModal.css';
 
 export class CreateTaskModal extends Component {
-  handleSubmit(vals) {
+  handleSubmit = (vals) => {
+    /* eslint-disable */
+    console.log('vals', vals)
     const newVals = {
       ...vals,
       communityId: this.props.communityId,
@@ -29,20 +31,13 @@ export class CreateTaskModal extends Component {
     return (
       <div className={styles.PollButton}>
         <Modal
-          renderHeader={() => (
-            <div className={styles.ModalHeader}>
-              <h1>Add Task</h1>
-              <button style={{ color: 'black' }} onClick={() => closeModal()}>
-                x
-              </button>
-            </div>
-          )}
+          renderHeader={() => <h1>Add Task</h1>}
+          closeModal={closeModal}
+          hasCloseButton
           label="Add Task"
           isOpen={isModalOpen}
         >
-          <div>
-            <ManageTaskForm submitForm={this.handleSubmit.bind(this)} />
-          </div>
+          <ManageTaskForm submitForm={this.handleSubmit} />
         </Modal>
       </div>
     );
