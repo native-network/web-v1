@@ -364,38 +364,9 @@ export class Dashboard extends Component {
       <Loader />
     ) : (
       <Fragment>
-<<<<<<< HEAD
-        {!this.props.hasSession ? (
-          this.renderAuthorizeModal()
-        ) : (
-          <Fragment>
-            <Modal
-              hasCloseButton
-              isOpen={this.state.isModalOpen}
-              closeModal={this.closeModal.bind(this)}
-              maxWidth="1020px"
-            >
-              <CommunityStake
-                loading={this.props.isCurrencyLoading}
-                user={this.props.user}
-                error={this.props.currencyError}
-                populateNativeBalance={this.populateConverter.bind(this)}
-                community={this.state.activeCommunity}
-                dismissDialog={this.closeModal.bind(this)}
-              />
-            </Modal>
-            <Modal
-              hasCloseButton
-              isOpen={this.state.isPrivateModalOpen}
-              closeModal={this.closeModal.bind(this)}
-              maxWidth="1020px"
-            >
-              <CommunityPrivateUserRequest
-                community={this.state.activeCommunity}
-                user={this.props.user}
-                closeModal={this.closeModal.bind(this)}
-=======
-        {this.renderAuthorizeModal(this.props.user)}
+        {!this.props.hasSession
+          ? this.renderAuthorizeModal(this.props.user)
+          : null}
         <Modal
           hasCloseButton
           isOpen={this.state.isModalOpen}
@@ -405,6 +376,7 @@ export class Dashboard extends Component {
           <CommunityStake
             loading={this.props.isCurrencyLoading}
             user={this.props.user}
+            error={this.props.currencyError}
             populateNativeBalance={this.populateConverter.bind(this)}
             community={this.state.activeCommunity}
             dismissDialog={this.closeModal.bind(this)}
@@ -470,7 +442,6 @@ export class Dashboard extends Component {
                   (c) => c.currency,
                 )}
                 submitHandler={this.submitTransaction.bind(this)}
->>>>>>> e190dd0... WIP: set up dialog component
               />
               <p className={styles.DashboardConverterMessage}>
                 Welcome to the Native Alpha. Beta (Q1 2019) will enable
@@ -533,7 +504,7 @@ export default connect(
       currencyError: state.currencies.error,
       isLoading: state.loading > 0,
       authLoading: state.user.loading,
-      hasSession: !!state.user.id,
+      hasSession: !!state.user.id && state.user.kycStatus === 'approved',
       user: state.user,
       walletCurrencies: state.user.wallet.currencies,
       prices: state.prices,
