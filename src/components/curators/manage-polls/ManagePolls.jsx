@@ -28,15 +28,9 @@ export class ManagePolls extends Component {
   render() {
     return (
       <div>
-        <ManagePollsNew />
-        <div className={styles.TableTitle}>
-          <h2>Current Polls</h2>
-        </div>
-        <ManagePollsList polls={this.state.currentPolls} />
-        <div className={styles.TableTitle}>
-          <h2>Past Polls</h2>
-        </div>
-        <ManagePollsList polls={this.state.pastPolls} />
+        <h2 className={styles.TableTitle}>Polls Dashboard</h2>
+        <ManagePollsNew communityId={this.props.communityId} />
+        <ManagePollsList polls={this.props.items} />
       </div>
     );
   }

@@ -99,7 +99,7 @@ export default class CommunityService {
         }
       });
       approve.on('error', () =>
-        reject('There was a problem with the approval process.'),
+        reject(new Error('There was a problem with the approval process.')),
       );
       const checkTransaction = setInterval(async () => {
         if (transactionHash) {
@@ -133,7 +133,7 @@ export default class CommunityService {
       });
 
       buyWithToken.on('error', () =>
-        reject('There was a problem with the purchase process.'),
+        reject(new Error('There was a problem with the purchase process.')),
       );
       const checkTransaction = setInterval(async () => {
         if (transactionHash) {
@@ -177,7 +177,7 @@ export default class CommunityService {
         }
       });
       stakeCommunityTokens.on('error', () =>
-        reject('There was a problem staking into that community.'),
+        reject(new Error('There was a problem staking into that community.')),
       );
 
       const checkTransaction = setInterval(async () => {

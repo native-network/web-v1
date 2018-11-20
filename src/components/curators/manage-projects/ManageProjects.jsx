@@ -27,7 +27,8 @@ export class ManageProjects extends Component {
   render() {
     return (
       <div>
-        <ManageProjectsNew />
+        <ManageProjectsNew communityId={this.props.communityId} />
+        <h4>Projects are coming soon!</h4>
         <div className={styles.TableTitle}>
           <h2>Current Projects</h2>
         </div>

@@ -1,5 +1,6 @@
 @import '../../styles/media-queries.css';
 @import '../../styles/extends.css';
+@import '../../components/shared/button/Button.css';
 
 :global(.ReactTable .rt-tr) {
   align-items: center;
@@ -18,6 +19,12 @@
   background: var(--native-cream-2);
   padding: 1.5rem 0;
 
+  & .Button {
+    @extend %button;
+    @extend %primary-theme;
+    @extend %box-shadow;
+  }
+
   & > div {
     @extend %container;
 
@@ -34,6 +41,7 @@
   & .Balance {
     display: flex;
     align-items: center;
+    flex-flow: wrap;
   }
 
   & img {
@@ -45,6 +53,11 @@
 .Dashboard {
   composes: container from global;
   margin-bottom: 5rem;
+}
+
+.DashboardTitle {
+  display: flex;
+  justify-content: space-between;
 }
 
 .DashboardConverter {
@@ -121,6 +134,11 @@
     max-width: 5rem;
     margin: 0 auto;
   }
+}
+
+.AuthorizeModalContainer {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .AuthorizeButton {

@@ -44,10 +44,11 @@ class TabPanels extends Component {
     const { props, state } = this;
     const { panels, community } = props;
     const { activeTab } = state;
-    const panelNames = panels.map(
-      (panel) => `${panel.name} (${(panel.items && panel.items.length) || 0})`,
-    );
-
+    const panelNames = panels.map((panel) => {
+      return panel.items
+        ? `${panel.name} (${(panel.items && panel.items.length) || 0})`
+        : panel.name;
+    });
     const { filter } = this.state.activeFilter;
 
     return (
@@ -71,7 +72,12 @@ class TabPanels extends Component {
         {(panels || []).map(
           ({ render, items }, index) =>
             index === activeTab ? (
-              <TabPanel key={index} render={() => render(filter(items))} />
+              <TabPanel
+                key={index}
+                render={() =>
+                  this.props.hasFilter ? render(filter(items)) : render(items)
+                }
+              />
             ) : null,
         )}
       </div>

@@ -11,6 +11,7 @@ import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
 import { Link } from 'react-router-dom';
 const { web3 } = getWeb3ServiceInstance();
 const { fromWei } = web3.utils;
+import { uploadableField } from '../../../utils/helpers';
 
 import styles from './Card.css';
 
@@ -93,8 +94,8 @@ export class Card extends Component {
     const { props, state } = this;
     const { community, render } = props;
     const { isReadMoreOpen } = state;
-    const socialLinks = JSON.parse(community.socialMediaLinks);
-    const membershipBenefits = JSON.parse(community.membershipBenefits);
+    const socialLinks = community.socialMediaLinks || [];
+    const membershipBenefits = community.membershipBenefits || [];
     const isMember = !!this.props.user.memberOf.find((userCommunity) => {
       return userCommunity.id === community.id;
     });
@@ -200,7 +201,7 @@ export class Card extends Component {
               >
                 <div className={styles.Benefits}>
                   <h3>Membership Benefits:</h3>
-                  {membershipBenefits ? (
+                  {Array.isArray(membershipBenefits) ? (
                     <ul>
                       {membershipBenefits.map((benefit, index) => (
                         <li key={index}>{benefit}</li>
@@ -219,7 +220,7 @@ export class Card extends Component {
                       <a
                         target="_blank"
                         rel="noopener nofollow"
-                        href={community.votingPolicy}
+                        href={uploadableField(community.votingPolicy)}
                       >
                         Download the voting policy
                       </a>
@@ -230,7 +231,9 @@ export class Card extends Component {
                       <a
                         target="_blank"
                         rel="noopener nofollow"
-                        href={community.revenueDistributionPolicy}
+                        href={uploadableField(
+                          community.revenueDistributionPolicy,
+                        )}
                       >
                         Download the revenue distribution policy
                       </a>

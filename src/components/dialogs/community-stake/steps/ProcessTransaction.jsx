@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Loader from '../../../shared/loader';
 import { connect } from 'react-redux';
 
@@ -29,19 +29,28 @@ class ProcessTransaction extends Component {
             <Loader />
           </div>
           {this.props.hash ? (
-            <p>
-              Your transaction progress can be viewed on{' '}
-              <a
-                target="_blank"
-                rel="noopener nofollow"
-                href={`https://${
-                  process.env.WEB3NETWORK == 'rinkeby' ? 'rinkeby.' : ''
-                }etherscan.io/tx/${this.props.hash}`}
-              >
-                etherscan.io
-              </a>
-              .
-            </p>
+            <Fragment>
+              <p>
+                If you have been waiting a while, check your wallet for the next
+                transaction to sign.
+              </p>
+              {this.props.message.length > 0 ? (
+                <p>{this.props.message}</p>
+              ) : null}
+              <p>
+                Your transaction progress can be viewed on{' '}
+                <a
+                  target="_blank"
+                  rel="noopener nofollow"
+                  href={`https://${
+                    process.env.WEB3NETWORK == 'rinkeby' ? 'rinkeby.' : ''
+                  }etherscan.io/tx/${this.props.hash}`}
+                >
+                  etherscan.io
+                </a>
+                .
+              </p>
+            </Fragment>
           ) : null}
         </div>
         <Button
@@ -60,6 +69,7 @@ export default connect(
   (state) => {
     return {
       hash: state.currencies.hash,
+      message: state.currencies.message,
     };
   },
   null,

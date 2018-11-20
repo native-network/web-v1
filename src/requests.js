@@ -16,7 +16,7 @@ export const instance = axios.create({
 });
 
 export const s3Path = (fileName) => {
-  return `${baseURL}/s3uploader/uploads/${fileName}`;
+  return `${baseURL}/community-assets/uploads/${fileName}`;
 };
 
 export const get = async (endpoint) => {
@@ -38,6 +38,14 @@ export const post = async (endpoint, payload) => {
 export const put = async (endpoint, payload) => {
   try {
     return await instance.put(`/${endpoint}`, payload);
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+export const patch = async (endpoint, payload) => {
+  try {
+    return await instance.patch(`/${endpoint}`, payload);
   } catch (err) {
     throw new Error(err);
   }

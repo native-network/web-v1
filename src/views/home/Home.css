@@ -18,6 +18,8 @@
   @extend %button;
   @extend %primary-theme;
   @extend %box-shadow;
+
+  min-width: 150px;
 }
 
 .CardList {
