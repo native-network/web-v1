@@ -24,12 +24,11 @@ export default function userSessionReducer(state = {}, action) {
     case actions.UPDATE_USER_ERROR:
       return { ...state, userError: action.error };
     case 'UPDATE_KYC_COMPLETE':
-      console.log(action); // eslint-disable-line
       return { ...state, kycApplicantId: action.user.kycApplicantId };
     case 'UPDATE_KYC_ISSUE':
-      console.log(action); // eslint-disable-line
       return { ...state };
-
+    case 'POLL_KYC_STATUS_COMPLETE':
+      return { ...state, kycStatus: action.kycStatus };
     case 'GET_KYC_TOKEN_COMPLETE':
       return { ...state, kycToken: action.token };
     case actions.DISMISS_USER_MESSAGE: {

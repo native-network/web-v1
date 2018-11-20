@@ -364,9 +364,7 @@ export class Dashboard extends Component {
       <Loader />
     ) : (
       <Fragment>
-        {!this.props.hasSession
-          ? this.renderAuthorizeModal(this.props.user)
-          : null}
+        {!this.props.hasSession && this.renderAuthorizeModal(this.props.user)}
         <Modal
           hasCloseButton
           isOpen={this.state.isModalOpen}

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { push } from 'connected-react-router';
 import { userSessionActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
@@ -12,12 +11,7 @@ import { MESSAGES } from '../utils/constants';
 import { toastrError, toastrInfo, toastrSuccess } from './toastrActions';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
 
-export /**
- * getUserSession
- *
- * @returns session object
- */
-const getUserSession = () => {
+export const getUserSession = () => {
   return async (dispatch, getState) => {
     const { state } = getState().router.location;
     const { address: walletAddress } = getState().user.wallet;
@@ -45,13 +39,7 @@ const getUserSession = () => {
   };
 };
 
-export /**
- *
- *
- * @param {*} stakeConfirmationInterval - intervbal fn
- * @returns
- */
-const pollUserStake = (stakeConfirmationInterval) => {
+export const pollUserStake = (stakeConfirmationInterval) => {
   return async (dispatch) => {
     const messageId = MESSAGES.STAKE_CONFIRM;
     stakeConfirmationInterval = setInterval(async () => {
@@ -264,6 +252,30 @@ export const updateUserError = (error) => {
   };
 };
 
+export const pollKycStatus = () => {
+  return async (dispatch, getState) => {
+    dispatch({ type: 'POLL_KYC_STATUS' });
+
+    try {
+      const { user } = getState();
+      const { data } = await get(`user`);
+      const { kycStatus } = data.user;
+      if (kycStatus !== user.kycStatus) {
+        return dispatch(pollKycStatusComplete(kycStatus));
+      }
+    } catch (err) {
+      console.log(err) // eslint-disable-line
+    }
+  };
+};
+
+export const pollKycStatusComplete = (kycStatus) => {
+  return {
+    type: 'POLL_KYC_STATUS_COMPLETE',
+    kycStatus,
+  };
+};
+
 export const updateKyc = (userId, applicantId) => {
   return async (dispatch) => {
     dispatch({ type: 'UPDATE_KYC' });
@@ -304,7 +316,7 @@ export const getKycToken = (userId) => {
 
       return dispatch(getKycTokenComplete(data));
     } catch (err) {
-      console.log(err);
+      console.log(err); // eslint-disable-line
     }
   };
 };
@@ -313,5 +325,5 @@ export const getKycTokenComplete = (token) => {
   return {
     type: 'GET_KYC_TOKEN_COMPLETE',
     token,
-  }
-}
+  };
+};

@@ -13,22 +13,20 @@ export class VerifyUser extends Component {
 
   componentDidMount() {
     const { user } = this.props;
-    console.log(user);
     if (!user.id) {
       this.setState({components: [Authorize, Processing, KYC]})
-    } else if (user.id) {
+    } else if (user.id && user.kycStatus !== 'approved') {
       this.setState({ components: [KYC]});
+    } else if (user.id && user.kycStatus === 'approved') {
+      this.setState({ components: []});
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   // const { loading: prevLoading } = prevProps;
-  //   // const { user: newUser, loading: newLoading } = this.props;
-  //   // if (newUser.id && prevLoading !== newLoading) {
-  //   //   console.log('foo!')
-  //   //   this.setState({ components: [KYC] });
-  //   // }
-  // }
+  componentDidUpdate(prevProps) {
+    if (prevProps.user.kycStatus !== this.props.user.kycStatus && this.props.user.kycStatus === 'approved') {
+      this.props.submitHandler();
+    }
+  }
 
   render() {
     const { props } = this;
