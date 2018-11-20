@@ -57,7 +57,6 @@ export class App extends Component {
     }
 
     if (
-      this.props.user.id &&
       this.props.user.kycStatus !== 'approved' &&
       !this.state.pollStatusIntervalSet
     ) {
