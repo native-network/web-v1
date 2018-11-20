@@ -362,7 +362,8 @@ export class Dashboard extends Component {
     const userEth = this.props.user.wallet.currencies.find(
       (c) => c.symbol === 'ETH',
     );
-    const ethBalance = userEth && fromWei(userEth.balance);
+    const ethBalance =
+      userEth && userEth.balance ? fromWei(userEth.balance) : 0;
     const ethInUSD = this.props.prices.ethUSD
       ? formatUsd(ethBalance * this.props.prices.ethUSD)
       : '$0';
