@@ -1,9 +1,13 @@
 import { communityTasksActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
-import { toastrError } from './toastrActions';
-// import { toastrError, toastrSuccess } from './toastrActions';
+import { toastrError, toastrSuccess } from './toastrActions';
 import { communityContractInstance } from '../utils/constants';
+
+import { getWeb3ServiceInstance } from '../web3/Web3Service';
+
+const service = getWeb3ServiceInstance();
+const { toWei } = service.web3.utils;
 
 export const getCommunityTasks = (id) => {
   return async (dispatch) => {
@@ -41,8 +45,6 @@ export const addNewTask = (task) => {
     dispatch(beginAjaxCall());
     try {
       const { data } = await post('tasks', task);
-      /* eslint-disable */
-      console.log('data', data);
       dispatch(addNewTaskSuccess(data));
       return dispatch(addNewContractTask(data));
     } catch (err) {
@@ -67,29 +69,30 @@ export const addNewTaskError = (error) => {
   };
 };
 
-/* eslint-disable */
-
-export const addNewContractTask = ({id, reward, community}) => {
+export const addNewContractTask = ({ id, reward, community }) => {
   return async (dispatch) => {
     dispatch({ type: actions.ADD_NEW_CONTRACT_TASK });
     dispatch(beginAjaxCall());
-   
-      console.log('id', id)
-      console.log('reward', reward)
-      // console.log('address', address)
-      // async function to create new contract task 
 
-       communityContractInstance(community).then(({ community3 }) => {
-        Promise.all([
-          community3.createNewTask(id, reward),
-        ]).then((data) => {
-          console.log('data', data)
-        })}).catch((err) => {
-          console.log('err', err)
-        })
+    /* eslint-disable */
+    console.log('reward', reward)
+    const rewardInWei = toWei(reward);
+    console.log('rewardInWei', rewardInWei)
 
-      // dispatch(toastrSuccess('Successfully created contract task'))
-      // return dispatch(addNewContractTaskSuccess(data));
+    communityContractInstance(community)
+      .then(({ community3 }) => {
+        Promise.all([community3.createNewTask(id, rewardInWei)]).then(
+          (data) => {
+            dispatch(toastrSuccess('Successfully created contract task'));
+            dispatch(addNewContractTaskSuccess(data));
+          },
+        );
+      })
+      .catch((err) => {
+        const { message } = err;
+        dispatch(toastrError(message));
+        dispatch(addNewContractTaskError(err));
+      });
   };
 };
 

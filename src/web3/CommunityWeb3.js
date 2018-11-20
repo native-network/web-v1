@@ -96,10 +96,15 @@ export default class CommunityService {
 
   async createNewTask(id, amount) {
     /* eslint-disable */
-    console.log('this.smartTokenRemoteContract', this.smartTokenRemoteContract)
-    return await this.smartTokenRemoteContract.methods
+    // console.log('do we get here bro?', this.communityContract)
+    console.log('id', id)
+    console.log('amount', amount)
+    const yo = await this.communityContract.methods
       .createNewTask(id, amount)
       .call();
+
+      console.log('yo', yo)
+      return yo;
   }
 
   async approve(receivingAddress, transactionAmount, cb) {
