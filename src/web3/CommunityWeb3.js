@@ -94,6 +94,14 @@ export default class CommunityService {
       .call();
   }
 
+  async createNewTask(id, amount) {
+    /* eslint-disable */
+    console.log('this.smartTokenRemoteContract', this.smartTokenRemoteContract)
+    return await this.smartTokenRemoteContract.methods
+      .createNewTask(id, amount)
+      .call();
+  }
+
   async approve(receivingAddress, transactionAmount, cb) {
     let gasPrice = await this.getGasPrice();
     gasPrice = gasPrice * 1.5;
