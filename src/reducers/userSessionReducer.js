@@ -23,13 +23,13 @@ export default function userSessionReducer(state = {}, action) {
       return { ...state, ...action.user };
     case actions.UPDATE_USER_ERROR:
       return { ...state, userError: action.error };
-    case 'UPDATE_KYC_COMPLETE':
+    case actions.UPDATE_KYC_COMPLETE:
       return { ...state, kycApplicantId: action.user.kycApplicantId };
-    case 'UPDATE_KYC_ISSUE':
+    case actions.UPDATE_KYC_ISSUE:
       return { ...state };
-    case 'POLL_KYC_STATUS_COMPLETE':
+    case actions.POLL_KYC_STATUS_COMPLETE:
       return { ...state, kycStatus: action.kycStatus };
-    case 'GET_KYC_TOKEN_COMPLETE':
+    case actions.GET_KYC_TOKEN_COMPLETE:
       return { ...state, kycToken: action.token };
     case actions.DISMISS_USER_MESSAGE: {
       const filteredMessages = state.messages.filter((message) => {

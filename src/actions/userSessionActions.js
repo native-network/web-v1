@@ -254,7 +254,7 @@ export const updateUserError = (error) => {
 
 export const pollKycStatus = () => {
   return async (dispatch, getState) => {
-    dispatch({ type: 'POLL_KYC_STATUS' });
+    dispatch({ type: actions.POLL_KYC_STATUS });
 
     try {
       const { user } = getState();
@@ -271,14 +271,14 @@ export const pollKycStatus = () => {
 
 export const pollKycStatusComplete = (kycStatus) => {
   return {
-    type: 'POLL_KYC_STATUS_COMPLETE',
+    type: actions.POLL_KYC_STATUS_COMPLETE,
     kycStatus,
   };
 };
 
 export const updateKyc = (userId, applicantId) => {
   return async (dispatch) => {
-    dispatch({ type: 'UPDATE_KYC' });
+    dispatch({ type: actions.UPDATE_KYC });
     try {
       const { data } = await post(`user/${userId}/updateKyc`, {
         id: userId,
@@ -295,21 +295,21 @@ export const updateKyc = (userId, applicantId) => {
 
 export const updateKycComplete = (user) => {
   return {
-    type: 'UPDATE_KYC_COMPLETE',
+    type: actions.UPDATE_KYC_COMPLETE,
     user,
   };
 };
 
 export const updateKycIssue = (error) => {
   return {
-    type: 'UPDATE_KYC_ISSUE',
+    type: actions.UPDATE_KYC_ISSUE,
     error,
   };
 };
 
 export const getKycToken = (userId) => {
   return async (dispatch) => {
-    dispatch({ type: 'GET_KYC_TOKEN' });
+    dispatch({ type: actions.GET_KYC_TOKEN });
 
     try {
       const { data } = await get(`user/${userId}/get-kyc-token`);
@@ -323,7 +323,7 @@ export const getKycToken = (userId) => {
 
 export const getKycTokenComplete = (token) => {
   return {
-    type: 'GET_KYC_TOKEN_COMPLETE',
+    type: actions.GET_KYC_TOKEN_COMPLETE,
     token,
   };
 };
