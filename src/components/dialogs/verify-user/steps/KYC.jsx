@@ -13,8 +13,7 @@ class KYC extends Component {
 
   componentDidMount() {
     const script = document.createElement('script');
-    // TODO: add `.env` var
-    script.src = 'https://test-api.sumsub.com/idensic/static/idensic.js';
+    script.src = process.env.KYC_URL;
     script.async = true;
 
     if (this.props.user.id) {
