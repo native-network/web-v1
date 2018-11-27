@@ -366,21 +366,23 @@ export class Dashboard extends Component {
       this.renderAuthorizeModal(this.props.user)
     ) : (
       <Fragment>
-        <Modal
-          hasCloseButton
-          isOpen={this.state.isModalOpen}
-          closeModal={this.closeModal.bind(this)}
-          maxWidth="1020px"
-        >
-          <CommunityStake
-            loading={this.props.isCurrencyLoading}
-            user={this.props.user}
-            error={this.props.currencyError}
-            populateNativeBalance={this.populateConverter.bind(this)}
-            community={this.state.activeCommunity}
-            dismissDialog={this.closeModal.bind(this)}
-          />
-        </Modal>
+        {!!Object.keys(this.state.activeCommunity).length && (
+          <Modal
+            hasCloseButton
+            isOpen={this.state.isModalOpen}
+            closeModal={this.closeModal.bind(this)}
+            maxWidth="1020px"
+          >
+            <CommunityStake
+              loading={this.props.isCurrencyLoading}
+              user={this.props.user}
+              error={this.props.currencyError}
+              populateNativeBalance={this.populateConverter.bind(this)}
+              community={this.state.activeCommunity}
+              dismissDialog={this.closeModal.bind(this)}
+            />
+          </Modal>
+        )}
         <Modal
           hasCloseButton
           isOpen={this.state.isPrivateModalOpen}
