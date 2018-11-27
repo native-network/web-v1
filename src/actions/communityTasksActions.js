@@ -3,11 +3,7 @@ import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
 import { toastrError, toastrSuccess } from './toastrActions';
 import { communityContractInstance } from '../utils/constants';
-
-import { getWeb3ServiceInstance } from '../web3/Web3Service';
-
-const service = getWeb3ServiceInstance();
-const { toWei } = service.web3.utils;
+import BigNumber from 'bignumber.js';
 
 export const getCommunityTasks = (id) => {
   return async (dispatch) => {
@@ -74,14 +70,11 @@ export const addNewContractTask = ({ id, reward, community }) => {
     dispatch({ type: actions.ADD_NEW_CONTRACT_TASK });
     dispatch(beginAjaxCall());
 
-    /* eslint-disable */
-    console.log('reward', reward)
-    const rewardInWei = toWei(reward);
-    console.log('rewardInWei', rewardInWei)
+    const rewardBigNumber = new BigNumber(reward).toString();
 
     communityContractInstance(community)
       .then(({ community3 }) => {
-        Promise.all([community3.createNewTask(id, rewardInWei)]).then(
+        Promise.all([community3.createNewTask(id, rewardBigNumber)]).then(
           (data) => {
             dispatch(toastrSuccess('Successfully created contract task'));
             dispatch(addNewContractTaskSuccess(data));

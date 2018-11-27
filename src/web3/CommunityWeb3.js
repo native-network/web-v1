@@ -95,16 +95,14 @@ export default class CommunityService {
   }
 
   async createNewTask(id, amount) {
-    /* eslint-disable */
-    // console.log('do we get here bro?', this.communityContract)
-    console.log('id', id)
-    console.log('amount', amount)
-    const yo = await this.communityContract.methods
-      .createNewTask(id, amount)
-      .call();
-
-      console.log('yo', yo)
+    try {
+      const yo = await this.communityContract.methods
+        .createNewTask(id, amount)
+        .send({ from: this.web3Service.mainAccount });
       return yo;
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
   async approve(receivingAddress, transactionAmount, cb) {
