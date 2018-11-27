@@ -209,7 +209,7 @@ export class Dashboard extends Component {
     const isCurator = !!curatorOf.find((c) => c.id === community.id);
     let communityStatus;
 
-    if (communityStatusOf.length >= 1) {
+    if (communityStatusOf && communityStatusOf.length >= 1) {
       const userCommunityStatus = this.props.user.communityStatusOf.find(
         (c) => c.communityId === community.id,
       );
