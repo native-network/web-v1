@@ -264,7 +264,8 @@ export const pollKycStatus = () => {
         return dispatch(pollKycStatusComplete(kycStatus));
       }
     } catch (err) {
-      console.log(err) // eslint-disable-line
+      const { message } = err;
+      return dispatch(pollKycStatusIssue(message));
     }
   };
 };
@@ -273,6 +274,13 @@ export const pollKycStatusComplete = (kycStatus) => {
   return {
     type: actions.POLL_KYC_STATUS_COMPLETE,
     kycStatus,
+  };
+};
+
+export const pollKycStatusIssue = (error) => {
+  return {
+    type: actions.POLL_KYC_STATUS_ISSUE,
+    error,
   };
 };
 
@@ -316,7 +324,9 @@ export const getKycToken = (userId) => {
 
       return dispatch(getKycTokenComplete(data));
     } catch (err) {
-      console.log(err); // eslint-disable-line
+      const { message } = err;
+
+      return dispatch(getKycTokenIssue(message));
     }
   };
 };
@@ -325,5 +335,12 @@ export const getKycTokenComplete = (token) => {
   return {
     type: actions.GET_KYC_TOKEN_COMPLETE,
     token,
+  };
+};
+
+export const getKycTokenIssue = (error) => {
+  return {
+    type: actions.GET_KYC_TOKEN_ISSUE,
+    error,
   };
 };
