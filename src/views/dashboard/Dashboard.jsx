@@ -209,7 +209,7 @@ export class Dashboard extends Component {
     const isCurator = !!curatorOf.find((c) => c.id === community.id);
     let communityStatus;
 
-    if (communityStatusOf && communityStatusOf.length >= 1) {
+    if (communityStatusOf.length >= 1) {
       const userCommunityStatus = this.props.user.communityStatusOf.find(
         (c) => c.communityId === community.id,
       );
@@ -362,9 +362,10 @@ export class Dashboard extends Component {
 
     return this.props.isLoading ? (
       <Loader />
+    ) : !this.props.hasSession ? (
+      this.renderAuthorizeModal(this.props.user)
     ) : (
       <Fragment>
-        {!this.props.hasSession && this.renderAuthorizeModal(this.props.user)}
         <Modal
           hasCloseButton
           isOpen={this.state.isModalOpen}
