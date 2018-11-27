@@ -13,9 +13,16 @@ export const submitVote = (pollId, optionId, communityId) => {
       const { data } = await post(`polls/${pollId}/vote`, { optionId });
       dispatch(getCommunityPolls(communityId));
       return dispatch(voteSuccess(data));
-    } catch (err) {
-      const { message } = err;
-      dispatch(toastrError(message));
+    } catch ({ message }) {
+      if (message === 'Error: Request failed with status code 401') {
+        dispatch(
+          toastrError(
+            'You are currently blacklisted from taking any actions in this community. Please reach out to the curator for details on how to be reinstated into the community.',
+          ),
+        );
+      } else {
+        dispatch(toastrError(message));
+      }
       return dispatch(voteError(message));
     }
   };

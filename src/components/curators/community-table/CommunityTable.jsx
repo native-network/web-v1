@@ -148,7 +148,7 @@ class CommunityTable extends Component {
               break;
             case 'blacklisted':
               listOfButtons.push({
-                content: 'Whitelist user',
+                content: 'Undo Blacklist',
                 action: 'member',
                 theme: 'tertiary',
               });
