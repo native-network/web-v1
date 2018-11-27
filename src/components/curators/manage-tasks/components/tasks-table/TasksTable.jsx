@@ -14,7 +14,24 @@ function ManageTasksList(props) {
     <ReactTable
       columns={tasksTableColumnConfig}
       noDataText="No tasks were found"
-      data={tasks}
+      data={(tasks || []).map(
+        ({
+          title,
+          timeToComplete,
+          timeToCompleteUnit,
+          startDate,
+          endDate,
+          reward,
+          status,
+        }) => ({
+          title,
+          timeToComplete: `${timeToComplete} ${timeToCompleteUnit}`,
+          startDate,
+          endDate,
+          reward: `${reward} NVT`,
+          status,
+        }),
+      )}
     />
   );
 }

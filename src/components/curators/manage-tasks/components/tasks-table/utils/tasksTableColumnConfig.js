@@ -1,5 +1,4 @@
 import moment from 'moment';
-
 export const tasksTableColumnConfig = [
   {
     Header: 'Task Title',
@@ -11,13 +10,8 @@ export const tasksTableColumnConfig = [
   },
   {
     Header: 'Time to Complete',
-    Cell: ({
-      row: {
-        _original: { timeToComplete, timeToCompleteUnit },
-      },
-    }) => {
-      return timeToComplete + ' ' + timeToCompleteUnit;
-    },
+    accessor: 'timeToComplete',
+    Cell: ({ value }) => value,
   },
   {
     Header: 'Start Date',
