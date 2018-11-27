@@ -12,8 +12,6 @@ import styles from './CreateTaskModal.css';
 
 export class CreateTaskModal extends Component {
   handleSubmit = (vals) => {
-    /* eslint-disable */
-    console.log('vals', vals)
     const newVals = {
       ...vals,
       communityId: this.props.communityId,
@@ -23,7 +21,7 @@ export class CreateTaskModal extends Component {
     newVals.reward = +vals.reward;
     newVals.timeToComplete = +vals.timeToComplete;
     this.props.addNewTask(newVals);
-  }
+  };
 
   render() {
     const { closeModal, isModalOpen } = this.props;

@@ -1,4 +1,5 @@
 @import '../../../styles/media-queries.css';
+@import '../../forms/styles.css';
 
 %label {
   color: var(--primary-color);
@@ -7,6 +8,7 @@
 }
 
 .ManageTaskForm {
+  composes: FormStyles from '../../forms/styles.css';
   margin-top: 2rem;
 }
 
@@ -26,53 +28,8 @@
   }
 }
 
-.FieldGroup {
-  margin-bottom: 1rem;
-
-  & label {
-    @extend %label;
-  }
-
-  & input,
-  & textarea {
-    border: 1px solid var(--primary-color);
-    width: 100%;
-    padding-left: 0.5rem;
-    font: 1rem 'azo-sans-web', sans-serif;
-  }
-
-  & input {
-    height: 2rem;
-  }
-
-  & textarea {
-    padding: 0.5rem;
-    resize: none;
-  }
-}
-
-.GroupedFieldGroup {
-  break-before: avoid;
-  break-after: always;
-
-  & h2 {
-    @extend %label;
-
-    margin: 0;
-  }
-}
-
 .Error {
   color: var(--warm-coral);
-}
-
-.RadioField {
-  margin-right: 0.75rem;
-}
-
-input[type=number]::-webkit-inner-spin-button {
-  margin: 0;
-  -webkit-appearance: none;
 }
 
 .description {
