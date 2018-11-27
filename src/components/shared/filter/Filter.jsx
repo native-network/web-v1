@@ -10,7 +10,7 @@ function Filter({ activeFilter, filters, className, selectHandler }) {
     <Downshift
       onSelect={(select) => selectHandler(select)}
       itemToString={(item) => (item ? item.name : '')}
-      defaultSelectedItem={activeFilter}
+      defaultSelectedItem={activeFilter || filters[0]}
     >
       {({
         getLabelProps,
