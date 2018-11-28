@@ -231,7 +231,11 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
         );
       }
       if (status === 'member') {
-        dispatch(toastrSuccess('User has been whitelisted to the community.'));
+        dispatch(
+          toastrSuccess(
+            'This user has been removed from the blacklist and is now able to engage in community actions.',
+          ),
+        );
       }
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
@@ -307,7 +311,6 @@ export const preApproveUser = ({ communityId, address }) => {
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
     try {
-      console.log(communityId, address); //eslint-disable-line
       const { data } = await post(`communities/${communityId}/preapproveUser`, {
         communityId,
         address,

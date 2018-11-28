@@ -2,29 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addNewTask } from '../../../actions/communityTasksActions';
+import { addNewTask } from '../../../../../actions/communityTasksActions';
 
-import Loader from '../../shared/loader';
-import Button from '../../shared/button';
-import Modal from '../../shared/modal';
-import ManageTaskForm from '../../forms/manage-task';
+import Loader from '../../../../shared/loader';
+import Modal from '../../../../shared/modal';
+import ManageTaskForm from '../../../../forms/manage-task';
 import moment from 'moment';
 
-import styles from './ManageTasks.css';
+import styles from './CreateTaskModal.css';
 
-export class ManageTasksNew extends Component {
-  state = {
-    isModalOpen: false,
-  };
-
-  openModal() {
-    this.setState({ isModalOpen: true });
-  }
-
-  closeModal() {
-    this.setState({ isModalOpen: false });
-  }
-
+export class CreateTaskModal extends Component {
   handleSubmit(vals) {
     const newVals = {
       ...vals,
@@ -38,30 +25,23 @@ export class ManageTasksNew extends Component {
   }
 
   render() {
+    const { closeModal, isModalOpen } = this.props;
+
     return this.props.isLoading ? (
       <Loader />
     ) : (
       <div className={styles.PollButton}>
-        <Button
-          theme="secondary"
-          content="Add Task"
-          clickHandler={this.openModal.bind(this)}
-          disabled
-        />
         <Modal
           renderHeader={() => (
             <div className={styles.ModalHeader}>
               <h1>Add Task</h1>
-              <button
-                style={{ color: 'black' }}
-                onClick={this.closeModal.bind(this)}
-              >
+              <button style={{ color: 'black' }} onClick={() => closeModal()}>
                 x
               </button>
             </div>
           )}
           label="Add Task"
-          isOpen={this.state.isModalOpen}
+          isOpen={isModalOpen}
         >
           <div>
             <ManageTaskForm submitForm={this.handleSubmit.bind(this)} />
@@ -85,4 +65,4 @@ export default connect(
     };
   },
   mapDispatchToProps,
-)(ManageTasksNew);
+)(CreateTaskModal);

@@ -8741,6 +8741,7 @@ react-final-form-html5-validation@^1.0.1:
 react-final-form-listeners@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-final-form-listeners/-/react-final-form-listeners-1.0.1.tgz#1604bdaa4b8a2ee16bf6bafadd8f977e359c9900"
+  integrity sha512-RtxE9VtB9hp0Buro3VgtB4CpdpEYyVueJQy9lZ7gYMVBRzAT3t3+Bvtu2kmxOfwmWvMyL8jts2HPAcTGNJdA2Q==
 
 react-final-form@^3.6.5:
   version "3.6.5"
@@ -8750,6 +8751,7 @@ react-final-form@^3.6.5:
 react-ga@^2.5.3:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.5.3.tgz#0f447c73664c069a5fc341f6f431262e3d4c23c4"
+  integrity sha512-25wvPv1PVLDLhw1gEYP33h0V2sJHahKMfUCAxhq8JPYmNQwx1fcjJAkJk+WmSqGN93lHLhExDkxy3SQizQnx3A==
   optionalDependencies:
     prop-types "^15.6.0"
     react "^15.6.2 || ^16.0"
@@ -8903,6 +8905,7 @@ react-transition-group@^2.4.0:
 "react@^15.6.2 || ^16.0":
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"
+  integrity sha512-FDCSVd3DjVTmbEAjUNX6FgfAmQ+ypJfHUsqUJOYNCBUp1h8lqmtC+0mXJ+JjsWx4KAVTkk1vKd1hLQPvEviSuw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -9497,6 +9500,7 @@ schedule@^0.3.0:
 schedule@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/schedule/-/schedule-0.5.0.tgz#c128fffa0b402488b08b55ae74bb9df55cc29cc8"
+  integrity sha512-HUcJicG5Ou8xfR//c2rPT0lPIRR09vVvN81T9fqfVgBmhERUbDEQoYKjpBxbueJnCPpSu2ujXzOnRQt6x9o/jw==
   dependencies:
     object-assign "^4.1.1"
 
