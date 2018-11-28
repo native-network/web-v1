@@ -44,11 +44,11 @@ export default function ManageTaskForm({ submitForm }) {
             >
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Task Reward (NVT)*</label>
+                  <label>Task Reward (NTV)*</label>
                   <input
                     {...input}
                     type="number"
-                    placeholder="Task Reward (NVT)"
+                    placeholder="Task Reward (NTV)"
                   />
                   {meta.error && meta.touched && renderError(meta.error)}
                 </div>
