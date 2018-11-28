@@ -1,59 +1,37 @@
-import React, { Component } from 'react';
-import moment from 'moment';
+import React, { Component, Fragment } from 'react';
 
-import ManageTasksList from './ManageTasksList';
-import ManageTasksNew from './ManageTasksNew';
-
-import styles from './ManageTasks.css';
+import TasksTable from './components/tasks-table';
+import CreateTaskModal from './components/create-task-modal';
+import Button from '../../shared/button';
 
 export class ManageTasks extends Component {
   state = {
-    currentTasks: [],
-    expandedTask: 0,
-    pastTasks: [],
+    isModalOpen: false,
   };
 
-  componentDidMount() {
-    const currentTasks = this.props.items.filter((task) => {
-      return moment(task.endDate).isAfter(moment());
-    });
-    const pastTasks = this.props.items.filter((task) => {
-      return moment(task.endDate).isBefore(moment());
-    });
-    this.setState({
-      currentTasks: currentTasks,
-      pastTasks: pastTasks,
-    });
+  openModal() {
+    this.setState({ isModalOpen: true });
   }
 
-  expandListRow = (taskId) => {
-    this.setState({
-      expandedTask: taskId,
-    });
-  };
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
 
   render() {
     return (
-      <div>
-        <ManageTasksNew communityId={this.props.communityId} />
-        <h4>Tasks are coming soon!</h4>
-        <div className={styles.TableTitle}>
-          <h2>Current Tasks</h2>
-        </div>
-        <ManageTasksList
-          tasks={this.state.currentTasks}
-          handleExpand={this.expandListRow}
-          expandedTask={this.state.expandedTask}
+      <Fragment>
+        <Button
+          theme="secondary"
+          content="Add Task"
+          clickHandler={() => this.openModal()}
         />
-        <div className={styles.TableTitle}>
-          <h2>Past Tasks</h2>
-        </div>
-        <ManageTasksList
-          tasks={this.state.pastTasks}
-          handleExpand={this.expandListRow}
-          expandedTask={this.state.expandedTask}
+        <CreateTaskModal
+          communityId={this.props.communityId}
+          closeModal={() => this.closeModal()}
+          isModalOpen={this.state.isModalOpen}
         />
-      </div>
+        <TasksTable {...this.props} />
+      </Fragment>
     );
   }
 }
