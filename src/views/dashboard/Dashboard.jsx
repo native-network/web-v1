@@ -131,6 +131,27 @@ const cols = [
     },
   },
   {
+    Header: 'Amount Staked',
+    accessor: 'amountStaked',
+    maxWidth: 150,
+    Cell: ({ value }) => {
+      return formatUsd(value);
+    },
+    Footer: ({ data }) => {
+      const sum = data.reduce((sum, { amountStaked }) => {
+        return (+amountStaked + +sum).toFixed(2);
+      }, 0);
+
+      return `$${sum}`;
+    },
+    style: {
+      textAlign: 'right',
+    },
+    headerStyle: {
+      textAlign: 'right',
+    },
+  },
+  {
     Header: 'Actions',
     accessor: 'actions',
     sortable: false,
@@ -203,27 +224,44 @@ export class Dashboard extends Component {
   }
 
   formatAction(community, currency) {
-    const isMember = !!this.props.user.memberOf.find(
-      (c) => c.id === community.id,
-    );
-    const isCurator = !!this.props.user.curatorOf.find(
-      (c) => c.id === community.id,
-    );
+    const { communityStatusOf, curatorOf, memberOf } = this.props.user;
+    const isMember = !!memberOf.find((c) => c.id === community.id);
+    const isCurator = !!curatorOf.find((c) => c.id === community.id);
+    let communityStatus;
+
+    if (communityStatusOf.length >= 1) {
+      const userCommunityStatus = this.props.user.communityStatusOf.find(
+        (c) => c.communityId === community.id,
+      );
+      if (userCommunityStatus) {
+        communityStatus = userCommunityStatus.userStatus;
+      }
+    }
 
     const name = () => {
       if (isMember || isCurator) {
         return `Get more ${currency && currency.symbol}`;
       }
-      if (!community.isPrivate && !isMember) {
+      if (
+        (!community.isPrivate && !isMember) ||
+        (community.isPrivate && communityStatus === 'approved')
+      ) {
         return 'Join Community';
       }
+
       return 'Request Membership';
     };
 
     const clickHandler = () => {
-      if (!isMember && !isCurator && community.isPrivate) {
+      if (
+        !isMember &&
+        !isCurator &&
+        community.isPrivate &&
+        communityStatus !== 'approved'
+      ) {
         return this.openIsPrivateModal(community);
       }
+
       return this.openModal(community);
     };
 
@@ -389,6 +427,7 @@ export class Dashboard extends Component {
               <CommunityStake
                 loading={this.props.isCurrencyLoading}
                 user={this.props.user}
+                error={this.props.currencyError}
                 populateNativeBalance={this.populateConverter.bind(this)}
                 community={this.state.activeCommunity}
                 dismissDialog={this.closeModal.bind(this)}
@@ -475,6 +514,10 @@ export class Dashboard extends Component {
                       userCurrency && userCurrency.balance
                         ? fromWei(userCurrency.balance)
                         : '0';
+                    const userAmountStaked =
+                      userCurrency && userCurrency.staked
+                        ? fromWei(userCurrency.staked)
+                        : '0';
                     return {
                       community: {
                         ...community,
@@ -487,6 +530,9 @@ export class Dashboard extends Component {
                         ),
                       },
                       quantity: bigNumber(userBalance)
+                        .decimalPlaces(3)
+                        .toString(),
+                      amountStaked: bigNumber(userAmountStaked)
                         .decimalPlaces(3)
                         .toString(),
                       price: this.communityPrice(community),
@@ -516,6 +562,7 @@ export default connect(
     return {
       communities: state.communities.communities,
       isCurrencyLoading: state.currencies.loading,
+      currencyError: state.currencies.error,
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,

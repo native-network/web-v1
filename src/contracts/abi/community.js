@@ -2,7 +2,7 @@ export const communityAbi = [
   {
     constant: true,
     inputs: [],
-    name: 'communityStorage',
+    name: 'nativeTokenInstance',
     outputs: [
       {
         name: '',
@@ -16,7 +16,7 @@ export const communityAbi = [
   {
     constant: true,
     inputs: [],
-    name: 'nativeTokenInstance',
+    name: 'communityTokenInstance',
     outputs: [
       {
         name: '',
@@ -44,7 +44,7 @@ export const communityAbi = [
   {
     constant: true,
     inputs: [],
-    name: 'communityTokenInstance',
+    name: 'voteController',
     outputs: [
       {
         name: '',
@@ -58,7 +58,7 @@ export const communityAbi = [
   {
     constant: true,
     inputs: [],
-    name: 'voteController',
+    name: 'communityAccount',
     outputs: [
       {
         name: '',
@@ -142,7 +142,7 @@ export const communityAbi = [
         type: 'address',
       },
       {
-        name: '_communityStorageContractAddress',
+        name: '_communityAccountContractAddress',
         type: 'address',
       },
     ],
@@ -242,11 +242,11 @@ export const communityAbi = [
     constant: false,
     inputs: [
       {
-        name: 'newCommunityStorageAddress',
+        name: 'newCommunityAccountAddress',
         type: 'address',
       },
     ],
-    name: 'setCommunityStorage',
+    name: 'setCommunityAccount',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -260,7 +260,7 @@ export const communityAbi = [
         type: 'address',
       },
     ],
-    name: 'setCommunityStorageOwner',
+    name: 'setCommunityAccountOwner',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',

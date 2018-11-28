@@ -1,6 +1,7 @@
 import { communityAbi } from '../contracts/abi/community';
 import { smartTokenAbi } from '../contracts/abi/smarttoken';
 import { getAddress } from '../web3/Web3Service';
+import { communityStorageAbi } from '../contracts/abi/communitystorage';
 
 export default class CommunityService {
   web3Service;
@@ -33,6 +34,10 @@ export default class CommunityService {
       this.community.address,
     );
 
+    const communityAccount = await this.communityRemoteContract.methods
+      .communityAccount()
+      .call();
+
     this.smartTokenRemoteContract = await this.web3Service.initContractRemote(
       smartTokenAbi,
       this.community.tokenAddress,
@@ -42,7 +47,13 @@ export default class CommunityService {
       smartTokenAbi,
       this.community.tokenAddress,
     );
+
+    this.communityStorageRemoteContract = await this.web3Service.initContractRemote(
+      communityStorageAbi,
+      communityAccount,
+    );
   }
+
   async communityIsMember(address) {
     try {
       return await this.communityContract.methods
@@ -99,7 +110,7 @@ export default class CommunityService {
         }
       });
       approve.on('error', () =>
-        reject('There was a problem with the approval process.'),
+        reject(new Error('There was a problem with the approval process.')),
       );
       const checkTransaction = setInterval(async () => {
         if (transactionHash) {
@@ -133,7 +144,7 @@ export default class CommunityService {
       });
 
       buyWithToken.on('error', () =>
-        reject('There was a problem with the purchase process.'),
+        reject(new Error('There was a problem with the purchase process.')),
       );
       const checkTransaction = setInterval(async () => {
         if (transactionHash) {
@@ -159,6 +170,12 @@ export default class CommunityService {
     }
   }
 
+  async getAmountStaked(address) {
+    return this.communityStorageRemoteContract.methods
+      .stakedBalances(address)
+      .call();
+  }
+
   async stake(cb) {
     let gasPrice = await this.getGasPrice();
     gasPrice = gasPrice * 1.25;
@@ -177,7 +194,7 @@ export default class CommunityService {
         }
       });
       stakeCommunityTokens.on('error', () =>
-        reject('There was a problem staking into that community.'),
+        reject(new Error('There was a problem staking into that community.')),
       );
 
       const checkTransaction = setInterval(async () => {
