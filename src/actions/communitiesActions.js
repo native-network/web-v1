@@ -216,21 +216,28 @@ export const getCommunityMembersError = (error) => {
   };
 };
 
-export const blacklistMember = (communityId, userId) => {
+export const updateUserStatus = ({ communityId, userId, status }) => {
   return async (dispatch) => {
-    dispatch({ type: actions.BLACKLIST_MEMBER });
-
+    dispatch({ type: actions.UPDATE_USER_STATUS });
     try {
-      const { data } = await post(
-        `communities/${+communityId}/addBlacklistUser`,
-        { id: userId },
-      );
-      const { blacklisted } = data;
-
-      dispatch(
-        toastrSuccess('This user has been blacklisted from the community.'),
-      );
-      dispatch(blacklistMemberComplete(communityId, blacklisted));
+      await post(`communities/${+communityId}/updateUserStatus`, {
+        communityId,
+        userId,
+        status,
+      });
+      if (status === 'blacklisted') {
+        dispatch(
+          toastrSuccess('User has been blacklisted from the community.'),
+        );
+      }
+      if (status === 'member') {
+        dispatch(
+          toastrSuccess(
+            'This user has been removed from the blacklist and is now able to engage in community actions.',
+          ),
+        );
+      }
+      dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
       dispatch(
@@ -238,47 +245,101 @@ export const blacklistMember = (communityId, userId) => {
           'There was a problem blacklisting this member. Please try again.',
         ),
       );
-      dispatch(blacklistMemberError(message));
+      dispatch(updateUserStatusIssue(message));
     }
   };
 };
 
-export const removeBlacklistMember = (communityId, userId) => {
+export const updateUserStatusComplete = (communityId, userId, status) => {
+  return {
+    type: actions.UPDATE_USER_STATUS_COMPLETE,
+    communityId,
+    userId,
+    status,
+  };
+};
+
+export const updateUserStatusIssue = (error) => {
+  return {
+    type: actions.UPDATE_USER_STATUS_ISSUE,
+    error,
+  };
+};
+
+export const requestPrivateCommunityAccess = ({
+  description,
+  email,
+  communityId,
+  address,
+}) => {
   return async (dispatch) => {
-    dispatch({ type: actions.REMOVE_BLACKLIST_MEMBER });
-
     try {
-      const { data } = await post(
-        `communities/${+communityId}/removeBlacklistUser`,
-        { id: userId },
+      dispatch({ type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS });
+      await post(`communities/${+communityId}/requestAccess`, {
+        description,
+        email,
+        address,
+      });
+      dispatch(
+        toastrSuccess('Successfully Requested approval to join community'),
       );
-      const { blacklisted } = data;
-
-      dispatch(toastrSuccess('This user has been removed from the blacklist.'));
-      dispatch(blacklistMemberComplete(communityId, blacklisted));
+      dispatch(requestPrivateCommunityAccessComplete());
     } catch (err) {
       const { message } = err;
       dispatch(
-        toastrError(
-          'There was a problem removing this member from the blacklist. Please try again.',
-        ),
+        toastrError('There was a problem requesting access to join community'),
       );
-      dispatch(blacklistMemberError(message));
+      dispatch(requestPrivateCommunityAccessIssue(message));
     }
   };
 };
 
-export const blacklistMemberComplete = (communityId, blacklist) => {
+export const requestPrivateCommunityAccessComplete = () => {
   return {
-    type: actions.BLACKLIST_COMPLETE,
-    communityId,
-    blacklist,
+    type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_COMPLETE,
   };
 };
 
-export const blacklistMemberError = (error) => {
+export const requestPrivateCommunityAccessIssue = (error) => {
   return {
-    type: actions.BLACKLIST_ISSUE,
+    type: actions.USER_REQUEST_PRIVATE_COMMUNITY_ACCESS_ISSUE,
+    error,
+  };
+};
+
+export const preApproveUser = ({ communityId, address }) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.PRE_APPROVE_USER });
+    try {
+      const { data } = await post(`communities/${communityId}/preapproveUser`, {
+        communityId,
+        address,
+      });
+      dispatch(
+        toastrSuccess(
+          `User with an Ethereum address of ${address}, has been pre approved`,
+        ),
+      );
+      return dispatch(preApprovedUserComplete({ data, communityId }));
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError('Something went wrong'));
+      dispatch(preApprovedUserIssue(message));
+    }
+  };
+};
+
+export const preApprovedUserComplete = ({ data, communityId }) => {
+  return {
+    type: actions.PRE_APPROVE_USER_COMPLETE,
+    data,
+    communityId,
+  };
+};
+
+export const preApprovedUserIssue = (error) => {
+  return {
+    type: actions.PRE_APPROVE_USER_ISSUE,
     error,
   };
 };

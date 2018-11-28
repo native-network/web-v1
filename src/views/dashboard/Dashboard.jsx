@@ -5,6 +5,7 @@ import { history } from '../../store';
 import { bindActionCreators } from 'redux';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import CommunityStake from '../../components/dialogs/community-stake';
+import CommunityPrivateUserRequest from '../../components/forms/community-private-user-request';
 import { getWeb3ServiceInstance } from '../../web3/Web3Service';
 import { bigNumber } from '../../utils/helpers';
 const { web3 } = getWeb3ServiceInstance();
@@ -37,7 +38,7 @@ Object.assign(ReactTableDefaults, {
 
 const cols = [
   {
-    Header: 'Community Name',
+    Header: 'Community',
     accessor: 'community',
     Cell: ({ value }) =>
       value.isMemberOf || value.isCuratorOf ? (
@@ -130,6 +131,28 @@ const cols = [
     },
   },
   {
+    Header: 'Amount Staked',
+    id: 'amountStaked',
+    accessor: ({ price, amountStaked }) => (+price).toFixed(2) * amountStaked,
+    maxWidth: 150,
+    Cell: ({ value }) => {
+      return formatUsd(value);
+    },
+    Footer: ({ data }) => {
+      const sum = data.reduce((sum, { amountStaked }) => {
+        return (+amountStaked + +sum).toFixed(2);
+      }, 0);
+
+      return `$${sum}`;
+    },
+    style: {
+      textAlign: 'right',
+    },
+    headerStyle: {
+      textAlign: 'right',
+    },
+  },
+  {
     Header: 'Actions',
     accessor: 'actions',
     sortable: false,
@@ -156,6 +179,7 @@ const cols = [
 export class Dashboard extends Component {
   state = {
     isModalOpen: false,
+    isPrivateModalOpen: false,
     activeCommunity: {},
     sendCurrency: this.props.walletCurrencies.find(
       (currency) => currency.symbol === 'ETH',
@@ -200,6 +224,55 @@ export class Dashboard extends Component {
     );
   }
 
+  formatAction(community, currency) {
+    const { communityStatusOf, curatorOf, memberOf } = this.props.user;
+    const isMember = !!memberOf.find((c) => c.id === community.id);
+    const isCurator = !!curatorOf.find((c) => c.id === community.id);
+    let communityStatus;
+
+    if (communityStatusOf.length >= 1) {
+      const userCommunityStatus = this.props.user.communityStatusOf.find(
+        (c) => c.communityId === community.id,
+      );
+      if (userCommunityStatus) {
+        communityStatus = userCommunityStatus.userStatus;
+      }
+    }
+
+    const name = () => {
+      if (isMember || isCurator) {
+        return `Get more ${currency && currency.symbol}`;
+      }
+      if (
+        (!community.isPrivate && !isMember) ||
+        (community.isPrivate && communityStatus === 'approved')
+      ) {
+        return 'Join Community';
+      }
+
+      return 'Request Membership';
+    };
+
+    const clickHandler = () => {
+      if (
+        !isMember &&
+        !isCurator &&
+        community.isPrivate &&
+        communityStatus !== 'approved'
+      ) {
+        return this.openIsPrivateModal(community);
+      }
+
+      return this.openModal(community);
+    };
+
+    return {
+      name,
+      clickHandler,
+      communitySymbol: currency.symbol,
+    };
+  }
+
   authorize() {
     if (this.props.user.wallet.address) {
       this.props.promptAuthorize(this.props.user.wallet.address);
@@ -232,13 +305,30 @@ export class Dashboard extends Component {
         )}
         isOpen={!this.props.hasSession}
       >
-        <Button
-          centered
-          theme="primary"
-          content="Sign Message"
-          className={styles.AuthorizeButton}
-          clickHandler={this.authorize.bind(this)}
-        />
+        {!this.props.user.wallet.address ? (
+          <div className={styles.AuthorizeModalContainer}>
+            <p>
+              If you haven't set up MetaMask (or another Web3 wallet) yet,
+              please{' '}
+              <a
+                href="https://metamask.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                download and set up MetaMask
+              </a>
+              .
+            </p>
+          </div>
+        ) : (
+          <Button
+            centered
+            theme="primary"
+            content="Sign Message"
+            className={styles.AuthorizeButton}
+            clickHandler={this.authorize.bind(this)}
+          />
+        )}
       </Modal>
     );
   }
@@ -294,8 +384,17 @@ export class Dashboard extends Component {
     this.setState({ isModalOpen: true });
   }
 
+  openIsPrivateModal(activeCommunity) {
+    this.setState({
+      activeCommunity: {
+        ...activeCommunity,
+      },
+    });
+    this.setState({ isPrivateModalOpen: true });
+  }
+
   closeModal() {
-    this.setState({ isModalOpen: false });
+    this.setState({ isModalOpen: false, isPrivateModalOpen: false });
   }
 
   render() {
@@ -329,16 +428,39 @@ export class Dashboard extends Component {
               <CommunityStake
                 loading={this.props.isCurrencyLoading}
                 user={this.props.user}
+                error={this.props.currencyError}
                 populateNativeBalance={this.populateConverter.bind(this)}
                 community={this.state.activeCommunity}
                 dismissDialog={this.closeModal.bind(this)}
+              />
+            </Modal>
+            <Modal
+              hasCloseButton
+              isOpen={this.state.isPrivateModalOpen}
+              closeModal={this.closeModal.bind(this)}
+              maxWidth="1020px"
+            >
+              <CommunityPrivateUserRequest
+                community={this.state.activeCommunity}
+                user={this.props.user}
+                closeModal={this.closeModal.bind(this)}
               />
             </Modal>
             <div className={styles.DashboardBanner}>
               <div className={styles.TokenBalances}>
                 <div className={styles.Balance}>
                   <img src={eth} /> ETH Balance:&nbsp;
-                  <b>{ethBalance}</b> ({ethInUSD})
+                  <b>{ethBalance}</b>
+                  &nbsp;(
+                  {ethInUSD}) &nbsp;
+                  <a
+                    className={styles.Button}
+                    href="https://buy.mycrypto.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    MyCrypto
+                  </a>
                 </div>
                 <WalletAddress
                   displayPrepend
@@ -381,9 +503,6 @@ export class Dashboard extends Component {
                   </p>
                 </div>
               ) : null}
-              <div className={styles.TableTitle}>
-                <h1>Your Communities</h1>
-              </div>
               <div className={styles.Table}>
                 <ReactTable
                   columns={cols}
@@ -395,6 +514,10 @@ export class Dashboard extends Component {
                     const userBalance =
                       userCurrency && userCurrency.balance
                         ? fromWei(userCurrency.balance)
+                        : '0';
+                    const userAmountStaked =
+                      userCurrency && userCurrency.staked
+                        ? fromWei(userCurrency.staked)
                         : '0';
                     return {
                       community: {
@@ -410,16 +533,11 @@ export class Dashboard extends Component {
                       quantity: bigNumber(userBalance)
                         .decimalPlaces(3)
                         .toString(),
+                      amountStaked: bigNumber(userAmountStaked)
+                        .decimalPlaces(3)
+                        .toString(),
                       price: this.communityPrice(community),
-                      actions: {
-                        name: this.props.user.memberOf.find(
-                          (c) => c.id === community.id,
-                        )
-                          ? `Get ${currency && currency.symbol}`
-                          : `Support Community`,
-                        clickHandler: () => this.openModal(community),
-                        communitySymbol: community.currency.symbol,
-                      },
+                      actions: this.formatAction(community, currency),
                     };
                   })}
                 />
@@ -445,6 +563,7 @@ export default connect(
     return {
       communities: state.communities.communities,
       isCurrencyLoading: state.currencies.loading,
+      currencyError: state.currencies.error,
       isLoading: state.loading > 0,
       hasSession: !!state.user.id,
       user: state.user,

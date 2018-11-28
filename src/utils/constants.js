@@ -33,20 +33,24 @@ export const retrieveWalletCurrencyData = async (address, community) => {
       community3.getPrice(),
       community3.getSymbol(),
       community3.getTokenBalance(address),
+      community3.getAmountStaked(address),
     ])
       .then((data) => {
         if (data) {
-          const [price, symbol, balance] = data;
+          const [price, symbol, balance, staked] = data;
 
           return {
             id,
             price,
             symbol,
             balance,
+            staked,
             iconUrl: community.icon,
           };
         }
       })
-      .catch((err) => err);
+      .catch((err) => {
+        return err;
+      });
   });
 };

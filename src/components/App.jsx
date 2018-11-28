@@ -12,6 +12,7 @@ import { routes } from '../routes';
 import styles from './App.css';
 import native from '../assets/img/native.svg';
 
+import { initGoogleAnalytics } from '../utils/analytics';
 import { getUserSession, refreshAccounts } from '../actions/userSessionActions';
 import { getCurrentPrices } from '../actions/pricesActions';
 
@@ -22,6 +23,8 @@ export class App extends Component {
   };
 
   componentWillMount() {
+    initGoogleAnalytics();
+
     if (!localStorage.getItem('visited')) {
       this.setState({ isWelcomeModalOpen: true });
     }
@@ -31,6 +34,12 @@ export class App extends Component {
   componentDidUpdate(prevProps) {
     const { address: oldUserAddress } = prevProps.user.wallet;
     const { address: newUserAddress } = this.props.user.wallet;
+    const { pathname: oldPathname } = prevProps.location;
+    const { pathname: newPathname } = this.props.location;
+
+    if (oldPathname !== newPathname) {
+      window.scrollTo(0, 0);
+    }
 
     if (!!newUserAddress && newUserAddress !== oldUserAddress) {
       this.props.getUserSession();

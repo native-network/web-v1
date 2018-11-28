@@ -85,20 +85,29 @@ export default function communitiesReducer(
             c.id === action.community.id ? { ...c, ...action.community } : c,
         ),
       };
-    case actions.BLACKLIST_COMPLETE:
+
+    case actions.UPDATE_USER_STATUS_COMPLETE:
       return {
         ...state,
-        communities: state.communities.map(
-          (c) =>
-            c.id === action.communityId
-              ? { ...c, blacklisted: action.blacklist }
-              : c,
-        ),
+        communities: state.communities.map((community) => {
+          if (community.id === action.communityId) {
+            return {
+              ...community,
+              members: community.members.map((member) => {
+                if (member.id === action.userId) {
+                  return { ...member, userStatus: action.status };
+                }
+                return member;
+              }),
+            };
+          }
+          return community;
+        }),
       };
-    case actions.BLACKLIST_ISSUE:
+    case actions.UPDATE_USER_STATUS_ERROR:
       return {
         ...state,
-        blacklistError: action.error,
+        updateUserStatusError: action.error,
       };
     case actions.UPDATE_COMMUNITY_ERROR:
       return {
@@ -110,7 +119,19 @@ export default function communitiesReducer(
               : c,
         ),
       };
-
+    case actions.PRE_APPROVE_USER_COMPLETE:
+      return {
+        ...state,
+        communities: state.communities.map((community) => {
+          if (community.id === action.communityId) {
+            return {
+              ...community,
+              members: [action.data, ...community.members],
+            };
+          }
+          return community;
+        }),
+      };
     case actions.GET_COMMUNITY_MEMBERS_SUCCESS:
       return {
         ...state,

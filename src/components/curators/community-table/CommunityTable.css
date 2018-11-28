@@ -14,6 +14,31 @@
 
 .ManageMembers {
   margin: 0 0 3rem;
+
+  .Pagination {
+    display: flex;
+    margin: 2rem auto 0;
+
+    & button,
+    & button[disabled] {
+
+      /* stylelint-disable-next-line declaration-no-important */
+      box-shadow: none !important;
+      border-radius: 0;
+    }
+  }
+
+  & .buttonContainer {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    & button {
+      height: 52px;
+    }
+  }
 }
 
 .ManageMembersTitle,
@@ -33,19 +58,6 @@
   font-weight: 400;
 }
 
-.Pagination {
-  display: flex;
-  margin: 2rem auto 0;
-
-  & button,
-  & button[disabled] {
-
-    /* stylelint-disable-next-line declaration-no-important */
-    box-shadow: none !important;
-    border-radius: 0;
-  }
-}
-
 .PaginationList {
   @extend %unstyled-list;
 
@@ -53,5 +65,14 @@
 
   & li {
     flex: 1 1 100%;
+  }
+}
+
+.actionButtonsContainer {
+  display: flex;
+  flex-direction: column;
+
+  & button:nth-child(2) {
+    margin-top: 1rem;
   }
 }

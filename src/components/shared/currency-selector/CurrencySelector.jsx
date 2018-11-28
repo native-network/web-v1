@@ -42,7 +42,7 @@ function CurrencySelector({
               alt=""
             />
             <span className={styles.CurrencyDirection}>
-              {isFrom ? `Pay with` : `Receive`}
+              {isFrom ? `Send` : `Get`}
             </span>
             <span className={styles.CurrencyId}>{currency.symbol}</span>
             {hasDropdown ? (
