@@ -74,12 +74,10 @@ export const addNewContractTask = ({ id, reward, community }) => {
 
     communityContractInstance(community)
       .then(({ community3 }) => {
-        Promise.all([community3.createNewTask(id, rewardBigNumber)]).then(
-          (data) => {
-            dispatch(toastrSuccess('Successfully created contract task'));
-            dispatch(addNewContractTaskSuccess(data));
-          },
-        );
+        community3.createNewTask(id, rewardBigNumber).then((data) => {
+          dispatch(toastrSuccess('Successfully created contract task'));
+          dispatch(addNewContractTaskSuccess(data));
+        });
       })
       .catch((err) => {
         const { message } = err;
