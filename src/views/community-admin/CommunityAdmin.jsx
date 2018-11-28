@@ -70,8 +70,8 @@ function formatInitiatives(polls, tasks, projects, community) {
     {
       name: 'Tasks',
       items: tasks,
-      render: (items) => (
-        <ManageTasks items={items} communityId={community.id} />
+      render: (tasks) => (
+        <ManageTasks tasks={tasks} communityId={community.id} />
       ),
     },
     {
