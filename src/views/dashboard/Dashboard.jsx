@@ -387,7 +387,7 @@ export class Dashboard extends Component {
     ) : (
       <Fragment>
         {!this.props.hasSession ? (
-          this.renderAuthorizeModal()
+          this.renderAuthorizeModal(this.props.user)
         ) : (
           <Fragment>
             {!!Object.keys(this.state.activeCommunity).length && (
