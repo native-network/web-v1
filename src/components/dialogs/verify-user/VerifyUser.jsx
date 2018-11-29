@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 import Dialog from '../Dialog';
 
@@ -14,16 +13,19 @@ export class VerifyUser extends Component {
   componentDidMount() {
     const { user } = this.props;
     if (!user.id) {
-      this.setState({components: [Authorize, Processing, KYC]})
+      this.setState({ components: [Authorize, Processing, KYC] });
     } else if (user.id && user.kycStatus !== 'approved') {
-      this.setState({ components: [KYC]});
+      this.setState({ components: [KYC] });
     } else if (user.id && user.kycStatus === 'approved') {
-      this.setState({ components: []});
+      this.setState({ components: [] });
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.user.kycStatus !== this.props.user.kycStatus && this.props.user.kycStatus === 'approved') {
+    if (
+      prevProps.user.kycStatus !== this.props.user.kycStatus &&
+      this.props.user.kycStatus === 'approved'
+    ) {
       this.props.submitHandler();
     }
   }
