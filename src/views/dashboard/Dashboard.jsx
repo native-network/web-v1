@@ -133,7 +133,8 @@ const cols = [
   },
   {
     Header: 'Amount Staked',
-    accessor: 'amountStaked',
+    id: 'amountStaked',
+    accessor: ({ price, amountStaked }) => (+price).toFixed(2) * amountStaked,
     maxWidth: 150,
     Cell: ({ value }) => {
       return formatUsd(value);
