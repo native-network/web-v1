@@ -35,7 +35,7 @@ export class ManageTasks extends Component {
           closeModal={() => this.closeModal()}
           isModalOpen={this.state.isModalOpen}
         />
-        <TasksTable {...this.props} />
+        <TasksTable tasks={this.props.items} />
       </Fragment>
     );
   }
