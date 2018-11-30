@@ -21,7 +21,7 @@ export default function communityTasksReducer(
         ...state,
         tasks: [...state.tasks, action.task],
       };
-    case 'UPDATE_TASK':
+    case actions.UPDATE_TASK:
       return {
         ...state,
         tasks: [

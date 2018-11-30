@@ -93,7 +93,7 @@ export const pollForEscrow = (taskId) => {
 
 export const updateTask = (task) => {
   return {
-    type: 'UPDATE_TASK',
+    type: actions.UPDATE_TASK,
     task,
   };
 };
