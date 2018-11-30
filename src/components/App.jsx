@@ -7,6 +7,7 @@ import Header from './shared/header';
 import Footer from './shared/footer';
 import Modal from './shared/modal';
 import WelcomeDialog from './dialogs/welcome-dialog';
+import KYCTesting from './shared/kyc-testing';
 import { routes } from '../routes';
 
 import styles from './App.css';
@@ -106,6 +107,9 @@ export class App extends Component {
         />
         {routes(this.props.user)}
         <Footer location={this.props.location} user={this.props.user} />
+        <KYCTesting
+          kycApplicantId={this.props.user && this.props.user.kycApplicantId}
+        />
       </Fragment>
     );
   }
