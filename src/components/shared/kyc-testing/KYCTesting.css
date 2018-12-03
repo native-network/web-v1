@@ -1,5 +1,0 @@
-@import '../../../styles/extends.css';
-
-.KYCApplicantId {
-  @extend %visually-hidden;
-}
