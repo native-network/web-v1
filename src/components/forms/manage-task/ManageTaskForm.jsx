@@ -136,7 +136,11 @@ export default function ManageTaskForm({ submitForm }) {
               )}
             </Field>
           </div>
-          <Field name="understandConditions">
+          <Field
+            name="understandConditions"
+            type="checkbox"
+            validate={required}
+          >
             {({ input }) => (
               <div className={styles.FieldGroup}>
                 <p>
