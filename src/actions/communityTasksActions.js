@@ -50,13 +50,13 @@ export const addNewTask = (task) => {
     dispatch(beginAjaxCall());
     try {
       const { data } = await post('tasks', task);
-      const { id, reward, community } = data;
+      const { id, contractId, reward, community } = data;
 
       const rewardBigNumber = toWei(new BigNumber(reward).toString());
 
       communityContractInstance(community)
         .then(({ community3 }) => {
-          community3.createNewTask(id, rewardBigNumber).then(() => {
+          community3.createNewTask(contractId, rewardBigNumber).then(() => {
             dispatch(pollForEscrow(id));
             dispatch(
               toastrSuccess('Successfully created task, pending escrow'),
