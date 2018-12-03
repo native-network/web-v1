@@ -1,10 +1,8 @@
 import React from 'react';
 
-import styles from './KYCTesting.css';
-
 function KYCTesting({ kycApplicantId }) {
   return (
-    <span id="kycApplicantId" className={styles.KYCApplicantId}>
+    <span id="kycApplicantId" style={{ display: 'none' }}>
       {kycApplicantId}
     </span>
   );
