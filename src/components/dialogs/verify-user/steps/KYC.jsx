@@ -68,12 +68,19 @@ class KYC extends Component {
             },
             {
               name: 'email',
-              required: false,
+              required: true,
+            },
+            {
+              name: 'dob',
+              required: true,
+            },
+            {
+              name: 'addresses',
+              required: true,
             },
           ],
         },
-        requiredDocuments:
-          'IDENTITY:PASSPORT,ID_CARD,DRIVERS;SELFIE:SELFIE;PROOF_OF_RESIDENCE:UTILITY_BILL',
+        requiredDocuments: 'IDENTITY:DRIVERS,PASSPORT,ID_CARD;SELFIE:SELFIE',
       },
       (messageType, payload) => {
         switch (messageType) {
