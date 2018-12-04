@@ -16,7 +16,7 @@ export class CreateTaskModal extends Component {
       ...vals,
       communityId: this.props.communityId,
     };
-    newVals.startDate = moment().toISOString();
+    newVals.startDate = moment(vals.startDate, 'MM/DD/YYYY').toISOString();
     newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
     newVals.reward = +vals.reward;
     newVals.timeToComplete = +vals.timeToComplete;
