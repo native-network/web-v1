@@ -4,6 +4,7 @@ import moment from 'moment';
 import Button from '../../../../../shared/button';
 
 import styles from '../TasksTable.css';
+import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
 
 export const tasksTableColumnConfig = [
   {
@@ -42,6 +43,7 @@ export const tasksTableColumnConfig = [
   {
     Header: 'Status',
     accessor: 'status',
+    Cell: ({ value }) => capitalizeFirstLetter(value),
   },
   {
     Header: 'Actions',
