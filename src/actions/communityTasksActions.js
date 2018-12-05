@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { communityTasksActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
@@ -94,36 +93,39 @@ export const addNewTask = (task) => {
 
 export const cancelTask = (taskId) => {
   return async (dispatch, getState) => {
-    const activeCommunity = getState().communities.communities.find(c => c.active);
+    const activeCommunity = getState().communities.communities.find(
+      (c) => c.active,
+    );
     communityContractInstance(activeCommunity)
-    .then(({ community3 }) => {
-      community3
-        .cancelTask(taskId, (hash) =>
-          dispatch(
-            pendingTransactionComplete({
-              hash,
-            }),
-          ),
-        )
-        .then(() => {
-          dispatch(
-            toastrSuccess('Successfully cancelled task, pending blockchain confirmation.'),
-          );
-        })
-        .catch((err) => {
-          const { message } = err;
-          dispatch(toastrError(message));
-          dispatch(addNewTaskError(message));
-        });
-    })
-    .catch((err) => {
-      const { message } = err;
-      dispatch(toastrError(message));
-      dispatch(addNewTaskError(message));
-    });
-
-  }
-}
+      .then(({ community3 }) => {
+        community3
+          .cancelTask(taskId, (hash) =>
+            dispatch(
+              pendingTransactionComplete({
+                hash,
+              }),
+            ),
+          )
+          .then(() => {
+            dispatch(
+              toastrSuccess(
+                'Successfully cancelled task, pending blockchain confirmation.',
+              ),
+            );
+          })
+          .catch((err) => {
+            const { message } = err;
+            dispatch(toastrError(message));
+            dispatch(addNewTaskError(message));
+          });
+      })
+      .catch((err) => {
+        const { message } = err;
+        dispatch(toastrError(message));
+        dispatch(addNewTaskError(message));
+      });
+  };
+};
 
 export const pollForEscrow = (taskId) => {
   return async (dispatch) => {
@@ -182,14 +184,14 @@ export const updateTaskIssue = (error) => {
 };
 
 export const approveTask = (taskId) => {
-  return async (dispatch) => {
+  return async (dispatch) => { // eslint-disable-line
     try {
       const { data } = await post(`tasks/approve`, { taskId });
-      return updateTask(data);
+      return dispatch(updateTask(data));
     } catch (err) {
       const { message } = err;
 
-      console.log(message);
+      dispatch(updateTaskIssue(message));
     }
   };
 };
