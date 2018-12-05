@@ -1,0 +1,18 @@
+@import '../../../styles/media-queries.css';
+
+.Form {
+  composes: FormStyles from '../styles.css';
+
+  @media (--medium-viewport) {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
+
+.FieldGroup {
+  composes: FieldGroup from '../styles.css';
+}
+
+.Error {
+  composes: Error from '../styles.css';
+}

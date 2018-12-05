@@ -5,10 +5,6 @@ export const tasksTableColumnConfig = [
     accessor: 'title',
   },
   {
-    Header: 'Description',
-    accessor: 'description',
-  },
-  {
     Header: 'Time to Complete',
     accessor: 'timeToComplete',
     Cell: ({ value }) => value,

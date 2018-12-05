@@ -91,10 +91,29 @@ export const pollForEscrow = (taskId) => {
   };
 };
 
+export const claimTask = (claimedTask) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`tasks/claim`, claimedTask);
+      return dispatch(updateTask(data));
+    } catch (err) {
+      const { message } = err;
+      return dispatch(updateTaskIssue(message));
+    }
+  };
+};
+
 export const updateTask = (task) => {
   return {
     type: actions.UPDATE_TASK,
     task,
+  };
+};
+
+export const updateTaskIssue = (error) => {
+  return {
+    type: actions.UPDATE_TASK_ISSUE,
+    error,
   };
 };
 
