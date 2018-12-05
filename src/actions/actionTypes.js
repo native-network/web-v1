@@ -118,6 +118,7 @@ export const communityTasksActions = {
   ADD_NEW_TASK_SUCCESS: 'ADD_NEW_TASK_SUCCESS',
   ADD_NEW_TASK_ERROR: 'ADD_NEW_TASK_ERROR',
   UPDATE_TASK: 'UPDATE_TASK',
+  UPDATE_TASK_ISSUE: 'UPDATE_TASK_ISSUE',
 };
 
 export const voteActions = {

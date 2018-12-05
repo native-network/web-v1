@@ -30,6 +30,11 @@ export default function communityTasksReducer(
           ),
         ],
       };
+    case actions.UPDATE_TASK_ISSUE:
+      return {
+        ...state,
+        error: action.error,
+      };
     case actions.ADD_NEW_TASK_ERROR:
       return {
         ...state,

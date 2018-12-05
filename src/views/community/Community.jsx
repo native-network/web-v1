@@ -63,7 +63,7 @@ function formatInitiatives(polls, tasks, projects) {
     },
     {
       name: 'Tasks',
-      items: tasks,
+      items: (tasks || []).filter((item) => item.status !== 'initialized'),
       render: (items) => <Tasks items={items} />,
     },
     {
