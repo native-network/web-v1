@@ -1,5 +1,30 @@
-@import '../../../../../styles/variables.css';
+@import '../../../../../styles/extends.css';
 
 .TableContainer {
   margin-bottom: 3rem;
+}
+
+.ButtonGroup {
+  @extend %box-shadow;
+
+  display: flex;
+  border-radius: 5px;
+
+  & button {
+    padding-left: 0;
+    padding-right: 0;
+    width: 50%;
+    border-radius: 0;
+
+    /* stylelint-disable-next-line declaration-no-important */
+    box-shadow: 0 0 0 !important;
+
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+  }
 }

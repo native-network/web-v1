@@ -1,9 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import moment from 'moment';
 
 import Filter from '../../../../../shared/filter';
 import Button from '../../../../../shared/button';
 import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
+
+import styles from '../TasksTable.css';
 
 const applyFilter = (arr, filterStatus) =>
   (arr || []).filter((i) => i.status === filterStatus);
@@ -46,6 +48,16 @@ export const tasksTableColumnConfig = [
     accessor: 'reward',
   },
   {
+    Header: 'Claimed By',
+    accessor: 'claimedBy',
+    Cell: ({ value }) =>
+      value ? (
+        <a rel="noopener noreferrer" target="_blank" href={`mailto:${value}`}>
+          {value}
+        </a>
+      ) : null,
+  },
+  {
     Header: 'Status',
     accessor: 'status',
     filterable: true,
@@ -66,19 +78,20 @@ export const tasksTableColumnConfig = [
   {
     Header: 'Actions',
     accessor: 'actions',
+    resizeable: false,
+    width: 250,
     Cell: ({ row }) => {
       const { status } = row;
       switch (status) {
+        case 'escrowed':
+          return <Button block theme="primary" content="Cancel" />;
         case 'claimed':
           return (
-            <Fragment>
-              <Button block theme="secondary" content="Approve" />
-              <br />
-              <Button block theme="primary" content="Deny" />
-            </Fragment>
+            <div className={styles.ButtonGroup}>
+              <Button theme="primary" content="Approve" />
+              <Button outline theme="primary" content="Deny" />
+            </div>
           );
-        case 'escrowed':
-          return <Button theme="primary" content="Cancel" />;
         default:
           return;
       }
