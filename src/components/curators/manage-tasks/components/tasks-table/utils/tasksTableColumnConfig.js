@@ -1,27 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 
-import Filter from '../../../../../shared/filter';
 import Button from '../../../../../shared/button';
-import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
 
 import styles from '../TasksTable.css';
-
-const applyFilter = (arr, filterStatus) =>
-  (arr || []).filter((i) => i.status === filterStatus);
-
-const statuses = ['initialized', 'escrowed', 'claimed'];
-
-const filters = [
-  {
-    name: 'All',
-    filter: (items) => items,
-  },
-  ...statuses.map((status) => ({
-    name: capitalizeFirstLetter(status),
-    filter: (items) => applyFilter(items, status),
-  })),
-];
 
 export const tasksTableColumnConfig = [
   {
@@ -60,20 +42,6 @@ export const tasksTableColumnConfig = [
   {
     Header: 'Status',
     accessor: 'status',
-    filterable: true,
-    filterAll: true,
-    headerStyle: {
-      overflow: 'visible',
-    },
-    filterMethod: ({ value: filter }, rows) => filter(rows),
-    Cell: ({ value }) => capitalizeFirstLetter(value),
-    Filter: ({ onChange }) => (
-      <Filter
-        filters={filters}
-        activeFilter={filters[0]}
-        selectHandler={({ filter }) => onChange(filter)}
-      />
-    ),
   },
   {
     Header: 'Actions',
