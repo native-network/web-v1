@@ -50,16 +50,33 @@ export const tasksTableColumnConfig = [
     accessor: 'actions',
     resizeable: false,
     width: 250,
-    Cell: ({ row }) => {
+    Cell: ({ value, row }) => {
       const { status } = row;
+      const { approve, cancel, deny } = value;
       switch (status) {
         case 'escrowed':
-          return <Button block theme="primary" content="Cancel" />;
+          return (
+            <Button
+              block
+              theme="primary"
+              content="Cancel"
+              clickHandler={cancel}
+            />
+          );
         case 'claimed':
           return (
             <div className={styles.ButtonGroup}>
-              <Button theme="primary" content="Approve" />
-              <Button outline theme="primary" content="Deny" />
+              <Button
+                theme="primary"
+                content="Approve"
+                clickHandler={approve}
+              />
+              <Button
+                outline
+                theme="primary"
+                content="Deny"
+                clickHandler={deny}
+              />
             </div>
           );
         default:

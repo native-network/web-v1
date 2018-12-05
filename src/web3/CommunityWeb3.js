@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { communityAbi } from '../contracts/abi/community';
 import { smartTokenAbi } from '../contracts/abi/smarttoken';
 import { getAddress } from '../web3/Web3Service';
@@ -94,18 +95,72 @@ export default class CommunityService {
       .call();
   }
 
-  async createNewTask(id, amount) {
+  async createNewTask(id, amount, cb) {
     let gasPrice = await this.getGasPrice();
     gasPrice = gasPrice * 1.5;
-    try {
-      const task = await this.communityContract.methods
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+
+      const task = this.communityContract.methods
         .createNewTask(id, amount)
         .send({ from: this.web3Service.mainAccount, gasPrice });
 
-      return task;
-    } catch (err) {
-      throw new Error(err);
-    }
+      task.on('error', () => reject(new Error('There was a problem creating this task'))); // eslint-disable-line
+
+      task.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
+  async cancelTask(taskId, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+
+      const task = this.communityContract.methods
+        .cancelTask(taskId)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      task.on('error', () => reject(new Error('There was a problem cancelling this task')));
+
+      task.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
   }
 
   async approve(receivingAddress, transactionAmount, cb) {

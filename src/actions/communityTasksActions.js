@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { communityTasksActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
@@ -5,6 +6,7 @@ import { toastrError, toastrSuccess } from './toastrActions';
 import { communityContractInstance } from '../utils/constants';
 import BigNumber from 'bignumber.js';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
+import { pendingTransactionComplete } from './currencyActions';
 
 const { web3 } = getWeb3ServiceInstance();
 
@@ -56,13 +58,26 @@ export const addNewTask = (task) => {
 
       communityContractInstance(community)
         .then(({ community3 }) => {
-          community3.createNewTask(contractId, rewardBigNumber).then(() => {
-            dispatch(pollForEscrow(id));
-            dispatch(
-              toastrSuccess('Successfully created task, pending escrow'),
-            );
-            dispatch(addNewTaskSuccess(data));
-          });
+          community3
+            .createNewTask(contractId, rewardBigNumber, (hash) =>
+              dispatch(
+                pendingTransactionComplete({
+                  hash,
+                }),
+              ),
+            )
+            .then(() => {
+              dispatch(pollForEscrow(id));
+              dispatch(
+                toastrSuccess('Successfully created task, pending escrow'),
+              );
+              dispatch(addNewTaskSuccess(data));
+            })
+            .catch((err) => {
+              const { message } = err;
+              dispatch(toastrError(message));
+              dispatch(addNewTaskError(message));
+            });
         })
         .catch((err) => {
           const { message } = err;
@@ -76,6 +91,39 @@ export const addNewTask = (task) => {
     }
   };
 };
+
+export const cancelTask = (taskId) => {
+  return async (dispatch, getState) => {
+    const activeCommunity = getState().communities.communities.find(c => c.active);
+    communityContractInstance(activeCommunity)
+    .then(({ community3 }) => {
+      community3
+        .cancelTask(taskId, (hash) =>
+          dispatch(
+            pendingTransactionComplete({
+              hash,
+            }),
+          ),
+        )
+        .then(() => {
+          dispatch(
+            toastrSuccess('Successfully cancelled task, pending blockchain confirmation.'),
+          );
+        })
+        .catch((err) => {
+          const { message } = err;
+          dispatch(toastrError(message));
+          dispatch(addNewTaskError(message));
+        });
+    })
+    .catch((err) => {
+      const { message } = err;
+      dispatch(toastrError(message));
+      dispatch(addNewTaskError(message));
+    });
+
+  }
+}
 
 export const pollForEscrow = (taskId) => {
   return async (dispatch) => {
@@ -130,6 +178,19 @@ export const updateTaskIssue = (error) => {
   return {
     type: actions.UPDATE_TASK_ISSUE,
     error,
+  };
+};
+
+export const approveTask = (taskId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`tasks/approve`, { taskId });
+      return updateTask(data);
+    } catch (err) {
+      const { message } = err;
+
+      console.log(message);
+    }
   };
 };
 

@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  approveTask,
+  cancelTask,
+} from '../../../../../actions/communityTasksActions';
 
 import { tasksTableColumnConfig } from './utils/tasksTableColumnConfig';
 
@@ -15,6 +21,8 @@ export function ManageTasksList(props) {
         noDataText="No tasks were found"
         data={(tasks || []).map(
           ({
+            id,
+            contractId,
             title,
             timeToComplete,
             startDate,
@@ -32,6 +40,11 @@ export function ManageTasksList(props) {
             reward: `${reward} NTV`,
             claimedBy: userEmail,
             status,
+            actions: {
+              approve: () => props.approveTask(id),
+              cancel: () => props.cancelTask(contractId),
+              deny: () => alert('deny'),
+            },
           }),
         )}
       />
@@ -39,7 +52,14 @@ export function ManageTasksList(props) {
   );
 }
 
+export const mapDispatchToProps = (dispatch) => {
+  return {
+    approveTask: bindActionCreators(approveTask, dispatch),
+    cancelTask: bindActionCreators(cancelTask, dispatch),
+  };
+};
+
 export default connect(
   null,
-  null,
+  mapDispatchToProps,
 )(ManageTasksList);
