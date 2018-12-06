@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { claimTask } from '../../../actions/communityTasksActions';
+import { claimTask, submitTask } from '../../../actions/communityTasksActions';
 import styles from './Tasks.css';
 
 import Modal from '../../shared/modal';
 import Button from '../../shared/button';
-import ClaimTaskForm from '../../forms/claim-task';
+import UserTaskForm from '../../forms/user-task';
 
 export class TaskItem extends Component {
   state = { isModalOpen: false };
@@ -28,17 +28,27 @@ export class TaskItem extends Component {
     this.closeModal();
   };
 
+  handleSubmitTask = (values) => {
+    const taskId = this.props.id;
+    const { email, comments } = values;
+
+    this.props.submitTask({ taskId, email, comments });
+    this.closeModal();
+  };
+
   render() {
     const { index, ...item } = this.props;
-
     const {
       title,
       description,
+      claimedBy,
       status,
       imageUrl,
       reward,
       timeToComplete,
     } = item;
+    const isClaimedUser = claimedBy === this.props.user.id;
+
     return (
       <li className={styles.TaskItem} key={index}>
         {imageUrl ? (
@@ -52,20 +62,38 @@ export class TaskItem extends Component {
           <Modal
             isOpen={this.state.isModalOpen}
             hasCloseButton
-            label="Claim Task"
+            label={`${isClaimedUser ? 'Submit' : 'Claim'} Task`}
             renderHeader={() => (
-              <h1>Are you sure you want to claim this task?</h1>
+              <h1>
+                Are you sure you want to {isClaimedUser ? 'submit' : 'claim'}{' '}
+                this task?
+              </h1>
             )}
             closeModal={this.closeModal}
           >
-            <p>
-              Once you claim this task, no one else will be able to claim it.
-              Please submit your email address and a few comments about why you
-              are qualified to complete this task.
-            </p>
-            <ClaimTaskForm
+            {status === 'escrowed' ? (
+              <p>
+                Once you claim this task, no one else will be able to claim it.
+                Please submit your email address and a few comments about why
+                you are qualified to complete this task.
+              </p>
+            ) : (
+              <p>
+                Once the task has been submitted, the curator will review your
+                work. Please provide any relevant information to help the
+                curator decide whether your work meets the necessary conditions
+                to consider this work complete.
+              </p>
+            )}
+            <UserTaskForm
+              isSubmission={isClaimedUser}
+              task={item}
               user={this.props.user}
-              handleSubmit={this.handleTaskClaim}
+              handleSubmit={(values) =>
+                isClaimedUser
+                  ? this.handleSubmitTask(values)
+                  : this.handleTaskClaim(values)
+              }
             />
             <Button
               theme="link"
@@ -85,8 +113,12 @@ export class TaskItem extends Component {
           </p>
           <Button
             theme="secondary"
-            content="Claim Task"
-            disabled={status === 'claimed'}
+            content={isClaimedUser ? 'Submit Work' : 'Claim Task'}
+            disabled={
+              ((status === 'claimed' || status === 'pendingapproval') &&
+                !isClaimedUser) ||
+              (isClaimedUser && status === 'pendingapproval')
+            }
             clickHandler={this.openModal}
           />
         </div>
@@ -98,6 +130,7 @@ export class TaskItem extends Component {
 export const mapDispatchToProps = (dispatch) => {
   return {
     claimTask: bindActionCreators(claimTask, dispatch),
+    submitTask: bindActionCreators(submitTask, dispatch),
   };
 };
 

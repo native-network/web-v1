@@ -1,17 +1,24 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 
-import styles from './ClaimTaskForm.css';
+import styles from './UserTaskForm.css';
 import Button from '../../shared/button';
 
-export default function ClaimTaskForm({ user, handleSubmit }) {
+export default function UserTaskForm({
+  user,
+  task,
+  isSubmission,
+  handleSubmit,
+}) {
   const required = (value) => (value && value.length ? undefined : 'Required');
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
+
+  const initialEmail = !isSubmission ? user.email || '' : task.userEmail;
 
   return (
     <Form
       initialValues={{
-        email: user.email || '',
+        email: initialEmail,
         comments: '',
       }}
       onSubmit={handleSubmit}
@@ -43,7 +50,7 @@ export default function ClaimTaskForm({ user, handleSubmit }) {
             disabled={invalid || pristine}
             type="submit"
             theme="secondary"
-            content="Claim"
+            content={isSubmission ? 'Submit Task' : 'Claim'}
           />
         </form>
       )}
