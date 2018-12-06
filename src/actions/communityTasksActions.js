@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { communityTasksActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
@@ -99,7 +98,8 @@ export const declineClaimedTask = (taskId) => {
 
       return dispatch(updateTask(data));
     } catch (err) {
-      console.log(err); // eslint-disable-line
+      const { message } = err;
+      return dispatch(updateTaskIssue(message));
     }
   };
 };
@@ -128,6 +128,7 @@ export const cancelTask = (taskId) => {
               });
               return dispatch(updateTask(data));
             } catch (err) {
+              const { message } = err;
               dispatch({ type: '_ERROR' });
               dispatch(toastrError(message));
               dispatch(updateTaskIssue(message));
@@ -231,10 +232,12 @@ export const denySubmittedTask = (taskId) => {
 
       return dispatch(updateTask(data));
     } catch (err) {
-      console.log(err);
+      const { message } = err;
+
+      dispatch(updateTaskIssue(message));
     }
-  }
-}
+  };
+};
 
 export const addNewTaskSuccess = (task) => {
   return {
