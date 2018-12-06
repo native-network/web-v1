@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 import {
   approveTask,
   cancelTask,
+  declineClaimedTask,
+  denySubmittedTask,
 } from '../../../../../actions/communityTasksActions';
 
 import { tasksTableColumnConfig } from './utils/tasksTableColumnConfig';
@@ -22,7 +24,6 @@ export function ManageTasksList(props) {
         data={(tasks || []).map(
           ({
             id,
-            contractId,
             title,
             timeToComplete,
             startDate,
@@ -42,8 +43,9 @@ export function ManageTasksList(props) {
             status,
             actions: {
               approve: () => props.approveTask(id),
-              cancel: () => props.cancelTask(contractId),
-              deny: () => alert('deny'),
+              decline: () => props.declineClaimedTask(id),
+              cancel: () => props.cancelTask(id),
+              deny: () => props.denySubmittedTask(id),
             },
           }),
         )}
@@ -56,6 +58,8 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     approveTask: bindActionCreators(approveTask, dispatch),
     cancelTask: bindActionCreators(cancelTask, dispatch),
+    declineClaimedTask: bindActionCreators(declineClaimedTask, dispatch),
+    denySubmittedTask: bindActionCreators(denySubmittedTask, dispatch),
   };
 };
 

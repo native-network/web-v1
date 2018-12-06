@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { communityTasksActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';
@@ -91,22 +92,49 @@ export const addNewTask = (task) => {
   };
 };
 
+export const declineClaimedTask = (taskId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`tasks/deny-claim`, { taskId });
+
+      return dispatch(updateTask(data));
+    } catch (err) {
+      console.log(err); // eslint-disable-line
+    }
+  };
+};
+
 export const cancelTask = (taskId) => {
   return async (dispatch, getState) => {
+    dispatch(beginAjaxCall());
     const activeCommunity = getState().communities.communities.find(
       (c) => c.active,
     );
+    const task = getState().tasks.tasks.find((task) => task.id === taskId);
     communityContractInstance(activeCommunity)
       .then(({ community3 }) => {
         community3
-          .cancelTask(taskId, (hash) =>
+          .cancelTask(task && task.contractId, (hash) =>
             dispatch(
               pendingTransactionComplete({
                 hash,
               }),
             ),
           )
+          .then(async () => {
+            try {
+              const { data } = await post(`tasks/pending-cancellation`, {
+                taskId,
+              });
+              return dispatch(updateTask(data));
+            } catch (err) {
+              dispatch({ type: '_ERROR' });
+              dispatch(toastrError(message));
+              dispatch(updateTaskIssue(message));
+            }
+          })
           .then(() => {
+            dispatch({ type: '_SUCCESS' });
             dispatch(
               toastrSuccess(
                 'Successfully cancelled task, pending blockchain confirmation.',
@@ -116,13 +144,13 @@ export const cancelTask = (taskId) => {
           .catch((err) => {
             const { message } = err;
             dispatch(toastrError(message));
-            dispatch(addNewTaskError(message));
+            dispatch(updateTaskIssue(message));
           });
       })
       .catch((err) => {
         const { message } = err;
         dispatch(toastrError(message));
-        dispatch(addNewTaskError(message));
+        dispatch(updateTaskIssue(message));
       });
   };
 };
@@ -184,7 +212,7 @@ export const updateTaskIssue = (error) => {
 };
 
 export const approveTask = (taskId) => {
-  return async (dispatch) => { // eslint-disable-line
+  return async (dispatch) => {
     try {
       const { data } = await post(`tasks/approve`, { taskId });
       return dispatch(updateTask(data));
@@ -195,6 +223,18 @@ export const approveTask = (taskId) => {
     }
   };
 };
+
+export const denySubmittedTask = (taskId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`tasks/deny-submission`, { taskId });
+
+      return dispatch(updateTask(data));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
 
 export const addNewTaskSuccess = (task) => {
   return {
