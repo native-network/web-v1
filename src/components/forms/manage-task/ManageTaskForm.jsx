@@ -130,6 +130,7 @@ export default function ManageTaskForm({ submitForm }) {
                     onChange={(date) =>
                       input.onChange(moment(date).format('MM/DD/YYYY'))
                     }
+                    excludeDates={[new Date(values.startDate), 0]}
                   />
                   {meta.error && meta.touched && renderError(meta.error)}
                 </div>
