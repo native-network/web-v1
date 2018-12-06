@@ -95,9 +95,25 @@ export const claimTask = (claimedTask) => {
   return async (dispatch) => {
     try {
       const { data } = await post(`tasks/claim`, claimedTask);
+      dispatch(toastrSuccess('You have successfully claimed this task'));
       return dispatch(updateTask(data));
     } catch (err) {
       const { message } = err;
+      return dispatch(updateTaskIssue(message));
+    }
+  };
+};
+
+export const submitTask = (submittedTask) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`tasks/submit`, submittedTask);
+
+      dispatch(toastrSuccess('Your message has been submitted to the curator'));
+      return dispatch(updateTask(data));
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError(message));
       return dispatch(updateTaskIssue(message));
     }
   };
