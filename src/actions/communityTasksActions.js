@@ -20,7 +20,7 @@ export const getCommunityTasks = (id) => {
 
       (data || [])
         .filter((task) => task.status === 'initialized')
-        .forEach((task) => dispatch(pollForEscrow(task.id)));
+        .forEach((task) => dispatch(pollStatus(task.id)));
 
       return dispatch(getCommunityTasksSuccess(data));
     } catch (err) {
@@ -66,11 +66,11 @@ export const addNewTask = (task) => {
               ),
             )
             .then(() => {
-              dispatch(pollForEscrow(id));
               dispatch(
                 toastrSuccess('Successfully created task, pending escrow'),
               );
               dispatch(addNewTaskSuccess(data));
+              dispatch(pollStatus(id));
             })
             .catch((err) => {
               const { message } = err;
@@ -156,13 +156,16 @@ export const cancelTask = (taskId) => {
   };
 };
 
-export const pollForEscrow = (taskId) => {
-  return async (dispatch) => {
+export const pollStatus = (taskId) => {
+  return async (dispatch, getState) => {
     const poll = setInterval(async () => {
-      dispatch({ type: 'POLL_FOR_ESCROW' });
+      dispatch({ type: 'POLL_STATUS' });
       const { data } = await get(`tasks/${taskId}`);
+      const activeTask = (getState().tasks.tasks || []).find(
+        (task) => task.id === taskId,
+      );
 
-      if (data.status === 'escrowed') {
+      if (activeTask.status !== data.status) {
         clearInterval(poll);
         return dispatch(updateTask(data));
       }
