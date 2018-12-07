@@ -5,7 +5,10 @@ import {
   setActiveCommunity,
   unsetActiveCommunity,
 } from '../../actions/communitiesActions';
-
+import {
+  sendTransactionInEth,
+  sendTransactionInNtv,
+} from '../../actions/currencyActions';
 import { getCommunityTasks } from '../../actions/communityTasksActions';
 import { getCommunityProjects } from '../../actions/communityProjectsActions';
 import { getCommunityPolls } from '../../actions/communityPollsActions';
@@ -33,6 +36,14 @@ export class Community extends Component {
     this.props.unsetActiveCommunity();
   }
 
+  submitTransaction(symbol, community, amount) {
+    if (symbol === 'NTV') {
+      this.props.sendTransactionInEth(community, amount);
+    } else {
+      this.props.sendTransactionInNtv(community, amount);
+    }
+  }
+
   render() {
     const { community, polls, tasks, projects } = this.props;
     const initiatives = formatInitiatives(polls, tasks, projects);
@@ -42,7 +53,10 @@ export class Community extends Component {
     }
     return community ? (
       <Card
-        community={community}
+        community={{
+          ...community,
+          submitTransaction: this.submitTransaction.bind(this),
+        }}
         isCommunityRoute={this.props.isCommunityRoute}
         render={() => (
           <div className={styles.CommunityPanels}>
@@ -81,6 +95,8 @@ export function mapDispatchToProps(dispatch) {
     getCommunityPolls: bindActionCreators(getCommunityPolls, dispatch),
     getCommunityTasks: bindActionCreators(getCommunityTasks, dispatch),
     getCommunityProjects: bindActionCreators(getCommunityProjects, dispatch),
+    sendTransactionInEth: bindActionCreators(sendTransactionInEth, dispatch),
+    sendTransactionInNtv: bindActionCreators(sendTransactionInNtv, dispatch),
   };
 }
 
