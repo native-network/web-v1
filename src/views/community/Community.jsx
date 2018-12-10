@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import {
   setActiveCommunity,
   unsetActiveCommunity,
@@ -18,6 +19,8 @@ import Card from '../../components/shared/card';
 import TabPanels from '../../components/shared/tab-panels';
 
 import { Votes, Tasks, Projects } from '../../components/initiatives';
+
+import { voteFilters, taskFilters } from '../../utils/filters';
 
 import styles from './Community.css';
 
@@ -74,11 +77,13 @@ function formatInitiatives(polls, tasks, projects) {
       name: 'Votes',
       items: polls,
       render: (items) => <Votes items={items} />,
+      filters: voteFilters,
     },
     {
       name: 'Tasks',
       items: (tasks || []).filter((item) => item.status !== 'initialized'),
       render: (items) => <Tasks items={items} />,
+      filters: taskFilters,
     },
     {
       name: 'Projects',

@@ -4,24 +4,9 @@ import moment from 'moment';
 import VoteResults from '../../shared/vote-results';
 import Filter from '../../../components/shared/filter';
 
-import styles from './ManagePolls.css';
+import { voteFilters as filters } from '../../../utils/filters';
 
-const filters = [
-  {
-    name: 'All',
-    filter: (items) => items,
-  },
-  {
-    name: 'Open',
-    filter: (items) =>
-      (items || []).filter((i) => !moment(i.endDate).isBefore(moment())),
-  },
-  {
-    name: 'Closed',
-    filter: (items) =>
-      (items || []).filter((i) => moment(i.endDate).isBefore(moment())),
-  },
-];
+import styles from './ManagePolls.css';
 
 Object.assign(ReactTableDefaults, {
   minRows: 0,

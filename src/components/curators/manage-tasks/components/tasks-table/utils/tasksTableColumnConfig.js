@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import moment from 'moment';
 
+import Filter from '../../../../../shared/filter';
 import Button from '../../../../../shared/button';
-
-import styles from '../TasksTable.css';
 import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
+import { taskFilters } from '../../../../../../utils/filters';
 
 const handleString = (str) =>
   str
@@ -49,7 +49,20 @@ export const tasksTableColumnConfig = [
   {
     Header: 'Status',
     accessor: 'status',
+    filterable: true,
+    filterAll: true,
+    headerStyle: {
+      overflow: 'visible',
+    },
+    filterMethod: ({ value: filter }, rows) => filter(rows),
     Cell: ({ value }) => handleString(value),
+    Filter: ({ onChange }) => (
+      <Filter
+        filters={taskFilters}
+        activeFilter={taskFilters[0]}
+        selectHandler={({ filter }) => onChange(filter)}
+      />
+    ),
   },
   {
     Header: 'Actions',
@@ -94,6 +107,8 @@ export const tasksTableColumnConfig = [
               />
             </div>
           );
+        case 'escrowed':
+          return <Button theme="primary" content="Cancel" />;
         default:
           return;
       }

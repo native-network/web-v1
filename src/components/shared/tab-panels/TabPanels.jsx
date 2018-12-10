@@ -1,5 +1,5 @@
+/* eslint-disablew */
 import React, { Component } from 'react';
-import moment from 'moment';
 
 import Filter from '../filter';
 
@@ -7,33 +7,21 @@ import TabNavigation from './TabNavigation';
 import TabPanel from './TabPanel';
 import styles from './TabPanels.css';
 
-const today = moment();
-
-const itemsForFilter = [
-  {
-    name: 'All',
-    filter: (items) => items,
-  },
-  {
-    name: 'Open',
-    filter: (items) =>
-      (items || []).filter((item) => moment(item.endDate).isAfter(today)),
-  },
-  {
-    name: 'Closed',
-    filter: (items) =>
-      (items || []).filter((item) => moment(item.endDate).isBefore(today)),
-  },
-];
-
 class TabPanels extends Component {
   state = {
-    activeTab: 0,
-    activeFilter: itemsForFilter.find((f) => f.name === 'Open'),
+    activeTab: {},
   };
 
-  setActiveTab(tabIndex) {
-    this.setState({ activeTab: tabIndex });
+  componentDidMount() {
+    const { panels } = this.props;
+
+    this.setState({ activeTab: panels[0] });
+  }
+
+  setActiveTab(panelName) {
+    const { panels } = this.props;
+    const activeTab = panels.find((panel) => panel.name === panelName);
+    this.setState({ activeTab });
   }
 
   filterHandler(filter) {
@@ -44,12 +32,10 @@ class TabPanels extends Component {
     const { props, state } = this;
     const { panels, community } = props;
     const { activeTab } = state;
-    const panelNames = panels.map((panel) => {
-      return panel.items
-        ? `${panel.name} (${(panel.items && panel.items.length) || 0})`
-        : panel.name;
-    });
-    const { filter } = this.state.activeFilter;
+    const { render, items, filters } = activeTab;
+    const panelNames = panels.map((panel) => panel.name);
+
+    // const activeFilters = panels[activeTab].filters;
 
     return (
       <div className={styles.TabPanels}>
@@ -57,28 +43,14 @@ class TabPanels extends Component {
           telegramLink={community && community.telegramLink}
           activeTab={activeTab}
           panels={panelNames}
-          clickHandler={(i) => this.setActiveTab(i)}
+          clickHandler={(panel) => this.setActiveTab(panel)}
           renderFilter={() =>
-            this.props.hasFilter ? (
-              <Filter
-                activeFilter={this.state.activeFilter}
-                selectHandler={this.filterHandler.bind(this)}
-                className="visible-lg"
-                filters={itemsForFilter}
-              />
+            this.props.hasFilter && filters.length ? (
+              <Filter filters={!!filters && filters.length ? filters : []} />
             ) : null
           }
         />
-        {(panels || []).map(
-          ({ render, items }, index) =>
-            index === activeTab ? (
-              <TabPanel
-                key={index}
-                render={() =>
-                  this.props.hasFilter ? render(filter(items)) : render(items)
-                }
-              />
-            ) : null,
+        <TabPanel render={() => render && render(items)} />
         )}
       </div>
     );
