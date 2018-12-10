@@ -1,45 +1,74 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import ManageProjectsList from './ManageProjectsList';
-import ManageProjectsNew from './ManageProjectsNew';
+// import ManageProjectsList from './ManageProjectsList';
+
+import Button from '../../shared/button';
+import Modal from '../../shared/modal';
+import ManageProjectForm from '../../forms/manage-project';
+
+import { addNewProject } from '../../../actions/communityProjectsActions';
 
 import styles from './ManageProjects.css';
 
 export class ManageProjects extends Component {
   state = {
-    currentProjects: [],
-    pastProjects: [],
+    isModalOpen: false,
   };
 
-  componentDidMount() {
-    const currentProjects = this.props.items.filter((project) => {
-      return moment(project.endDate).isAfter(moment());
+  openModal = () => {
+    this.setState({ isModalOpen: true });
+  };
+
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
+  };
+
+  handleSubmit = (values) => {
+    const { communityId, addNewProject } = this.props;
+    const { endDate } = values;
+
+    addNewProject({
+      ...values,
+      communityId,
+      startDate: moment().toISOString(),
+      endDate: moment(endDate).toISOString(),
     });
-    const pastProjects = this.props.items.filter((project) => {
-      return moment(project.endDate).isBefore(moment());
-    });
-    this.setState({
-      currentProjects: currentProjects,
-      pastProjects: pastProjects,
-    });
-  }
+  };
 
   render() {
     return (
       <div>
-        <ManageProjectsNew communityId={this.props.communityId} />
-        <h4>Projects are coming soon!</h4>
-        <div className={styles.TableTitle}>
-          <h2>Current Projects</h2>
+        <div className={styles.Header}>
+          <h2>Projects</h2>
+          <Button
+            theme="secondary"
+            content="Add Project"
+            clickHandler={this.openModal}
+          />
         </div>
-        <ManageProjectsList projects={this.state.currentProjects} />
-        <div className={styles.TableTitle}>
-          <h2>Past Projects</h2>
-        </div>
-        <ManageProjectsList projects={this.state.pastProjects} />
+        <Modal
+          hasCloseButton
+          closeModal={this.closeModal}
+          renderHeader={() => <h1>Add Project</h1>}
+          label="Add Project"
+          isOpen={this.state.isModalOpen}
+        >
+          <ManageProjectForm submitForm={this.handleSubmit.bind(this)} />
+        </Modal>
       </div>
     );
   }
 }
 
-export default ManageProjects;
+export const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewProject: bindActionCreators(addNewProject, dispatch),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ManageProjects);

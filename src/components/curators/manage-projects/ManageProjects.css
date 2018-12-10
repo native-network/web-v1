@@ -1,5 +1,16 @@
 @import '../../../styles/variables.css';
 
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+
+  & h2 {
+    margin: 0;
+  }
+}
+
 .TableTitle {
   width: 100%;
   text-align: center;
