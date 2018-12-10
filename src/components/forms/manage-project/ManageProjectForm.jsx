@@ -6,19 +6,16 @@ import moment from 'moment';
 import Button from '../../shared/button';
 import FileUploader from '../../shared/file-uploader/FileUploader';
 
+import {
+  composeValidators,
+  required,
+  validateAddress,
+} from '../utils/validators';
+
 import styles from './ManageProjectForm.css';
 
 export default function ManageProjectForm({ submitForm, project }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
-  const required = (value) => (value ? undefined : 'Required');
-  const validateAddress = (value) =>
-    //TODO: Add better address validation
-    value.length > 0 ? undefined : 'Must be a valid wallet address';
-  const composeValidators = (...validators) => (value) =>
-    validators.reduce(
-      (error, validator) => error || validator(value),
-      undefined,
-    );
 
   return (
     <Form

@@ -1,15 +1,8 @@
 @import '../../../styles/globals.css';
 @import '../../../styles/media-queries.css';
 
-%label {
-  color: var(--primary-color);
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
 .ManageProjectForm {
-  composes: container from global;
-  margin-top: 2rem;
+  composes: FormStyles from '../styles.css';
 }
 
 .ManageProjectFields {
@@ -28,48 +21,9 @@
 }
 
 .FieldGroup {
-  margin-bottom: 1rem;
-
-  & label {
-    @extend %label;
-  }
-
-  & input,
-  & textarea {
-    border: 1px solid var(--primary-color);
-    width: 100%;
-    padding-left: 0.5rem;
-    font: 1rem 'azo-sans-web', sans-serif;
-  }
-
-  & input {
-    height: 2rem;
-  }
-
-  & textarea {
-    padding: 0.5rem;
-    resize: none;
-  }
-
-  & input[type="text"]:disabled,
-  & input[type="number"]:disabled,
-  & input[type="date"]:disabled,
-  & textarea:disabled {
-    color: var(--gray-6);
-  }
-}
-
-.GroupedFieldGroup {
-  break-before: avoid;
-  break-after: always;
-
-  & h2 {
-    @extend %label;
-
-    margin: 0;
-  }
+  composes: FieldGroup from '../styles.css';
 }
 
 .Error {
-  color: var(--secondary-color);
+  composes: Error from '../styles.css';
 }
