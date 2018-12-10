@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import ReactTable from 'react-table';
 // import ManageProjectsList from './ManageProjectsList';
 
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
 import ManageProjectForm from '../../forms/manage-project';
 
+import WalletAddress from '../../shared/wallet-address';
+
 import { addNewProject } from '../../../actions/communityProjectsActions';
 
 import styles from './ManageProjects.css';
+import { capitalizeFirstLetter } from '../../../utils/helpers';
 
 export class ManageProjects extends Component {
   state = {
@@ -57,6 +61,57 @@ export class ManageProjects extends Component {
         >
           <ManageProjectForm submitForm={this.handleSubmit.bind(this)} />
         </Modal>
+        <ReactTable
+          columns={[
+            {
+              Header: 'Title',
+              accessor: 'title',
+            },
+            {
+              Header: 'Start Date',
+              accessor: 'startDate',
+              Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
+            },
+            {
+              Header: 'End Date',
+              accessor: 'endDate',
+              Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
+            },
+            {
+              Header: 'Total Cost',
+              accessor: 'totalCost',
+              Cell: ({ value }) => (value ? `${value} NTV` : null),
+            },
+            {
+              Header: 'Payment Address',
+              accessor: 'address',
+              Cell: ({ value }) => <WalletAddress address={value} />,
+            },
+            {
+              Header: 'Status',
+              accessor: 'status',
+              Cell: ({ value }) =>
+                value ? capitalizeFirstLetter(value) : null,
+            },
+            {
+              Header: 'Actions',
+              accessor: 'actions',
+              Cell: () => (
+                <Button theme="secondary" block content="Click here" />
+              ),
+            },
+          ]}
+          data={(this.props.items || []).map(
+            ({ title, startDate, endDate, totalCost, address, status }) => ({
+              title,
+              startDate,
+              endDate,
+              totalCost,
+              address,
+              status,
+            }),
+          )}
+        />
       </div>
     );
   }
