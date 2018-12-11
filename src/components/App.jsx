@@ -7,19 +7,25 @@ import Header from './shared/header';
 import Footer from './shared/footer';
 import Modal from './shared/modal';
 import WelcomeDialog from './dialogs/welcome-dialog';
+import KYCTesting from './shared/kyc-testing';
 import { routes } from '../routes';
 
 import styles from './App.css';
 import native from '../assets/img/native.svg';
 
 import { initGoogleAnalytics } from '../utils/analytics';
-import { getUserSession, refreshAccounts } from '../actions/userSessionActions';
+import {
+  getUserSession,
+  refreshAccounts,
+  pollKycStatus,
+} from '../actions/userSessionActions';
 import { getCurrentPrices } from '../actions/pricesActions';
 
 export class App extends Component {
   state = {
     isWelcomeModalOpen: false,
     refreshIntervalSet: false,
+    pollStatusIntervalSet: false,
   };
 
   componentWillMount() {
@@ -49,6 +55,20 @@ export class App extends Component {
         this.props.refreshAccounts(this.props.user);
       }, 1000);
       this.setState({ refreshIntervalSet: true });
+    }
+
+    if (
+      this.props.user.kycStatus !== 'approved' &&
+      !this.state.pollStatusIntervalSet
+    ) {
+      const checkUserStatus = setInterval(() => {
+        this.props.pollKycStatus();
+
+        if (this.props.user.kycStatus === 'approved') {
+          clearInterval(checkUserStatus);
+        }
+      }, 1000 * 5);
+      this.setState({ pollStatusIntervalSet: true });
     }
   }
 
@@ -87,6 +107,9 @@ export class App extends Component {
         />
         {routes(this.props.user)}
         <Footer location={this.props.location} user={this.props.user} />
+        <KYCTesting
+          kycApplicantId={this.props.user && this.props.user.kycApplicantId}
+        />
       </Fragment>
     );
   }
@@ -95,6 +118,7 @@ export class App extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     getUserSession: bindActionCreators(getUserSession, dispatch),
+    pollKycStatus: bindActionCreators(pollKycStatus, dispatch),
     refreshAccounts: bindActionCreators(refreshAccounts, dispatch),
     getCurrentPrices: bindActionCreators(getCurrentPrices, dispatch),
   };
