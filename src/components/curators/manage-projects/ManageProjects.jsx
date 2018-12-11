@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import ReactTable from 'react-table';
-// import ManageProjectsList from './ManageProjectsList';
 
 import Button from '../../shared/button';
 import Modal from '../../shared/modal';
