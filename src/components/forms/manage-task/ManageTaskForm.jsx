@@ -24,7 +24,7 @@ export default function ManageTaskForm({ submitForm }) {
     <Form
       onSubmit={(values) => submitForm(values)}
       initialValues={{
-        timeToCompleteUnit: 'minutes',
+        timeToCompleteUnit: 'days',
       }}
       render={({ handleSubmit, pristine, invalid, values }) => (
         <form className={styles.ManageTaskForm} onSubmit={handleSubmit}>
@@ -44,29 +44,17 @@ export default function ManageTaskForm({ submitForm }) {
             >
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Task Reward (NT)*</label>
+                  <label>Task Reward (NTV)*</label>
                   <input
                     {...input}
                     type="number"
-                    placeholder="Task Reward (NT)"
+                    placeholder="Task Reward (NTV)"
                   />
                   {meta.error && meta.touched && renderError(meta.error)}
                 </div>
               )}
             </Field>
-            <Field name="description" validate={required}>
-              {({ input, meta }) => (
-                <div className={styles.FieldGroup}>
-                  <label>Task Description*</label>
-                  <textarea
-                    rows="6"
-                    {...input}
-                    placeholder="Task Description"
-                  />
-                  {meta.error && meta.touched && renderError(meta.error)}
-                </div>
-              )}
-            </Field>
+
             <Field name="imageUrl" type="file">
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
@@ -82,14 +70,41 @@ export default function ManageTaskForm({ submitForm }) {
               )}
             </Field>
 
-            <Field name="endDate" validate={required}>
+            <Field name="timeToComplete" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <p>Task will start today: {moment().format('MM/DD/YYYY')}</p>
-                  <label>End date*</label>
+                  <label>Time to Complete (Days)*</label>
+                  <input
+                    {...input}
+                    type="number"
+                    placeholder={`In ${values.timeToCompleteUnit}`}
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+
+            <Field name="description" validate={required}>
+              {({ input, meta }) => (
+                <div className={`${styles.FieldGroup} ${styles.description}`}>
+                  <label>Task Description*</label>
+                  <textarea
+                    rows="6"
+                    {...input}
+                    placeholder="Task Description"
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+
+            <Field name="startDate" validate={required}>
+              {({ input, meta }) => (
+                <div className={`${styles.FieldGroup} ${styles.calendar}`}>
+                  <label>Start Date*</label>
                   <DatePicker
                     {...input}
-                    minDate={moment().add(1, 'days')}
+                    minDate={moment()}
                     selected={
                       input.value ? moment(input.value, 'MM/DD/YYYY') : null
                     }
@@ -101,53 +116,55 @@ export default function ManageTaskForm({ submitForm }) {
                 </div>
               )}
             </Field>
-            <Field name="timeToComplete" validate={required}>
+
+            <Field name="endDate" validate={required}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Time to Complete*</label>
-                  <input
+                  <label>End date*</label>
+                  <DatePicker
                     {...input}
-                    type="number"
-                    placeholder={`In ${values.timeToCompleteUnit}`}
+                    minDate={moment().add(1, 'days')}
+                    selected={
+                      input.value ? moment(input.value, 'MM/DD/YYYY') : null
+                    }
+                    onChange={(date) =>
+                      input.onChange(moment(date).format('MM/DD/YYYY'))
+                    }
+                    excludeDates={[new Date(values.startDate), 0]}
                   />
                   {meta.error && meta.touched && renderError(meta.error)}
                 </div>
               )}
             </Field>
-            <label className={styles.RadioField}>
-              <Field
-                name="timeToCompleteUnit"
-                component="input"
-                type="radio"
-                value="minutes"
-              />
-              Minutes
-            </label>
-            <label className={styles.RadioField}>
-              <Field
-                name="timeToCompleteUnit"
-                component="input"
-                type="radio"
-                value="hours"
-              />
-              Hours
-            </label>
-            <label className={styles.RadioField}>
-              <Field
-                name="timeToCompleteUnit"
-                component="input"
-                type="radio"
-                value="days"
-              />
-              Days
-            </label>
           </div>
+          <Field
+            name="understandConditions"
+            type="checkbox"
+            validate={required}
+          >
+            {({ input }) => (
+              <div className={styles.FieldGroup}>
+                <p>
+                  By checking, I understand that I can't edit the task contract
+                  once created. I will only will be able to cancel the task.
+                </p>
+                <label className={styles.checkboxContainer}>
+                  <input
+                    type="checkbox"
+                    {...input}
+                    className={styles.conditionsCheckbox}
+                  />
+                  <span className={styles.customCheckbox} />
+                </label>
+              </div>
+            )}
+          </Field>
           <Button
             centered
             type="submit"
             theme="secondary"
             disabled={pristine || invalid}
-            content="Save"
+            content="Add Task"
           />
         </form>
       )}

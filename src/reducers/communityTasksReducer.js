@@ -21,6 +21,20 @@ export default function communityTasksReducer(
         ...state,
         tasks: [...state.tasks, action.task],
       };
+    case actions.UPDATE_TASK:
+      return {
+        ...state,
+        tasks: [
+          ...(state.tasks || []).map(
+            (task) => (task.id === action.task.id ? action.task : task),
+          ),
+        ],
+      };
+    case actions.UPDATE_TASK_ISSUE:
+      return {
+        ...state,
+        error: action.error,
+      };
     case actions.ADD_NEW_TASK_ERROR:
       return {
         ...state,

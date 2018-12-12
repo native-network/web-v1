@@ -4,6 +4,8 @@ import TasksTable from './components/tasks-table';
 import CreateTaskModal from './components/create-task-modal';
 import Button from '../../shared/button';
 
+import styles from './ManageTasks.css';
+
 export class ManageTasks extends Component {
   state = {
     isModalOpen: false,
@@ -20,17 +22,20 @@ export class ManageTasks extends Component {
   render() {
     return (
       <Fragment>
-        <Button
-          theme="secondary"
-          content="Add Task"
-          clickHandler={() => this.openModal()}
-        />
+        <div className={styles.header}>
+          <h2>Tasks</h2>
+          <Button
+            theme="secondary"
+            content="Add Task"
+            clickHandler={() => this.openModal()}
+          />
+        </div>
         <CreateTaskModal
           communityId={this.props.communityId}
           closeModal={() => this.closeModal()}
           isModalOpen={this.state.isModalOpen}
         />
-        <TasksTable {...this.props} />
+        <TasksTable tasks={this.props.tasks} />
       </Fragment>
     );
   }

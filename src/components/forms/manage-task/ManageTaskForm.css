@@ -1,4 +1,5 @@
 @import '../../../styles/media-queries.css';
+@import '../../forms/styles.css';
 
 %label {
   color: var(--primary-color);
@@ -7,7 +8,7 @@
 }
 
 .ManageTaskForm {
-  composes: container from global;
+  composes: FormStyles from '../../forms/styles.css';
   margin-top: 2rem;
 }
 
@@ -21,56 +22,53 @@
   }
 
   @media (--medium-viewport) {
-    columns: 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     column-gap: 2rem;
   }
 }
 
-.FieldGroup {
-  margin-bottom: 1rem;
-
-  & label {
-    @extend %label;
-  }
-
-  & input,
-  & textarea {
-    border: 1px solid var(--primary-color);
-    width: 100%;
-    padding-left: 0.5rem;
-    font: 1rem 'azo-sans-web', sans-serif;
-  }
-
-  & input {
-    height: 2rem;
-  }
-
-  & textarea {
-    padding: 0.5rem;
-    resize: none;
-  }
-}
-
-.GroupedFieldGroup {
-  break-before: avoid;
-  break-after: always;
-
-  & h2 {
-    @extend %label;
-
-    margin: 0;
-  }
-}
-
 .Error {
-  color: var(--secondary-color);
+  color: var(--warm-coral);
 }
 
-.RadioField {
-  margin-right: 0.75rem;
+.description {
+  grid-column: span 2;
 }
 
-input[type=number]::-webkit-inner-spin-button {
-  margin: 0;
-  -webkit-appearance: none;
+.checkboxContainer {
+  display: block;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  & .customCheckbox {
+    display: block;
+    margin: 1rem 0;
+    border: 2px solid var(--dark-green);
+    height: 20px;
+    width: 20px;
+  }
+
+  & .conditionsCheckbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    &:checked {
+      & ~ .customCheckbox {
+        background-color: var(--dark-green);
+      }
+    }
+
+    &:disabled {
+      & ~ .customCheckbox {
+        cursor: not-allowed;
+      }
+    }
+  }
 }

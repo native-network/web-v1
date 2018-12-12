@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import { addNewTask } from '../../../../../actions/communityTasksActions';
 
-import Loader from '../../../../shared/loader';
 import Modal from '../../../../shared/modal';
 import ManageTaskForm from '../../../../forms/manage-task';
 import moment from 'moment';
@@ -12,40 +11,31 @@ import moment from 'moment';
 import styles from './CreateTaskModal.css';
 
 export class CreateTaskModal extends Component {
-  handleSubmit(vals) {
+  handleSubmit = (vals) => {
     const newVals = {
       ...vals,
       communityId: this.props.communityId,
     };
-    newVals.startDate = moment().toISOString();
+    newVals.startDate = moment(vals.startDate, 'MM/DD/YYYY').toISOString();
     newVals.endDate = moment(vals.endDate, 'MM/DD/YYYY').toISOString();
     newVals.reward = +vals.reward;
     newVals.timeToComplete = +vals.timeToComplete;
     this.props.addNewTask(newVals);
-  }
+  };
 
   render() {
     const { closeModal, isModalOpen } = this.props;
 
-    return this.props.isLoading ? (
-      <Loader />
-    ) : (
+    return (
       <div className={styles.PollButton}>
         <Modal
-          renderHeader={() => (
-            <div className={styles.ModalHeader}>
-              <h1>Add Task</h1>
-              <button style={{ color: 'black' }} onClick={() => closeModal()}>
-                x
-              </button>
-            </div>
-          )}
+          renderHeader={() => <h1>Add Task</h1>}
+          closeModal={closeModal}
+          hasCloseButton
           label="Add Task"
           isOpen={isModalOpen}
         >
-          <div>
-            <ManageTaskForm submitForm={this.handleSubmit.bind(this)} />
-          </div>
+          <ManageTaskForm submitForm={this.handleSubmit} />
         </Modal>
       </div>
     );

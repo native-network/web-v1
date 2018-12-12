@@ -94,6 +94,20 @@ export default class CommunityService {
       .call();
   }
 
+  async createNewTask(id, amount) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice = gasPrice * 1.5;
+    try {
+      const task = await this.communityContract.methods
+        .createNewTask(id, amount)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      return task;
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   async approve(receivingAddress, transactionAmount, cb) {
     let gasPrice = await this.getGasPrice();
     gasPrice = gasPrice * 1.5;
