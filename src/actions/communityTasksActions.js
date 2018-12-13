@@ -5,6 +5,7 @@ import { toastrError, toastrSuccess } from './toastrActions';
 import { communityContractInstance } from '../utils/constants';
 import BigNumber from 'bignumber.js';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
+import { pendingTransactionComplete } from './currencyActions';
 
 const { web3 } = getWeb3ServiceInstance();
 
@@ -18,8 +19,11 @@ export const getCommunityTasks = (id) => {
       const { data } = await get(`communities/${id}/tasks`);
 
       (data || [])
-        .filter((task) => task.status === 'initialized')
-        .forEach((task) => dispatch(pollForEscrow(task.id)));
+        .filter(
+          (task) =>
+            task.status === 'initialized' || /pending/.test(task.status),
+        )
+        .forEach((task) => dispatch(pollStatus(task.id)));
 
       return dispatch(getCommunityTasksSuccess(data));
     } catch (err) {
@@ -56,13 +60,26 @@ export const addNewTask = (task) => {
 
       communityContractInstance(community)
         .then(({ community3 }) => {
-          community3.createNewTask(contractId, rewardBigNumber).then(() => {
-            dispatch(pollForEscrow(id));
-            dispatch(
-              toastrSuccess('Successfully created task, pending escrow'),
-            );
-            dispatch(addNewTaskSuccess(data));
-          });
+          community3
+            .createNewTask(contractId, rewardBigNumber, (hash) =>
+              dispatch(
+                pendingTransactionComplete({
+                  hash,
+                }),
+              ),
+            )
+            .then(() => {
+              dispatch(
+                toastrSuccess('Successfully created task, pending escrow'),
+              );
+              dispatch(addNewTaskSuccess(data));
+              dispatch(pollStatus(id));
+            })
+            .catch((err) => {
+              const { message } = err;
+              dispatch(toastrError(message));
+              dispatch(addNewTaskError(message));
+            });
         })
         .catch((err) => {
           const { message } = err;
@@ -77,13 +94,85 @@ export const addNewTask = (task) => {
   };
 };
 
-export const pollForEscrow = (taskId) => {
+export const declineClaimedTask = (taskId) => {
   return async (dispatch) => {
-    const poll = setInterval(async () => {
-      dispatch({ type: 'POLL_FOR_ESCROW' });
-      const { data } = await get(`tasks/${taskId}`);
+    try {
+      const { data } = await post(`tasks/deny-claim`, { taskId });
 
-      if (data.status === 'escrowed') {
+      return dispatch(updateTask(data));
+    } catch (err) {
+      const { message } = err;
+      return dispatch(updateTaskIssue(message));
+    }
+  };
+};
+
+export const cancelTask = (taskId) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: 'CANCEL_TASK' });
+    dispatch(beginAjaxCall());
+    const activeCommunity = getState().communities.communities.find(
+      (c) => c.active,
+    );
+    const task = getState().tasks.tasks.find((task) => task.id === taskId);
+    communityContractInstance(activeCommunity)
+      .then(({ community3 }) => {
+        community3
+          .cancelTask(task && task.contractId, (hash) =>
+            dispatch(
+              pendingTransactionComplete({
+                hash,
+              }),
+            ),
+          )
+          .then(async () => {
+            try {
+              const { data } = await post(`tasks/pending-cancellation`, {
+                taskId,
+              });
+              return dispatch(updateTask(data));
+            } catch (err) {
+              const { message } = err;
+              dispatch({ type: 'CANCEL_TASK_ERROR' });
+              dispatch(toastrError(message));
+              dispatch(updateTaskIssue(message));
+            }
+          })
+          .then(() => {
+            dispatch({ type: 'CANCEL_TASK_SUCCESS' });
+            dispatch(
+              toastrSuccess(
+                'Successfully cancelled task, pending blockchain confirmation.',
+              ),
+            );
+            return dispatch(pollStatus(taskId));
+          })
+          .catch((err) => {
+            const { message } = err;
+            dispatch({ type: 'CANCEL_TASK_ERROR' });
+            dispatch(toastrError(message));
+            dispatch(updateTaskIssue(message));
+          });
+      })
+      .catch((err) => {
+        const { message } = err;
+        dispatch({ type: 'CANCEL_TASK_ERROR' });
+        dispatch(toastrError(message));
+        dispatch(updateTaskIssue(message));
+      });
+  };
+};
+
+export const pollStatus = (taskId) => {
+  return async (dispatch, getState) => {
+    const poll = setInterval(async () => {
+      dispatch({ type: 'POLL_STATUS' });
+      const { data } = await get(`tasks/${taskId}`);
+      const activeTask = (getState().tasks.tasks || []).find(
+        (task) => task.id === taskId,
+      );
+
+      if (activeTask.status !== data.status) {
         clearInterval(poll);
         return dispatch(updateTask(data));
       }
@@ -130,6 +219,33 @@ export const updateTaskIssue = (error) => {
   return {
     type: actions.UPDATE_TASK_ISSUE,
     error,
+  };
+};
+
+export const approveTask = (taskId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`tasks/approve`, { taskId });
+      return dispatch(updateTask(data));
+    } catch (err) {
+      const { message } = err;
+
+      dispatch(updateTaskIssue(message));
+    }
+  };
+};
+
+export const denySubmittedTask = (taskId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await post(`tasks/deny-submission`, { taskId });
+
+      return dispatch(updateTask(data));
+    } catch (err) {
+      const { message } = err;
+
+      dispatch(updateTaskIssue(message));
+    }
   };
 };
 
