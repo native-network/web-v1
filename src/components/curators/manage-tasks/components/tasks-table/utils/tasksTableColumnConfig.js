@@ -6,6 +6,12 @@ import Button from '../../../../../shared/button';
 import styles from '../TasksTable.css';
 import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
 
+const handleString = (str) =>
+  str
+    .split(/(?=[A-Z])/g)
+    .map((s) => capitalizeFirstLetter(s))
+    .join(' ');
+
 export const tasksTableColumnConfig = [
   {
     Header: 'Task Title',
@@ -43,23 +49,49 @@ export const tasksTableColumnConfig = [
   {
     Header: 'Status',
     accessor: 'status',
-    Cell: ({ value }) => capitalizeFirstLetter(value),
+    Cell: ({ value }) => handleString(value),
   },
   {
     Header: 'Actions',
     accessor: 'actions',
     resizeable: false,
     width: 250,
-    Cell: ({ row }) => {
+    Cell: ({ value, row }) => {
       const { status } = row;
+      const { approve, cancel, deny, decline } = value;
       switch (status) {
-        case 'escrowed':
-          return <Button block theme="primary" content="Cancel" />;
         case 'claimed':
           return (
+            <Button
+              block
+              theme="primary"
+              content="Decline"
+              clickHandler={decline}
+            />
+          );
+        case 'escrowed':
+          return (
+            <Button
+              block
+              theme="primary"
+              content="Cancel"
+              clickHandler={cancel}
+            />
+          );
+        case 'pendingApproval':
+          return (
             <div className={styles.ButtonGroup}>
-              <Button theme="primary" content="Approve" />
-              <Button outline theme="primary" content="Deny" />
+              <Button
+                theme="primary"
+                content="Approve"
+                clickHandler={approve}
+              />
+              <Button
+                outline
+                theme="primary"
+                content="Deny"
+                clickHandler={deny}
+              />
             </div>
           );
         default:
