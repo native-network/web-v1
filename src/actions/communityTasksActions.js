@@ -19,7 +19,10 @@ export const getCommunityTasks = (id) => {
       const { data } = await get(`communities/${id}/tasks`);
 
       (data || [])
-        .filter((task) => task.status === 'initialized')
+        .filter(
+          (task) =>
+            task.status === 'initialized' || /pending/.test(task.status),
+        )
         .forEach((task) => dispatch(pollStatus(task.id)));
 
       return dispatch(getCommunityTasksSuccess(data));
