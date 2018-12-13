@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { communityAbi } from '../contracts/abi/community';
 import { smartTokenAbi } from '../contracts/abi/smarttoken';
 import { getAddress } from '../web3/Web3Service';
@@ -106,7 +105,9 @@ export default class CommunityService {
         .createNewTask(id, amount)
         .send({ from: this.web3Service.mainAccount, gasPrice });
 
-      task.on('error', () => reject(new Error('There was a problem creating this task'))); // eslint-disable-line
+      task.on('error', () =>
+        reject(new Error('There was a problem creating this task')),
+      );
 
       task.on('transactionHash', (hash) => {
         if (cb) {
@@ -125,7 +126,7 @@ export default class CommunityService {
             resolve(receipt);
           }
         }
-      }, 1000)
+      }, 1000);
     });
   }
 
@@ -140,7 +141,9 @@ export default class CommunityService {
         .cancelTask(taskId)
         .send({ from: this.web3Service.mainAccount, gasPrice });
 
-      task.on('error', () => reject(new Error('There was a problem cancelling this task')));
+      task.on('error', () =>
+        reject(new Error('There was a problem cancelling this task')),
+      );
 
       task.on('transactionHash', (hash) => {
         if (cb) {
