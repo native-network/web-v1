@@ -115,7 +115,7 @@ export class TaskItem extends Component {
             theme="secondary"
             content={isClaimedUser ? 'Submit Work' : 'Claim Task'}
             disabled={
-              ((status === 'claimed' || status === 'pendingapproval') &&
+              ((status === 'claimed' || status === 'pendingApproval') &&
                 !isClaimedUser) ||
               (isClaimedUser && status === 'pendingApproval')
             }
