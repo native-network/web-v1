@@ -125,7 +125,7 @@ export default class CommunityService {
             resolve(receipt);
           }
         }
-      }, 1000);
+      }, 1000)
     });
   }
 

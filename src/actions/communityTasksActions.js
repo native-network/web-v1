@@ -106,6 +106,7 @@ export const declineClaimedTask = (taskId) => {
 
 export const cancelTask = (taskId) => {
   return async (dispatch, getState) => {
+    dispatch({ type: 'CANCEL_TASK' });
     dispatch(beginAjaxCall());
     const activeCommunity = getState().communities.communities.find(
       (c) => c.active,
@@ -129,27 +130,30 @@ export const cancelTask = (taskId) => {
               return dispatch(updateTask(data));
             } catch (err) {
               const { message } = err;
-              dispatch({ type: '_ERROR' });
+              dispatch({ type: 'CANCEL_TASK_ERROR' });
               dispatch(toastrError(message));
               dispatch(updateTaskIssue(message));
             }
           })
           .then(() => {
-            dispatch({ type: '_SUCCESS' });
+            dispatch({ type: 'CANCEL_TASK_SUCCESS' });
             dispatch(
               toastrSuccess(
                 'Successfully cancelled task, pending blockchain confirmation.',
               ),
             );
+            return dispatch(pollStatus(taskId));
           })
           .catch((err) => {
             const { message } = err;
+            dispatch({ type: 'CANCEL_TASK_ERROR' });
             dispatch(toastrError(message));
             dispatch(updateTaskIssue(message));
           });
       })
       .catch((err) => {
         const { message } = err;
+        dispatch({ type: 'CANCEL_TASK_ERROR' });
         dispatch(toastrError(message));
         dispatch(updateTaskIssue(message));
       });
