@@ -384,139 +384,26 @@ export class Dashboard extends Component {
 
     return this.props.isLoading ? (
       <Loader />
+    ) : !this.props.hasSession ? (
+      this.renderAuthorizeModal(this.props.user)
     ) : (
       <Fragment>
-        {!this.props.hasSession ? (
-          this.renderAuthorizeModal(this.props.user)
-        ) : (
-          <Fragment>
-            {!!Object.keys(this.state.activeCommunity).length && (
-              <Modal
-                hasCloseButton
-                isOpen={this.state.isModalOpen}
-                closeModal={this.closeModal.bind(this)}
-                maxWidth="1020px"
-              >
-                <CommunityStake
-                  loading={this.props.isCurrencyLoading}
-                  user={this.props.user}
-                  error={this.props.currencyError}
-                  populateNativeBalance={this.populateConverter.bind(this)}
-                  community={this.state.activeCommunity}
-                  dismissDialog={this.closeModal.bind(this)}
-                />
-              </Modal>
-            )}
-            <Modal
-              hasCloseButton
-              isOpen={this.state.isPrivateModalOpen}
-              closeModal={this.closeModal.bind(this)}
-              maxWidth="1020px"
-            >
-              <CommunityPrivateUserRequest
-                community={this.state.activeCommunity}
-                user={this.props.user}
-                closeModal={this.closeModal.bind(this)}
-              />
-            </Modal>
-            <div className={styles.DashboardBanner}>
-              <div className={styles.TokenBalances}>
-                <div className={styles.Balance}>
-                  <img src={eth} /> ETH Balance:&nbsp;
-                  <b>{ethBalance}</b>
-                  &nbsp;(
-                  {ethInUSD}) &nbsp;
-                  <a
-                    className={styles.Button}
-                    href="https://buy.mycrypto.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    MyCrypto
-                  </a>
-                </div>
-                <WalletAddress
-                  displayPrepend
-                  address={this.props.user.wallet.address}
-                />
-              </div>
-            </div>
-            <section className={styles.Dashboard}>
-              <h1 className={styles.DashboardTitle}>
-                {!nativeBalance || nativeBalance === '0'
-                  ? 'Get Native Token'
-                  : 'Convert Currencies'}
-              </h1>
-              {this.state.sendCurrency ? (
-                <div>
-                  <CurrencyConverter
-                    formRef={(form) => (this.form = form)}
-                    className={styles.DashboardConverter}
-                    defaultValues={{
-                      sendCurrency: this.state.sendCurrency,
-                      sendValue: this.state.sendValue,
-                      receiveValue: this.state.receiveValue,
-                      receiveCurrency: this.state.receiveCurrency,
-                    }}
-                    sendCurrencies={this.props.user.wallet.currencies.filter(
-                      (currency) =>
-                        (currency.symbol === 'ETH' ||
-                          currency.symbol === 'NTV') &&
-                        +currency.balance > 0,
-                    )}
-                    receiveCurrencies={this.props.communities.map(
-                      (c) => c.currency,
-                    )}
-                    submitHandler={this.submitTransaction.bind(this)}
-                  />
-                  <p className={styles.DashboardConverterMessage}>
-                    Welcome to the Native Alpha. Beta (Q1 2019) will enable
-                    conversions from Community Tokens and NTV back into other
-                    cryptocurrencies.
-                  </p>
-                </div>
-              ) : null}
-              <div className={styles.Table}>
-                <ReactTable
-                  columns={cols}
-                  data={this.props.communities.map((community) => {
-                    const userCurrency = this.props.user.wallet.currencies.find(
-                      (c) => c.symbol === community.currency.symbol,
-                    );
-                    const { currency } = community;
-                    const userBalance =
-                      userCurrency && userCurrency.balance
-                        ? fromWei(userCurrency.balance)
-                        : '0';
-                    const userAmountStaked =
-                      userCurrency && userCurrency.staked
-                        ? fromWei(userCurrency.staked)
-                        : '0';
-                    return {
-                      community: {
-                        ...community,
-                        symbol: currency && currency.symbol,
-                        isCuratorOf: !!this.props.user.curatorOf.find(
-                          (c) => c.id === community.id,
-                        ),
-                        isMemberOf: !!this.props.user.memberOf.find(
-                          (c) => c.id === community.id,
-                        ),
-                      },
-                      quantity: bigNumber(userBalance)
-                        .decimalPlaces(3)
-                        .toString(),
-                      amountStaked: bigNumber(userAmountStaked)
-                        .decimalPlaces(3)
-                        .toString(),
-                      price: this.communityPrice(community),
-                      actions: this.formatAction(community, currency),
-                    };
-                  })}
-                />
-              </div>
-            </section>
-          </Fragment>
+        {!!Object.keys(this.state.activeCommunity).length && (
+          <Modal
+            hasCloseButton
+            isOpen={this.state.isModalOpen}
+            closeModal={this.closeModal.bind(this)}
+            maxWidth="1020px"
+          >
+            <CommunityStake
+              loading={this.props.isCurrencyLoading}
+              user={this.props.user}
+              error={this.props.currencyError}
+              populateNativeBalance={this.populateConverter.bind(this)}
+              community={this.state.activeCommunity}
+              dismissDialog={this.closeModal.bind(this)}
+            />
+          </Modal>
         )}
         <Modal
           hasCloseButton
@@ -598,6 +485,10 @@ export class Dashboard extends Component {
                   userCurrency && userCurrency.balance
                     ? fromWei(userCurrency.balance)
                     : '0';
+                const userAmountStaked =
+                  userCurrency && userCurrency.staked
+                    ? fromWei(userCurrency.staked)
+                    : '0';
                 return {
                   community: {
                     ...community,
@@ -610,6 +501,9 @@ export class Dashboard extends Component {
                     ),
                   },
                   quantity: bigNumber(userBalance)
+                    .decimalPlaces(3)
+                    .toString(),
+                  amountStaked: bigNumber(userAmountStaked)
                     .decimalPlaces(3)
                     .toString(),
                   price: this.communityPrice(community),
