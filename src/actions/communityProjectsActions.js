@@ -1,11 +1,12 @@
-/* eslint-disable */
 import { communityProjectsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
-import { get, post, put } from '../requests';
+import { pollStatus } from './sharedActions';
+import { get, post } from '../requests';
 import { toastrError, toastrSuccess } from './toastrActions';
 import { communityContractInstance } from '../utils/constants';
 import BigNumber from 'bignumber.js';
 import { getWeb3ServiceInstance } from '../web3/Web3Service';
+import { pendingTransactionComplete } from './currencyActions';
 
 const { web3 } = getWeb3ServiceInstance();
 
@@ -17,6 +18,15 @@ export const getCommunityProjects = (id) => {
     dispatch(beginAjaxCall());
     try {
       const { data } = await get(`communities/${id}/projects`);
+
+      (data || [])
+        .filter(
+          (project) =>
+            project.status === 'initialized' || /pending/.test(project.status),
+        )
+        .forEach((project) =>
+          dispatch(pollStatus(project.id, 'projects', updateProject)),
+        );
 
       return dispatch(getCommunityProjectsSuccess(data));
     } catch (err) {
@@ -51,20 +61,25 @@ export const addNewProject = (project) => {
       const { id, contractId, totalCost, community, address } = data;
 
       const rewardBigNumber = toWei(new BigNumber(totalCost).toString());
-      console.log(data);
-      debugger;
+
       communityContractInstance(community)
         .then(({ community3 }) => {
-          community3.createNewProject(contractId, rewardBigNumber, address, (data) => {
-            console.log(data)
-          }).then(() => {
-            debugger;
-            // dispatch(pollForEscrow(id));
-            dispatch(
-              toastrSuccess('Successfully created task, pending escrow'),
-            );
-            dispatch(addNewProjectSuccess(data));
-          });
+          community3
+            .createNewProject(contractId, rewardBigNumber, address, (hash) =>
+              dispatch(pendingTransactionComplete({ hash })),
+            )
+            .then(() => {
+              dispatch(
+                toastrSuccess('Successfully created task, pending escrow'),
+              );
+              dispatch(addNewProjectSuccess(data));
+              dispatch(pollStatus(id, 'projects', updateProject));
+            })
+            .catch((err) => {
+              const { message } = err;
+              dispatch(toastrError(message));
+              dispatch(addNewProjectError(message));
+            });
         })
         .catch((err) => {
           const { message } = err;
@@ -93,33 +108,9 @@ export const addNewProjectError = (error) => {
   };
 };
 
-export const updateProject = (projectId, update) => {
-  return async (dispatch) => {
-    dispatch({ type: actions.UPDATE_PROJECT });
-    dispatch(beginAjaxCall());
-
-    try {
-      const { data } = await put(`projects/${projectId}`, update);
-
-      return dispatch(updateProjectSuccess(data));
-    } catch (err) {
-      const { message } = err;
-      dispatch(toastrError(message));
-      return dispatch(updateProjectError(message));
-    }
-  };
-};
-
-export const updateProjectSuccess = (project) => {
+export const updateProject = (project) => {
   return {
-    type: actions.UPDATE_PROJECT_SUCCESS,
+    type: actions.UPDATE_PROJECT,
     project,
-  };
-};
-
-export const updateProjectError = (error) => {
-  return {
-    type: actions.UPDATE_PROJECT_ERROR,
-    error,
   };
 };

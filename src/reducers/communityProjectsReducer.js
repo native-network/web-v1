@@ -26,17 +26,15 @@ export default function communityProjectsReducer(
         ...state,
         error: action.error,
       };
-    case actions.UPDATE_PROJECT_SUCCESS:
+    case actions.UPDATE_PROJECT:
       return {
         ...state,
-        projects: state.projects.map((project) => {
-          return project.id === action.project.id ? action.project : project;
-        }),
-      };
-    case actions.UPDATE_PROJECT_ERROR:
-      return {
-        ...state,
-        error: action.error,
+        projects: [
+          ...(state.projects || []).map(
+            (project) =>
+              project.id === action.project.id ? action.project : project,
+          ),
+        ],
       };
     default:
       return state;
