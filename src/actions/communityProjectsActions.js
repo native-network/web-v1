@@ -1,7 +1,15 @@
+/* eslint-disable */
 import { communityProjectsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post, put } from '../requests';
-import { toastrError } from './toastrActions';
+import { toastrError, toastrSuccess } from './toastrActions';
+import { communityContractInstance } from '../utils/constants';
+import BigNumber from 'bignumber.js';
+import { getWeb3ServiceInstance } from '../web3/Web3Service';
+
+const { web3 } = getWeb3ServiceInstance();
+
+const { toWei } = web3.utils;
 
 export const getCommunityProjects = (id) => {
   return async (dispatch) => {
@@ -40,8 +48,29 @@ export const addNewProject = (project) => {
 
     try {
       const { data } = await post('projects', project);
+      const { id, contractId, totalCost, community, address } = data;
 
-      return dispatch(addNewProjectSuccess(data));
+      const rewardBigNumber = toWei(new BigNumber(totalCost).toString());
+      console.log(data);
+      debugger;
+      communityContractInstance(community)
+        .then(({ community3 }) => {
+          community3.createNewProject(contractId, rewardBigNumber, address, (data) => {
+            console.log(data)
+          }).then(() => {
+            debugger;
+            // dispatch(pollForEscrow(id));
+            dispatch(
+              toastrSuccess('Successfully created task, pending escrow'),
+            );
+            dispatch(addNewProjectSuccess(data));
+          });
+        })
+        .catch((err) => {
+          const { message } = err;
+          dispatch(toastrError(message));
+          dispatch(addNewProjectError(message));
+        });
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
