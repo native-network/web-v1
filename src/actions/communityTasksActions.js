@@ -1,5 +1,6 @@
 import { communityTasksActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
+import { pollStatus } from './sharedActions';
 import { get, post } from '../requests';
 import { toastrError, toastrSuccess } from './toastrActions';
 import { communityContractInstance } from '../utils/constants';
@@ -23,7 +24,7 @@ export const getCommunityTasks = (id) => {
           (task) =>
             task.status === 'initialized' || /pending/.test(task.status),
         )
-        .forEach((task) => dispatch(pollStatus(task.id)));
+        .forEach((task) => dispatch(pollStatus(task.id, 'tasks', updateTask)));
 
       return dispatch(getCommunityTasksSuccess(data));
     } catch (err) {
@@ -55,7 +56,6 @@ export const addNewTask = (task) => {
     try {
       const { data } = await post('tasks', task);
       const { id, contractId, reward, community } = data;
-
       const rewardBigNumber = toWei(new BigNumber(reward).toString());
 
       communityContractInstance(community)
@@ -73,7 +73,7 @@ export const addNewTask = (task) => {
                 toastrSuccess('Successfully created task, pending escrow'),
               );
               dispatch(addNewTaskSuccess(data));
-              dispatch(pollStatus(id));
+              dispatch(pollStatus(id, 'tasks', updateTask));
             })
             .catch((err) => {
               const { message } = err;
@@ -93,7 +93,6 @@ export const addNewTask = (task) => {
     }
   };
 };
-
 export const declineClaimedTask = (taskId) => {
   return async (dispatch) => {
     try {
@@ -145,7 +144,7 @@ export const cancelTask = (taskId) => {
                 'Successfully cancelled task, pending blockchain confirmation.',
               ),
             );
-            return dispatch(pollStatus(taskId));
+            return dispatch(pollStatus(taskId, 'tasks', updateTask));
           })
           .catch((err) => {
             const { message } = err;
@@ -160,23 +159,6 @@ export const cancelTask = (taskId) => {
         dispatch(toastrError(message));
         dispatch(updateTaskIssue(message));
       });
-  };
-};
-
-export const pollStatus = (taskId) => {
-  return async (dispatch, getState) => {
-    const poll = setInterval(async () => {
-      dispatch({ type: 'POLL_STATUS' });
-      const { data } = await get(`tasks/${taskId}`);
-      const activeTask = (getState().tasks.tasks || []).find(
-        (task) => task.id === taskId,
-      );
-
-      if (activeTask.status !== data.status) {
-        clearInterval(poll);
-        return dispatch(updateTask(data));
-      }
-    }, 1000 * 5);
   };
 };
 
