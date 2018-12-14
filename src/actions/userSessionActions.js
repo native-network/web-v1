@@ -66,7 +66,6 @@ export const pollUserStake = (stakeConfirmationInterval) => {
 export const promptAuthorize = (address) => {
   return async (dispatch) => {
     dispatch({ type: actions.PROMPT_AUTHORIZE });
-    dispatch(beginAjaxCall());
     try {
       const { data } = await post(`user/signing`, { address });
       if (data) {
@@ -87,12 +86,19 @@ export const promptSignature = (signing, address) => {
     try {
       const signature = await promptSign(signing);
       const { data } = await post(`user/authorize`, { signature, address });
-      return dispatch(getUserSessionSuccess(data));
+      return dispatch(authorizationComplete(data));
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
       return dispatch(getUserSessionError(message));
     }
+  };
+};
+
+export const authorizationComplete = (user) => {
+  return {
+    type: actions.AUTHORIZATION_COMPLETE,
+    user,
   };
 };
 
@@ -242,6 +248,99 @@ export const updateUserSuccess = (user) => {
 export const updateUserError = (error) => {
   return {
     type: actions.UPDATE_USER_ERROR,
+    error,
+  };
+};
+
+export const pollKycStatus = () => {
+  return async (dispatch, getState) => {
+    dispatch({ type: actions.POLL_KYC_STATUS });
+
+    try {
+      const { user } = getState();
+      const { data } = await get(`user`);
+      const { kycStatus } = data.user;
+      if (kycStatus !== user.kycStatus) {
+        return dispatch(pollKycStatusComplete(kycStatus));
+      }
+    } catch (err) {
+      const { message } = err;
+      return dispatch(pollKycStatusIssue(message));
+    }
+  };
+};
+
+export const pollKycStatusComplete = (kycStatus) => {
+  return {
+    type: actions.POLL_KYC_STATUS_COMPLETE,
+    kycStatus,
+  };
+};
+
+export const pollKycStatusIssue = (error) => {
+  return {
+    type: actions.POLL_KYC_STATUS_ISSUE,
+    error,
+  };
+};
+
+export const updateKyc = (userId, applicantId) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.UPDATE_KYC });
+    try {
+      const { data } = await post(`user/${userId}/updateKyc`, {
+        id: userId,
+        kycApplicantId: applicantId,
+      });
+
+      dispatch(updateKycComplete(data));
+    } catch (err) {
+      const { message } = err;
+      dispatch(updateKycIssue(message));
+    }
+  };
+};
+
+export const updateKycComplete = (user) => {
+  return {
+    type: actions.UPDATE_KYC_COMPLETE,
+    user,
+  };
+};
+
+export const updateKycIssue = (error) => {
+  return {
+    type: actions.UPDATE_KYC_ISSUE,
+    error,
+  };
+};
+
+export const getKycToken = (userId) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.GET_KYC_TOKEN });
+
+    try {
+      const { data } = await get(`user/${userId}/get-kyc-token`);
+
+      return dispatch(getKycTokenComplete(data));
+    } catch (err) {
+      const { message } = err;
+
+      return dispatch(getKycTokenIssue(message));
+    }
+  };
+};
+
+export const getKycTokenComplete = (token) => {
+  return {
+    type: actions.GET_KYC_TOKEN_COMPLETE,
+    token,
+  };
+};
+
+export const getKycTokenIssue = (error) => {
+  return {
+    type: actions.GET_KYC_TOKEN_ISSUE,
     error,
   };
 };

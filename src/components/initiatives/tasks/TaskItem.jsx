@@ -117,7 +117,7 @@ export class TaskItem extends Component {
             disabled={
               ((status === 'claimed' || status === 'pendingapproval') &&
                 !isClaimedUser) ||
-              (isClaimedUser && status === 'pendingapproval')
+              (isClaimedUser && status === 'pendingApproval')
             }
             clickHandler={this.openModal}
           />
