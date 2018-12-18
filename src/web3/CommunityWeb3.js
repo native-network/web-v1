@@ -271,9 +271,9 @@ export default class CommunityService {
     try {
       return await this.communityContract.methods
         .getAvailableDevFund()
-        .call({ from: getAddress() });
+        .call({ from: await getAddress() });
     } catch (err) {
-      return err;
+      return new Error(err);
     }
   }
 

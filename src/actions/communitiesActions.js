@@ -114,6 +114,39 @@ export const updateCommunityWithCurrencyData = (community) => {
   };
 };
 
+export const getCommunityDevFund = (community) => {
+  return async (dispatch) => {
+    dispatch({ type: 'GET_DEV_FUND' });
+
+    return communityContractInstance(community)
+      .then(({ community3 }) => {
+        community3
+          .communityAvailableDevFund()
+          .then((data) =>
+            dispatch(
+              updateCommunityDevFund({ id: community.id, devFund: data }),
+            ),
+          )
+          .catch(({ message }) => updateCommunityDevFundIssue(message));
+      })
+      .catch(({ message }) => updateCommunityDevFundIssue(message));
+  };
+};
+
+export const updateCommunityDevFund = ({ id, devFund }) => {
+  return {
+    type: actions.UPDATE_COMMUNITY_DEV_FUND,
+    data: { id, devFund },
+  };
+};
+
+export const updateCommunityDevFundIssue = (error) => {
+  return {
+    type: actions.UPDATE_COMMUNITY_DEV_FUND_ISSUE,
+    error,
+  };
+};
+
 export const updateCommunityWithCurrencyDataSuccess = (community) => ({
   type: actions.UPDATE_COMMUNITY_WITH_CURRENCY_DATA_SUCCESS,
   community,

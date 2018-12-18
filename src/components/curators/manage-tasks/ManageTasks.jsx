@@ -31,7 +31,7 @@ export class ManageTasks extends Component {
           />
         </div>
         <CreateTaskModal
-          communityId={this.props.communityId}
+          community={this.props.community}
           closeModal={() => this.closeModal()}
           isModalOpen={this.state.isModalOpen}
         />
