@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { communityPollsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { get, post } from '../requests';

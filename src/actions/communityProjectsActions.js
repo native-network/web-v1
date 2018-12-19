@@ -108,7 +108,47 @@ export const addNewProjectError = (error) => {
   };
 };
 
-export const updateProject = (project) => {
+export const updateProject = (projectId, update) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.UPDATE_PROJECT });
+    dispatch(beginAjaxCall());
+
+    try {
+      const { data } = await put(`projects/${projectId}`, update);
+
+      return dispatch(updateProjectSuccess(data));
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError(message));
+      return dispatch(updateProjectError(message));
+    }
+  };
+};
+
+export const getCommunityPollById = (projectId, id) => {
+  return async (dispatch) => {
+    dispatch({ type: 'GET_PROJECT_POLL' });
+    try {
+      const { data: poll } = await get(`polls/${id}`);
+
+      return dispatch(addCommunityProjectPoll(projectId, poll));
+    } catch (err) {
+      const { message } = err;
+
+      console.log(message); // eslint-disable-line
+    }
+  };
+};
+
+export const addCommunityProjectPoll = (projectId, poll) => {
+  return {
+    type: 'ADD_PROJECT_POLL',
+    projectId,
+    poll,
+  };
+};
+
+export const updateProjectSuccess = (project) => {
   return {
     type: actions.UPDATE_PROJECT,
     project,
