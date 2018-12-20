@@ -207,11 +207,16 @@ export const updateTaskIssue = (error) => {
 export const approveTask = (taskId) => {
   return async (dispatch) => {
     try {
-      const { data } = await post(`tasks/approve`, { taskId });
+      const { data } = await post(`tasks/approve-submission`, { taskId });
+      dispatch(toastrSuccess('The task has been approved.'));
       return dispatch(updateTask(data));
     } catch (err) {
       const { message } = err;
-
+      dispatch(
+        toastrError(
+          'There was a problem approving this task. Please try again.',
+        ),
+      );
       dispatch(updateTaskIssue(message));
     }
   };
