@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { communityProjectsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { pollStatus } from './sharedActions';
@@ -136,6 +137,21 @@ export const getCommunityPollById = (projectId, id) => {
       const { message } = err;
 
       console.log(message); // eslint-disable-line
+    }
+  };
+};
+
+export const voteOnProject = (projectId, pollId, optionId) => {
+  return async (dispatch) => {
+    dispatch({ type: 'VOTE_ON_PROJECT' });
+
+    try {
+      const { data } = await post(`polls/${pollId}/vote`, { optionId });
+
+      dispatch(getCommunityPollById(projectId, data.id));
+      dispatch(toastrSuccess('FOO!'));
+    } catch (err) {
+      console.log(err);
     }
   };
 };
