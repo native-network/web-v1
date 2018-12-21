@@ -37,7 +37,7 @@ export default function communityProjectsReducer(
     case actions.UPDATE_PROJECT:
       return {
         ...state,
-        projects: [
+        proj\ects: [
           ...(state.projects || []).map(
             (project) =>
               project.id === action.project.id ? action.project : project,

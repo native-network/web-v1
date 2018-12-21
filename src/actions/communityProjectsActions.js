@@ -128,7 +128,7 @@ export const updateProject = (projectId, update) => {
 
 export const getCommunityPollById = (projectId, id) => {
   return async (dispatch) => {
-    dispatch({ type: 'GET_PROJECT_POLL' });
+    dispatch({ type: actions.GET_PROJECT_POLL });
     try {
       const { data: poll } = await get(`polls/${id}`);
 
@@ -136,33 +136,50 @@ export const getCommunityPollById = (projectId, id) => {
     } catch (err) {
       const { message } = err;
 
-      console.log(message); // eslint-disable-line
+      return dispatch(addCommunityProjectPollIssue(message));
     }
   };
 };
 
 export const voteOnProject = (projectId, pollId, optionId) => {
   return async (dispatch) => {
-    dispatch({ type: 'VOTE_ON_PROJECT' });
+    dispatch({ type: actions.VOTE_ON_PROJECT });
 
     try {
       const { data } = await post(`polls/${pollId}/vote`, { optionId });
 
+      dispatch({type: actions.VOTE_ON_PROJECT_COMPLETE});
+      dispatch(toastrSuccess('Your vote has been cast for this project.'));
       dispatch(getCommunityPollById(projectId, data.id));
-      dispatch(toastrSuccess('FOO!'));
     } catch (err) {
-      console.log(err);
+      const { message } = err;
+      dispatch(toastrError('There was a problem casting your vote. Please try again.'));
+      dispatch(voteOnProjectPollIssue(message));
     }
   };
 };
 
+export const voteOnProjectPollIssue = (error) => {
+  return {
+    type: actions.VOTE_ON_PROJECT_ISSUE,
+    error,
+  }
+}
+
 export const addCommunityProjectPoll = (projectId, poll) => {
   return {
-    type: 'ADD_PROJECT_POLL',
+    type: actions.ADD_PROJECT_POLL,
     projectId,
     poll,
   };
 };
+
+export const addCommunityProjectPollIssue = (error) => {
+  return {
+    type: actions.ADD_COMMUNITY_PROJECT_POLL_ISSUE,
+    error
+  }
+}
 
 export const updateProjectSuccess = (project) => {
   return {
