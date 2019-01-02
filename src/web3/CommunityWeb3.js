@@ -166,6 +166,41 @@ export default class CommunityService {
     });
   }
 
+  async createNewProject(contractId, amount, paymentAddress, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const project = this.communityContract.methods
+        .createNewProject(contractId, amount, paymentAddress)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      project.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      project.on('error', () =>
+        reject(new Error('There was a problem creating this project.')),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
   async approve(receivingAddress, transactionAmount, cb) {
     let gasPrice = await this.getGasPrice();
     gasPrice = gasPrice * 1.5;
@@ -236,9 +271,9 @@ export default class CommunityService {
     try {
       return await this.communityContract.methods
         .getAvailableDevFund()
-        .call({ from: getAddress() });
+        .call({ from: await getAddress() });
     } catch (err) {
-      return err;
+      return new Error(err);
     }
   }
 

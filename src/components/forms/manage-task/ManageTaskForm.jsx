@@ -9,17 +9,30 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import Button from '../../shared/button';
 import FileUploader from '../../shared/file-uploader/FileUploader';
 
-export default function ManageTaskForm({ submitForm }) {
+import { getWeb3ServiceInstance } from '../../../web3/Web3Service';
+import BigNumber from 'bignumber.js';
+import { stringToDecimalPlaces } from '../../../utils/helpers';
+
+const { web3 } = getWeb3ServiceInstance();
+
+const { toWei, fromWei } = web3.utils;
+
+export default function ManageTaskForm({ devFund, submitForm }) {
+  const devFundBN = new BigNumber(
+    stringToDecimalPlaces(fromWei(devFund), 3),
+  ).toString();
+
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
   const required = (value) => (value ? undefined : 'Required');
   const validateNumber = (value) =>
     value > 0 ? undefined : 'Must be more than 0';
+  const doesNotExceedDevFund = (value) =>
+    +toWei(value) > +devFund ? `Not enough funds available` : undefined;
   const composeValidators = (...validators) => (value) =>
     validators.reduce(
       (error, validator) => error || validator(value),
       undefined,
     );
-
   return (
     <Form
       onSubmit={(values) => submitForm(values)}
@@ -40,7 +53,11 @@ export default function ManageTaskForm({ submitForm }) {
             </Field>
             <Field
               name="reward"
-              validate={composeValidators(required, validateNumber)}
+              validate={composeValidators(
+                required,
+                validateNumber,
+                doesNotExceedDevFund,
+              )}
             >
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
@@ -51,6 +68,7 @@ export default function ManageTaskForm({ submitForm }) {
                     placeholder="Task Reward (NTV)"
                   />
                   {meta.error && meta.touched && renderError(meta.error)}
+                  <div>{devFundBN} NTV Available</div>
                 </div>
               )}
             </Field>

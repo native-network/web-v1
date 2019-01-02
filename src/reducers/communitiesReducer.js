@@ -43,6 +43,29 @@ export default function communitiesReducer(
           })),
         ],
       };
+    case actions.UPDATE_COMMUNITY_DEV_FUND_ISSUE:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case actions.UPDATE_COMMUNITY_DEV_FUND:
+      return {
+        ...state,
+        communities: [
+          ...state.communities.map(
+            (community) =>
+              community.id === action.data.id
+                ? {
+                    ...community,
+                    currency: {
+                      ...community.currency,
+                      devFund: action.data.devFund,
+                    },
+                  }
+                : community,
+          ),
+        ],
+      };
     case actions.UPDATE_COMMUNITY_WITH_CURRENCY_DATA_SUCCESS:
       return {
         ...state,

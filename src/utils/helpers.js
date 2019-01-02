@@ -55,3 +55,10 @@ export const isUrl = (test) => {
   );
   return re.test(test);
 };
+
+export function stringToDecimalPlaces(x, decimalPlaces) {
+  if (x.indexOf('.') > -1) {
+    const [before, after] = x.toString().split('.');
+    return `${before}.${after.slice(0, decimalPlaces)}`;
+  }
+}
