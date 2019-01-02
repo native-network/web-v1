@@ -18,6 +18,7 @@ export default function communityProjectsReducer(
       };
     case actions.GET_COMMUNITY_PROJECTS_ERROR:
     case actions.ADD_NEW_PROJECT_ERROR:
+    case actions.UPDATE_PROJECT_ERROR:
     case actions.VOTE_ON_PROJECT_ISSUE:
     case actions.ADD_PROJECT_POLL_ISSUE:
       return {

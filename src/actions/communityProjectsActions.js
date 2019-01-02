@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { communityProjectsActions as actions } from './actionTypes';
 import { beginAjaxCall } from './loadingActions';
 import { pollStatus } from './sharedActions';
@@ -109,79 +108,7 @@ export const addNewProjectError = (error) => {
   };
 };
 
-export const updateProject = (projectId, update) => {
-  return async (dispatch) => {
-    dispatch({ type: actions.UPDATE_PROJECT });
-    dispatch(beginAjaxCall());
-
-    try {
-      const { data } = await put(`projects/${projectId}`, update);
-
-      return dispatch(updateProjectSuccess(data));
-    } catch (err) {
-      const { message } = err;
-      dispatch(toastrError(message));
-      return dispatch(updateProjectError(message));
-    }
-  };
-};
-
-export const getCommunityPollById = (projectId, id) => {
-  return async (dispatch) => {
-    dispatch({ type: actions.GET_PROJECT_POLL });
-    try {
-      const { data: poll } = await get(`polls/${id}`);
-
-      return dispatch(addCommunityProjectPoll(projectId, poll));
-    } catch (err) {
-      const { message } = err;
-
-      return dispatch(addCommunityProjectPollIssue(message));
-    }
-  };
-};
-
-export const voteOnProject = (projectId, pollId, optionId) => {
-  return async (dispatch) => {
-    dispatch({ type: actions.VOTE_ON_PROJECT });
-
-    try {
-      const { data } = await post(`polls/${pollId}/vote`, { optionId });
-
-      dispatch({type: actions.VOTE_ON_PROJECT_COMPLETE});
-      dispatch(toastrSuccess('Your vote has been cast for this project.'));
-      dispatch(getCommunityPollById(projectId, data.id));
-    } catch (err) {
-      const { message } = err;
-      dispatch(toastrError('There was a problem casting your vote. Please try again.'));
-      dispatch(voteOnProjectPollIssue(message));
-    }
-  };
-};
-
-export const voteOnProjectPollIssue = (error) => {
-  return {
-    type: actions.VOTE_ON_PROJECT_ISSUE,
-    error,
-  }
-}
-
-export const addCommunityProjectPoll = (projectId, poll) => {
-  return {
-    type: actions.ADD_PROJECT_POLL,
-    projectId,
-    poll,
-  };
-};
-
-export const addCommunityProjectPollIssue = (error) => {
-  return {
-    type: actions.ADD_COMMUNITY_PROJECT_POLL_ISSUE,
-    error
-  }
-}
-
-export const updateProjectSuccess = (project) => {
+export const updateProject = (project) => {
   return {
     type: actions.UPDATE_PROJECT,
     project,
@@ -257,7 +184,7 @@ export const addCommunityProjectPoll = (projectId, poll) => {
 
 export const addCommunityProjectPollIssue = (error) => {
   return {
-    type: actions.ADD_PROJECT_POLL_ISSUE,
+    type: actions.ADD_COMMUNITY_PROJECT_POLL_ISSUE,
     error,
   };
 };
