@@ -184,7 +184,7 @@ export const addCommunityProjectPoll = (projectId, poll) => {
 
 export const addCommunityProjectPollIssue = (error) => {
   return {
-    type: actions.ADD_COMMUNITY_PROJECT_POLL_ISSUE,
+    type: actions.ADD_PROJECT_POLL_ISSUE,
     error,
   };
 };
