@@ -70,7 +70,7 @@ export const addNewProject = (project) => {
             )
             .then(() => {
               dispatch(
-                toastrSuccess('Successfully created task, pending escrow'),
+                toastrSuccess('Successfully created project, pending escrow'),
               );
               dispatch(addNewProjectSuccess(data));
               dispatch(pollStatus(id, 'projects', updateProject));
@@ -112,6 +112,23 @@ export const updateProject = (project) => {
   return {
     type: actions.UPDATE_PROJECT,
     project,
+  };
+};
+
+export const updateProjectStatus = ({ projectId, status }) => {
+  return async (dispatch) => {
+    dispatch({ type: actions.UPDATE_PROJECT_STATUS });
+    dispatch(beginAjaxCall());
+    try {
+      const { data } = await post(`projects/${projectId}/updateStatus`, {
+        status,
+      });
+      return dispatch(updateProjectSuccess(data));
+    } catch (err) {
+      const { message } = err;
+      dispatch(toastrError(message));
+      return dispatch(updateProjectError(message));
+    }
   };
 };
 
@@ -184,4 +201,71 @@ export const updateProjectError = (error) => {
     type: actions.UPDATE_PROJECT_ERROR,
     error,
   };
+};
+
+export const rewardProjectCompletion = (project, community) => {
+  return async (dispatch) => {
+    pendingWeb3ConfirmationAction(
+      'rewardProjectCompletion',
+      'Successfully rewarded project completion, pending confirmation.',
+      project,
+      community,
+      dispatch,
+    );
+  };
+};
+
+export const cancelProject = (project, community) => {
+  return async (dispatch) => {
+    pendingWeb3ConfirmationAction(
+      'cancelProject',
+      'Successfully released project fund to dev fund, pending confirmation.',
+      project,
+      community,
+      dispatch,
+    );
+  };
+};
+
+const pendingWeb3ConfirmationAction = (
+  method,
+  successMessage,
+  project,
+  community,
+  dispatch,
+) => {
+  dispatch(beginAjaxCall());
+  try {
+    const { projectId, contractId, status } = project;
+    communityContractInstance(community)
+      .then(({ community3 }) => {
+        community3[method](contractId, (hash) =>
+          dispatch(
+            pendingTransactionComplete({
+              hash,
+            }),
+          ),
+        )
+          .then(() => {
+            dispatch(toastrSuccess(successMessage));
+            dispatch(updateProjectStatus({ projectId, status }));
+            dispatch(pollStatus(projectId, 'projects', updateProject));
+            return dispatch(updateProjectSuccess(project));
+          })
+          .catch((err) => {
+            const { message } = err;
+            dispatch(toastrError(message));
+            return dispatch(updateProjectError(message));
+          });
+      })
+      .catch((err) => {
+        const { message } = err;
+        dispatch(toastrError(message));
+        return dispatch(updateProjectError(message));
+      });
+  } catch (err) {
+    const { message } = err;
+    dispatch(toastrError(message));
+    return dispatch(updateProjectError(message));
+  }
 };

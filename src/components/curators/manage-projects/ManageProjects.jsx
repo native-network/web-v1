@@ -10,7 +10,11 @@ import ManageProjectForm from '../../forms/manage-project';
 
 import WalletAddress from '../../shared/wallet-address';
 
-import { addNewProject } from '../../../actions/communityProjectsActions';
+import {
+  addNewProject,
+  rewardProjectCompletion,
+  cancelProject,
+} from '../../../actions/communityProjectsActions';
 
 import styles from './ManageProjects.css';
 import { capitalizeFirstLetter } from '../../../utils/helpers';
@@ -29,18 +33,19 @@ export class ManageProjects extends Component {
   };
 
   handleSubmit = (values) => {
-    const { communityId, addNewProject } = this.props;
+    const { community, addNewProject } = this.props;
     const { endDate } = values;
 
     addNewProject({
       ...values,
-      communityId,
+      communityId: community.id,
       startDate: moment().toISOString(),
       endDate: moment(endDate).toISOString(),
     });
   };
 
   render() {
+    const { community, cancelProject, rewardProjectCompletion } = this.props;
     return (
       <div>
         <div className={styles.Header}>
@@ -95,20 +100,88 @@ export class ManageProjects extends Component {
             {
               Header: 'Actions',
               accessor: 'actions',
-              Cell: () => (
-                <Button theme="secondary" block content="Click here" />
-              ),
+              Cell: ({ value }) => {
+                const { id, status, contractId } = value;
+
+                let listOfButtons = [];
+                switch (status) {
+                  case 'denied':
+                    listOfButtons.push({
+                      content: 'Distribute Funds',
+                      action: () => {
+                        cancelProject(
+                          {
+                            projectId: id,
+                            contractId,
+                            status: 'pendingCompletion',
+                          },
+                          community,
+                        );
+                      },
+                      theme: 'tertiary',
+                    });
+                    break;
+                  case 'passed':
+                    listOfButtons.push({
+                      content: 'Distribute Funds',
+                      action: () => {
+                        rewardProjectCompletion(
+                          {
+                            projectId: id,
+                            contractId,
+                            status: 'pendingCompletion',
+                          },
+                          community,
+                        );
+                      },
+                      theme: 'tertiary',
+                    });
+                    break;
+                }
+                const formatedListOfActionbuttons = listOfButtons.map(
+                  ({ action, content, theme }, ind) => {
+                    return (
+                      <Button
+                        key={ind}
+                        theme={theme}
+                        clickHandler={action}
+                        content={content}
+                      />
+                    );
+                  },
+                );
+                return (
+                  <div className={styles.actionButtonsContainer}>
+                    {formatedListOfActionbuttons}
+                  </div>
+                );
+              },
             },
           ]}
           data={(this.props.items || []).map(
-            ({ title, startDate, endDate, totalCost, address, status }) => ({
+            ({
+              id,
+              contractId,
               title,
               startDate,
               endDate,
               totalCost,
               address,
               status,
-            }),
+            }) => {
+              return {
+                actions: {
+                  id,
+                  contractId,
+                  status,
+                },
+                title,
+                startDate,
+                endDate,
+                totalCost,
+                address,
+              };
+            },
           )}
         />
       </div>
@@ -119,6 +192,11 @@ export class ManageProjects extends Component {
 export const mapDispatchToProps = (dispatch) => {
   return {
     addNewProject: bindActionCreators(addNewProject, dispatch),
+    rewardProjectCompletion: bindActionCreators(
+      rewardProjectCompletion,
+      dispatch,
+    ),
+    cancelProject: bindActionCreators(cancelProject, dispatch),
   };
 };
 
