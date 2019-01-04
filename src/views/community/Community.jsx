@@ -20,7 +20,7 @@ import TabPanels from '../../components/shared/tab-panels';
 
 import { Votes, Tasks, Projects } from '../../components/initiatives';
 
-import { voteFilters, taskFilters } from '../../utils/filters';
+import { voteFilters, taskFilters, projectFilters } from '../../utils/filters';
 
 import styles from './Community.css';
 
@@ -89,6 +89,7 @@ function formatInitiatives(polls, tasks, projects) {
       name: 'Projects',
       items: projects,
       render: (items) => <Projects items={items} />,
+      filters: projectFilters,
     },
   ];
 }

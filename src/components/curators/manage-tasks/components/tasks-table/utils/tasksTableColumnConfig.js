@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import moment from 'moment';
 
 import Filter from '../../../../../shared/filter';
 import Button from '../../../../../shared/button';
 import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
 import { taskFilters } from '../../../../../../utils/filters';
+
+import styles from '../TasksTable.css';
 
 const handleString = (str) =>
   str
@@ -107,8 +109,6 @@ export const tasksTableColumnConfig = [
               />
             </div>
           );
-        case 'escrowed':
-          return <Button theme="primary" content="Cancel" />;
         default:
           return;
       }

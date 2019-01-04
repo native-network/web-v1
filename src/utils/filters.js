@@ -33,3 +33,5 @@ export const taskFilters = [
     filter: (items) => applyFilter(items, status),
   })),
 ];
+
+export const projectFilters = voteFilters;
