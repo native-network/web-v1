@@ -6,11 +6,14 @@ import Icon from '../icon';
 import styles from './Filter.css';
 
 function Filter({ activeFilter, filters, className, selectHandler }) {
+  const filterName = (activeFilter && activeFilter.name) || filters[0].name;
   return (
     <Downshift
       onSelect={(select) => selectHandler(select)}
+      onChange={(select) => selectHandler(select)}
       itemToString={(item) => (item ? item.name : '')}
       defaultSelectedItem={activeFilter || filters[0]}
+      defaultInputValue={filterName}
     >
       {({
         getLabelProps,

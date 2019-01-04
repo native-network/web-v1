@@ -13,7 +13,6 @@ export default function TabNavigation({
   renderFilter,
   clickHandler,
 }) {
-  console.log(activeTab); // eslint-disable-line
   const addClassNames = (name) => {
     return cx({
       ActiveTab: activeTab.name === name,
