@@ -81,7 +81,12 @@ class CommunityTable extends Component {
         },
         Cell: ({ value }) =>
           value ? (
-            <a target="_blank" rel="noopener nofollow" href={`mailto:${value}`}>
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener nofollow"
+              href={`mailto:${value}`}
+            >
               {value}
             </a>
           ) : (

@@ -43,7 +43,12 @@ export const tasksTableColumnConfig = [
     accessor: 'claimedBy',
     Cell: ({ value }) =>
       value ? (
-        <a rel="noopener noreferrer" target="_blank" href={`mailto:${value}`}>
+        <a
+          className="link"
+          rel="noopener noreferrer"
+          target="_blank"
+          href={`mailto:${value}`}
+        >
           {value}
         </a>
       ) : null,

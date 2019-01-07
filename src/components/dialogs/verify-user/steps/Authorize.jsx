@@ -25,6 +25,7 @@ function Authorize(props) {
         <p>
           If you haven't set up MetaMask (or another Web3 wallet) yet, please{' '}
           <a
+            className="link"
             href="https://metamask.io"
             target="_blank"
             rel="noopener noreferrer"

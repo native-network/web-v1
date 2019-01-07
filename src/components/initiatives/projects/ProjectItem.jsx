@@ -79,6 +79,7 @@ export class ProjectItem extends Component {
                 <dt>Cost Breakdown:</dt>
                 <dd>
                   <a
+                    className="link"
                     href={project.costBreakdownUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -91,6 +92,7 @@ export class ProjectItem extends Component {
                 <dt>Roadmap Details:</dt>
                 <dd>
                   <a
+                    className="link"
                     href={project.roadmapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
