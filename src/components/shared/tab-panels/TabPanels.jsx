@@ -15,15 +15,12 @@ class TabPanels extends Component {
   componentDidMount() {
     const { panels } = this.props;
 
-    this.selectActiveTab(panels[0]);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.activeTab !== this.state.activeTab &&
-      !!this.state.activeTab.filters
-    ) {
-      this.setState({ activeFilter: this.state.activeTab.filters[0] });
+    if (this.props.hasFilter) {
+      this.setState({ activeTab: panels[0] }, () =>
+        this.setState({ activeFilter: this.state.activeTab.filters[0] }),
+      );
+    } else {
+      this.setState({ activeTab: panels[0] });
     }
   }
 
@@ -51,7 +48,7 @@ class TabPanels extends Component {
     const panelNames = panels.map((panel) => panel.name);
 
     const activeItems =
-      !!this.props.hasFilter && this.state.activeFilter
+      !!this.props.hasFilter && this.state.activeFilter.filter
         ? this.state.activeFilter.filter(items)
         : items;
 
