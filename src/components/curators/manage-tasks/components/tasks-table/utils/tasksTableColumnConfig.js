@@ -1,10 +1,12 @@
 import React from 'react';
 import moment from 'moment';
 
+import Filter from '../../../../../shared/filter';
 import Button from '../../../../../shared/button';
+import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
+import { taskFilters } from '../../../../../../utils/filters';
 
 import styles from '../TasksTable.css';
-import { capitalizeFirstLetter } from '../../../../../../utils/helpers';
 
 const handleString = (str) =>
   str
@@ -49,7 +51,20 @@ export const tasksTableColumnConfig = [
   {
     Header: 'Status',
     accessor: 'status',
+    filterable: true,
+    filterAll: true,
+    headerStyle: {
+      overflow: 'visible',
+    },
+    filterMethod: ({ value: filter }, rows) => filter(rows),
     Cell: ({ value }) => handleString(value),
+    Filter: ({ onChange }) => (
+      <Filter
+        filters={taskFilters}
+        activeFilter={taskFilters[0]}
+        selectHandler={({ filter }) => onChange(filter)}
+      />
+    ),
   },
   {
     Header: 'Actions',

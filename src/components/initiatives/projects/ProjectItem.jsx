@@ -26,7 +26,7 @@ export class ProjectItem extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.project !== this.props.project) {
-      if (!this.props.project.poll) {
+      if (this.props.project.poll !== prevProps.project.poll) {
         this.props.getCommunityPollById(
           this.props.project.id,
           this.props.project.polls[0].id,

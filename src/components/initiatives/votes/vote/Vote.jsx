@@ -36,7 +36,8 @@ function Vote({ vote, submitVote }) {
       <div className={styles.VoteDescription}>
         <h3>{title}</h3>
         <span className={styles.VoteClosing}>
-          Closes: {moment(endDate).format('MMM Do, h:mm A')}
+          {isClosed ? 'Closed' : 'Closes'}:{' '}
+          {moment(endDate).format('MMM Do, h:mm A')}
         </span>
         <p>{description}</p>
       </div>
