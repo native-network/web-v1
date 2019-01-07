@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 
 import Filter from '../filter';
@@ -16,26 +15,27 @@ class TabPanels extends Component {
   componentDidMount() {
     const { panels } = this.props;
 
-    this.selectActiveTab(panels[0])
+    this.selectActiveTab(panels[0]);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.activeTab !== this.state.activeTab && !!this.state.activeTab.filters) {
-      this.setState({activeFilter: this.state.activeTab.filters[0]})
+    if (
+      prevState.activeTab !== this.state.activeTab &&
+      !!this.state.activeTab.filters
+    ) {
+      this.setState({ activeFilter: this.state.activeTab.filters[0] });
     }
   }
 
   setActiveTab(panelName) {
     const { panels } = this.props;
     const activeTab = panels.find((panel) => panel.name === panelName);
-    this.selectActiveTab(activeTab);
-  }
-
-  selectActiveTab(tab) {
-    if (!!tab.filters) {
-      this.setState({ activeTab: tab }, () => this.setState({ activeFilter: this.state.activeTab.filters[0] }));
+    if (this.props.hasFilter) {
+      this.setState({ activeTab }, () =>
+        this.setState({ activeFilter: activeTab.filters[0] }),
+      );
     } else {
-      this.setState({ activeTab: tab })
+      this.setState({ activeTab });
     }
   }
 
@@ -49,8 +49,11 @@ class TabPanels extends Component {
     const { activeTab } = state;
     const { render, items, filters } = activeTab;
     const panelNames = panels.map((panel) => panel.name);
-    console.log
-    // const activeFilters = panels[activeTab].filters;
+
+    const activeItems =
+      !!this.props.hasFilter && this.state.activeFilter
+        ? this.state.activeFilter.filter(items)
+        : items;
 
     return (
       <div className={styles.TabPanels}>
@@ -60,18 +63,16 @@ class TabPanels extends Component {
           panels={panelNames}
           clickHandler={(panel) => this.setActiveTab(panel)}
           renderFilter={() => {
-
             return this.props.hasFilter && filters && filters.length ? (
               <Filter
-                activeFilter={this.state.activeFilter}
-                selectHandler={(filter) => console.log(filter)}
+                activeFilter={this.state.activeFilter || filters[0]}
+                selectHandler={(filter) => this.filterHandler(filter)}
                 filters={!!filters && filters.length ? filters : []}
               />
-            ) : null
-            }
-          }
+            ) : null;
+          }}
         />
-        <TabPanel render={() => render && render(items)} />
+        <TabPanel render={() => render && render(activeItems)} />
         )}
       </div>
     );

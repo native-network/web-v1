@@ -1,79 +1,93 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Downshift from 'downshift';
 
 import Icon from '../icon';
 
 import styles from './Filter.css';
 
-function Filter({ activeFilter, filters, className, selectHandler }) {
-  const filterName = (activeFilter && activeFilter.name) || filters[0].name;
-  return (
-    <Downshift
-      onSelect={(select) => selectHandler(select)}
-      onChange={(select) => selectHandler(select)}
-      itemToString={(item) => (item ? item.name : '')}
-      defaultSelectedItem={activeFilter || filters[0]}
-      defaultInputValue={filterName}
-    >
-      {({
-        getLabelProps,
-        getToggleButtonProps,
-        getMenuProps,
-        getItemProps,
-        isOpen,
-        selectedItem,
-        highlightedIndex,
-      }) => (
-        <div className={`${styles.Filter} ${className ? className : null}`}>
-          <label
-            {...getLabelProps({
-              className: styles.Label,
-            })}
-          >
-            Filter by type:
-          </label>
-          <div className={styles.FilterContainer}>
-            <button
-              {...getToggleButtonProps({
-                className: styles.Toggle,
+class Filter extends Component {
+  state = {
+    filter: this.props.activeFilter,
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.activeFilter !== prevProps.activeFilter) {
+      this.setState({ filter: this.props.activeFilter });
+    }
+  }
+
+  render() {
+    const { filters, className, selectHandler } = this.props;
+    const { filter } = this.state;
+
+    return (
+      <Downshift
+        onChange={(select) => selectHandler(select)}
+        onSelect={(select) => selectHandler(select)}
+        itemToString={(item) => (item ? item.name : '')}
+        initialSelectedItem={filter || filters[0]}
+        selectedItem={this.state.filter}
+      >
+        {({
+          getLabelProps,
+          getToggleButtonProps,
+          getMenuProps,
+          getItemProps,
+          isOpen,
+          selectedItem,
+          highlightedIndex,
+        }) => (
+          <div className={`${styles.Filter} ${className ? className : null}`}>
+            <label
+              {...getLabelProps({
+                className: styles.Label,
               })}
             >
-              {selectedItem.name}
-              <Icon
-                className={styles.ToggleIcon}
-                icon={isOpen ? 'caret-up' : 'caret-down'}
-              />
-            </button>
-            {isOpen ? (
-              <ul
-                {...getMenuProps({
-                  className: styles.FilterMenu,
+              Filter by type:
+            </label>
+            <div className={styles.FilterContainer}>
+              <button
+                {...getToggleButtonProps({
+                  className: styles.Toggle,
                 })}
               >
-                {(filters || []).map((item, index) => (
-                  <li
-                    key={index}
-                    {...getItemProps({
-                      item,
-                      className: styles.FilterMenuItem,
-                      style: {
-                        backgroundColor:
-                          highlightedIndex === index
-                            ? 'rgba(0, 0, 0, .1)'
-                            : 'transparent',
-                      },
-                    })}
-                  >
-                    {item.name}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+                {selectedItem.name}
+                <Icon
+                  className={styles.ToggleIcon}
+                  icon={isOpen ? 'caret-up' : 'caret-down'}
+                />
+              </button>
+              {isOpen ? (
+                <ul
+                  {...getMenuProps({
+                    className: styles.FilterMenu,
+                  })}
+                >
+                  {(filters || []).map((item, index) => (
+                    <li
+                      key={index}
+                      {...getItemProps({
+                        item,
+                        className: styles.FilterMenuItem,
+                        style: {
+                          backgroundColor:
+                            highlightedIndex === index
+                              ? 'rgba(0, 0, 0, .1)'
+                              : 'transparent',
+                        },
+                      })}
+                    >
+                      {item.name}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
           </div>
-        </div>
-      )}
-    </Downshift>
-  );
+        )}
+      </Downshift>
+    );
+  }
 }
 
 export default Filter;
