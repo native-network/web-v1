@@ -24,6 +24,8 @@ export function ManageTasksList(props) {
         data={(tasks || []).map(
           ({
             id,
+            contractId,
+            claimedBy,
             title,
             timeToComplete,
             startDate,
@@ -42,7 +44,7 @@ export function ManageTasksList(props) {
             claimedBy: userEmail,
             status,
             actions: {
-              approve: () => props.approveTask(id),
+              approve: () => props.approveTask(id, contractId, claimedBy),
               decline: () => props.declineClaimedTask(id),
               cancel: () => props.cancelTask(id),
               deny: () => props.denySubmittedTask(id),
