@@ -50,6 +50,19 @@ h3 {
   font-size: 2rem;
 }
 
+:global(.link) {
+  &,
+  &:visited {
+    color: var(--secondary-button-default);
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: var(--secondary-button-active);
+  }
+}
+
 /* React Table Global Overrides */
 :global(.ReactTable .rt-table) {
   overflow: visible;

@@ -246,7 +246,10 @@ class Terms extends Component {
           emailed to you unless we receive notice that the email was not
           delivered. If you wish to withdraw your consent to receiving
           electronic communications, please contact&nbsp;
-          <a href="https://www.google.com/url?q=https://squareup.com/help/us/en/&amp;sa=D&amp;ust=1538502414336000">
+          <a
+            className="link"
+            href="https://www.google.com/url?q=https://squareup.com/help/us/en/&amp;sa=D&amp;ust=1538502414336000"
+          >
             us
           </a>
           . If we are not able to support your request, you may need to
