@@ -70,7 +70,6 @@ class TabPanels extends Component {
           }}
         />
         <TabPanel render={() => render && render(activeItems)} />
-        )}
       </div>
     );
   }

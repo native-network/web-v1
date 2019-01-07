@@ -10,6 +10,7 @@ import {
 
 import WalletAddress from '../../../components/shared/wallet-address';
 import ProjectPollResults from '../../../components/shared/project-poll-results';
+import S3Image from '../../../components/shared/s3-image';
 import VoteForm from '../../forms/vote';
 
 import styles from './Projects.css';
@@ -52,11 +53,12 @@ export class ProjectItem extends Component {
 
     return (
       <li className={styles.ProjectItem}>
-        {project.imageUrl && (
-          <div className={styles.ProjectImage}>
-            <img src="http://placehold.it/400x400" alt="" />
-          </div>
-        )}
+        {project.imageUrl &&
+          project.imageUrl !== 'null' && (
+            <div className={styles.ProjectImage}>
+              <S3Image filePath={project.imageUrl} />
+            </div>
+          )}
         <div className={styles.ProjectDescription}>
           <h2 className={styles.ProjectTitle}>{title}</h2>
           <h3 className={styles.ProjectSubtitle}>{subtitle}</h3>
