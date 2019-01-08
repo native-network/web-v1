@@ -341,6 +341,45 @@ export default class CommunityService {
     });
   }
 
+  async rewardTaskCompletion(contractId, userId, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const rewardTask = this.communityContract.methods
+        .rewardTaskCompletion(contractId, userId)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      rewardTask.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      rewardTask.on('error', () =>
+        reject(
+          new Error(
+            'There was a problem with rewarding this task. Please try again.',
+          ),
+        ),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
   async communityAvailableDevFund() {
     try {
       return await this.communityContract.methods

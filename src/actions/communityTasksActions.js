@@ -204,12 +204,42 @@ export const updateTaskIssue = (error) => {
   };
 };
 
-export const approveTask = (taskId) => {
-  return async (dispatch) => {
+export const approveTask = (taskId, contractId, userId) => {
+  return async (dispatch, getState) => {
     try {
-      const { data } = await post(`tasks/approve-submission`, { taskId });
-      dispatch(toastrSuccess('The task has been approved.'));
-      return dispatch(updateTask(data));
+      dispatch({ type: actions.APPROVE_TASK });
+      dispatch(beginAjaxCall());
+      const activeCommunity = getState().communities.communities.find(
+        (c) => c.active,
+      );
+      const { data: userAddress } = await get(`user/${userId}/address`);
+
+      communityContractInstance(activeCommunity)
+        .then(({ community3 }) => {
+          community3
+            .rewardTaskCompletion(contractId, userAddress, (hash) =>
+              dispatch(
+                pendingTransactionComplete({
+                  hash,
+                }),
+              ),
+            )
+            .then(async () => {
+              const { data } = await post(`tasks/approve-submission`, {
+                taskId,
+              });
+              dispatch(toastrSuccess('The task has been approved.'));
+              return dispatch(approveTaskSuccess(data));
+            })
+            .catch(({ message }) => {
+              dispatch(toastrError(message));
+              dispatch(approveTaskError(message));
+            });
+        })
+        .catch(({ message }) => {
+          dispatch(toastrError(message));
+          dispatch(approveTaskError(message));
+        });
     } catch (err) {
       const { message } = err;
       dispatch(
@@ -217,7 +247,7 @@ export const approveTask = (taskId) => {
           'There was a problem approving this task. Please try again.',
         ),
       );
-      dispatch(updateTaskIssue(message));
+      dispatch(approveTaskError(message));
     }
   };
 };
@@ -233,6 +263,20 @@ export const denySubmittedTask = (taskId) => {
 
       dispatch(updateTaskIssue(message));
     }
+  };
+};
+
+export const approveTaskSuccess = (task) => {
+  return {
+    type: actions.APPROVE_TASK_SUCCESS,
+    task,
+  };
+};
+
+export const approveTaskError = (error) => {
+  return {
+    type: actions.APPROVE_TASK_ERROR,
+    error,
   };
 };
 

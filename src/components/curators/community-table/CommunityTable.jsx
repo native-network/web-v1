@@ -11,6 +11,7 @@ import {
 import countries from '../../../utils/countries.json';
 import { updateUserStatus } from '../../../actions/communitiesActions';
 import PreApproveUserModal from './components/pre-approve-user-modal';
+import Filter from '../../shared/filter';
 
 import styles from './CommunityTable.css';
 
@@ -18,6 +19,22 @@ Object.assign(ReactTableDefaults, {
   minRows: 0,
   showPaginationBottom: false,
 });
+
+const applyFilter = (arr, filterStatus) =>
+  (arr || []).filter((i) => i.userStatus === filterStatus);
+
+const statuses = ['pending', 'denied', 'approved', 'member', 'blacklisted'];
+
+const filters = [
+  {
+    name: 'All',
+    filter: (items) => items,
+  },
+  ...statuses.map((status) => ({
+    name: capitalizeFirstLetter(status),
+    filter: (items) => applyFilter(items, status),
+  })),
+];
 
 class CommunityTable extends Component {
   state = {
@@ -64,7 +81,12 @@ class CommunityTable extends Component {
         },
         Cell: ({ value }) =>
           value ? (
-            <a target="_blank" rel="noopener nofollow" href={`mailto:${value}`}>
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener nofollow"
+              href={`mailto:${value}`}
+            >
               {value}
             </a>
           ) : (
@@ -102,31 +124,20 @@ class CommunityTable extends Component {
         Header: 'Status',
         accessor: 'userStatus',
         resizable: false,
-        width: 165,
-        filterMethod: (filter, row) => {
-          if (filter.value === 'all') return row;
-          if (filter.value === 'pending') return row.userStatus === 'pending';
-          if (filter.value === 'denied') return row.userStatus === 'denied';
-          if (filter.value === 'approved') return row.userStatus === 'approved';
-          if (filter.value === 'member') return row.userStatus === 'member';
-          if (filter.value === 'blacklisted')
-            return row.userStatus === 'blacklisted';
+        width: 200,
+        headerStyle: {
+          overflow: 'visible',
         },
-        Filter: ({ filter, onChange }) => (
-          <select
-            value={filter ? filter.value : 'all'}
-            onChange={(event) => onChange(event.target.value)}
-            style={{ width: '100%' }}
-          >
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="denied">Denied</option>
-            <option value="approved">Approved</option>
-            <option value="member">Member</option>
-            <option value="blacklisted">Blacklisted</option>
-          </select>
+        filterMethod: ({ value: filter }, rows) => filter(rows),
+        Filter: ({ onChange }) => (
+          <Filter
+            filters={filters}
+            activeFilter={filters[0]}
+            selectHandler={({ filter }) => onChange(filter)}
+          />
         ),
         Cell: ({ value }) => (value ? capitalizeFirstLetter(value) : ''),
+        filterAll: true,
       },
       {
         Header: 'Actions',
@@ -233,6 +244,9 @@ class CommunityTable extends Component {
           showPageSizeOptions={false}
           showPageJump={false}
           showPaginationBottom
+          style={{
+            overflow: 'visible',
+          }}
           data={(members || []).map(
             ({
               id,

@@ -13,9 +13,9 @@ export default function TabNavigation({
   renderFilter,
   clickHandler,
 }) {
-  const addClassNames = (index) => {
+  const addClassNames = (name) => {
     return cx({
-      ActiveTab: activeTab === index,
+      ActiveTab: activeTab.name === name,
       TabNavigationItem: true,
     });
   };
@@ -26,8 +26,8 @@ export default function TabNavigation({
         <ul className={styles.TabNavigationList}>
           {(panels || []).map((name, i) => {
             return (
-              <li key={i} className={addClassNames(i)}>
-                <button onClick={() => clickHandler(i)}>{name}</button>
+              <li key={i} className={addClassNames(name)}>
+                <button onClick={() => clickHandler(name)}>{name}</button>
               </li>
             );
           })}

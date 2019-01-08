@@ -105,7 +105,7 @@ export default function ManageProjectForm({ submitForm, project }) {
                 </div>
               )}
             </Field>
-            <Field name="costBreakdownUrl" type="file" validate={required}>
+            <Field name="costBreakdownUrl" type="file">
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <label>Cost Breakdown*</label>
@@ -119,7 +119,7 @@ export default function ManageProjectForm({ submitForm, project }) {
                 </div>
               )}
             </Field>
-            <Field name="roadmapUrl" type="file" validate={required}>
+            <Field name="roadmapUrl" type="file">
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <label>Roadmap*</label>

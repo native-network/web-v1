@@ -2,6 +2,9 @@ import React from 'react';
 import ReactTable, { ReactTableDefaults } from 'react-table';
 import moment from 'moment';
 import VoteResults from '../../shared/vote-results';
+import Filter from '../../../components/shared/filter';
+
+import { voteFilters as filters } from '../../../utils/filters';
 
 import styles from './ManagePolls.css';
 
@@ -46,23 +49,19 @@ const cols = [
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (value ? 'Open' : 'Closed'),
-    maxWidth: 130,
     filterable: true,
-    filterMethod: (filter, row) => {
-      if (filter.value === 'all') return row;
-      if (filter.value === 'true') return row.status;
-      if (filter.value === 'false') return !row.status;
+    filterMethod: ({ value: filter }, row) => filter(row),
+    headerStyle: {
+      overflow: 'visible',
     },
-    Filter: ({ filter, onChange }) => (
-      <select
-        onChange={(event) => onChange(event.target.value)}
-        value={filter ? filter.value : 'all'}
-      >
-        <option value="all">Show All</option>
-        <option value="true">Open</option>
-        <option value="false">Closed</option>
-      </select>
+    Filter: ({ onChange }) => (
+      <Filter
+        filters={filters}
+        activeFilter={filters[0]}
+        selectHandler={({ filter }) => onChange(filter)}
+      />
     ),
+    filterAll: true,
   },
 ];
 
@@ -71,6 +70,9 @@ function ManagePollsList({ polls }) {
     <div className={styles.TableContainer}>
       <ReactTable
         columns={cols}
+        style={{
+          overflow: 'visible',
+        }}
         data={polls.map(
           ({ title, question, options, votes, startDate, endDate }) => {
             return {

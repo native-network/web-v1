@@ -7,6 +7,7 @@ import styles from './Tasks.css';
 
 import Modal from '../../shared/modal';
 import Button from '../../shared/button';
+import S3Image from '../../shared/s3-image';
 import UserTaskForm from '../../forms/user-task';
 
 export class TaskItem extends Component {
@@ -51,9 +52,9 @@ export class TaskItem extends Component {
 
     return (
       <li className={styles.TaskItem} key={index}>
-        {imageUrl ? (
+        {imageUrl && imageUrl !== 'null' ? (
           <div className={styles.TaskImage}>
-            <img src={imageUrl} alt="" />
+            <S3Image fileName={imageUrl} />
           </div>
         ) : null}
         <div className={styles.TaskDescription}>

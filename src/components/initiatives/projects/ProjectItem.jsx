@@ -10,7 +10,10 @@ import {
 
 import WalletAddress from '../../../components/shared/wallet-address';
 import ProjectPollResults from '../../../components/shared/project-poll-results';
+import S3Image from '../../../components/shared/s3-image';
 import VoteForm from '../../forms/vote';
+
+import { uploadableField } from '../../../utils/helpers';
 
 import styles from './Projects.css';
 
@@ -26,7 +29,7 @@ export class ProjectItem extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.project !== this.props.project) {
-      if (!this.props.project.poll) {
+      if (this.props.project.poll !== prevProps.project.poll) {
         this.props.getCommunityPollById(
           this.props.project.id,
           this.props.project.polls[0].id,
@@ -52,11 +55,12 @@ export class ProjectItem extends Component {
 
     return (
       <li className={styles.ProjectItem}>
-        {project.imageUrl && (
-          <div className={styles.ProjectImage}>
-            <img src="http://placehold.it/400x400" alt="" />
-          </div>
-        )}
+        {project.imageUrl &&
+          project.imageUrl !== 'null' && (
+            <div className={styles.ProjectImage}>
+              <S3Image filePath={project.imageUrl} />
+            </div>
+          )}
         <div className={styles.ProjectDescription}>
           <h2 className={styles.ProjectTitle}>{title}</h2>
           <h3 className={styles.ProjectSubtitle}>{subtitle}</h3>
@@ -75,30 +79,36 @@ export class ProjectItem extends Component {
                 <dt>Project Closes:</dt>
                 <dd> {moment(project.endDate).fromNow()}</dd>
               </div>
-              <div className={styles.ListItem}>
-                <dt>Cost Breakdown:</dt>
-                <dd>
-                  <a
-                    href={project.costBreakdownUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Cost Breakdown Link
-                  </a>
-                </dd>
-              </div>
-              <div className={styles.ListItem}>
-                <dt>Roadmap Details:</dt>
-                <dd>
-                  <a
-                    href={project.roadmapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Roadmap Link
-                  </a>
-                </dd>
-              </div>
+              {project.costBreakdownUrl && (
+                <div className={styles.ListItem}>
+                  <dt>Cost Breakdown:</dt>
+                  <dd>
+                    <a
+                      className="link"
+                      href={uploadableField(project.costBreakdownUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Cost Breakdown Link
+                    </a>
+                  </dd>
+                </div>
+              )}
+              {project.roadmapUrl && (
+                <div className={styles.ListItem}>
+                  <dt>Roadmap Details:</dt>
+                  <dd>
+                    <a
+                      className="link"
+                      href={uploadableField(project.roadmapUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Roadmap Link
+                    </a>
+                  </dd>
+                </div>
+              )}
               {project.additionalInfo && (
                 <div className={styles.ListItem}>
                   <dt>Additional Information:</dt>
