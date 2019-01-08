@@ -46,7 +46,7 @@ function Vote({ vote, submitVote }) {
         {hasVoted || isClosed ? (
           <VoteResults votes={votes} options={options} />
         ) : (
-          <VoteForm submitForm={handleSubmit} options={options} />
+          <VoteForm displayTitle submitForm={handleSubmit} options={options} />
         )}
       </div>
     </li>

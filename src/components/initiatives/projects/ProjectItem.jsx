@@ -13,6 +13,8 @@ import ProjectPollResults from '../../../components/shared/project-poll-results'
 import S3Image from '../../../components/shared/s3-image';
 import VoteForm from '../../forms/vote';
 
+import { uploadableField } from '../../../utils/helpers';
+
 import styles from './Projects.css';
 
 export class ProjectItem extends Component {
@@ -77,32 +79,36 @@ export class ProjectItem extends Component {
                 <dt>Project Closes:</dt>
                 <dd> {moment(project.endDate).fromNow()}</dd>
               </div>
-              <div className={styles.ListItem}>
-                <dt>Cost Breakdown:</dt>
-                <dd>
-                  <a
-                    className="link"
-                    href={project.costBreakdownUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Cost Breakdown Link
-                  </a>
-                </dd>
-              </div>
-              <div className={styles.ListItem}>
-                <dt>Roadmap Details:</dt>
-                <dd>
-                  <a
-                    className="link"
-                    href={project.roadmapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Roadmap Link
-                  </a>
-                </dd>
-              </div>
+              {project.costBreakdownUrl && (
+                <div className={styles.ListItem}>
+                  <dt>Cost Breakdown:</dt>
+                  <dd>
+                    <a
+                      className="link"
+                      href={uploadableField(project.costBreakdownUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Cost Breakdown Link
+                    </a>
+                  </dd>
+                </div>
+              )}
+              {project.roadmapUrl && (
+                <div className={styles.ListItem}>
+                  <dt>Roadmap Details:</dt>
+                  <dd>
+                    <a
+                      className="link"
+                      href={uploadableField(project.roadmapUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Roadmap Link
+                    </a>
+                  </dd>
+                </div>
+              )}
               {project.additionalInfo && (
                 <div className={styles.ListItem}>
                   <dt>Additional Information:</dt>

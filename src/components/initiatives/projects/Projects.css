@@ -37,19 +37,11 @@
 
 .ProjectDetails {
   @extend %unstyled-list;
-  @extend %box-shadow;
 
   margin: 0.5rem 0.25rem 2rem;
-  background: var(--primary-white);
-  border: 1px solid var(--gray-8);
-  border-radius: 5px;
 
   & .ListItem {
-    padding: 0.25rem;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--gray-8);
-    }
+    padding: 0.5rem 0;
   }
 
   & dt {
