@@ -108,7 +108,7 @@ export default function ManageProjectForm({ submitForm, project }) {
             <Field name="costBreakdownUrl" type="file">
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Cost Breakdown*</label>
+                  <label>Cost Breakdown</label>
                   <FileUploader
                     {...input}
                     onChange={(file) => {
@@ -122,7 +122,7 @@ export default function ManageProjectForm({ submitForm, project }) {
             <Field name="roadmapUrl" type="file">
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Roadmap*</label>
+                  <label>Roadmap</label>
                   <FileUploader
                     {...input}
                     onChange={(file) => {

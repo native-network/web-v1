@@ -179,6 +179,7 @@ export class ManageProjects extends Component {
                 startDate,
                 endDate,
                 totalCost,
+                status,
                 address,
               };
             },
