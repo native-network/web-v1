@@ -11,5 +11,11 @@ export const required = (value) => {
   return !!value && value.length ? undefined : 'Required';
 };
 
+export const minCharLength = (length) => (value) => {
+  return !!value && value.length >= length
+    ? undefined
+    : `Must be at least ${length} characters.`;
+};
+
 export const validateAddress = (value) =>
   isAddress(value) ? undefined : 'Must be a valid wallet address';
