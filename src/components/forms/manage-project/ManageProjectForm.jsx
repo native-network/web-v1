@@ -10,12 +10,15 @@ import {
   composeValidators,
   required,
   validateAddress,
+  minCharLength,
 } from '../utils/validators';
 
 import styles from './ManageProjectForm.css';
 
 export default function ManageProjectForm({ submitForm, project }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
+
+  const minimumCharacters = minCharLength(3);
 
   return (
     <Form
@@ -24,7 +27,7 @@ export default function ManageProjectForm({ submitForm, project }) {
       render={({ handleSubmit, pristine, invalid }) => (
         <form className={styles.ManageProjectForm} onSubmit={handleSubmit}>
           <div className={styles.ManageProjectFields}>
-            <Field name="title" validate={required}>
+            <Field name="title" validate={minimumCharacters}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <label>Project Title*</label>
@@ -33,7 +36,7 @@ export default function ManageProjectForm({ submitForm, project }) {
                 </div>
               )}
             </Field>
-            <Field name="subtitle" validate={required}>
+            <Field name="subtitle" validate={minimumCharacters}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
                   <label>Project Subtitle*</label>
