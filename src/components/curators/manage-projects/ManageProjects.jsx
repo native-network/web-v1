@@ -100,11 +100,29 @@ export class ManageProjects extends Component {
             {
               Header: 'Actions',
               accessor: 'actions',
+              width: 200,
               Cell: ({ value }) => {
-                const { id, status, contractId } = value;
-
+                const { id, status, contractId, hasVotes } = value;
                 let listOfButtons = [];
                 switch (status) {
+                  case 'escrowed':
+                    if (!hasVotes) {
+                      listOfButtons.push({
+                        content: 'Cancel Project',
+                        action: () => {
+                          cancelProject(
+                            {
+                              projectId: id,
+                              contractId,
+                              status: 'pendingCompletion',
+                            },
+                            community,
+                          );
+                        },
+                        theme: 'tertiary',
+                      });
+                    }
+                    break;
                   case 'denied':
                     listOfButtons.push({
                       content: 'Distribute Funds',
@@ -161,6 +179,7 @@ export class ManageProjects extends Component {
           data={(this.props.items || []).map(
             ({
               id,
+              pollHasVotes,
               contractId,
               title,
               startDate,
@@ -174,6 +193,7 @@ export class ManageProjects extends Component {
                   id,
                   contractId,
                   status,
+                  hasVotes: pollHasVotes,
                 },
                 title,
                 startDate,
