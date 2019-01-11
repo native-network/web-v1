@@ -19,7 +19,7 @@ import styles from './Projects.css';
 
 export class ProjectItem extends Component {
   componentDidMount() {
-    if (!this.props.project.poll) {
+    if (!this.props.project.poll && this.props.project.polls.length > 0) {
       this.props.getCommunityPollById(
         this.props.project.id,
         this.props.project.polls[0].id,
