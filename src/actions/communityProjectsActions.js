@@ -17,9 +17,20 @@ export const getCommunityProjects = (id) => {
     dispatch({ type: actions.GET_COMMUNITY_PROJECTS });
     dispatch(beginAjaxCall());
     try {
+      let projects = [];
       const { data } = await get(`communities/${id}/projects`);
 
       (data || [])
+        .map(async (project) => {
+          const { polls } = project;
+          const [poll] = polls;
+          const { id: pollId } = poll;
+
+          const { data: pollData } = await get(`polls/${pollId}`);
+
+          delete project.polls;
+          projects.push({ ...project, poll: pollData });
+        })
         .filter(
           (project) =>
             project.status === 'initialized' || /pending/.test(project.status),
@@ -28,7 +39,7 @@ export const getCommunityProjects = (id) => {
           dispatch(pollStatus(project.id, 'projects', updateProject)),
         );
 
-      return dispatch(getCommunityProjectsSuccess(data));
+      return dispatch(getCommunityProjectsSuccess(projects));
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
