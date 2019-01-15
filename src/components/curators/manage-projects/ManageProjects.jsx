@@ -65,50 +65,101 @@ export class ManageProjects extends Component {
         >
           <ManageProjectForm submitForm={this.handleSubmit.bind(this)} />
         </Modal>
-        <ReactTable
-          columns={[
-            {
-              Header: 'Title',
-              accessor: 'title',
-            },
-            {
-              Header: 'Start Date',
-              accessor: 'startDate',
-              Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
-            },
-            {
-              Header: 'End Date',
-              accessor: 'endDate',
-              Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
-            },
-            {
-              Header: 'Total Cost',
-              accessor: 'totalCost',
-              Cell: ({ value }) => (value ? `${value} NTV` : null),
-            },
-            {
-              Header: 'Payment Address',
-              accessor: 'address',
-              Cell: ({ value }) => <WalletAddress address={value} />,
-            },
-            {
-              Header: 'Status',
-              accessor: 'status',
-              Cell: ({ value }) =>
-                value ? capitalizeFirstLetter(value) : null,
-            },
-            {
-              Header: 'Actions',
-              accessor: 'actions',
-              width: 200,
-              Cell: ({ value }) => {
-                const { id, status, contractId, hasVotes } = value;
-                let listOfButtons = [];
-                switch (status) {
-                  case 'escrowed':
-                    if (!hasVotes) {
+        <div className={styles.TableContainer}>
+          <ReactTable
+            PaginationComponent={({ page, pages, onPageChange }) => {
+              return pages > 1 ? (
+                <div className={styles.Pagination}>
+                  <Button
+                    disabled={page === 0}
+                    theme="secondary"
+                    content="Previous"
+                    clickHandler={() => onPageChange(--page)}
+                  />
+                  <ul className={styles.PaginationList}>
+                    {[...Array(pages)].map((p, index) => (
+                      <li key={index}>
+                        <Button
+                          theme={index === page ? 'secondary' : 'white'}
+                          content={index + 1}
+                          clickHandler={() => onPageChange(index)}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                  <Button
+                    disabled={page + 1 === pages}
+                    theme="secondary"
+                    content="Next"
+                    clickHandler={() => onPageChange(++page)}
+                  />
+                </div>
+              ) : null;
+            }}
+            defaultPageSize={25}
+            showPageSizeOptions={false}
+            showPageJump={false}
+            showPaginationBottom
+            columns={[
+              {
+                Header: 'Title',
+                accessor: 'title',
+              },
+              {
+                Header: 'Start Date',
+                accessor: 'startDate',
+                Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
+              },
+              {
+                Header: 'End Date',
+                accessor: 'endDate',
+                Cell: ({ value }) => moment(value).format('MM/DD/YYYY'),
+              },
+              {
+                Header: 'Total Cost',
+                accessor: 'totalCost',
+                Cell: ({ value }) => (value ? `${value} NTV` : null),
+              },
+              {
+                Header: 'Payment Address',
+                accessor: 'address',
+                Cell: ({ value }) => <WalletAddress address={value} />,
+              },
+              {
+                Header: 'Status',
+                accessor: 'status',
+                Cell: ({ value }) =>
+                  value ? capitalizeFirstLetter(value) : null,
+              },
+              {
+                Header: 'Actions',
+                accessor: 'actions',
+                width: 200,
+                Cell: ({ value }) => {
+                  const { id, status, contractId, hasVotes } = value;
+                  let listOfButtons = [];
+                  switch (status) {
+                    case 'escrowed':
+                      if (!hasVotes) {
+                        listOfButtons.push({
+                          content: 'Cancel Project',
+                          action: () => {
+                            cancelProject(
+                              {
+                                projectId: id,
+                                contractId,
+                                status: 'pendingCompletion',
+                              },
+                              community,
+                            );
+                          },
+                          theme: 'tertiary',
+                        });
+                      }
+                      break;
+                    case 'denied':
                       listOfButtons.push({
-                        content: 'Cancel Project',
+                        content: 'Distribute Funds',
                         action: () => {
                           cancelProject(
                             {
@@ -121,90 +172,74 @@ export class ManageProjects extends Component {
                         },
                         theme: 'tertiary',
                       });
-                    }
-                    break;
-                  case 'denied':
-                    listOfButtons.push({
-                      content: 'Distribute Funds',
-                      action: () => {
-                        cancelProject(
-                          {
-                            projectId: id,
-                            contractId,
-                            status: 'pendingCompletion',
-                          },
-                          community,
-                        );
-                      },
-                      theme: 'tertiary',
-                    });
-                    break;
-                  case 'passed':
-                    listOfButtons.push({
-                      content: 'Distribute Funds',
-                      action: () => {
-                        rewardProjectCompletion(
-                          {
-                            projectId: id,
-                            contractId,
-                            status: 'pendingCompletion',
-                          },
-                          community,
-                        );
-                      },
-                      theme: 'tertiary',
-                    });
-                    break;
-                }
-                const formatedListOfActionbuttons = listOfButtons.map(
-                  ({ action, content, theme }, ind) => {
-                    return (
-                      <Button
-                        key={ind}
-                        theme={theme}
-                        clickHandler={action}
-                        content={content}
-                      />
-                    );
-                  },
-                );
-                return (
-                  <div className={styles.actionButtonsContainer}>
-                    {formatedListOfActionbuttons}
-                  </div>
-                );
-              },
-            },
-          ]}
-          data={(this.props.items || []).map(
-            ({
-              id,
-              pollHasVotes,
-              contractId,
-              title,
-              startDate,
-              endDate,
-              totalCost,
-              address,
-              status,
-            }) => {
-              return {
-                actions: {
-                  id,
-                  contractId,
-                  status,
-                  hasVotes: pollHasVotes,
+                      break;
+                    case 'passed':
+                      listOfButtons.push({
+                        content: 'Distribute Funds',
+                        action: () => {
+                          rewardProjectCompletion(
+                            {
+                              projectId: id,
+                              contractId,
+                              status: 'pendingCompletion',
+                            },
+                            community,
+                          );
+                        },
+                        theme: 'tertiary',
+                      });
+                      break;
+                  }
+                  const formatedListOfActionbuttons = listOfButtons.map(
+                    ({ action, content, theme }, ind) => {
+                      return (
+                        <Button
+                          key={ind}
+                          theme={theme}
+                          clickHandler={action}
+                          content={content}
+                        />
+                      );
+                    },
+                  );
+                  return (
+                    <div className={styles.actionButtonsContainer}>
+                      {formatedListOfActionbuttons}
+                    </div>
+                  );
                 },
+              },
+            ]}
+            data={(this.props.items || []).map(
+              ({
+                id,
+                pollHasVotes,
+                contractId,
                 title,
                 startDate,
                 endDate,
                 totalCost,
-                status,
                 address,
-              };
-            },
-          )}
-        />
+                status,
+              }) => {
+                return {
+                  actions: {
+                    id,
+                    contractId,
+                    status,
+                    hasVotes: pollHasVotes,
+                  },
+                  title,
+                  startDate,
+                  endDate,
+                  totalCost,
+                  status,
+                  address,
+                };
+              },
+            )}
+          />
+        </div>
       </div>
     );
   }
