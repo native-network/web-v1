@@ -50,8 +50,8 @@ class CommunityTable extends Component {
   };
 
   render() {
-    const { community, user, updateUserStatus } = this.props;
-    const { members, blacklisted } = community;
+    const { community, user, updateUserStatus, members } = this.props;
+    const { blacklisted } = community;
     const blacklistedIds = blacklisted.map((item) => item.id);
 
     const cols = [
@@ -343,8 +343,14 @@ export const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-  (state) => ({
-    user: state.user,
-  }),
+  (state) => {
+    const activeCommunity = state.communities.communities.find(
+      (com) => com.active,
+    );
+    return {
+      user: state.user,
+      members: activeCommunity && activeCommunity.members,
+    };
+  },
   mapDispatchToProps,
 )(CommunityTable);
