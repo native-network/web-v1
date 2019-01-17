@@ -258,24 +258,36 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
         userId,
         status,
       });
-      if (status === 'blacklisted') {
-        dispatch(
-          toastrSuccess('User has been blacklisted from the community.'),
-        );
-      }
-      if (status === 'member') {
-        dispatch(
-          toastrSuccess(
-            'This user has been removed from the blacklist and is now able to engage in community actions.',
-          ),
-        );
+      switch (status) {
+        case 'blacklisted':
+          dispatch(
+            toastrSuccess('User has been blacklisted from the community.'),
+          );
+          break;
+        case 'member':
+          dispatch(
+            toastrSuccess(
+              'This user has been removed from the blacklist and is now able to engage in community actions.',
+            ),
+          );
+          break;
+        case 'denied':
+          dispatch(
+            toastrSuccess('This user has been denied access to the community'),
+          );
+          break;
+        case 'approved':
+          dispatch(toastrSuccess('This user has been approved'));
+          break;
+        default:
+          break;
       }
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
       dispatch(
         toastrError(
-          'There was a problem blacklisting this member. Please try again.',
+          'There was a problem updating this member. Please try again.',
         ),
       );
       dispatch(updateUserStatusIssue(message));
