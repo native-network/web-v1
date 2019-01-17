@@ -256,11 +256,11 @@ export const denySubmittedTask = (taskId) => {
   return async (dispatch) => {
     try {
       const { data } = await post(`tasks/deny-submission`, { taskId });
-
+      dispatch(toastrSuccess('This task has been denied'));
       return dispatch(updateTask(data));
     } catch (err) {
       const { message } = err;
-
+      dispatch(toastrError('There was a problem denying this task'));
       dispatch(updateTaskIssue(message));
     }
   };
