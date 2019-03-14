@@ -20,6 +20,7 @@ export const CurrencyConverterDecorator = createDecorator(
     field: 'sendValue',
     updates: {
       receiveValue: (value, allValues) => {
+        console.log(allValues); // eslint-disable-line
         const { receiveCurrency } = allValues;
         const receivePrice = bigNumber(receiveCurrency.price);
         const valueBN = bigNumber(value || 0);
