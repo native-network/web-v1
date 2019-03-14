@@ -534,7 +534,7 @@ export default connect(
       currencyError: state.currencies.error,
       isLoading: state.loading > 0,
       authLoading: state.user.loading,
-      hasSession: !!state.user.id && state.user.kycStatus === 'approved',
+      hasSession: !!state.user.id,
       user: state.user,
       walletCurrencies: state.user.wallet.currencies,
       prices: state.prices,
