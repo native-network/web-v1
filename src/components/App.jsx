@@ -20,6 +20,7 @@ export class App extends Component {
   state = {
     isWelcomeModalOpen: false,
     refreshIntervalSet: false,
+    pollStatusIntervalSet: false,
   };
 
   componentWillMount() {

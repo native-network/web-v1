@@ -6,7 +6,7 @@ import Button from '../../shared/button';
 
 import styles from './VoteForm.css';
 
-export default function VoteForm({ submitForm, options }) {
+export default function VoteForm({ displayTitle, submitForm, options }) {
   const grabValues = (values) => {
     const option = options.find((o) => o.name === values.voteOption);
     return option ? submitForm(option.id) : null;
@@ -48,7 +48,7 @@ export default function VoteForm({ submitForm, options }) {
       onSubmit={grabValues}
       render={({ handleSubmit, form, pristine, invalid }) => (
         <form className={styles.VoteForm} onSubmit={handleSubmit}>
-          <h3>Please select one option:</h3>
+          {displayTitle && <h3>Please select one option:</h3>}
           {(options || []).map((option, index) =>
             renderOption({ index, ...option }),
           )}

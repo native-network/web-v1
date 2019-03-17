@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import {
   setActiveCommunity,
   unsetActiveCommunity,
 } from '../../actions/communitiesActions';
-
+import {
+  sendTransactionInEth,
+  sendTransactionInNtv,
+} from '../../actions/currencyActions';
 import { getCommunityTasks } from '../../actions/communityTasksActions';
 import { getCommunityProjects } from '../../actions/communityProjectsActions';
 import { getCommunityPolls } from '../../actions/communityPollsActions';
@@ -15,6 +19,8 @@ import Card from '../../components/shared/card';
 import TabPanels from '../../components/shared/tab-panels';
 
 import { Votes, Tasks, Projects } from '../../components/initiatives';
+
+import { voteFilters, taskFilters, projectFilters } from '../../utils/filters';
 
 import styles from './Community.css';
 
@@ -33,6 +39,14 @@ export class Community extends Component {
     this.props.unsetActiveCommunity();
   }
 
+  submitTransaction(symbol, community, amount) {
+    if (symbol === 'NTV') {
+      this.props.sendTransactionInEth(community, amount);
+    } else {
+      this.props.sendTransactionInNtv(community, amount);
+    }
+  }
+
   render() {
     const { community, polls, tasks, projects } = this.props;
     const initiatives = formatInitiatives(polls, tasks, projects);
@@ -42,7 +56,10 @@ export class Community extends Component {
     }
     return community ? (
       <Card
-        community={community}
+        community={{
+          ...community,
+          submitTransaction: this.submitTransaction.bind(this),
+        }}
         isCommunityRoute={this.props.isCommunityRoute}
         render={() => (
           <div className={styles.CommunityPanels}>
@@ -60,16 +77,19 @@ function formatInitiatives(polls, tasks, projects) {
       name: 'Votes',
       items: polls,
       render: (items) => <Votes items={items} />,
+      filters: voteFilters,
     },
     {
       name: 'Tasks',
-      items: tasks,
+      items: (tasks || []).filter((item) => item.status !== 'initialized'),
       render: (items) => <Tasks items={items} />,
+      filters: taskFilters,
     },
     {
       name: 'Projects',
       items: projects,
       render: (items) => <Projects items={items} />,
+      filters: projectFilters,
     },
   ];
 }
@@ -81,6 +101,8 @@ export function mapDispatchToProps(dispatch) {
     getCommunityPolls: bindActionCreators(getCommunityPolls, dispatch),
     getCommunityTasks: bindActionCreators(getCommunityTasks, dispatch),
     getCommunityProjects: bindActionCreators(getCommunityProjects, dispatch),
+    sendTransactionInEth: bindActionCreators(sendTransactionInEth, dispatch),
+    sendTransactionInNtv: bindActionCreators(sendTransactionInNtv, dispatch),
   };
 }
 

@@ -5,7 +5,6 @@ import { FieldArray } from 'react-final-form-arrays';
 import moment from 'moment';
 
 import styles from './ManagePollForm.css';
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 import Button from '../../shared/button';
 import FileUploader from '../../shared/file-uploader/FileUploader';

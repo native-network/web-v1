@@ -114,6 +114,39 @@ export const updateCommunityWithCurrencyData = (community) => {
   };
 };
 
+export const getCommunityDevFund = (community) => {
+  return async (dispatch) => {
+    dispatch({ type: 'GET_DEV_FUND' });
+
+    return communityContractInstance(community)
+      .then(({ community3 }) => {
+        community3
+          .communityAvailableDevFund()
+          .then((data) =>
+            dispatch(
+              updateCommunityDevFund({ id: community.id, devFund: data }),
+            ),
+          )
+          .catch(({ message }) => updateCommunityDevFundIssue(message));
+      })
+      .catch(({ message }) => updateCommunityDevFundIssue(message));
+  };
+};
+
+export const updateCommunityDevFund = ({ id, devFund }) => {
+  return {
+    type: actions.UPDATE_COMMUNITY_DEV_FUND,
+    data: { id, devFund },
+  };
+};
+
+export const updateCommunityDevFundIssue = (error) => {
+  return {
+    type: actions.UPDATE_COMMUNITY_DEV_FUND_ISSUE,
+    error,
+  };
+};
+
 export const updateCommunityWithCurrencyDataSuccess = (community) => ({
   type: actions.UPDATE_COMMUNITY_WITH_CURRENCY_DATA_SUCCESS,
   community,
@@ -225,20 +258,36 @@ export const updateUserStatus = ({ communityId, userId, status }) => {
         userId,
         status,
       });
-      if (status === 'blacklisted') {
-        dispatch(
-          toastrSuccess('User has been blacklisted from the community.'),
-        );
-      }
-      if (status === 'member') {
-        dispatch(toastrSuccess('User has been whitelisted to the community.'));
+      switch (status) {
+        case 'blacklisted':
+          dispatch(
+            toastrSuccess('User has been blacklisted from the community.'),
+          );
+          break;
+        case 'member':
+          dispatch(
+            toastrSuccess(
+              'This user has been removed from the blacklist and is now able to engage in community actions.',
+            ),
+          );
+          break;
+        case 'denied':
+          dispatch(
+            toastrSuccess('This user has been denied access to the community'),
+          );
+          break;
+        case 'approved':
+          dispatch(toastrSuccess('This user has been approved'));
+          break;
+        default:
+          break;
       }
       dispatch(updateUserStatusComplete(communityId, userId, status));
     } catch (err) {
       const { message } = err;
       dispatch(
         toastrError(
-          'There was a problem blacklisting this member. Please try again.',
+          'There was a problem updating this member. Please try again.',
         ),
       );
       dispatch(updateUserStatusIssue(message));
@@ -307,7 +356,6 @@ export const preApproveUser = ({ communityId, address }) => {
   return async (dispatch) => {
     dispatch({ type: actions.PRE_APPROVE_USER });
     try {
-      console.log(communityId, address); //eslint-disable-line
       const { data } = await post(`communities/${communityId}/preapproveUser`, {
         communityId,
         address,

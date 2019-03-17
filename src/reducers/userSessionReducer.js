@@ -3,6 +3,10 @@ import { initialState } from './initialState';
 
 export default function userSessionReducer(state = {}, action) {
   switch (action.type) {
+    case actions.PROMPT_AUTHORIZE:
+      return { ...state, loading: true };
+    case actions.AUTHORIZATION_COMPLETE:
+      return { ...state, loading: false, ...action.user, sessionErrror: '' };
     case actions.GET_USER_SESSION_SUCCESS:
       return { ...state, ...action.user, sessionErrror: '' };
     case actions.GET_USER_SESSION_ERROR:

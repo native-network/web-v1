@@ -66,7 +66,6 @@ export const pollUserStake = (stakeConfirmationInterval) => {
 export const promptAuthorize = (address) => {
   return async (dispatch) => {
     dispatch({ type: actions.PROMPT_AUTHORIZE });
-    dispatch(beginAjaxCall());
     try {
       const { data } = await post(`user/signing`, { address });
       if (data) {
@@ -87,12 +86,19 @@ export const promptSignature = (signing, address) => {
     try {
       const signature = await promptSign(signing);
       const { data } = await post(`user/authorize`, { signature, address });
-      return dispatch(getUserSessionSuccess(data));
+      return dispatch(authorizationComplete(data));
     } catch (err) {
       const { message } = err;
       dispatch(toastrError(message));
       return dispatch(getUserSessionError(message));
     }
+  };
+};
+
+export const authorizationComplete = (user) => {
+  return {
+    type: actions.AUTHORIZATION_COMPLETE,
+    user,
   };
 };
 

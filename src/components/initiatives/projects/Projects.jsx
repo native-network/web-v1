@@ -1,15 +1,13 @@
 import React from 'react';
 
+import ProjectItem from './ProjectItem';
+
 import styles from './Projects.css';
 
 function Projects({ items }) {
-  const renderProject = ({ index, ...item }) => {
-    return (
-      <li className={styles.ProjectItem} key={index}>
-        <h3>{item.name}</h3>
-      </li>
-    );
-  };
+  const renderProject = ({ index, ...item }) => (
+    <ProjectItem key={index} project={item} />
+  );
 
   return items.length ? (
     <ul className={styles.ProjectList}>

@@ -1,0 +1,41 @@
+@import '../../../../../styles/variables.css';
+
+.PollButton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ModalHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  & button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  & h1 {
+    @extend %decorator;
+
+    width: 100%;
+    text-align: center;
+
+    &::after {
+      background: var(--gray-7);
+      left: 10%;
+      width: 80%;
+      height: 2px;
+    }
+  }
+
+  & img {
+    max-width: 5rem;
+  }
+}

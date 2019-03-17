@@ -218,6 +218,7 @@ export class Card extends Component {
                   {community.votingPolicy && (
                     <p>
                       <a
+                        className="link"
                         target="_blank"
                         rel="noopener nofollow"
                         href={uploadableField(community.votingPolicy)}
@@ -229,6 +230,7 @@ export class Card extends Component {
                   {community.revenueDistributionPolicy && (
                     <p>
                       <a
+                        className="link"
                         target="_blank"
                         rel="noopener nofollow"
                         href={uploadableField(

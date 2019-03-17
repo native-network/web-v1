@@ -1,42 +1,62 @@
 @import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
 
 .TaskList {
   @extend %unstyled-list;
 }
 
 .TaskItem {
-  padding: 1rem 0;
+  padding: 1rem 0 3rem;
   display: flex;
   align-items: stretch;
+  flex-direction: column;
 
   &:not(:last-child) {
     @extend %decorator--full-width;
   }
+
+  @media (--medium-viewport) {
+    flex-direction: row;
+  }
 }
 
 .TaskImage {
-  flex-basis: 15rem;
+  order: 2;
 
-  & span {
-    display: block;
-    text-align: center;
+  @media (--medium-viewport) {
+    max-width: 15rem;
+    width: 100%;
+    margin-right: 2rem;
+    order: initial;
   }
 }
 
 .TaskDescription {
-  margin: 0 2rem;
-  flex-grow: 2;
+  order: 1;
 
   & h3 {
     margin-top: 0;
   }
+
+  @media (--medium-viewport) {
+    width: 100%;
+    order: initial;
+    margin-right: 2rem;
+  }
 }
 
 .TaskMeta {
-  flex-grow: 1;
-  text-align: center;
+  order: 3;
 
   & h4 {
-    margin-top: 0;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  @media (--medium-viewport) {
+    margin-left: auto;
+    max-width: 25rem;
+    width: 100%;
+    order: initial;
   }
 }
