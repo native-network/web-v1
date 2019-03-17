@@ -6,6 +6,7 @@ import moment from 'moment';
 import VoteResults from '../../../shared/vote-results';
 import VoteForm from '../../../forms/vote/index';
 import { submitVote } from '../../../../actions/voteActions';
+import S3Image from '../../../shared/s3-image';
 
 import styles from './Vote.css';
 
@@ -28,15 +29,16 @@ function Vote({ vote, submitVote }) {
 
   return (
     <li className={styles.VoteItem}>
-      {!fileUrl ? null : (
+      {fileUrl && fileUrl !== 'null' ? (
         <div className={styles.VoteImage}>
-          <img src={fileUrl} alt="" />
+          <S3Image fileName={fileUrl} />
         </div>
-      )}
+      ) : null}
       <div className={styles.VoteDescription}>
         <h3>{title}</h3>
         <span className={styles.VoteClosing}>
-          Closes: {moment(endDate).format('MMM Do, h:mm A')}
+          {isClosed ? 'Closed' : 'Closes'}:{' '}
+          {moment(endDate).format('MMM Do, h:mm A')}
         </span>
         <p>{description}</p>
       </div>
@@ -44,7 +46,7 @@ function Vote({ vote, submitVote }) {
         {hasVoted || isClosed ? (
           <VoteResults votes={votes} options={options} />
         ) : (
-          <VoteForm submitForm={handleSubmit} options={options} />
+          <VoteForm displayTitle submitForm={handleSubmit} options={options} />
         )}
       </div>
     </li>

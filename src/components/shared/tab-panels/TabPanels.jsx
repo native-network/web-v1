@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 
 import Filter from '../filter';
 
@@ -7,33 +6,34 @@ import TabNavigation from './TabNavigation';
 import TabPanel from './TabPanel';
 import styles from './TabPanels.css';
 
-const today = moment();
-
-const itemsForFilter = [
-  {
-    name: 'All',
-    filter: (items) => items,
-  },
-  {
-    name: 'Open',
-    filter: (items) =>
-      (items || []).filter((item) => moment(item.endDate).isAfter(today)),
-  },
-  {
-    name: 'Closed',
-    filter: (items) =>
-      (items || []).filter((item) => moment(item.endDate).isBefore(today)),
-  },
-];
-
 class TabPanels extends Component {
   state = {
-    activeTab: 0,
-    activeFilter: itemsForFilter.find((f) => f.name === 'Open'),
+    activeTab: {},
+    activeFilter: {},
   };
 
-  setActiveTab(tabIndex) {
-    this.setState({ activeTab: tabIndex });
+  componentDidMount() {
+    const { panels } = this.props;
+
+    if (this.props.hasFilter) {
+      this.setState({ activeTab: panels[0] }, () =>
+        this.setState({ activeFilter: this.state.activeTab.filters[0] }),
+      );
+    } else {
+      this.setState({ activeTab: panels[0] });
+    }
+  }
+
+  setActiveTab(panelName) {
+    const { panels } = this.props;
+    const activeTab = panels.find((panel) => panel.name === panelName);
+    if (this.props.hasFilter) {
+      this.setState({ activeTab }, () =>
+        this.setState({ activeFilter: activeTab.filters[0] }),
+      );
+    } else {
+      this.setState({ activeTab });
+    }
   }
 
   filterHandler(filter) {
@@ -44,12 +44,13 @@ class TabPanels extends Component {
     const { props, state } = this;
     const { panels, community } = props;
     const { activeTab } = state;
-    const panelNames = panels.map((panel) => {
-      return panel.items
-        ? `${panel.name} (${(panel.items && panel.items.length) || 0})`
-        : panel.name;
-    });
-    const { filter } = this.state.activeFilter;
+    const { render, items, filters } = activeTab;
+    const panelNames = panels.map((panel) => panel.name);
+
+    const activeItems =
+      !!this.props.hasFilter && this.state.activeFilter.filter
+        ? this.state.activeFilter.filter(items)
+        : items;
 
     return (
       <div className={styles.TabPanels}>
@@ -57,29 +58,18 @@ class TabPanels extends Component {
           telegramLink={community && community.telegramLink}
           activeTab={activeTab}
           panels={panelNames}
-          clickHandler={(i) => this.setActiveTab(i)}
-          renderFilter={() =>
-            this.props.hasFilter ? (
+          clickHandler={(panel) => this.setActiveTab(panel)}
+          renderFilter={() => {
+            return this.props.hasFilter && filters && filters.length ? (
               <Filter
-                activeFilter={this.state.activeFilter}
-                selectHandler={this.filterHandler.bind(this)}
-                className="visible-lg"
-                filters={itemsForFilter}
+                activeFilter={this.state.activeFilter || filters[0]}
+                selectHandler={(filter) => this.filterHandler(filter)}
+                filters={!!filters && filters.length ? filters : []}
               />
-            ) : null
-          }
+            ) : null;
+          }}
         />
-        {(panels || []).map(
-          ({ render, items }, index) =>
-            index === activeTab ? (
-              <TabPanel
-                key={index}
-                render={() =>
-                  this.props.hasFilter ? render(filter(items)) : render(items)
-                }
-              />
-            ) : null,
-        )}
+        <TabPanel render={() => render && render(activeItems)} />
       </div>
     );
   }

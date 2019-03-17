@@ -1,28 +1,16 @@
-@import '../../../styles/globals.css';
 @import '../../../styles/media-queries.css';
 
-.ManageProjectForm {
+.Form {
   composes: FormStyles from '../styles.css';
-}
-
-.ManageProjectFields {
-  & > div {
-    break-inside: avoid;
-  }
-
-  & label {
-    display: block;
-  }
 
   @media (--medium-viewport) {
-    columns: 2;
-    column-gap: 2rem;
+    max-width: 80%;
+    margin: 0 auto;
   }
 }
 
 .FieldGroup {
   composes: FieldGroup from '../styles.css';
-  break-inside: avoid-column;
 }
 
 .Error {

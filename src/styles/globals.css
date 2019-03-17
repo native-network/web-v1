@@ -1,4 +1,5 @@
 @import url('https://use.typekit.net/ltg0xwv.css');
+@import './extends.css';
 
 @custom-selector :--heading h1, h2, h3, h4, h5, h6;
 
@@ -47,4 +48,26 @@ h2 {
 
 h3 {
   font-size: 2rem;
+}
+
+:global(.link) {
+  &,
+  &:visited {
+    color: var(--secondary-button-default);
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: var(--secondary-button-active);
+  }
+}
+
+/* React Table Global Overrides */
+:global(.ReactTable .rt-table) {
+  overflow: visible;
+}
+
+:global(.ReactTable .-filters label) {
+  @extend %visually-hidden;
 }

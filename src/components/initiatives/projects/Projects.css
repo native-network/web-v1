@@ -1,4 +1,5 @@
 @import '../../../styles/extends.css';
+@import '../../../styles/media-queries.css';
 
 .ProjectList {
   @extend %unstyled-list;
@@ -6,6 +7,14 @@
 
 .ProjectItem {
   padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  & div {
+    width: 100%;
+  }
 
   &:not(:last-child) {
     @extend %decorator--full-width;
@@ -14,5 +23,73 @@
     &::after {
       background: var(--primary-color);
     }
+  }
+
+  @media (--medium-viewport) {
+    flex-direction: row;
+  }
+}
+
+.ProjectTitle,
+.ProjectSubtitle {
+  margin: 0;
+}
+
+.ProjectDetails {
+  @extend %unstyled-list;
+
+  margin: 0.5rem 0.25rem 2rem;
+
+  & .ListItem {
+    padding: 0.5rem 0;
+  }
+
+  & dt {
+    font-weight: 700;
+  }
+
+  & dd {
+    margin: 0;
+  }
+}
+
+.ProjectImage {
+  order: 2;
+
+  @media (--medium-viewport) {
+    max-width: 15rem;
+    width: 100%;
+    margin-right: 2rem;
+    order: initial;
+  }
+}
+
+.ProjectDescription {
+  order: 1;
+
+  & h3 {
+    margin-top: 0;
+  }
+
+  @media (--medium-viewport) {
+    width: 100%;
+    order: initial;
+    margin-right: 2rem;
+  }
+}
+
+.ProjectMeta {
+  order: 3;
+
+  & h4 {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  @media (--medium-viewport) {
+    margin-left: auto;
+    max-width: 25rem;
+    width: 100%;
+    order: initial;
   }
 }

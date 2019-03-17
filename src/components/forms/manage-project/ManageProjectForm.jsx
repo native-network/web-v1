@@ -6,19 +6,19 @@ import moment from 'moment';
 import Button from '../../shared/button';
 import FileUploader from '../../shared/file-uploader/FileUploader';
 
+import {
+  composeValidators,
+  required,
+  validateAddress,
+  minCharLength,
+} from '../utils/validators';
+
 import styles from './ManageProjectForm.css';
 
 export default function ManageProjectForm({ submitForm, project }) {
   const renderError = (error) => <span className={styles.Error}>{error}</span>;
-  const required = (value) => (value ? undefined : 'Required');
-  const validateAddress = (value) =>
-    //TODO: Add better address validation
-    value.length > 0 ? undefined : 'Must be a valid wallet address';
-  const composeValidators = (...validators) => (value) =>
-    validators.reduce(
-      (error, validator) => error || validator(value),
-      undefined,
-    );
+
+  const minimumCharacters = minCharLength(3);
 
   return (
     <Form
@@ -26,137 +26,92 @@ export default function ManageProjectForm({ submitForm, project }) {
       initialValues={project}
       render={({ handleSubmit, pristine, invalid }) => (
         <form className={styles.ManageProjectForm} onSubmit={handleSubmit}>
-          {!project ? (
-            <div className={styles.ManageProjectFields}>
-              <Field name="title" validate={required}>
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>Project Title*</label>
-                    <input {...input} type="text" placeholder="Project Title" />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-              <Field name="subtitle" validate={required}>
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>Project Subtitle*</label>
-                    <input
-                      {...input}
-                      type="text"
-                      placeholder="Project Subtitle"
-                    />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-              <Field name="description" validate={required}>
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>Project Description*</label>
-                    <textarea
-                      rows="6"
-                      {...input}
-                      placeholder="Project Description"
-                    />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-              <Field name="totalCost" validate={required}>
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>Total Cost (NT)*</label>
-                    <input
-                      {...input}
-                      type="number"
-                      placeholder="Total Cost (NT)"
-                    />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-              <Field
-                name="address"
-                validate={composeValidators(required, validateAddress)}
-              >
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <label>Funds Release Address*</label>
-                    <input {...input} type="text" placeholder="Address" />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-              <Field name="endDate" validate={required}>
-                {({ input, meta }) => (
-                  <div className={styles.FieldGroup}>
-                    <p>
-                      Project voting will open {moment().format('MM/DD/YYYY')}
-                    </p>
-                    <label>End date*</label>
-                    <DatePicker
-                      {...input}
-                      minDate={moment().add(1, 'days')}
-                      selected={
-                        input.value ? moment(input.value, 'MM/DD/YYYY') : null
-                      }
-                      onChange={(date) =>
-                        input.onChange(moment(date).format('MM/DD/YYYY'))
-                      }
-                    />
-                    {meta.error && meta.touched && renderError(meta.error)}
-                  </div>
-                )}
-              </Field>
-            </div>
-          ) : (
-            <div className={styles.ManageProjectFields}>
-              <div className={styles.FieldGroup}>
-                <label>Project Title</label>
-                <input
-                  type="text"
-                  disabled
-                  value={project.title}
-                  className={styles.DisabledField}
-                />
-              </div>
-              <div className={styles.FieldGroup}>
-                <label>Project Subtitle</label>
-                <input type="text" disabled value={project.subtitle} />
-              </div>
-              <div className={styles.FieldGroup}>
-                <label>Project Description</label>
-                <textarea
-                  rows="6"
-                  disabled
-                  value={project.description}
-                  placeholder="Project Description"
-                />
-              </div>
-              <div className={styles.FieldGroup}>
-                <label>Total Cost (NT)</label>
-                <input type="number" disabled value={project.totalCost} />
-              </div>
-              <div className={styles.FieldGroup}>
-                <label>Funds Release Address</label>
-                <input type="text" disabled value={project.address} />
-              </div>
-              <div className={styles.FieldGroup}>
-                <label>End Date</label>
-                <input
-                  type="text"
-                  disabled
-                  value={moment(project.endDate).format('MM/DD/YYYY')}
-                />
-              </div>
-            </div>
-          )}
           <div className={styles.ManageProjectFields}>
-            <Field name="costBreakdownUrl" type="file" validate={required}>
+            <Field name="title" validate={minimumCharacters}>
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Cost Breakdown*</label>
+                  <label>Project Title*</label>
+                  <input {...input} type="text" placeholder="Project Title" />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+            <Field name="subtitle" validate={minimumCharacters}>
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Project Subtitle*</label>
+                  <input
+                    {...input}
+                    type="text"
+                    placeholder="Project Subtitle"
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+            <Field name="description" validate={required}>
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Project Description*</label>
+                  <textarea
+                    rows="6"
+                    {...input}
+                    placeholder="Project Description"
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+            <Field name="totalCost" validate={required}>
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Total Cost (NTV)*</label>
+                  <input
+                    {...input}
+                    type="number"
+                    placeholder="Total Cost (NT)"
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+            <Field
+              name="address"
+              validate={composeValidators(required, validateAddress)}
+            >
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Funds Release Address*</label>
+                  <input {...input} type="text" placeholder="Address" />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                </div>
+              )}
+            </Field>
+            <Field name="endDate" validate={required}>
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>End date*</label>
+                  <DatePicker
+                    {...input}
+                    minDate={moment().add(1, 'days')}
+                    selected={
+                      input.value ? moment(input.value, 'MM/DD/YYYY') : null
+                    }
+                    onChange={(date) =>
+                      input.onChange(moment(date).format('MM/DD/YYYY'))
+                    }
+                  />
+                  {meta.error && meta.touched && renderError(meta.error)}
+                  <p>
+                    Project voting will open {moment().format('MM/DD/YYYY')}
+                  </p>
+                </div>
+              )}
+            </Field>
+            <Field name="costBreakdownUrl" type="file">
+              {({ input, meta }) => (
+                <div className={styles.FieldGroup}>
+                  <label>Cost Breakdown</label>
                   <FileUploader
                     {...input}
                     onChange={(file) => {
@@ -167,10 +122,10 @@ export default function ManageProjectForm({ submitForm, project }) {
                 </div>
               )}
             </Field>
-            <Field name="roadmapUrl" type="file" validate={required}>
+            <Field name="roadmapUrl" type="file">
               {({ input, meta }) => (
                 <div className={styles.FieldGroup}>
-                  <label>Roadmap*</label>
+                  <label>Roadmap</label>
                   <FileUploader
                     {...input}
                     onChange={(file) => {

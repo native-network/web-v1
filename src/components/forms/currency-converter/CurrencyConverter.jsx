@@ -154,6 +154,7 @@ export class CurrencyConverter extends Component {
                 <p>
                   Your transaction progress can be viewed on{' '}
                   <a
+                    className="link"
                     target="_blank"
                     rel="noopener nofollow"
                     href={`https://${

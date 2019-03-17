@@ -1,0 +1,22 @@
+.ResultContainer {
+  border: 1px solid var(--primary-black);
+  position: relative;
+  margin: 0 0 2rem;
+}
+
+.ResultSVG {
+  height: 2rem;
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.QuorumMeter {
+  animation: fill 500ms ease-out;
+  fill: var(--primary-color);
+}
+
+@keyframes fill {
+  from {
+    width: 0%;
+  }
+}

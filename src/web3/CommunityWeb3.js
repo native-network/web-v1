@@ -94,6 +94,187 @@ export default class CommunityService {
       .call();
   }
 
+  async createNewTask(id, amount, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice = gasPrice * 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+
+      const task = this.communityContract.methods
+        .createNewTask(id, amount)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      task.on('error', () =>
+        reject(new Error('There was a problem creating this task')),
+      );
+
+      task.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
+  async cancelTask(taskId, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+
+      const task = this.communityContract.methods
+        .cancelTask(taskId)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      task.on('error', () =>
+        reject(new Error('There was a problem cancelling this task')),
+      );
+
+      task.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
+  async createNewProject(contractId, amount, paymentAddress, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const project = this.communityContract.methods
+        .createNewProject(contractId, amount, paymentAddress)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      project.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      project.on('error', () =>
+        reject(new Error('There was a problem creating this project.')),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
+  async rewardProjectCompletion(contractId, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const project = this.communityContract.methods
+        .rewardProjectCompletion(contractId)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      project.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      project.on('error', () =>
+        reject(
+          new Error('There was a problem distributing funds for this project.'),
+        ),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
+  async cancelProject(contractId, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const project = this.communityContract.methods
+        .cancelProject(contractId)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      project.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      project.on('error', () =>
+        reject(
+          new Error('There was a problem releasing project funds to dev fund.'),
+        ),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
   async approve(receivingAddress, transactionAmount, cb) {
     let gasPrice = await this.getGasPrice();
     gasPrice = gasPrice * 1.5;
@@ -160,13 +341,52 @@ export default class CommunityService {
     });
   }
 
+  async rewardTaskCompletion(contractId, userId, cb) {
+    let gasPrice = await this.getGasPrice();
+    gasPrice *= 1.5;
+
+    return new Promise((resolve, reject) => {
+      let transactionHash;
+      const rewardTask = this.communityContract.methods
+        .rewardTaskCompletion(contractId, userId)
+        .send({ from: this.web3Service.mainAccount, gasPrice });
+
+      rewardTask.on('transactionHash', (hash) => {
+        if (cb) {
+          cb(hash);
+          transactionHash = hash;
+        }
+      });
+
+      rewardTask.on('error', () =>
+        reject(
+          new Error(
+            'There was a problem with rewarding this task. Please try again.',
+          ),
+        ),
+      );
+
+      const checkTransaction = setInterval(async () => {
+        if (transactionHash) {
+          const receipt = await this.web3Service.web3.eth.getTransactionReceipt(
+            transactionHash,
+          );
+          if (receipt) {
+            clearInterval(checkTransaction);
+            resolve(receipt);
+          }
+        }
+      }, 1000);
+    });
+  }
+
   async communityAvailableDevFund() {
     try {
       return await this.communityContract.methods
         .getAvailableDevFund()
-        .call({ from: getAddress() });
+        .call({ from: await getAddress() });
     } catch (err) {
-      return err;
+      return new Error(err);
     }
   }
 
