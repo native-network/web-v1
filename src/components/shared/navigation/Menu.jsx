@@ -46,12 +46,12 @@ function Menu({
       </li>
       <li className={menuItemClass}>
         <a
-          href="https://nativeproject.zendesk.com/hc/en-us"
+          href="https://chat.nativeproject.one"
           target="_blank"
           rel="noopener nofollow"
           className={linkClass}
         >
-          Learn
+          Chat
         </a>
       </li>
       {(role === 'member' || role === 'curator') && (
