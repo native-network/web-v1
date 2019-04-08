@@ -13,16 +13,12 @@ function FeedbackHeader() {
             so we can give you the best user experience possible.&nbsp;
             <span>
               Ask us anything in our&nbsp;
-              <a href="https://telegram.me/nativeproject" target="_blank">
-                Telegram
+              <a href="https://chat.nativeproject.one" target="_blank">
+                Chat
               </a>
-              &nbsp;channel, or send us your bug reports and general feedback at
-              our&nbsp;
-              <a
-                href="https://nativeproject.zendesk.com/hc/en-us/requests/new"
-                target="_blank"
-              >
-                Zendesk
+              , or send us your bug reports and general feedback on our&nbsp;
+              <a href="https://forum.nativeproject.one" target="_blank">
+                Forum
               </a>
               .
             </span>
